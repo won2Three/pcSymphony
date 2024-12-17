@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>[ 회원가입 ]</h1>
+<form>
+<!--    id="joinForm" th:action="@{/member/join}" method="post"-->
+    <table>
+        <tr>
+            <th>ID</th>
+            <td><input type="text" name="memberId" id="memberId"></td>
+        </tr>
+        <tr>
+            <th>Password</th>
+            <td><input type="password" name="memberPw" id="memberPw"></td>
+        </tr>
+        <tr>
+            <th>이름</th>
+            <td><input type="text" name="memberName" id="memberName"></td>
+        </tr>
+        <tr>
+            <th>이메일</th>
+            <td><input type="text" name="email" id="email"></td>
+        </tr>
+        <tr>
+            <th>주소</th>
+            <td><input type="text" name="address" id="address"></td>
+        </tr>
+        <tr>
+            <th>성별</th>
+            <td>
+                <input type="radio" name="gender" id="male" value="남성">남성
+                <input type="radio" name="gender" id="female" value="여성">여성
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td><input type="submit" value="가입"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
