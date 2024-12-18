@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <h1>[ 로그인 ]</h1>
-<form>
-<!--  id="loginForm" th:action="@{/member/login}" method="post"-->
+<form id="loginForm" th:action="@{/member/login}" method="post">
   <table>
     <tr>
       <th>ID</th>

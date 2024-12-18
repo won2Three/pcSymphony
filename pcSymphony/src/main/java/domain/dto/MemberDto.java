@@ -19,6 +19,9 @@ public class MemberDto {
     //사용자 이름
     String memberName;
 
+    //이메일
+    String email;
+
     //주소
     String address;
 

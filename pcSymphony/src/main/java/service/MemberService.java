@@ -21,6 +21,7 @@ public class MemberService {
                 .memberId(passwordEncoder.encode(dto.getMemberId()))
                 .memberPw(dto.getMemberPw())
                 .memberName(dto.getMemberName())
+                .email((dto.getEmail()))
                 .address(dto.getAddress())
                 .gender(dto.getGender())
                 .build();

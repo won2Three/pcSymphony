@@ -27,6 +27,9 @@ public class MemberEntity {
    @Column(name = "user_name", nullable=false)
    private String memberName;
 
+   @Column(name = "user_email", nullable = false)
+   private String email;
+
    //주소는 null 허용
    @Column(name = "user_address")
    private String address;
