@@ -1,4 +1,4 @@
-package security;
+package com.example.demo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ public class WebSecurityConfig {
     private static final String[] PUBLIC_URLS = {
             "/"                     //root
             , "/member/join"  //회원가입
-            , "/member/login" //로그인폼
+//            , "/member/login" //로그인폼
             //메인?, 글 작성 이외는 가능
     };
 

@@ -1,12 +1,12 @@
-package controller;
+package com.example.demo.controller;
 
-import domain.dto.MemberDto;
+import com.example.demo.domain.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import service.MemberService;
+import com.example.demo.service.MemberService;
 
 @RequiredArgsConstructor
 @Controller
@@ -15,8 +15,8 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("login")
-    public String login() {
+    @GetMapping("loginForm")
+    public String loginForm() {
         return "member/loginForm";
     }
 
@@ -34,6 +34,6 @@ public class MemberController {
     @PostMapping("join")
     public String join(MemberDto memberDto) {
         memberService.join(memberDto);
-        return "redirect:/member/loginFrom";
+        return "redirect:/member/loginForm";
     }
 }

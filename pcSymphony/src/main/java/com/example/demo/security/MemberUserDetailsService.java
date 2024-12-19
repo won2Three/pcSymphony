@@ -1,13 +1,13 @@
-package security;
+package com.example.demo.security;
 
-import domain.entity.MemberEntity;
+import com.example.demo.domain.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import repository.MemberRepository;
+import com.example.demo.repository.MemberRepository;
 
 @Slf4j
 @Service
@@ -17,6 +17,7 @@ public class MemberUserDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
+
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 
@@ -24,15 +25,15 @@ public class MemberUserDetailsService implements UserDetailsService {
                 .orElseThrow(() ->
                         new UsernameNotFoundException(id + " : 없는 id입니다."));
 
-        MemberUserDetails userDetails = MemberUserDetails.builder()
+        MemberUserDetails user = MemberUserDetails.builder()
                 .id(memberEntity.getMemberId())
                 .password(memberEntity.getMemberPw())
                 .name(memberEntity.getMemberName())
                 .address(memberEntity.getAddress())
                 .email(memberEntity.getEmail())
-                .gender(memberEntity.getGender())
+                .gender(memberEntity.getGender().toString())
                 .build();
 
-        return null;
+        return user;
     }
 }

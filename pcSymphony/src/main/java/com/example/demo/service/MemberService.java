@@ -1,11 +1,11 @@
-package service;
+package com.example.demo.service;
 
-import domain.dto.MemberDto;
-import domain.entity.MemberEntity;
+import com.example.demo.domain.dto.MemberDto;
+import com.example.demo.domain.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import repository.MemberRepository;
+import com.example.demo.repository.MemberRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -18,13 +18,14 @@ public class MemberService {
 
     public void join(MemberDto dto) {
         MemberEntity entity = MemberEntity.builder()
-                .memberId(passwordEncoder.encode(dto.getMemberId()))
-                .memberPw(dto.getMemberPw())
+                .memberId(dto.getMemberId())
+                .memberPw(passwordEncoder.encode(dto.getMemberPw()))
                 .memberName(dto.getMemberName())
-                .email((dto.getEmail()))
+                .email(dto.getEmail())
                 .address(dto.getAddress())
                 .gender(dto.getGender())
                 .build();
+
 
         memberRepository.save(entity);
 
