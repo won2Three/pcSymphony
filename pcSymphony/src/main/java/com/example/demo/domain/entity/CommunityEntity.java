@@ -26,7 +26,7 @@ public class CommunityEntity {
     //여러개의 글이 한명의 작성자에 의해 작성
     @ManyToOne(fetch = FetchType.LAZY)//다대일 관게
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    MemberEntity memberEntity;
+    MemberEntity member;
     //글 제목
     @Column(name = "community_title", nullable = false)
     private String communityTitle;

@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class CommunityDto {
 
+    //작성자아이디
+    private String memberId;
+    //글순서
     private int communityId;
     private String communityTitle;
     private String communityContent;
