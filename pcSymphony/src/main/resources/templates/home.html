@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8">
+	<title>market</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 20px;
+		}
+
+		h1 {
+			text-align: center;
+			color: #333;
+		}
+
+		table {
+			width: 100%;
+			margin: 20px 0;
+			border-collapse: collapse;
+			background-color: #fff;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+		}
+
+		th {
+			background-color: #007BFF;
+			color: white;
+			padding: 10px;
+			text-align: left;
+		}
+
+		td {
+			padding: 10px;
+			border: 1px solid #ddd;
+		}
+
+		a {
+			color: #007BFF;
+			text-decoration: none;
+			padding: 5px 10px;
+			border-radius: 5px;
+			transition: background-color 0.3s;
+		}
+
+		a:hover {
+			background-color: #e7f1ff;
+		}
+
+		button {
+			background-color: #007BFF;
+			color: white;
+			border: none;
+			padding: 10px 15px;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		button:hover {
+			background-color: #0056b3;
+		}
+
+		.container {
+			max-width: 800px;
+			margin: auto;
+		}
+	</style>
+</head>
+<body>
+
+<div class="container">
+	<h1>[ 중고거래 서비스 ]</h1>
+
+	<table>
+		<tr>
+			<th>동원담당</th>
+		</tr>
+		<tr>
+			<td>
+				<!-- 로그인 전 -->
+				<th:block sec:authorize="not isAuthenticated()">
+					<p><a th:href="@{/member/join}">회원가입</a></p>
+					<p><a th:href="@{/member/login}">로그인</a></p>
+				</th:block>
+				<!-- 로그인 후 -->
+				<th:block sec:authorize="isAuthenticated()">
+					<p><a th:href="@{/member/logout}">로그아웃</a></p>
+					<p><a th:href="@{/board/list}">거래 게시판</a></p>
+				</th:block>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button>커뮤니티</button>
+			</td>
+		</tr>
+	</table>
+
+	<table>
+		<tr>
+			<th>윤원담당</th>
+		</tr>
+		<tr>
+			<td>
+				<a href="/part/cpu">cpu</a>
+				<a href="/part/cpucooler">cpucooler</a>
+				<a href="/part/cover">cover</a>
+				<a href="/part/memory">memory</a>
+				<a href="/part/motherboard">motherboard</a>
+				<a href="/part/powersupply">powersupply</a>
+				<a href="/part/storage">storage</a>
+				<a href="/part/videocard">videocard</a>
+			</td>
+		</tr>
+	</table>
+
+	<table>
+		<tr>
+			<th>대원담당</th>
+		</tr>
+		<tr>
+			<td>
+				<button>pc리뷰</button>
+				<button>카트</button>
+				<button>가이드라인</button>
+				<button>가이드라인</button>
+			</td>
+		</tr>
+	</table>
+</div>
+
+</body>
+</html>
