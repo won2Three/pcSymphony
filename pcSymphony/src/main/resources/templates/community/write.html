@@ -2,11 +2,11 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>글쓰기 - 커뮤니티 게시판</title>
+    <title>게시물 작성</title>
     <style>
         /* 배경 색상 */
         body {
-            background-color: #333;
+            background-color: #333; /* 진회색 배경 */
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -15,9 +15,9 @@
             margin: 0;
         }
 
-        /* 글쓰기 폼 컨테이너 스타일 */
-        .form-container {
-            background-color: #f0f0f0;
+        /* 게시판 컨테이너 스타일 */
+        .community-container {
+            background-color: #f0f0f0; /* 약간 회색이 섞인 흰색 */
             border-radius: 8px;
             padding: 40px;
             width: 100%;
@@ -32,28 +32,29 @@
             margin-bottom: 20px;
         }
 
+        /* 입력 폼 스타일 */
         .input-field {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
             border-radius: 4px;
+            border: 1px solid #ccc;
             font-size: 14px;
-            background-color: #fff;
         }
 
         .textarea-field {
             width: 100%;
-            height: 150px;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
             border-radius: 4px;
+            border: 1px solid #ccc;
             font-size: 14px;
-            background-color: #fff;
+            height: 200px;
+            resize: vertical;
         }
 
-        .submit-button {
+        /* 버튼 스타일 */
+        .submit-button, .cancel-button {
             background-color: #4c9aff;
             color: white;
             padding: 10px 20px;
@@ -61,50 +62,67 @@
             border-radius: 4px;
             cursor: pointer;
             text-align: center;
-            display: inline-block;
         }
 
-        .submit-button:hover {
+        .submit-button:hover, .cancel-button:hover {
             background-color: #3577d6;
         }
 
         .cancel-button {
-            background-color: #f44336;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-align: center;
-            display: inline-block;
-            margin-left: 10px;
+            background-color: #ddd;
         }
 
-        .cancel-button:hover {
-            background-color: #e53935;
+        .form-footer {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+            color: #888;
         }
     </style>
+    <script>
+        // 폼 제출 시 제목과 내용이 빈 값인지를 확인하는 함수
+        function validateForm() {
+            var title = document.getElementById("communityTitle").value;
+            var content = document.getElementById("communityContent").value;
+
+            if (title.trim() === "") {
+                alert("제목을 입력해주세요.");
+                return false;
+            }
+            if (content.trim() === "") {
+                alert("내용을 입력해주세요.");
+                return false;
+            }
+            return true; // 유효성 검사 통과
+        }
+    </script>
 </head>
 <body>
-<div class="form-container">
-    <h1>글쓰기</h1>
+<div class="community-container">
+    <h1>게시물 작성</h1>
 
-    <!-- 글쓰기 폼 -->
-    <form method="post" action="/community/save">
-        <label for="title">제목</label>
-        <input type="text" id="title" name="title" class="input-field" required>
+    <!-- 게시물 작성 폼 -->
+    <form action="/community/write" method="POST" onsubmit="return validateForm()">
+        <!-- 제목 입력 필드 -->
+        <input type="text" id="communityTitle" name="communityTitle" class="input-field" placeholder="제목을 입력하세요" required />
 
-        <label for="content">내용</label>
-        <textarea id="content" name="content" class="textarea-field" required></textarea>
+        <!-- 내용 입력 필드 -->
+        <textarea id="communityContent" name="communityContent" class="textarea-field" placeholder="내용을 입력하세요" required></textarea>
 
-        <label for="author">작성자</label>
-        <input type="text" id="author" name="author" class="input-field" value="홍길동" disabled> <!-- 예시로 이름을 넣음 -->
+        <!-- 작성자 정보는 자동으로 설정될 수 있도록 hidden 필드로 처리하거나, 세션에서 가져오는 방식 -->
+        <!-- <input type="hidden" name="memberId" value="${sessionMemberId}" /> -->
 
-        <div style="text-align: center;">
-            <button type="submit" class="submit-button">작성 완료</button>
-            <a href="/community/list" class="cancel-button">취소</a>
-        </div>
+        <!-- 제출 버튼 -->
+        <button type="submit" class="submit-button">작성 완료</button>
+
+        <!-- 취소 버튼 (목록으로 돌아가기) -->
+        <a href="list" class="cancel-button">취소</a>
     </form>
+
+    <!-- 폼 하단 안내 -->
+    <div class="form-footer">
+        <p>게시물 작성을 완료하고, 목록으로 돌아가거나 다른 게시물을 작성할 수 있습니다.</p>
+    </div>
 </div>
 </body>
 </html>

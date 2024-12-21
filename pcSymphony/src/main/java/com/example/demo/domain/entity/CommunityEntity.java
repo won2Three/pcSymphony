@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,6 +39,7 @@ public class CommunityEntity {
     private int communityView;
     //등록일
     @CreatedDate
-    @Column(name = "community_date")
-    private Timestamp communityDate;
+    @Column(name = "community_date",
+            columnDefinition = "timestamp default current_timestamp")
+    LocalDateTime communityDate;
 }

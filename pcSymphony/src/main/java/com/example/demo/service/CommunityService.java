@@ -34,7 +34,7 @@ public class CommunityService {
             CommunityDto dto = CommunityDto.builder()
                     .communityId(entity.getCommunityId())
                     .communityContent(entity.getCommunityContent())
-                    .communityDate(String.valueOf(entity.getCommunityDate()))
+                    .communityDate(entity.getCommunityDate())
                     .communityTitle(entity.getCommunityTitle())
                     .communityView(String.valueOf(entity.getCommunityView()))
                     .memberId(entity.getMember().getMemberId())
@@ -69,7 +69,7 @@ public class CommunityService {
                 .communityTitle(communityEntity.getCommunityTitle())
                 .communityContent(communityEntity.getCommunityContent())
                 .communityView(String.valueOf(communityEntity.getCommunityView()))
-                .communityDate(String.valueOf(communityEntity.getCommunityDate()))
+                .communityDate(communityEntity.getCommunityDate())
                 .memberId(communityEntity.getMember().getMemberId())
                 .build();
 

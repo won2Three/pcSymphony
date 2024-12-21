@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,12 +14,12 @@ import lombok.NoArgsConstructor;
 public class CommunityDto {
 
     //작성자아이디
-    private String memberId;
+    String memberId;
     //글순서
-    private int communityId;
-    private String communityTitle;
-    private String communityContent;
-    private String communityView;
-    private String communityDate;
+    int communityId;
+    String communityTitle;
+    String communityContent;
+    String communityView;
+    LocalDateTime communityDate;
 
 }
