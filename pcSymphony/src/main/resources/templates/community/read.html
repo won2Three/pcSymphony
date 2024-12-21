@@ -1,10 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게시물 읽기/수정 - 커뮤니티 게시판</title>
+    <style>
+        /* 배경 색상 */
+        body {
+            background-color: #333;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* 컨테이너 스타일 */
+        .read-container {
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .content-section {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .content-section label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .content-section p, .content-section input, .content-section textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            color: #333;
+        }
+
+        .content-section textarea {
+            height: 150px;
+        }
+
+        .content-section input, .content-section textarea {
+            display: none;
+        }
+
+        .edit-mode .content-section p {
+            display: none;
+        }
+
+        .edit-mode .content-section input, .edit-mode .content-section textarea {
+            display: block;
+        }
+
+        /* 버튼 스타일 */
+        .button-group {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #4c9aff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .button:hover {
+            background-color: #3577d6;
+        }
+
+        .delete-button {
+            background-color: #f44336;
+        }
+
+        .delete-button:hover {
+            background-color: #e53935;
+        }
+
+        .modify-button {
+            background-color: #ff9800;
+        }
+
+        .modify-button:hover {
+            background-color: #fb8c00;
+        }
+
+        .save-button {
+            background-color: #4caf50;
+        }
+
+        .save-button:hover {
+            background-color: #43a047;
+        }
+
+        .cancel-button {
+            background-color: #9e9e9e;
+        }
+
+        .cancel-button:hover {
+            background-color: #757575;
+        }
+    </style>
 </head>
 <body>
+<div class="read-container" id="read-container">
+    <h1>게시물 상세 보기</h1>
 
+    <!-- 게시물 내용 -->
+    <div class="content-section">
+        <label for="title">제목</label>
+        <p id="title">게시물 제목 예시</p>
+        <input type="text" id="edit-title" value="게시물 제목 예시">
+    </div>
+
+    <div class="content-section">
+        <label for="content">내용</label>
+        <p id="content">게시물 내용 예시입니다. 여기에 게시글의 상세 내용을 표시합니다.</p>
+        <textarea id="edit-content">게시물 내용 예시입니다. 여기에 게시글의 상세 내용을 표시합니다.</textarea>
+    </div>
+
+    <div class="content-section">
+        <label for="author">작성자</label>
+        <p id="author">홍길동</p>
+        <input type="text" id="edit-author" value="홍길동" disabled>
+    </div>
+
+    <div class="content-section">
+        <label for="date">작성일</label>
+        <p id="date">2024-12-20</p>
+        <input type="text" id="edit-date" value="2024-12-20" disabled>
+    </div>
+
+    <div class="content-section">
+        <label for="views">조회수</label>
+        <p id="views">123</p>
+    </div>
+
+    <!-- 버튼 그룹 -->
+    <div class="button-group">
+        <a href="/community/list" class="button">목록으로</a>
+        <button class="button modify-button" onclick="toggleEditMode()">수정하기</button>
+        <button class="button save-button" style="display: none;" onclick="saveChanges()">저장하기</button>
+        <button class="button cancel-button" style="display: none;" onclick="cancelEdit()">취소하기</button>
+        <a href="/community/delete/{id}" class="button delete-button" onclick="return confirm('정말 삭제하시겠습니까?');">삭제하기</a>
+    </div>
+</div>
+
+<script>
+    function toggleEditMode() {
+        const container = document.getElementById('read-container');
+        container.classList.toggle('edit-mode');
+        const isEditMode = container.classList.contains('edit-mode');
+
+        document.querySelector('.modify-button').style.display = isEditMode ? 'none' : 'inline-block';
+        document.querySelector('.save-button').style.display = isEditMode ? 'inline-block' : 'none';
+        document.querySelector('.cancel-button').style.display = isEditMode ? 'inline-block' : 'none';
+    }
+
+    function saveChanges() {
+        alert('변경 사항이 저장되었습니다!');
+        toggleEditMode();
+    }
+
+    function cancelEdit() {
+        toggleEditMode();
+    }
+</script>
 </body>
 </html>
