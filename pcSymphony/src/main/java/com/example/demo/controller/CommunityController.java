@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.dto.CommunityDto;
+import com.example.demo.domain.entity.CommunityEntity;
 import com.example.demo.security.MemberUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,11 +54,33 @@ public class CommunityController {
         return "redirect:list";
     }
 
-    @PostMapping("update")
-    @ResponseBody
-    public String upadate(@RequestBody CommunityDto communityDto,
-                          @AuthenticationPrincipal MemberUserDetails user) {
-        communityService.update(communityDto.getCommunityId(), communityDto, user.getUsername());
-        return "redirect:list";
+//    @GetMapping("update/{id}")
+//    public String update(@PathVariable("id") Integer id, Model model) {
+//        CommunityDto communityDto = communityService.getCommunity(id);
+//        model.addAttribute("community",communityDto);
+//        return "community/update";
+//    }
+
+    @GetMapping("update/{id}")
+    public String update(@PathVariable("id") Integer id, Model model) {
+        CommunityDto communityDto = communityService.getCommunity(id); // DTO 객체 가져오기
+        model.addAttribute("community", communityDto); // 모델에 community 추가
+        return "community/update"; // 업데이트 페이지로 리턴
+    }
+
+    @PostMapping("update/{id}")
+    public String update(@PathVariable("id") Integer id, CommunityEntity entity) {
+        //기존에 담겨져 있던 글
+//        CommunityDto communityDto = communityService.getCommunity(id);
+        CommunityDto communityDto = new CommunityDto();
+        //기존에 있던 내용에 덮어씌우기
+        communityDto.setCommunityId(id);
+        communityDto.setCommunityTitle(entity.getCommunityTitle());
+        communityDto.setCommunityContent(entity.getCommunityContent());
+
+        communityService.update(id, communityDto);
+        return "redirect:/community/list";
+
+
     }
 }

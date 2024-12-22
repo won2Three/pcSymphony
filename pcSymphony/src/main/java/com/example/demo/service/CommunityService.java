@@ -92,19 +92,20 @@ public class CommunityService {
     }
 
     //수정
-    public void update(int communityId, CommunityDto communityDto, String username) {
-        // 사용자 확인
-        MemberEntity memberEntity = memberRepository.findById(username)
-                .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
+    public void update(int communityId, CommunityDto communityDto) {
+//    public void update(int communityId, CommunityDto communityDto, String username) {
+//         //사용자 확인
+//        MemberEntity memberEntity = memberRepository.findById(username)
+//                .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
 
         // 게시글 확인
         CommunityEntity communityEntity = communityRepository.findById(communityId)
                 .orElseThrow(() -> new EntityNotFoundException("글이 없습니다."));
 
-        // 작성자 확인
-        if (!communityEntity.getMember().getMemberId().equals(username)) {
-            throw new RuntimeException("수정 권한이 없습니다.");
-        }
+//        // 작성자 확인
+//        if (!communityEntity.getMember().getMemberId().equals(username)) {
+//            throw new RuntimeException("수정 권한이 없습니다.");
+//        }
 
         // 게시글 수정
         communityEntity.setCommunityTitle(communityDto.getCommunityTitle());

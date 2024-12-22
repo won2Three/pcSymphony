@@ -104,7 +104,8 @@
     <!-- 수정/삭제 버튼 -->
     <div class="edit-delete-buttons">
         <!-- 수정 버튼 -->
-        <a href="#" th:href="@{/community/write?communityId=${community.communityId}}" class="edit-button">수정</a>
+        <a th:href="@{/community/update/{communityId}(communityId=${community.communityId})}" class="edit-button">수정</a>
+
 
         <!-- 삭제 버튼 -->
         <form th:action="@{/community/delete}" method="get">

@@ -26,18 +26,19 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(author -> author
                         .requestMatchers(PUBLIC_URLS).permitAll() //인증 없이 접근 가능
-                        .anyRequest().authenticated() //그 외 요청은 인증 요구, 로그인사용자만 접근 가능
+                                .anyRequest().permitAll() //모든 요청을 인증없이 접근 가능
+//                        .anyRequest().authenticated() //그 외 요청은 인증 요구, 로그인사용자만 접근 가능
                 )
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(formLogin -> formLogin
-                        .loginPage("/member/loginForm")
-                        .usernameParameter("id") //로그인 폼에서 사용자 이름필드의 파라미터 이름
-                        .passwordParameter("password")
-                        .loginProcessingUrl("/member/login") //로그인 폼 제출 url
-                        .defaultSuccessUrl("/", true)
-                        //로그인 성공 후 리다이렉트 할 기본 url, "/"(홈페이지)
-                        .permitAll() //모든 사용자에게 접근 허용
-                )
+//                .formLogin(formLogin -> formLogin
+//                        .loginPage("/member/loginForm")
+//                        .usernameParameter("id") //로그인 폼에서 사용자 이름필드의 파라미터 이름
+//                        .passwordParameter("password")
+//                        .loginProcessingUrl("/member/login") //로그인 폼 제출 url
+//                        .defaultSuccessUrl("/", true)
+//                        //로그인 성공 후 리다이렉트 할 기본 url, "/"(홈페이지)
+//                        .permitAll() //모든 사용자에게 접근 허용
+//                )
                 .logout(logout -> logout
                         .logoutUrl("/member/logout")
                         .logoutSuccessUrl("/") //리다이렉트 홈페에지로
