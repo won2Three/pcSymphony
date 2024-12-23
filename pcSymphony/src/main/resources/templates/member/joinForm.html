@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <style>
+        /* 배경 색상 */
+        body {
+            background-color: #333; /* 진회색 배경 */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* 회원가입 폼 스타일 */
+        .join-container {
+            background-color: #f0f0f0; /* 약간 회색이 섞인 흰색 */
+            border-radius: 8px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* 폼 요소 스타일 */
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        th {
+            text-align: left;
+            padding: 8px 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        td {
+            padding: 8px 0;
+        }
+
+        input[type="text"], input[type="password"], input[type="radio"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            margin-top: 5px;
+        }
+
+        input[type="radio"] {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #4c9aff; /* 입력 시 파란색 테두리 */
+            outline: none;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4c9aff; /* 하늘색 */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3577d6; /* 버튼 hover 시 색상 변경 */
+        }
+
+        /* 추가적인 스타일 */
+        .form-footer {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+<div class="join-container">
+    <h1>회원가입</h1>
+    <form id="joinForm" th:action="@{/member/join}" method="post">
+        <table>
+            <tr>
+                <th for="memberId">ID</th>
+                <td><input type="text" name="memberId" id="memberId" required></td>
+            </tr>
+            <tr>
+                <th for="memberPw">Password</th>
+                <td><input type="password" name="memberPw" id="memberPw" required></td>
+            </tr>
+            <tr>
+                <th for="memberName">이름</th>
+                <td><input type="text" name="memberName" id="memberName" required></td>
+            </tr>
+            <tr>
+                <th for="email">이메일</th>
+                <td><input type="text" name="email" id="email" required></td>
+            </tr>
+            <tr>
+                <th for="address">주소</th>
+                <td><input type="text" name="address" id="address" required></td>
+            </tr>
+            <tr>
+                <th>성별</th>
+                <td>
+                    <input type="radio" name="gender" id="male" value="남성" required>남성
+                    <input type="radio" name="gender" id="female" value="여성" required>여성
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">가입</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div class="form-footer">
+        <p>이미 계정이 있으신가요? <a href="/member/login" style="color: #4c9aff;">로그인</a></p>
+    </div>
+</div>
+</body>
+</html>

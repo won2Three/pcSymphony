@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>커뮤니티 게시판</title>
+    <style>
+        /* 배경 색상 */
+        body {
+            background-color: #333; /* 진회색 배경 */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* 게시판 컨테이너 스타일 */
+        .community-container {
+            background-color: #f0f0f0; /* 약간 회색이 섞인 흰색 */
+            border-radius: 8px;
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* 글쓰기 버튼 스타일 */
+        .write-button {
+            background-color: #4c9aff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none; /* 링크 스타일 기본으로 제거 */
+        }
+
+        .write-button:hover {
+            background-color: #3577d6;
+        }
+
+        /* 테이블 스타일 */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #4c9aff;
+            color: white;
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        /* 추가적인 스타일 */
+        .form-footer {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+            color: #888;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 글쓰기 버튼
+            $('#writeButton').click(function(){
+                location.href = 'write'; // 글쓰기 페이지로 이동
+            });
+
+            // 목록 조회 함수
+            function getList() {
+                $.ajax({
+                    url: 'getList', // 서버에서 목록을 가져오는 URL
+                    method: 'POST',
+                    success: function(list) {
+                        if (list.length === 0) {
+                            $('#tbody').html('<tr><td colspan="6" style="text-align: center;">목록이 없습니다.</td></tr>');
+                            return;
+                        }
+                        $('#tbody').empty(); // 기존 내용 제거
+
+                        // 목록을 테이블에 추가
+                        $(list).each(function(idx, board) {
+                            let html = `
+                                <tr>
+                                    <td>${board.communityId}</td>
+                                    <td>${board.communityView}</td>
+                                    <td><a href="read?communityId=${board.communityId}">${board.communityTitle}</a></td>
+                                    <td>${board.communityContent}</td>
+                                    <td>${board.memberId}</td>
+                                    <td>${board.communityDate}</td>
+                                </tr>
+                            `;
+                            $('#tbody').append(html); // 테이블에 추가
+                        });
+                    },
+                    error: function() {
+                        alert("목록 조회 실패");
+                    }
+                });
+            }
+
+            // 페이지 로드 시 목록 조회
+            getList();
+        });
+    </script>
+</head>
+<body>
+<div class="community-container">
+    <h1>커뮤니티 게시판</h1>
+
+    <!-- 글쓰기 버튼 (링크로 변환) -->
+    <a href="write" class="write-button" id="writeButton">글쓰기</a>
+
+    <!-- 테이블 -->
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>조회수</th>
+            <th>제목</th>
+            <th>내용</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        <!-- 글 목록 출력 영역 -->
+        <tr>
+            <td colspan="6" style="text-align: center;">목록이 없습니다.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="form-footer">
+        <p>게시판에 대한 문의나 의견이 있으시면 관리자가 도움을 드리겠습니다.</p>
+    </div>
+</div>
+</body>
+</html>
