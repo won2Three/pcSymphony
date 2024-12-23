@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.dto.CommunityDto;
+import com.example.demo.domain.dto.CommunityDTO;
 import com.example.demo.domain.entity.CommunityEntity;
 import com.example.demo.domain.entity.MemberEntity;
 import com.example.demo.repository.MemberRepository;
@@ -23,15 +23,15 @@ public class CommunityService {
     private final MemberRepository memberRepository;
 
     //커뮤니티 메인
-    public List<CommunityDto> getList() {
+    public List<CommunityDTO> getList() {
         //entity 기반 모든 게시글 조회
         List<CommunityEntity> entities = communityRepository.findAll();
 
         //반환할 DTO 리스트
-        List<CommunityDto> dtoList = new ArrayList<>();
+        List<CommunityDTO> dtoList = new ArrayList<>();
 
         for (CommunityEntity entity : entities) {
-            CommunityDto dto = CommunityDto.builder()
+            CommunityDTO dto = CommunityDTO.builder()
                     .communityId(entity.getCommunityId())
                     .communityContent(entity.getCommunityContent())
                     .communityDate(entity.getCommunityDate())
@@ -46,7 +46,7 @@ public class CommunityService {
     }
 
     //글쓰기
-    public void write(CommunityDto communityDto) {
+    public void write(CommunityDTO communityDto) {
         MemberEntity memberEntity = memberRepository.findById(communityDto.getMemberId())
                 .orElseThrow(()
                         -> new EntityNotFoundException("회원정보가 없습니다"));
@@ -60,11 +60,11 @@ public class CommunityService {
     }
 
     //read
-    public CommunityDto getCommunity(int communityId) {
+    public CommunityDTO getCommunity(int communityId) {
         CommunityEntity communityEntity = communityRepository.findById(communityId)
                 .orElseThrow(() ->
                         new EntityNotFoundException("글이 없습니다."));
-        CommunityDto communityDto = CommunityDto.builder()
+        CommunityDTO communityDto = CommunityDTO.builder()
                 .communityId(communityEntity.getCommunityId())
                 .communityTitle(communityEntity.getCommunityTitle())
                 .communityContent(communityEntity.getCommunityContent())
@@ -92,8 +92,8 @@ public class CommunityService {
     }
 
     //수정
-    public void update(int communityId, CommunityDto communityDto) {
-//    public void update(int communityId, CommunityDto communityDto, String username) {
+    public void update(int communityId, CommunityDTO communityDto) {
+//    public void update(int communityId, CommunityDTO communityDto, String username) {
 //         //사용자 확인
 //        MemberEntity memberEntity = memberRepository.findById(username)
 //                .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));

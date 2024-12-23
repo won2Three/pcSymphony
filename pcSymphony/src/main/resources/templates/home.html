@@ -73,7 +73,7 @@
 <body>
 
 <div class="container">
-	<h1>[ 중고거래 서비스 ]</h1>
+	<h1>[ PcSymphony ]</h1>
 
 	<table>
 		<tr>
@@ -89,13 +89,12 @@
 				<!-- 로그인 후 -->
 				<th:block sec:authorize="isAuthenticated()">
 					<p><a th:href="@{/member/logout}">로그아웃</a></p>
-					<p><a th:href="@{/board/list}">거래 게시판</a></p>
 				</th:block>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<button>커뮤니티</button>
+				<button th:onclick="location.href='/community/list'">커뮤니티</button>
 			</td>
 		</tr>
 	</table>

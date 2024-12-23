@@ -17,6 +17,7 @@ public class WebSecurityConfig {
     private static final String[] PUBLIC_URLS = {
             "/"                     //root
             , "/member/join"  //회원가입
+            ,"/community/list" //커뮤니티 리스트
 //            , "/member/login" //로그인폼
             //메인?, 글 작성 이외는 가능
     };

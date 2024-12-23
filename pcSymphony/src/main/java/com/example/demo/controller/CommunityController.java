@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.dto.CommunityDto;
+import com.example.demo.domain.dto.CommunityDTO;
 import com.example.demo.domain.entity.CommunityEntity;
 import com.example.demo.security.MemberUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class CommunityController {
 
     @PostMapping("write")
     public String write(
-            CommunityDto community,
+            CommunityDTO community,
             @AuthenticationPrincipal MemberUserDetails user) {
         community.setMemberId(user.getUsername());
         communityService.write(community);
@@ -41,7 +41,7 @@ public class CommunityController {
     @GetMapping("read")
     public String read(@RequestParam("communityId") int communityId,
                        Model model) {
-        CommunityDto communityDto = communityService.getCommunity(communityId);
+        CommunityDTO communityDto = communityService.getCommunity(communityId);
         model.addAttribute("community", communityDto);
         return "community/read";
     }
@@ -56,14 +56,14 @@ public class CommunityController {
 
 //    @GetMapping("update/{id}")
 //    public String update(@PathVariable("id") Integer id, Model model) {
-//        CommunityDto communityDto = communityService.getCommunity(id);
+//        CommunityDTO communityDto = communityService.getCommunity(id);
 //        model.addAttribute("community",communityDto);
 //        return "community/update";
 //    }
 
     @GetMapping("update/{id}")
     public String update(@PathVariable("id") Integer id, Model model) {
-        CommunityDto communityDto = communityService.getCommunity(id); // DTO 객체 가져오기
+        CommunityDTO communityDto = communityService.getCommunity(id); // DTO 객체 가져오기
         model.addAttribute("community", communityDto); // 모델에 community 추가
         return "community/update"; // 업데이트 페이지로 리턴
     }
@@ -71,8 +71,8 @@ public class CommunityController {
     @PostMapping("update/{id}")
     public String update(@PathVariable("id") Integer id, CommunityEntity entity) {
         //기존에 담겨져 있던 글
-//        CommunityDto communityDto = communityService.getCommunity(id);
-        CommunityDto communityDto = new CommunityDto();
+//        CommunityDTO communityDto = communityService.getCommunity(id);
+        CommunityDTO communityDto = new CommunityDTO();
         //기존에 있던 내용에 덮어씌우기
         communityDto.setCommunityId(id);
         communityDto.setCommunityTitle(entity.getCommunityTitle());
