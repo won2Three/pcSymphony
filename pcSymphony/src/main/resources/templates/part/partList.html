@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${tableName} + ' List'">Parts List</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1 th:text="${tableName} + ' List'">Parts List</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>manufacturer</th>
+        <th>Price</th>
+        <th>Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="part : ${parts}">
+        <td th:text="${part.id}">1</td>
+        <td>
+            <!-- 제목을 클릭하면 partDetail.html로 이동 -->
+            <a th:href="@{/part/{tableName}/{id}(tableName=${tableName}, id=${part.id})}" th:text="${part.name}">Part Name</a>
+        </td>
+        <td th:text="${part.manufacturer}">Brand Name</td>
+        <td th:text="${part.price}">Price</td>
+        <td th:text="${part.part}">Part</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
