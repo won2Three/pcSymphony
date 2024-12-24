@@ -138,7 +138,7 @@ public class CommunityService {
     //리플 목록
     public List<CommunityReplyDTO> getReplyList(int communityId) {
         Sort sort = Sort.by(Sort.Direction.ASC, "communityId");
-        List<CommunityReplyEntity> replyEntityList = replyRepository.findByCommunity_CommunityId(communityId, sort);
+        List<CommunityReplyEntity> replyEntityList = replyRepository.findByCommunity_communityId(communityId, sort);
         List<CommunityReplyDTO> replyDTOList = new ArrayList<CommunityReplyDTO>();
 
         for (CommunityReplyEntity replyEntity : replyEntityList) {
@@ -155,11 +155,17 @@ public class CommunityService {
 
     //댓글 삭제
     public void communityReplyDelete(CommunityReplyDTO replyDTO) {
-        CommunityReplyEntity replyEntity = replyRepository.findById(replyDTO.getCommunityId())
+        // 댓글 ID를 기준으로 댓글 엔티티를 조회
+        CommunityReplyEntity replyEntity = replyRepository.findById(replyDTO.getCommunityReplyId())
                 .orElseThrow(() -> new EntityNotFoundException("댓글 정보가 없습니다"));
+
+        // 댓글 작성자와 현재 사용자가 일치하는지 확인
         if (!replyDTO.getMemberId().equals(replyEntity.getMember().getMemberId())) {
             throw new RuntimeException("삭제 권한이 없습니다");
         }
+
+        // 댓글 삭제
         replyRepository.delete(replyEntity);
     }
+
 }

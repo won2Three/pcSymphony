@@ -18,26 +18,25 @@ public class CommunityRestController {
 
     private final CommunityService communityService;
 
+    // 게시글 목록
     @PostMapping("getList")
     public List<CommunityDTO> getList() {
         return communityService.getList();
     }
 
-    //커뮤니티 댓글
-    //저장
+    // 댓글 저장
     @PostMapping("communityReplyWrite")
     public ResponseEntity<?> communityReplyWrite(@RequestBody CommunityReplyDTO replyDTO,
-                                      @AuthenticationPrincipal MemberUserDetails user) {
+                                                 @AuthenticationPrincipal MemberUserDetails user) {
         replyDTO.setMemberId(user.getUsername());
         communityService.communityReplyWrite(replyDTO);
 
         return ResponseEntity.ok().build();
     }
 
-    //커뮤니티 댓글 목록 조회
-    @PostMapping("communityReplyList")
+    // 댓글 목록 조회 (GET 방식으로 수정)
+    @GetMapping("communityReplyList")
     public ResponseEntity<?> getReplyList(@RequestParam("communityId") int communityId) {
-
         // 댓글 목록을 가져오는 서비스 메서드를 호출
         List<CommunityReplyDTO> replyList = communityService.getReplyList(communityId);
 
@@ -45,12 +44,12 @@ public class CommunityRestController {
         return ResponseEntity.ok(replyList);
     }
 
-    //커뮤니티 댓글 삭제
-    @PostMapping("communityReplyDelete")
-    public void replyDelete(CommunityReplyDTO replyDTO,
-                            @AuthenticationPrincipal MemberUserDetails userDetails) {
-
-    }
-
-
+//    // 댓글 삭제
+//    @PostMapping("communityReplyDelete")
+//    public ResponseEntity<?> replyDelete(@RequestBody CommunityReplyDTO replyDTO,
+//                                         @AuthenticationPrincipal MemberUserDetails userDetails) {
+//        // 댓글 삭제 로직 구현
+//        communityService.communityReplyDelete(replyDTO.getCommunityReplyId(), userDetails.getUsername());
+//        return ResponseEntity.ok().build();
+//    }
 }

@@ -82,104 +82,37 @@
         .back-button:hover {
             background-color: #bbb;
         }
+
+        /* 댓글 관련 스타일 */
+        .reply {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+        }
+
+        .reply th, .reply td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .reply th {
+            background-color: #f1f1f1;
+        }
+
+        .reply button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .reply button:hover {
+            background-color: #ff3333;
+        }
     </style>
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
-    <script>
-        $(document).ready(function() {
-      // 리플 목록 조회
-      communityReplyList();
-
-      // 리플 작성 버튼
-      $('#replyWriteButton').click(function(){
-          let communityId = $('#communityId').text();
-          let communityReplyContent = $('#communityReplyContent').val();
-
-          $.ajax({
-              url: 'community/communityReplyWrite',  // 서버에서 처리할 URL을 확인
-              type: 'POST',
-              data: JSON.stringify({
-                  communityId: communityId,
-                  replyText: communityReplyContent
-              }),
-              contentType: 'application/json',
-              success: function(response) {
-                  $('#communityReplyContent').val('');  // 입력 필드 초기화
-                  communityReplyList();  // 리플 목록 갱신
-              },
-              error: function(e) {
-                  alert('리플 작성 실패');
-              }
-          });
-      });
-
-      // 리플 목록 조회
-      function communityReplyList() {
-          let communityId = $('#communityId').text();
-
-          $.ajax({
-              url: 'community/communityReplyList',  // 서버에서 처리할 URL을 확인
-              type: 'POST',
-              data: { communityId: communityId },
-              success: function(list) {
-                  $('#replyTable').empty();  // 기존 테이블 내용 비우기
-                  $(list).each(function(idx, reply) {
-                      let html = `
-                          <tr>
-                              <th>${reply.replyNum}</th>
-                              <td style="width:100px;">${reply.memberId}</td>
-                              <td style="width:250px;">${reply.replyText}</td>
-                              <td>
-                      `;
-
-                      // 로그인한 사용자만 삭제 버튼을 보이도록 설정
-                      if (reply.memberId === '[[${#authentication.name}]]') {
-                          html += `
-                              <button class="replyDeleteButton"
-                                      data-communityReplyId="${reply.communityReplyId}"
-                                      data-communityId="${reply.communityId}">
-                                  삭제
-                              </button>
-                          `;
-                      }
-
-                      html += `</td></tr>`;
-                      $('#replyTable').append(html);
-
-                      // 삭제 버튼 클릭 이벤트
-                      $('.replyDeleteButton').click(replyDelete);
-                  });
-              },
-              error: function() {
-                  alert('리플 목록 조회 실패');
-              }
-          });
-      }
-
-      // 리플 삭제
-      function replyDelete() {
-          let communityReplyId = $(this).data('communityReplyId');
-          let communityId = $(this).data('communityId');
-
-          $.ajax({
-              url: 'community/communityReplyDelete',  // 서버에서 처리할 URL을 확인
-              type: 'POST',
-              data: JSON.stringify({
-                  communityReplyId: communityReplyId,
-                  communityId: communityId
-              }),
-              contentType: 'application/json',
-              success: function() {
-                  alert('삭제되었습니다.');
-                  communityReplyList();  // 리플 목록 갱신
-              },
-              error: function() {
-                  alert('리플 삭제 실패');
-              }
-          });
-      }
-  });
-
-    </script>
 </head>
 <body>
 <div class="community-container">
@@ -203,9 +136,8 @@
         <!-- 수정 버튼 -->
         <a th:href="@{/community/update/{communityId}(communityId=${community.communityId})}" class="edit-button">수정</a>
 
-
         <!-- 삭제 버튼 -->
-        <form th:action="@{/community/delete}" method="get">
+        <form th:action="@{/community/delete}" method="POST">
             <input type="hidden" name="communityId" th:value="${community.communityId}" />
             <button type="submit" class="delete-button">삭제</button>
         </form>
@@ -214,16 +146,118 @@
     <!-- 뒤로가기 버튼 -->
     <a href="/community/list" class="back-button">목록으로 돌아가기</a>
 </div>
+
 <!-- 리플 작성 폼 시작 -->
-<form>
-    리플입력
-    <input id="replyText" style="width:500px">
+<form id="replyForm">
+    <label for="communityReplyContent">리플입력</label>
+    <input id="communityReplyContent" name="replyContent" style="width:500px" /> <!-- 댓글 입력 필드 -->
     <button type="button" id="replyWriteButton">저장</button>
 </form>
-</div>
+
 <!-- 리플 목록 출력 시작 -->
 <table class="reply" id="replyTable">
+    <thead>
+    <tr>
+        <th>작성자</th>
+        <th>내용</th>
+        <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 댓글 목록은 여기에 동적으로 추가됩니다. -->
+    </tbody>
 </table>
+
+<script>
+    // 현재 커뮤니티 ID와 사용자 ID를 얻어옵니다.
+    const communityId = /*[[${community.communityId}]]*/ 1;  // 서버에서 동적으로 값을 받아옵니다.
+    const userId = /*[[${#authentication.name}]]*/ 'user123'; // 로그인한 사용자 ID를 서버에서 받아옵니다.
+
+    // 댓글 목록을 로드하는 함수
+    function loadComments() {
+        $.ajax({
+            url: '/community/communityReplyList?communityId=' + communityId, // GET 방식으로 파라미터 전달
+            type: 'GET',
+            success: function(data) {
+                const replyTableBody = $('#replyTable tbody');
+                replyTableBody.empty(); // 기존 댓글 목록을 비웁니다.
+
+                // 서버에서 받은 댓글 데이터를 HTML로 출력
+                data.forEach(function(comment) {
+                    const commentHtml = `
+                        <tr id="comment-${comment.communityReplyId}">
+                            <td>${comment.memberId}</td>
+                            <td>${comment.replyContent}</td>
+                            <td>
+                                <button onclick="deleteComment(${comment.communityReplyId})">삭제</button>
+                            </td>
+                        </tr>
+                    `;
+                    replyTableBody.append(commentHtml);
+                });
+            },
+            error: function(xhr, status, error) {
+                alert('댓글 목록 불러오기 실패');
+            }
+        });
+    }
+
+    // 댓글을 저장하는 함수
+    $('#replyWriteButton').click(function() {
+        const replyContent = $('#communityReplyContent').val();
+        if (!replyContent) {
+            alert('댓글을 입력하세요.');
+            return;
+        }
+
+        const replyData = {
+            communityId: communityId,
+            memberId: userId,
+            replyContent: replyContent
+        };
+
+        $.ajax({
+            url: '/community/communityReplyWrite',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(replyData),
+            success: function() {
+                $('#communityReplyContent').val(''); // 댓글 입력란 초기화
+                loadComments(); // 댓글 목록 새로고침
+            },
+            error: function() {
+                alert('댓글 저장 실패!');
+            }
+        });
+    });
+
+    // 댓글을 삭제하는 함수
+    function deleteComment(commentId) {
+        const deleteData = {
+            communityId: communityId,
+            communityReplyId: commentId,
+            memberId: userId
+        };
+
+        $.ajax({
+            url: '/community/communityReplyDelete',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(deleteData),
+            success: function() {
+                loadComments(); // 댓글 목록 새로고침
+            },
+            error: function() {
+                alert('댓글 삭제 실패!');
+            }
+        });
+    }
+
+    // 페이지 로드 시 댓글 목록 불러오기
+    $(document).ready(function() {
+        loadComments();
+    });
+</script>
 
 </body>
 </html>
