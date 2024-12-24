@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class CommunityDto {
+public class CommunityDTO {
 
     //작성자아이디
     String memberId;

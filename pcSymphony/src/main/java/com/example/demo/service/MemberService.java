@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.dto.MemberDto;
+import com.example.demo.domain.dto.MemberDTO;
 import com.example.demo.domain.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +16,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public void join(MemberDto dto) {
+    public void join(MemberDTO dto) {
         MemberEntity entity = MemberEntity.builder()
                 .memberId(dto.getMemberId())
                 .memberPw(passwordEncoder.encode(dto.getMemberPw()))

@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.dto.CommunityDto;
+import com.example.demo.domain.dto.CommunityDTO;
 import com.example.demo.service.CommunityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +17,7 @@ public class CommunityRestController {
     private final CommunityService communityService;
 
     @PostMapping("getList")
-    public List<CommunityDto> getList() {
+    public List<CommunityDTO> getList() {
         return communityService.getList();
     }
 

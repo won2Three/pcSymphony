@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.dto.MemberDto;
+import com.example.demo.domain.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,13 +32,13 @@ public class MemberController {
      * @return 회원가입 후 로그인페이지로 리다이렉트
      **/
     @PostMapping("join")
-    public String join(MemberDto memberDto) {
+    public String join(MemberDTO memberDto) {
         memberService.join(memberDto);
         return "redirect:/member/loginForm";
     }
 
 //    @PostMapping("login")
-//    public String login(MemberDto memberDto) {
+//    public String login(MemberDTO memberDto) {
 //        return "redirect:/main";
 //    }
 }
