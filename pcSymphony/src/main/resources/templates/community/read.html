@@ -86,88 +86,99 @@
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
     <script>
         $(document).ready(function() {
-         //리플 목록 조회
-         replyList();
+      // 리플 목록 조회
+      communityReplyList();
 
-         //삭제버튼
-         $('#deleteButton').click(function(){
-             if(confirm('삭제하시겠습니까?')){
-                 let CommunityId = $('#CommunityId').text();
-                 location.href='delete?CommunityId=' + CommunityId;
-             }
-         });
+      // 리플 작성 버튼
+      $('#replyWriteButton').click(function(){
+          let communityId = $('#communityId').text();
+          let communityReplyContent = $('#communityReplyContent').val();
 
-         //리플작성 버튼
-         $('#replyWriteButton').click(function(){
-             let CommunityId = $('#CommunityId').text();
-             let CommunityReplyContent = $('#CommunityReplyContent').val();
+          $.ajax({
+              url: 'community/communityReplyWrite',  // 서버에서 처리할 URL을 확인
+              type: 'POST',
+              data: JSON.stringify({
+                  communityId: communityId,
+                  replyText: communityReplyContent
+              }),
+              contentType: 'application/json',
+              success: function(response) {
+                  $('#communityReplyContent').val('');  // 입력 필드 초기화
+                  communityReplyList();  // 리플 목록 갱신
+              },
+              error: function(e) {
+                  alert('리플 작성 실패');
+              }
+          });
+      });
 
-             $.ajax({
-                 url:'replyWrite',
-                 type:'post',
-                 data:{CommunityId: CommunityId, CommunityReplyContent: CommunityReplyContent},
-                 success:function(){
-                     $('#CommunityReplyContent').val('');
-                     replyList();
-                 },
-                 error:function(e){
-                     alert('리플 목록 조회 실패');
-                 }
-             });//
-         });
+      // 리플 목록 조회
+      function communityReplyList() {
+          let communityId = $('#communityId').text();
 
-        });
-        //리플 목록 조회
-        function replyList(){
-            $.ajax({
-                url:'replyList',
-                type:'get',
-                data:{CommunityId: $('#CommunityId').text()},
-                dataType: 'json',
-                success:function(list){
-                    $('#replyTable').empty();
-                    $(list).each(function(idx, reply){
-                        let html=`
-                         <tr>
-                          <th>${reply.replyNum}</th>
-                          <td style="width:100px;">${reply.memberId}</td>
-                          <td style="width:250px;">${reply.replyText}</td>
-                          <td>
-                        `;
-                    if(reply.memberId == '[[${#authentication.name}]]'){
-                        html +=`
-                        <button class="replyDeleteButton"
-                         data-CommunityReplyId="${reply.CommunityReplyId}"
-                         data-CommunityId="${reply.CommunityId}">
-                         삭제
-                        </button>
-                        `;
-                    }
+          $.ajax({
+              url: 'community/communityReplyList',  // 서버에서 처리할 URL을 확인
+              type: 'POST',
+              data: { communityId: communityId },
+              success: function(list) {
+                  $('#replyTable').empty();  // 기존 테이블 내용 비우기
+                  $(list).each(function(idx, reply) {
+                      let html = `
+                          <tr>
+                              <th>${reply.replyNum}</th>
+                              <td style="width:100px;">${reply.memberId}</td>
+                              <td style="width:250px;">${reply.replyText}</td>
+                              <td>
+                      `;
 
-                    html +=`</td></tr>`;
-                    $('#replyTable').append(html);
+                      // 로그인한 사용자만 삭제 버튼을 보이도록 설정
+                      if (reply.memberId === '[[${#authentication.name}]]') {
+                          html += `
+                              <button class="replyDeleteButton"
+                                      data-communityReplyId="${reply.communityReplyId}"
+                                      data-communityId="${reply.communityId}">
+                                  삭제
+                              </button>
+                          `;
+                      }
 
-                    $('.replyDeleteButton').click(replyDelete);
+                      html += `</td></tr>`;
+                      $('#replyTable').append(html);
 
-                    });
-                }
-            });
-        }
-        //리플삭제
-        function replyDelete(){
-            let CommunityReplyId = $(this).data('CommunityReplyId');
-            let CommunityId = $(this).data('CommunityId');
+                      // 삭제 버튼 클릭 이벤트
+                      $('.replyDeleteButton').click(replyDelete);
+                  });
+              },
+              error: function() {
+                  alert('리플 목록 조회 실패');
+              }
+          });
+      }
 
-            $.ajax({
-                url:'replyDelete',
-                type: 'post',
-                data:{CommunityReplyId:CommunityReplyId, CommunityId:CommunityId},
-                success:function(){
-                    alert('삭제되었습니다.');
-                    replyList();
-                }
-            });
-        }
+      // 리플 삭제
+      function replyDelete() {
+          let communityReplyId = $(this).data('communityReplyId');
+          let communityId = $(this).data('communityId');
+
+          $.ajax({
+              url: 'community/communityReplyDelete',  // 서버에서 처리할 URL을 확인
+              type: 'POST',
+              data: JSON.stringify({
+                  communityReplyId: communityReplyId,
+                  communityId: communityId
+              }),
+              contentType: 'application/json',
+              success: function() {
+                  alert('삭제되었습니다.');
+                  communityReplyList();  // 리플 목록 갱신
+              },
+              error: function() {
+                  alert('리플 삭제 실패');
+              }
+          });
+      }
+  });
+
     </script>
 </head>
 <body>

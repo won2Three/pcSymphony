@@ -18,11 +18,11 @@ public class CommunityReplyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "community_reply_id", nullable = false)
-    Integer CommunityReplyId;
+    Integer communityReplyId;
 
     //댓글
     @Column(name = "community_reply_content", nullable = false)
-    String CommunityReplyContent;
+    String communityReplyContent;
 
     //커뮤니티 정보 (외래키)
     @ManyToOne(fetch = FetchType.LAZY)

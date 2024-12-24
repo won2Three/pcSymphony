@@ -1,12 +1,16 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.dto.CommunityDTO;
+import com.example.demo.domain.dto.CommunityReplyDTO;
 import com.example.demo.domain.entity.CommunityEntity;
+import com.example.demo.domain.entity.CommunityReplyEntity;
 import com.example.demo.domain.entity.MemberEntity;
+import com.example.demo.repository.CommunityReplyRepository;
 import com.example.demo.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.example.demo.repository.CommunityRepository;
 
@@ -21,6 +25,8 @@ public class CommunityService {
     private final CommunityRepository communityRepository;
 
     private final MemberRepository memberRepository;
+
+    private final CommunityReplyRepository replyRepository;
 
     //커뮤니티 메인
     public List<CommunityDTO> getList() {
@@ -112,5 +118,48 @@ public class CommunityService {
         communityEntity.setCommunityContent(communityDto.getCommunityContent());
 
         communityRepository.save(communityEntity);
+    }
+
+    //댓글 저장
+    public void communityReplyWrite(CommunityReplyDTO replyDTO) {
+        MemberEntity memberEntity = memberRepository.findById(replyDTO.getMemberId())
+                .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
+        CommunityEntity communityEntity = communityRepository.findById(replyDTO.getCommunityId())
+                .orElseThrow(() -> new EntityNotFoundException("게시글 정보가 없습니다."));
+        CommunityReplyEntity communityReplyEntity = CommunityReplyEntity.builder()
+                .community(communityEntity)
+                .member(memberEntity)
+                .communityReplyContent(replyDTO.getReplyContent())
+                .build();
+
+        replyRepository.save(communityReplyEntity);
+    }
+
+    //리플 목록
+    public List<CommunityReplyDTO> getReplyList(int communityId) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "communityId");
+        List<CommunityReplyEntity> replyEntityList = replyRepository.findByCommunity_CommunityId(communityId, sort);
+        List<CommunityReplyDTO> replyDTOList = new ArrayList<CommunityReplyDTO>();
+
+        for (CommunityReplyEntity replyEntity : replyEntityList) {
+            CommunityReplyDTO replyDTO = CommunityReplyDTO.builder()
+                    .communityReplyId(replyEntity.getCommunityReplyId())
+                    .communityId(replyEntity.getCommunity().getCommunityId())
+                    .memberId(replyEntity.getMember().getMemberId())
+                    .replyContent(replyEntity.getCommunityReplyContent())
+                    .build();
+            replyDTOList.add(replyDTO);
+        }
+        return replyDTOList;
+    }
+
+    //댓글 삭제
+    public void communityReplyDelete(CommunityReplyDTO replyDTO) {
+        CommunityReplyEntity replyEntity = replyRepository.findById(replyDTO.getCommunityId())
+                .orElseThrow(() -> new EntityNotFoundException("댓글 정보가 없습니다"));
+        if (!replyDTO.getMemberId().equals(replyEntity.getMember().getMemberId())) {
+            throw new RuntimeException("삭제 권한이 없습니다");
+        }
+        replyRepository.delete(replyEntity);
     }
 }
