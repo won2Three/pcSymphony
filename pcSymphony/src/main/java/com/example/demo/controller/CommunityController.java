@@ -38,17 +38,28 @@ public class CommunityController {
         return "redirect:list";
     }
 
+//    @GetMapping("read")
+//    public String read(@RequestParam("communityId") int communityId,
+//                       Model model) {
+//        CommunityDTO communityDto = communityService.getCommunity(communityId);
+//        model.addAttribute("community", communityDto);
+//        return "community/read";
+//    }
     @GetMapping("read")
     public String read(@RequestParam("communityId") int communityId,
                        Model model) {
+
+        //조회수 증가
+        communityService.incrementViewCount(communityId);
+
         CommunityDTO communityDto = communityService.getCommunity(communityId);
         model.addAttribute("community", communityDto);
         return "community/read";
     }
 
 
-    @GetMapping("delete")
-    public String delete(@RequestParam("communityId") int communityId,
+    @PostMapping("delete")
+    public String delete(@RequestParam("communityId") Integer communityId,
                          @AuthenticationPrincipal MemberUserDetails user) {
         communityService.delete(communityId, user.getUsername());
         return "redirect:list";
@@ -82,5 +93,6 @@ public class CommunityController {
         return "redirect:/community/list";
 
     }
+
 
 }

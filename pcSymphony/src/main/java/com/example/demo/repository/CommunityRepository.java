@@ -13,8 +13,4 @@ import java.util.List;
 public interface CommunityRepository extends JpaRepository<CommunityEntity, Integer> {
     //public List<CommunityEntity> selectAll();
 
-    @Modifying
-    @Transactional
-    @Query("update CommunityEntity c set c.communityView = c.communityView + 1 where c.communityId = :communityId")
-    void viewCount(Integer communityId);
 }

@@ -171,13 +171,11 @@ public class CommunityService {
 
     //조회수 증가
     @Transactional
-    public CommunityEntity viewDetail(Integer communityId) {
-        communityRepository.viewCount(communityId);
-        return communityRepository.findById(communityId).orElseThrow(
-                () -> {
-                    return new IllegalArgumentException("아이디를 찾을 수 없습니다.");
-                });
+    public void incrementViewCount(Integer communityId) {
+        CommunityEntity community = communityRepository.findById(communityId)
+                .orElseThrow(() -> new EntityNotFoundException("게시글 없음"));
+        community.setCommunityView(community.getCommunityView() + 1);
+        communityRepository.save(community);
     }
-
     }
 
