@@ -102,7 +102,9 @@
   <h1>게시물 수정</h1>
 
   <!-- 게시물 수정 폼 -->
+<!--  <form th:action="@{/community/update/{id}(id=${community.communityId})}" method="POST" onsubmit="return validateForm()">-->
   <form th:action="@{/community/update/{id}(id=${community.communityId})}" method="POST" onsubmit="return validateForm()">
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 
     <!-- 제목 입력 필드 (기존 제목이 자동으로 들어가도록 처리) -->
     <input type="text" id="communityTitle" name="communityTitle" class="input-field" placeholder="제목을 입력하세요" th:value="${community.communityTitle}" required />

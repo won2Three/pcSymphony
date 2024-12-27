@@ -10,6 +10,7 @@ import com.example.demo.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import com.example.demo.repository.CommunityRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -99,20 +100,41 @@ public class CommunityService {
     }
 
     //수정
-    public void update(int communityId, CommunityDTO communityDto) {
 //    public void update(int communityId, CommunityDTO communityDto, String username) {
 //         //사용자 확인
 //        MemberEntity memberEntity = memberRepository.findById(username)
 //                .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
+//
+//        // 게시글 확인
+//        CommunityEntity communityEntity = communityRepository.findById(communityId)
+//                .orElseThrow(() -> new EntityNotFoundException("글이 없습니다."));
+//
+//        // 작성자 확인
+//        if (!communityEntity.getMember().getMemberId().equals(username)) {
+//            throw new RuntimeException("수정 권한이 없습니다.");
+//        }
+//
+//        // 게시글 수정
+//        communityEntity.setCommunityTitle(communityDto.getCommunityTitle());
+//        communityEntity.setCommunityContent(communityDto.getCommunityContent());
+//
+//        communityRepository.save(communityEntity);
+//    }
+    public void update(int communityId, CommunityDTO communityDto, String currentUsername) {
+        // 사용자 확인
+        MemberEntity memberEntity = memberRepository.findById(currentUsername)
+                .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
 
         // 게시글 확인
         CommunityEntity communityEntity = communityRepository.findById(communityId)
                 .orElseThrow(() -> new EntityNotFoundException("글이 없습니다."));
 
-//        // 작성자 확인
-//        if (!communityEntity.getMember().getMemberId().equals(username)) {
-//            throw new RuntimeException("수정 권한이 없습니다.");
-//        }
+        // 작성자 확인
+        if (!communityEntity.getMember().getMemberId().equals(currentUsername)) {
+            System.out.println("작성자 ID: " + communityEntity.getMember().getMemberId());
+            System.out.println("현재 사용자 ID: " + currentUsername);
+            throw new AccessDeniedException("수정 권한이 없습니다.");
+        }
 
         // 게시글 수정
         communityEntity.setCommunityTitle(communityDto.getCommunityTitle());
@@ -120,6 +142,7 @@ public class CommunityService {
 
         communityRepository.save(communityEntity);
     }
+
 
     //댓글 저장
     public void communityReplyWrite(CommunityReplyDTO replyDTO) {
