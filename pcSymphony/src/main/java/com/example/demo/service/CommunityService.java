@@ -8,11 +8,11 @@ import com.example.demo.domain.entity.MemberEntity;
 import com.example.demo.repository.CommunityReplyRepository;
 import com.example.demo.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.example.demo.repository.CommunityRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class CommunityService {
                     .communityContent(entity.getCommunityContent())
                     .communityDate(entity.getCommunityDate())
                     .communityTitle(entity.getCommunityTitle())
-                    .communityView(String.valueOf(entity.getCommunityView()))
+                    .communityView(entity.getCommunityView())
                     .memberId(entity.getMember().getMemberId())
                     .build();
 
@@ -60,6 +60,7 @@ public class CommunityService {
                 .member(memberEntity)
                 .communityTitle(communityDto.getCommunityTitle())
                 .communityContent(communityDto.getCommunityContent())
+                .communityView(0) //조회수 초기화
                 .build();
 
         communityRepository.save(communityEntity);
@@ -74,7 +75,7 @@ public class CommunityService {
                 .communityId(communityEntity.getCommunityId())
                 .communityTitle(communityEntity.getCommunityTitle())
                 .communityContent(communityEntity.getCommunityContent())
-                .communityView(String.valueOf(communityEntity.getCommunityView()))
+                .communityView(communityEntity.getCommunityView())
                 .communityDate(communityEntity.getCommunityDate())
                 .memberId(communityEntity.getMember().getMemberId())
                 .build();
@@ -137,7 +138,7 @@ public class CommunityService {
 
     //리플 목록
     public List<CommunityReplyDTO> getReplyList(int communityId) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "communityId");
+        Sort sort = Sort.by(Sort.Direction.ASC, "community.communityId");
         List<CommunityReplyEntity> replyEntityList = replyRepository.findByCommunity_communityId(communityId, sort);
         List<CommunityReplyDTO> replyDTOList = new ArrayList<CommunityReplyDTO>();
 
@@ -154,13 +155,13 @@ public class CommunityService {
     }
 
     //댓글 삭제
-    public void communityReplyDelete(CommunityReplyDTO replyDTO) {
+    public void communityReplyDelete(Integer communityReplyId, String username) {
         // 댓글 ID를 기준으로 댓글 엔티티를 조회
-        CommunityReplyEntity replyEntity = replyRepository.findById(replyDTO.getCommunityReplyId())
+        CommunityReplyEntity replyEntity = replyRepository.findById(communityReplyId)
                 .orElseThrow(() -> new EntityNotFoundException("댓글 정보가 없습니다"));
 
         // 댓글 작성자와 현재 사용자가 일치하는지 확인
-        if (!replyDTO.getMemberId().equals(replyEntity.getMember().getMemberId())) {
+        if (!username.equals(replyEntity.getMember().getMemberId())) {
             throw new RuntimeException("삭제 권한이 없습니다");
         }
 
@@ -168,4 +169,15 @@ public class CommunityService {
         replyRepository.delete(replyEntity);
     }
 
-}
+    //조회수 증가
+    @Transactional
+    public CommunityEntity viewDetail(Integer communityId) {
+        communityRepository.viewCount(communityId);
+        return communityRepository.findById(communityId).orElseThrow(
+                () -> {
+                    return new IllegalArgumentException("아이디를 찾을 수 없습니다.");
+                });
+    }
+
+    }
+

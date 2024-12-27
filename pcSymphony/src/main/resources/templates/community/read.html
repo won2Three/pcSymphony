@@ -128,7 +128,7 @@
     <div class="community-info">
         조회수: <span th:text="${community.communityView}"></span> |
         작성자: <span th:text="${community.memberId}"></span> |
-        작성일: <span th:text="${#dates.format(community.communityDate, 'yyyy-MM-dd HH:mm')}"></span>
+        작성일: <span th:text="${#temporals.format(community.communityDate, 'yyyy-MM-dd HH:mm')}"></span>
     </div>
 
     <!-- 수정/삭제 버튼 -->
@@ -170,8 +170,8 @@
 
 <script>
     // 현재 커뮤니티 ID와 사용자 ID를 얻어옵니다.
-    const communityId = /*[[${community.communityId}]]*/ 1;  // 서버에서 동적으로 값을 받아옵니다.
-    const userId = /*[[${#authentication.name}]]*/ 'user123'; // 로그인한 사용자 ID를 서버에서 받아옵니다.
+    const communityId = [[${community.communityId}]];  // 서버에서 동적으로 값을 받아옵니다.
+    const userId = '[[${#authentication.name}]];' // 로그인한 사용자 ID를 서버에서 받아옵니다.
 
     // 댓글 목록을 로드하는 함수
     function loadComments() {

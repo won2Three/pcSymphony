@@ -44,12 +44,14 @@ public class CommunityRestController {
         return ResponseEntity.ok(replyList);
     }
 
-//    // 댓글 삭제
-//    @PostMapping("communityReplyDelete")
-//    public ResponseEntity<?> replyDelete(@RequestBody CommunityReplyDTO replyDTO,
-//                                         @AuthenticationPrincipal MemberUserDetails userDetails) {
-//        // 댓글 삭제 로직 구현
-//        communityService.communityReplyDelete(replyDTO.getCommunityReplyId(), userDetails.getUsername());
-//        return ResponseEntity.ok().build();
-//    }
+    // 댓글 삭제
+    @PostMapping("communityReplyDelete")
+    public ResponseEntity<?> replyDelete(@RequestBody CommunityReplyDTO replyDTO,
+                                         @AuthenticationPrincipal MemberUserDetails userDetails) {
+        // 댓글 삭제 로직 구현
+        communityService.communityReplyDelete(replyDTO.getCommunityReplyId(), userDetails.getUsername());
+        return ResponseEntity.ok().build();
+
+    }
+
 }

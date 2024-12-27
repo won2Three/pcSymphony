@@ -81,6 +81,6 @@ public class CommunityController {
         communityService.update(id, communityDto);
         return "redirect:/community/list";
 
-
     }
+
 }
