@@ -9,8 +9,10 @@ import com.example.demo.repository.CommunityReplyRepository;
 import com.example.demo.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import com.example.demo.repository.CommunityRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -84,45 +87,10 @@ public class CommunityService {
         return communityDto;
     }
 
-    //삭제
-    public void delete(int boardNum, String username) {
-        MemberEntity memberEntity = memberRepository.findById(username)
-                .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
-
-        CommunityEntity communityEntity = communityRepository.findById(boardNum)
-                .orElseThrow(() -> new EntityNotFoundException("글이 없습니다."));
-
-        if (!username.equals(memberEntity.getMemberId())) {
-            throw new RuntimeException("삭제 권한이 없습니다.");
-        }
-
-        communityRepository.delete(communityEntity);
-    }
-
     //수정
-//    public void update(int communityId, CommunityDTO communityDto, String username) {
-//         //사용자 확인
-//        MemberEntity memberEntity = memberRepository.findById(username)
-//                .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
-//
-//        // 게시글 확인
-//        CommunityEntity communityEntity = communityRepository.findById(communityId)
-//                .orElseThrow(() -> new EntityNotFoundException("글이 없습니다."));
-//
-//        // 작성자 확인
-//        if (!communityEntity.getMember().getMemberId().equals(username)) {
-//            throw new RuntimeException("수정 권한이 없습니다.");
-//        }
-//
-//        // 게시글 수정
-//        communityEntity.setCommunityTitle(communityDto.getCommunityTitle());
-//        communityEntity.setCommunityContent(communityDto.getCommunityContent());
-//
-//        communityRepository.save(communityEntity);
-//    }
-    public void update(int communityId, CommunityDTO communityDto, String currentUsername) {
-        // 사용자 확인
-        MemberEntity memberEntity = memberRepository.findById(currentUsername)
+        public void update(int communityId, CommunityDTO communityDto, String username) {
+         //사용자 확인
+        MemberEntity memberEntity = memberRepository.findById(username)
                 .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
 
         // 게시글 확인
@@ -130,10 +98,8 @@ public class CommunityService {
                 .orElseThrow(() -> new EntityNotFoundException("글이 없습니다."));
 
         // 작성자 확인
-        if (!communityEntity.getMember().getMemberId().equals(currentUsername)) {
-            System.out.println("작성자 ID: " + communityEntity.getMember().getMemberId());
-            System.out.println("현재 사용자 ID: " + currentUsername);
-            throw new AccessDeniedException("수정 권한이 없습니다.");
+        if (!communityEntity.getMember().getMemberId().equals(username)) {
+            throw new RuntimeException("수정 권한이 없습니다.");
         }
 
         // 게시글 수정
@@ -143,6 +109,20 @@ public class CommunityService {
         communityRepository.save(communityEntity);
     }
 
+    //삭제
+    public void delete(int communityId, String username) {
+        MemberEntity memberEntity = memberRepository.findById(username)
+                .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
+
+        CommunityEntity communityEntity = communityRepository.findById(communityId)
+                .orElseThrow(() -> new EntityNotFoundException("글이 없습니다."));
+
+        if (!username.equals(memberEntity.getMemberName())) {
+            throw new RuntimeException("삭제 권한이 없습니다.");
+        }
+
+        communityRepository.delete(communityEntity);
+    }
 
     //댓글 저장
     public void communityReplyWrite(CommunityReplyDTO replyDTO) {

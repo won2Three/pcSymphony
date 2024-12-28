@@ -120,7 +120,16 @@
 </head>
 <body>
 <div class="community-container">
+
     <h1>게시물 상세보기</h1>
+
+
+
+
+    <!-- 에러 메시지 출력 (삭제 권한이 없을 경우) -->
+    <div th:if="${errorMessage != null}" class="error-message">
+        <p th:text="${errorMessage}"></p>
+    </div>
 
     <!-- 게시물 제목 -->
     <div class="community-title" th:text="${community.communityTitle}"></div>
