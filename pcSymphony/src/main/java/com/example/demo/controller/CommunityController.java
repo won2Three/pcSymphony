@@ -55,31 +55,15 @@ public class CommunityController {
     }
 
 
-//    @PostMapping("delete")
-//    public String delete(@RequestParam("communityId") Integer communityId,
-//                         @AuthenticationPrincipal MemberUserDetails user) {
-//
-//        communityService.delete(communityId, user.getUsername());
-//        return "redirect:list";
-//    }
-
     @PostMapping("delete")
     public String delete(@RequestParam("communityId") Integer communityId,
-                         @AuthenticationPrincipal MemberUserDetails user,
-                         RedirectAttributes redirectAttributes) {
-        try {
-            // 게시글 삭제 시도
-            communityService.delete(communityId, user.getUsername());
-        } catch (RuntimeException e) {
-            // 삭제 권한이 없을 경우 에러 메시지 설정
-            redirectAttributes.addFlashAttribute("errorMessage", "삭제 권한이 없습니다.(컨트롤러)");
-
-            return "redirect:/community/read?communityId=" + communityId;  // 권한 오류가 발생하면 목록 페이지로 리다이렉트
-        }
-
-        // 정상적으로 삭제되었을 경우
-        return "redirect:/community/list";  // 삭제 후 목록 페이지로 리다이렉트
+                         @AuthenticationPrincipal MemberUserDetails user) {
+        System.out.println("Authenticated username: " + user.getUsername());
+        communityService.delete(communityId, user.getUsername());
+        return "redirect:list";
     }
+
+
 
 
 //    @GetMapping("update/{id}")
