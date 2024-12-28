@@ -118,7 +118,7 @@ public class CommunityService {
                 .orElseThrow(() -> new EntityNotFoundException("글이 없습니다."));
 
         if (!username.equals(memberEntity.getMemberName())) {
-            throw new RuntimeException("삭제 권한이 없습니다.");
+            throw new RuntimeException("삭제 권한이 없습니다(서비스).");
         }
 
         communityRepository.delete(communityEntity);
