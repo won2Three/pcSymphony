@@ -18,6 +18,7 @@ public class WebSecurityConfig {
             "/"                     //root
             , "/member/join"  //회원가입
             ,"/community/list" //커뮤니티 리스트
+            ,"/css/**", "/js/**", "/images/**" // 정적 리소스 허용
 //            , "/member/login" //로그인폼
             //메인?, 글 작성 이외는 가능
     };
