@@ -148,7 +148,6 @@ public class CommunityService {
         CommunityEntity communityEntity = communityRepository.findById(replyDTO.getCommunityId())
                 .orElseThrow(() -> new EntityNotFoundException("게시글 정보가 없습니다."));
         CommunityReplyEntity communityReplyEntity = CommunityReplyEntity.builder()
-                .community(communityEntity)
                 .member(memberEntity)
                 .communityReplyContent(replyDTO.getReplyContent())
                 .build();

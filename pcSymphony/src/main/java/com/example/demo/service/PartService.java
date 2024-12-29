@@ -1,13 +1,18 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.dto.part.PartDTO;
+import com.example.demo.domain.dto.part.PartsReviewDTO;
+import com.example.demo.domain.entity.MemberEntity;
 import com.example.demo.domain.entity.part.*;
+import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.part.*;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -26,6 +31,9 @@ public class PartService {
     private final CoverRepository coverRepository;
     private final VideoCardRepository videoCardRepository;
     private final PowerSupplyRepository powerSupplyRepository;
+    private final MemberRepository memberRepository;
+    private final PartsReviewRepository partsReviewRepository;
+
 
     // 각 테이블에 맞는 DTO를 반환하는 메서드
     public Object findPartByTableAndId(String tableName, int id) {
@@ -178,5 +186,77 @@ public class PartService {
 
         return partDTO;
     }
+
+    //-----------------------------------파츠 리뷰 ------------------------------------
+
+    //리뷰 저장
+    public void partsReviewWrite(PartsReviewDTO reviewDTO) {
+
+        // 필수 정보 조회 (사용자 정보)
+        MemberEntity memberEntity = memberRepository.findById(reviewDTO.getMemberId())
+                .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다"));
+
+        // 선택적 부품들 (null 체크 후 조회)
+        CpuEntity cpuEntity = (reviewDTO.getCpuId() != null)
+                ? cpuRepository.findById(reviewDTO.getCpuId())
+                .orElseThrow(() -> new EntityNotFoundException("CPU 정보가 없습니다."))
+                : null;
+
+        CpuCoolerEntity cpuCoolerEntity = (reviewDTO.getCpucoolerId() != null)
+                ? cpuCoolerRepository.findById(reviewDTO.getCpucoolerId())
+                .orElseThrow(() -> new EntityNotFoundException("cpucooler 정보가 없습니다."))
+                : null;
+
+        MemoryEntity memoryEntity = (reviewDTO.getMemoryId() != null)
+                ? memoryRepository.findById(reviewDTO.getMemoryId())
+                .orElseThrow(() -> new EntityNotFoundException("memory 정보가 없습니다."))
+                : null;
+
+        MotherboardEntity motherboardEntity = (reviewDTO.getMotherboardId() != null)
+                ? motherboardRepository.findById(reviewDTO.getMotherboardId())
+                .orElseThrow(() -> new EntityNotFoundException("motherboard 정보가 없습니다."))
+                : null;
+
+        StorageEntity storageEntity = (reviewDTO.getStorageId() != null)
+                ? storageRepository.findById(reviewDTO.getStorageId())
+                .orElseThrow(() -> new EntityNotFoundException("storage 정보가 없습니다."))
+                : null;
+
+        VideoCardEntity videoCardEntity = (reviewDTO.getVideocardId() != null)
+                ? videoCardRepository.findById(reviewDTO.getVideocardId())
+                .orElseThrow(() -> new EntityNotFoundException("videocard 정보가 없습니다."))
+                : null;
+
+        PowerSupplyEntity powerSupplyEntity = (reviewDTO.getPowersupplyId() != null)
+                ? powerSupplyRepository.findById(reviewDTO.getPowersupplyId())
+                .orElseThrow(() -> new EntityNotFoundException("powersupply 정보가 없습니다."))
+                : null;
+
+        CoverEntity coverEntity = (reviewDTO.getCoverId() != null)
+                ? coverRepository.findById(reviewDTO.getCoverId())
+                .orElseThrow(() -> new EntityNotFoundException("cover 정보가 없습니다."))
+                : null;
+
+        // 리뷰 엔티티 생성 (선택적 부품들만 포함)
+        PartsReviewEntity reviewEntity = PartsReviewEntity.builder()
+                .member(memberEntity)
+                .cpu(cpuEntity) // 선택적 부품 (CPU)
+                .cpucooler(cpuCoolerEntity) // 선택적 부품 (cpuCooler)
+                .memory(memoryEntity) // 선택적 부품 (memory)
+                .motherboard(motherboardEntity) // 선택적 부품 (motherboard)
+                .storage(storageEntity) // 선택적 부품 (storage)
+                .videocard(videoCardEntity) // 선택적 부품 (videocard)
+                .powersupply(powerSupplyEntity) // 선택적 부품 (powersupply)
+                .cover(coverEntity) // 선택적 부품 (cover)
+                .partsReviewTitle(reviewDTO.getPartsReviewTitle()) // 리뷰 제목
+                .partsReviewContent(reviewDTO.getPartsReviewContent()) // 리뷰 내용
+                .partsReviewRating(reviewDTO.getPartsReviewRating()) // 별점
+                .partsReviewDate(LocalDateTime.now()) // 리뷰 작성일
+                .build();
+
+        // 리뷰 저장
+        partsReviewRepository.save(reviewEntity);
+    }
+
 
 }

@@ -207,6 +207,66 @@
 <!-- 담기버튼을 누르면 tableName알맞는 장바구니의 id값에 담긴다. -->
   </tbody>
 </table>
+
+<!--리뷰-->
+<h2>리뷰 작성</h2>
+
+<!-- 리뷰 작성 폼 -->
+<div class="review-form">
+  <h3>리뷰 작성하기</h3>
+  <form>
+    <div>
+      <label for="reviewTitle">리뷰 제목:</label>
+      <input type="text" id="reviewTitle" name="reviewTitle" placeholder="리뷰 제목을 작성해주세요." required>
+    </div>
+
+    <div>
+      <label for="rating">별점:</label>
+      <select id="rating" name="rating" required>
+        <option value="1">1점</option>
+        <option value="2">2점</option>
+        <option value="3">3점</option>
+        <option value="4">4점</option>
+        <option value="5">5점</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="reviewContent">리뷰 내용:</label>
+      <textarea id="reviewContent" name="reviewContent" placeholder="리뷰 내용을 작성해주세요." required></textarea>
+    </div>
+
+    <div>
+      <button type="submit">리뷰 저장</button>
+    </div>
+  </form>
+</div>
+
+<!-- 리뷰 목록 -->
+<div class="review-list">
+  <h3>리뷰 목록</h3>
+  <table>
+    <thead>
+    <tr>
+      <th>작성자</th>
+      <th>리뷰 제목</th>
+      <th>리뷰 내용</th>
+      <th>별점</th>
+      <th>작성 날짜</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 실제 데이터로 채워질 부분 -->
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+
 <script>
   function addToCart(button) {
     const tableName = button.getAttribute('data-table-name');
