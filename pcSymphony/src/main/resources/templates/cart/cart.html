@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>카트</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const deleteButtons = document.querySelectorAll(".deleteButton");
+
+            deleteButtons.forEach(function(button, index) {
+                button.addEventListener("click", function() {
+                    const row = button.closest("tr");
+                    const category = row.querySelector(".category").innerText; // 카테고리 (예: CPU, Memory 등)
+                    const categoryMapping = {
+                        "CPU": "cpu",
+                        "CpuCooler": "cpucooler",
+                        "VideoCard": "videocard",
+                        "Memory": "memory",
+                        "Storage": "storage",
+                        "Motherboard": "motherboard",
+                        "PowerSupply": "powersupply",
+                        "Case": "cover"
+                    };
+
+                    const cartItem = categoryMapping[category]; // 카트에서 해당 항목의 key 값
+                    if (!cartItem) return;
+
+                    // Ajax 요청 보내기
+                    fetch(`/cart/removeItem`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ cartItem })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // 성공적으로 삭제되었을 때 화면에서 제품명과 가격을 변경
+                            const priceElement = row.querySelector(".price");
+                            const itemPrice = parseFloat(priceElement.innerText.replace(',', '')) || 0;
+
+                            row.querySelector(".name").innerText = '제품 없음';
+                            row.querySelector("th:nth-child(4)").innerText = '0';
+                            button.setAttribute("disabled", true); // 버튼 비활성화
+
+                            const totalPriceElement = document.querySelector(".totalPrice");
+                            const currentTotalPrice = parseFloat(totalPriceElement.innerText.replace(',', '').replace('원', '')) || 0;
+                            const newTotalPrice = currentTotalPrice - itemPrice;
+
+                            totalPriceElement.innerText = newTotalPrice.toLocaleString() + '달러';
+                        } else {
+                            alert('삭제 실패');
+                        }
+                    })
+                    .catch(error => {
+                        console.error("삭제 실패:", error);
+                    });
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<h1>[ 카트 ]</h1>
+<table>
+    <thead>
+    <tr>
+        <td colspan="6">
+            <button id="writeButton">제품 선택하기</button>
+        </td>
+    </tr>
+    <tr>
+        <td>번호</td>
+        <td>카테고리</td>
+        <td style="width: 300px;">제품명</td>
+        <td>가격</td>
+    </tr>
+    <tr>
+        <th>1</th>
+        <th class="category">CPU</th>
+        <th class="name" th:text="${cart.cpu != null ? cart.cpu.name : '제품 없음'}">제품명</th>
+        <th class="price" th:text="${cart.cpu != null ? cart.cpu.price : '0'}">가격</th>
+        <td>
+            <button class="deleteButton" th:disabled="${cart.cpu == null}">삭제</button>
+        </td>
+    </tr>
+    <tr>
+        <th>2</th>
+        <th class="category">CpuCooler</th>
+        <th class="name" th:text="${cart.cpucooler != null ? cart.cpucooler.name : '제품 없음'}">제품명</th>
+        <th class="price" th:text="${cart.cpucooler != null ? cart.cpucooler.price : '0'}">가격</th>
+        <td>
+            <button class="deleteButton" th:disabled="${cart.cpucooler == null}">삭제</button>
+        </td>
+    </tr>
+    <tr>
+        <th>3</th>
+        <th class="category">VideoCard</th>
+        <th class="name" th:text="${cart.videocard != null ? cart.videocard.name : '제품 없음'}">제품명</th>
+        <th class="price" th:text="${cart.videocard != null ? cart.videocard.price : '0'}">가격</th>
+        <td>
+            <button class="deleteButton" th:disabled="${cart.videocard == null}">삭제</button>
+        </td>
+    </tr>
+    <tr>
+        <th>4</th>
+        <th class="category">Memory</th>
+        <th class="name" th:text="${cart.memory != null ? cart.memory.name : '제품 없음'}">제품명</th>
+        <th class="price" th:text="${cart.memory != null ? cart.memory.price : '0'}">가격</th>
+        <td>
+            <button class="deleteButton" th:disabled="${cart.memory == null}">삭제</button>
+        </td>
+    </tr>
+    <tr>
+        <th>5</th>
+        <th class="category">Storage</th>
+        <th class="name" th:text="${cart.storage != null ? cart.storage.name : '제품 없음'}">제품명</th>
+        <th class="price" th:text="${cart.storage != null ? cart.storage.price : '0'}" >가격</th>
+        <td>
+            <button class="deleteButton" th:disabled="${cart.storage == null}">삭제</button>
+        </td>
+    </tr>
+    <tr>
+        <th>6</th>
+        <th class="category">Motherboard</th>
+        <th class="name" th:text="${cart.motherboard != null ? cart.motherboard.name : '제품 없음'}">제품명</th>
+        <th class="price" th:text="${cart.motherboard != null ? cart.motherboard.price : '0'}">가격</th>
+        <td>
+            <button class="deleteButton" th:disabled="${cart.motherboard == null}">삭제</button>
+        </td>
+    </tr>
+    <tr>
+        <th>7</th>
+        <th class="category">PowerSupply</th>
+        <th class="name" th:text="${cart.powersupply != null ? cart.powersupply.name : '제품 없음'}">제품명</th>
+        <th class="price" th:text="${cart.powersupply != null ? cart.powersupply.price : '0'}">가격</th>
+        <td>
+            <button class="deleteButton" th:disabled="${cart.powersupply == null}">삭제</button>
+        </td>
+    </tr>
+    <tr>
+        <th>8</th>
+        <th class="category">Case</th>
+        <th class="name" th:text="${cart.cover != null ? cart.cover.name : '제품 없음'}">제품명</th>
+        <th class="price" th:text="${cart.cover != null ? cart.cover.price : '0'}">가격</th>
+        <td>
+            <button class="deleteButton" th:disabled="${cart.cover == null}">삭제</button>
+        </td>
+    </tr>
+    </thead>
+    <tbody id="tbody">
+    <tr>
+        <th>
+            <td colspan="4">전체 가격</td>
+        <td class="totalPrice" th:text="${#numbers.formatDecimal(totalPrice, 0, 0)} + '달러'">전체 가격</td>
+
+
+
+        </th>
+        <th>
+            <button id="Compatibility Check">호환성체크</button>
+        </th>
+        <th>
+            <button id="Save as text">txt로 저장하기</button>
+        </th>
+        <th>
+            <button id="create review" th:disabled="${cart.cpu == null or cart.cpucooler == null or cart.motherboard == null or cart.memory == null or cart.storage == null or cart.videocard == null or cart.powersupply == null or cart.cover == null}">리뷰 작성하기</button>
+        </th>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

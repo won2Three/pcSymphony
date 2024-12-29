@@ -114,6 +114,7 @@ public class PartController {
         return "part/partDetail";
     }
 
+
 //        Object part = partService.findPartByTableAndId(tableName, id);
 //        System.out.println("test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!start!");
 //        System.out.println(part);
