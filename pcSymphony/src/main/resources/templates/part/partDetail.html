@@ -211,18 +211,51 @@
 <!--리뷰-->
 <h2>리뷰 작성</h2>
 
+<!--&lt;!&ndash; 리뷰 작성 폼 &ndash;&gt;-->
+<!--<div class="review-form">-->
+<!--  <h3>리뷰 작성하기</h3>-->
+<!--  <form>-->
+<!--    <div>-->
+<!--      <label for="reviewTitle">리뷰 제목:</label>-->
+<!--      <input type="text" id="reviewTitle" name="reviewTitle" placeholder="리뷰 제목을 작성해주세요." required>-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--      <label for="rating">별점:</label>-->
+<!--      <select id="rating" name="rating" required>-->
+<!--        <option value="1">1점</option>-->
+<!--        <option value="2">2점</option>-->
+<!--        <option value="3">3점</option>-->
+<!--        <option value="4">4점</option>-->
+<!--        <option value="5">5점</option>-->
+<!--      </select>-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--      <label for="reviewContent">리뷰 내용:</label>-->
+<!--      <textarea id="reviewContent" name="reviewContent" placeholder="리뷰 내용을 작성해주세요." required></textarea>-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--      <button type="submit">리뷰 저장</button>-->
+<!--    </div>-->
+<!--  </form>-->
+<!--</div>-->
+
+<h2>리뷰 작성</h2>
+
 <!-- 리뷰 작성 폼 -->
 <div class="review-form">
   <h3>리뷰 작성하기</h3>
-  <form>
+  <form id="reviewForm">
     <div>
-      <label for="reviewTitle">리뷰 제목:</label>
-      <input type="text" id="reviewTitle" name="reviewTitle" placeholder="리뷰 제목을 작성해주세요." required>
+      <label for="partsReviewTitle">리뷰 제목:</label>
+      <input type="text" id="partsReviewTitle" name="partsReviewTitle" placeholder="리뷰 제목을 작성해주세요." required>
     </div>
 
     <div>
-      <label for="rating">별점:</label>
-      <select id="rating" name="rating" required>
+      <label for="partsReviewRating">별점:</label>
+      <select id="partsReviewRating" name="partsReviewRating" required>
         <option value="1">1점</option>
         <option value="2">2점</option>
         <option value="3">3점</option>
@@ -232,15 +265,94 @@
     </div>
 
     <div>
-      <label for="reviewContent">리뷰 내용:</label>
-      <textarea id="reviewContent" name="reviewContent" placeholder="리뷰 내용을 작성해주세요." required></textarea>
+      <label for="partsReviewContent">리뷰 내용:</label>
+      <textarea id="partsReviewContent" name="partsReviewContent" placeholder="리뷰 내용을 작성해주세요." required></textarea>
     </div>
+
+    <!-- 각 부품의 ID는 URL에서 추출하여 자동으로 입력 -->
+    <input type="hidden" id="cpuId" name="cpuId" value="">
+    <input type="hidden" id="cpucoolerId" name="cpucoolerId" value="">
+    <input type="hidden" id="motherboardId" name="motherboardId" value="">
+    <input type="hidden" id="memoryId" name="memoryId" value="">
+    <input type="hidden" id="storageId" name="storageId" value="">
+    <input type="hidden" id="videocardId" name="videocardId" value="">
+    <input type="hidden" id="powersupplyId" name="powersupplyId" value="">
+    <input type="hidden" id="coverId" name="coverId" value="">
 
     <div>
       <button type="submit">리뷰 저장</button>
     </div>
   </form>
 </div>
+
+<script>
+  // URL에서 부품 정보 추출
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParts = window.location.pathname.split('/');
+    const partType = urlParts[1]; // 예: 'part'
+    const partCategory = urlParts[2]; // 예: 'cpu', 'motherboard', ...
+    const partDetailId = urlParts[3]; // 예: 부품 ID (예: 1)
+
+    // 각 부품에 해당하는 'hidden' input 필드를 자동으로 설정
+    if (partCategory === 'cpu') {
+      document.getElementById('cpuId').value = partDetailId;
+    } else if (partCategory === 'cpucooler') {
+      document.getElementById('cpucoolerId').value = partDetailId;
+    } else if (partCategory === 'motherboard') {
+      document.getElementById('motherboardId').value = partDetailId;
+    } else if (partCategory === 'memory') {
+      document.getElementById('memoryId').value = partDetailId;
+    } else if (partCategory === 'storage') {
+      document.getElementById('storageId').value = partDetailId;
+    } else if (partCategory === 'videocard') {
+      document.getElementById('videocardId').value = partDetailId;
+    } else if (partCategory === 'powersupply') {
+      document.getElementById('powersupplyId').value = partDetailId;
+    } else if (partCategory === 'cover') {
+      document.getElementById('coverId').value = partDetailId;
+    }
+  });
+
+  // 리뷰 작성 폼의 submit 이벤트 처리
+  document.getElementById('reviewForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // 폼 제출 기본 동작 방지
+
+    // 폼 데이터를 객체로 변환
+    const formData = {
+      partsReviewTitle: document.getElementById('partsReviewTitle').value,
+      partsReviewRating: document.getElementById('partsReviewRating').value,
+      partsReviewContent: document.getElementById('partsReviewContent').value,
+      cpuId: document.getElementById('cpuId').value || null,
+      cpucoolerId: document.getElementById('cpucoolerId').value || null,
+      motherboardId: document.getElementById('motherboardId').value || null,
+      memoryId: document.getElementById('memoryId').value || null,
+      storageId: document.getElementById('storageId').value || null,
+      videocardId: document.getElementById('videocardId').value || null,
+      powersupplyId: document.getElementById('powersupplyId').value || null,
+      coverId: document.getElementById('coverId').value || null
+    };
+
+    // POST 요청 보내기 (서버 API로)
+    fetch('/part/partsReviewWrite', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert('리뷰가 성공적으로 저장되었습니다.');
+      // 폼 초기화
+      document.getElementById('reviewForm').reset();
+    })
+    .catch(error => {
+      alert('리뷰 저장에 실패했습니다.');
+    });
+  });
+</script>
+
+
 
 <!-- 리뷰 목록 -->
 <div class="review-list">
