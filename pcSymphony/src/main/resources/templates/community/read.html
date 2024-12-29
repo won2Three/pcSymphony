@@ -5,116 +5,168 @@
     <title>게시물 상세보기</title>
     <style>
         /* 배경 색상 */
- body {
-     background-color: #333; /* 진회색 배경 */
-     font-family: Arial, sans-serif;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     height: 100vh;
-     margin: 0;
- }
+        body {
+            background-color: #333; /* 진회색 배경 */
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
- /* 게시판 컨테이너 스타일 */
- .community-container {
-     background-color: #f0f0f0; /* 약간 회색이 섞인 흰색 */
-     border-radius: 8px;
-     padding: 40px;
-     width: 100%;
-     max-width: 900px;
-     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
- }
+        /* 게시판 컨테이너 스타일 */
+        .community-container {
+            background-color: #f0f0f0; /* 약간 회색이 섞인 흰색 */
+            border-radius: 8px;
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 30px; /* 각 구간 사이의 간격 */
+        }
 
- /* 제목 및 텍스트 스타일 */
- h1 {
-     text-align: center;
-     font-size: 24px;
-     color: #333;
-     margin-bottom: 20px;
- }
+        /* 제목 및 텍스트 스타일 */
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
 
- .community-title {
-     font-size: 28px;
-     color: #333;
-     margin-bottom: 20px;
- }
+        .community-title {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
 
- .community-content {
-     font-size: 16px;
-     color: #333;
-     margin-bottom: 20px;
- }
+        .community-content {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
+        }
 
- .community-info {
-     font-size: 14px;
-     color: #888;
-     margin-bottom: 20px;
- }
+        .community-info {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 20px;
+        }
 
- /* 버튼 스타일 */
- .edit-delete-buttons {
-     display: flex;
-     justify-content: space-between;
- }
+        /* 게시물 상세보기 구역 */
+        .post-detail {
+            display: block;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
- .edit-button,
- .delete-button {
-     background-color: #4c9aff;
-     color: white;
-     padding: 10px 20px;
-     border: none;
-     border-radius: 4px;
-     cursor: pointer;
- }
+        /* 댓글 구역 */
+        .comments-section {
+            display: block;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
- .edit-button:hover,
- .delete-button:hover {
-     background-color: #3577d6;
- }
+        .reply {
+            width: 100%; /* 가로 전체를 차지 */
+            margin-top: 10px;
+            border-collapse: collapse; /* 테이블 셀 간격 정리 */
+        }
 
- .back-button {
-     background-color: #ddd;
-     padding: 10px 20px;
-     border: none;
-     border-radius: 4px;
-     cursor: pointer;
-     text-decoration: none;
- }
+        .reply th,
+        .reply td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
 
- .back-button:hover {
-     background-color: #bbb;
- }
+        .reply th {
+            background-color: #f1f1f1;
+        }
 
- /* 댓글 관련 스타일 */
- .reply {
-     width: 100%;
-     margin-top: 30px;
-     border-collapse: collapse;
- }
+        /* 댓글 삭제 버튼 */
+        .reply button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
- .reply th,
- .reply td {
-     padding: 10px;
-     border: 1px solid #ddd;
- }
+        .reply button:hover {
+            background-color: #ff3333;
+        }
 
- .reply th {
-     background-color: #f1f1f1;
- }
+        /* 댓글 입력란 구역 */
+        .comment-input-section {
+            display: block;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
- .reply button {
-     background-color: #ff4d4d;
-     color: white;
-     border: none;
-     padding: 5px 10px;
-     border-radius: 4px;
-     cursor: pointer;
- }
+        .comment-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
 
- .reply button:hover {
-     background-color: #ff3333;
- }
+        .submit-button {
+            background-color: #4c9aff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
+        .submit-button:hover {
+            background-color: #3577d6;
+        }
+
+        /* 버튼 스타일 */
+        .edit-delete-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .edit-button,
+        .delete-button {
+            background-color: #4c9aff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .edit-button:hover,
+        .delete-button:hover {
+            background-color: #3577d6;
+        }
+
+        .back-button {
+            background-color: #ddd;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #bbb;
+        }
     </style>
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 </head>
