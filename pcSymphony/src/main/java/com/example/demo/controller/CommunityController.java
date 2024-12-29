@@ -58,13 +58,9 @@ public class CommunityController {
     @PostMapping("delete")
     public String delete(@RequestParam("communityId") Integer communityId,
                          @AuthenticationPrincipal MemberUserDetails user) {
-        System.out.println("Authenticated username: " + user.getUsername());
         communityService.delete(communityId, user.getUsername());
         return "redirect:list";
     }
-
-
-
 
 //    @GetMapping("update/{id}")
 //    public String update(@PathVariable("id") Integer id, Model model) {
