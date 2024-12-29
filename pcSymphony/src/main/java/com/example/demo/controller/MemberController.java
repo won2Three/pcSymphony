@@ -37,8 +37,8 @@ public class MemberController {
         return "redirect:/member/loginForm";
     }
 
-//    @PostMapping("login")
-//    public String login(MemberDTO memberDto) {
-//        return "redirect:/main";
-//    }
+    @PostMapping("login")
+    public String login(MemberDTO memberDto) {
+        return "redirect:/";
+    }
 }

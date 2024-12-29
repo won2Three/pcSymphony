@@ -19,7 +19,7 @@ public class CommunityDTO {
     int communityId;
     String communityTitle;
     String communityContent;
-    String communityView;
+    int communityView;
     LocalDateTime communityDate;
 
 }

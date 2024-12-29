@@ -5,88 +5,131 @@
     <title>게시물 상세보기</title>
     <style>
         /* 배경 색상 */
-        body {
-            background-color: #333; /* 진회색 배경 */
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+ body {
+     background-color: #333; /* 진회색 배경 */
+     font-family: Arial, sans-serif;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     height: 100vh;
+     margin: 0;
+ }
 
-        /* 게시판 컨테이너 스타일 */
-        .community-container {
-            background-color: #f0f0f0; /* 약간 회색이 섞인 흰색 */
-            border-radius: 8px;
-            padding: 40px;
-            width: 100%;
-            max-width: 900px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+ /* 게시판 컨테이너 스타일 */
+ .community-container {
+     background-color: #f0f0f0; /* 약간 회색이 섞인 흰색 */
+     border-radius: 8px;
+     padding: 40px;
+     width: 100%;
+     max-width: 900px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ }
 
-        h1 {
-            text-align: center;
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
-        }
+ /* 제목 및 텍스트 스타일 */
+ h1 {
+     text-align: center;
+     font-size: 24px;
+     color: #333;
+     margin-bottom: 20px;
+ }
 
-        /* 게시물 제목, 내용 등의 스타일 */
-        .community-title {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 20px;
-        }
+ .community-title {
+     font-size: 28px;
+     color: #333;
+     margin-bottom: 20px;
+ }
 
-        .community-content {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 20px;
-        }
+ .community-content {
+     font-size: 16px;
+     color: #333;
+     margin-bottom: 20px;
+ }
 
-        .community-info {
-            font-size: 14px;
-            color: #888;
-            margin-bottom: 20px;
-        }
+ .community-info {
+     font-size: 14px;
+     color: #888;
+     margin-bottom: 20px;
+ }
 
-        /* 수정/삭제 버튼 스타일 */
-        .edit-delete-buttons {
-            display: flex;
-            justify-content: space-between;
-        }
+ /* 버튼 스타일 */
+ .edit-delete-buttons {
+     display: flex;
+     justify-content: space-between;
+ }
 
-        .edit-button, .delete-button {
-            background-color: #4c9aff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+ .edit-button,
+ .delete-button {
+     background-color: #4c9aff;
+     color: white;
+     padding: 10px 20px;
+     border: none;
+     border-radius: 4px;
+     cursor: pointer;
+ }
 
-        .edit-button:hover, .delete-button:hover {
-            background-color: #3577d6;
-        }
+ .edit-button:hover,
+ .delete-button:hover {
+     background-color: #3577d6;
+ }
 
-        .back-button {
-            background-color: #ddd;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-        }
+ .back-button {
+     background-color: #ddd;
+     padding: 10px 20px;
+     border: none;
+     border-radius: 4px;
+     cursor: pointer;
+     text-decoration: none;
+ }
 
-        .back-button:hover {
-            background-color: #bbb;
-        }
+ .back-button:hover {
+     background-color: #bbb;
+ }
+
+ /* 댓글 관련 스타일 */
+ .reply {
+     width: 100%;
+     margin-top: 30px;
+     border-collapse: collapse;
+ }
+
+ .reply th,
+ .reply td {
+     padding: 10px;
+     border: 1px solid #ddd;
+ }
+
+ .reply th {
+     background-color: #f1f1f1;
+ }
+
+ .reply button {
+     background-color: #ff4d4d;
+     color: white;
+     border: none;
+     padding: 5px 10px;
+     border-radius: 4px;
+     cursor: pointer;
+ }
+
+ .reply button:hover {
+     background-color: #ff3333;
+ }
+
     </style>
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 </head>
 <body>
 <div class="community-container">
+
     <h1>게시물 상세보기</h1>
+
+
+
+
+    <!-- 에러 메시지 출력 (삭제 권한이 없을 경우) -->
+    <div th:if="${errorMessage != null}" class="error-message">
+        <p th:text="${errorMessage}"></p>
+    </div>
 
     <!-- 게시물 제목 -->
     <div class="community-title" th:text="${community.communityTitle}"></div>
@@ -98,25 +141,149 @@
     <div class="community-info">
         조회수: <span th:text="${community.communityView}"></span> |
         작성자: <span th:text="${community.memberId}"></span> |
-        작성일: <span th:text="${#dates.format(community.communityDate, 'yyyy-MM-dd HH:mm')}"></span>
+        작성일: <span th:text="${#temporals.format(community.communityDate, 'yyyy-MM-dd HH:mm')}"></span>
     </div>
+
+<!--    &lt;!&ndash; 수정/삭제 버튼 &ndash;&gt;-->
+<!--    <div class="edit-delete-buttons">-->
+<!--        &lt;!&ndash; 수정 버튼 &ndash;&gt;-->
+<!--        <a th:href="@{/community/update/{communityId}(communityId=${community.communityId})}" class="edit-button">수정</a>-->
+
+<!--        &lt;!&ndash; 삭제 버튼 &ndash;&gt;-->
+<!--        <form th:action="@{/community/delete}" method="POST">-->
+<!--            <input type="hidden" name="communityId" th:value="${community.communityId}" />-->
+<!--            <button type="submit" class="delete-button">삭제</button>-->
+<!--        </form>-->
+<!--    </div>-->
 
     <!-- 수정/삭제 버튼 -->
     <div class="edit-delete-buttons">
-        <!-- 수정 버튼 -->
-        <a th:href="@{/community/update/{communityId}(communityId=${community.communityId})}" class="edit-button">수정</a>
+        <!-- 수정 버튼 (작성자와 로그인한 사용자가 같을 때만 표시) -->
+        <a th:if="${community.memberId == #authentication.name}" th:href="@{/community/update/{communityId}(communityId=${community.communityId})}" class="edit-button">수정</a>
 
-
-        <!-- 삭제 버튼 -->
-        <form th:action="@{/community/delete}" method="get">
+        <!-- 삭제 버튼 (작성자와 로그인한 사용자가 같을 때만 표시) -->
+        <form th:if="${community.memberId == #authentication.name}" th:action="@{/community/delete}" method="POST">
             <input type="hidden" name="communityId" th:value="${community.communityId}" />
             <button type="submit" class="delete-button">삭제</button>
         </form>
     </div>
 
+
     <!-- 뒤로가기 버튼 -->
     <a href="/community/list" class="back-button">목록으로 돌아가기</a>
 </div>
+
+<!-- 리플 작성 폼 시작 -->
+<form id="replyForm">
+    <label for="communityReplyContent">리플입력</label>
+    <input id="communityReplyContent" name="replyContent" style="width:500px" /> <!-- 댓글 입력 필드 -->
+    <button type="button" id="replyWriteButton">저장</button>
+</form>
+
+<!-- 리플 목록 출력 시작 -->
+<table class="reply" id="replyTable">
+    <thead>
+    <tr>
+        <th>작성자</th>
+        <th>내용</th>
+        <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 댓글 목록은 여기에 동적으로 추가됩니다. -->
+    </tbody>
+</table>
+
+<script>
+    // 현재 커뮤니티 ID와 사용자 ID를 얻어옵니다.
+    const communityId = [[${community.communityId}]];  // 서버에서 동적으로 값을 받아옵니다.
+    const userId = '[[${#authentication.name}]];' // 로그인한 사용자 ID를 서버에서 받아옵니다.
+
+    // 댓글 목록을 로드하는 함수
+    function loadComments() {
+        $.ajax({
+            url: '/community/communityReplyList?communityId=' + communityId, // GET 방식으로 파라미터 전달
+            type: 'GET',
+            success: function(data) {
+                const replyTableBody = $('#replyTable tbody');
+                replyTableBody.empty(); // 기존 댓글 목록을 비웁니다.
+
+                // 서버에서 받은 댓글 데이터를 HTML로 출력
+                data.forEach(function(comment) {
+                    const commentHtml = `
+                        <tr id="comment-${comment.communityReplyId}">
+                            <td>${comment.memberId}</td>
+                            <td>${comment.replyContent}</td>
+                            <td>
+                                <button onclick="deleteComment(${comment.communityReplyId})">삭제</button>
+                            </td>
+                        </tr>
+                    `;
+                    replyTableBody.append(commentHtml);
+                });
+            },
+            error: function(xhr, status, error) {
+                alert('댓글 목록 불러오기 실패');
+            }
+        });
+    }
+
+    // 댓글을 저장하는 함수
+    $('#replyWriteButton').click(function() {
+        const replyContent = $('#communityReplyContent').val();
+        if (!replyContent) {
+            alert('댓글을 입력하세요.');
+            return;
+        }
+
+        const replyData = {
+            communityId: communityId,
+            memberId: userId,
+            replyContent: replyContent
+        };
+
+        $.ajax({
+            url: '/community/communityReplyWrite',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(replyData),
+            success: function() {
+                $('#communityReplyContent').val(''); // 댓글 입력란 초기화
+                loadComments(); // 댓글 목록 새로고침
+            },
+            error: function() {
+                alert('댓글 저장 실패!');
+            }
+        });
+    });
+
+    // 댓글을 삭제하는 함수
+    function deleteComment(commentId) {
+        const deleteData = {
+            communityId: communityId,
+            communityReplyId: commentId,
+            memberId: userId
+        };
+
+        $.ajax({
+            url: '/community/communityReplyDelete',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(deleteData),
+            success: function() {
+                loadComments(); // 댓글 목록 새로고침
+            },
+            error: function() {
+                alert('댓글 삭제 실패!');
+            }
+        });
+    }
+
+    // 페이지 로드 시 댓글 목록 불러오기
+    $(document).ready(function() {
+        loadComments();
+    });
+</script>
 
 </body>
 </html>

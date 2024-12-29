@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "community")
 public class CommunityEntity {
 
@@ -42,4 +43,6 @@ public class CommunityEntity {
     @Column(name = "community_date",
             columnDefinition = "timestamp default current_timestamp")
     LocalDateTime communityDate;
+
 }
+
