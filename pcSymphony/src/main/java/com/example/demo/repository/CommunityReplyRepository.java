@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface CommunityReplyRepository extends JpaRepository<CommunityReplyEntity, Integer> {
     List<CommunityReplyEntity> findByCommunity_communityId(Integer communityId, Sort sort);
+
 }

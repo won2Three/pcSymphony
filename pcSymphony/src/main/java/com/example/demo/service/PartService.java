@@ -13,7 +13,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 게시판 서비스
@@ -55,7 +57,6 @@ public class PartService {
         return partEntity;
 
     }
-
 
 
     public PartDTO getPart(String tableName, int id) {
@@ -261,5 +262,58 @@ public class PartService {
         partsReviewRepository.save(reviewEntity);
     }
 
+    // 부품 타입에 따라 리뷰 목록 조회
+    public List<PartsReviewDTO> getReviewList(String partType, Integer partId) {
+        List<PartsReviewEntity> reviewEntities = null;
 
+        switch (partType.toLowerCase()) {
+            case "cpu":
+                reviewEntities = partsReviewRepository.findByCpu_Id(partId);
+                break;
+            case "memory":
+                reviewEntities = partsReviewRepository.findByMemory_Id(partId);
+                break;
+            case "motherboard":
+                reviewEntities = partsReviewRepository.findByMotherboard_Id(partId);
+                break;
+            case "storage":
+                reviewEntities = partsReviewRepository.findByStorage_Id(partId);
+                break;
+            case "videocard":
+                reviewEntities = partsReviewRepository.findByVideocard_Id(partId);
+                break;
+            case "powersupply":
+                reviewEntities = partsReviewRepository.findByPowersupply_Id(partId);
+                break;
+            case "cpucooler":
+                reviewEntities = partsReviewRepository.findByCpucooler_Id(partId);
+                break;
+            case "cover":
+                reviewEntities = partsReviewRepository.findByCover_Id(partId);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid part type: " + partType);
+        }
+        return reviewEntities.stream()
+                //단일 리뷰 엔티티
+                .map(reviewEntity -> {
+                    return PartsReviewDTO.builder()
+                            .partsReviewId(reviewEntity.getPartsReviewId())
+                            .partsReviewTitle(reviewEntity.getPartsReviewTitle())
+                            .partsReviewContent(reviewEntity.getPartsReviewContent())
+                            .partsReviewRating(reviewEntity.getPartsReviewRating())
+                            .partsReviewDate(reviewEntity.getPartsReviewDate())
+                            .memberId(reviewEntity.getMember().getMemberId())
+                            .cpuId(reviewEntity.getCpu() != null ? reviewEntity.getCpu().getId() : null)
+                            .cpucoolerId(reviewEntity.getCpucooler() != null ? reviewEntity.getCpucooler().getId() : null)
+                            .motherboardId(reviewEntity.getMotherboard() != null ? reviewEntity.getMotherboard().getId() : null)
+                            .memoryId(reviewEntity.getMemory() != null ? reviewEntity.getMemory().getId() : null)
+                            .storageId(reviewEntity.getStorage() != null ? reviewEntity.getStorage().getId() : null)
+                            .videocardId(reviewEntity.getVideocard() != null ? reviewEntity.getVideocard().getId() : null)
+                            .powersupplyId(reviewEntity.getPowersupply() != null ? reviewEntity.getPowersupply().getId() : null)
+                            .coverId(reviewEntity.getCover() != null ? reviewEntity.getCover().getId() : null)
+                            .build();
+                })
+                .collect(Collectors.toList());
+    }
 }

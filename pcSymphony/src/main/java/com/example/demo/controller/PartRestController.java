@@ -6,10 +6,11 @@ import com.example.demo.service.PartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("part")
@@ -22,9 +23,22 @@ public class PartRestController {
     @PostMapping("partsReviewWrite")
     public ResponseEntity<?> partsReviewWrite(@RequestBody PartsReviewDTO reviewDTO,
                                               @AuthenticationPrincipal MemberUserDetails user) {
+        System.out.println("Received reviewDTO: " + reviewDTO); // 디버깅용 출력
         reviewDTO.setMemberId(user.getUsername());
         partService.partsReviewWrite(reviewDTO);
 
-        return ResponseEntity.ok().build();
+        // JSON 응답 반환
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "리뷰 저장 성공");
+
+        return ResponseEntity.ok(response);
+    }
+
+    // 리뷰 목록 조회 API
+    @GetMapping("/{partType}/{id}/reviews")
+    public ResponseEntity<?> getReviewList(@PathVariable("partType") String partType,
+                                           @PathVariable("id") Integer id) {
+        List<PartsReviewDTO> reviewList = partService.getReviewList(partType, id);
+        return ResponseEntity.ok(reviewList);
     }
 }
