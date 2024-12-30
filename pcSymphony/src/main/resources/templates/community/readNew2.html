@@ -9,31 +9,6 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" href="../../static/css/style.css">
     <script th:src="@{/js/jquery-3.7.1.min.js}" src="../../static/js/jquery-3.7.1.min.js"></script>
     <script th:src="@{/js/main.min.js}" src="../../static/js/main.min.js"></script>
-    <style>
-        /* 제목과 내용 간 간격 추가 */
-        .news-item-title {
-            margin-top: 50px;
-            margin-bottom: 250px; /* 기존 값보다 더 큰 여백 */
-        }
-
-        .text-xs {
-            margin-top: 100px; /* 내용과 그 외 요소 사이에 공간 추가 */
-        }
-
-        /* 헤더 아래 툴바 높이 줄이기 */
-        .hero {
-            padding-top: 20px; /* 상단 여백 줄이기 */
-            padding-bottom: 20px; /* 하단 여백 줄이기 */
-            height: 150px; /* 섹션의 고정 높이 설정 (필요 시 값 조정) */
-        }
-        .button-group {
-            margin-top: 20px;
-        }
-        .button-dark {
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body class="has-animations">
 <div class="body-wrap ">
@@ -78,19 +53,18 @@
                 </div>
             </div>
         </div>
-        <!-- 메인 섹션 -->
-        <!-- 에러 메시지 출력 (삭제 권한이 없을 경우) -->
-        <div class="text-xxs" th:if="${errorMessage != null}">
-            <p th:text="${errorMessage}"></p>
-        </div>
+    <!-- 메인 섹션 -->
+<!--        <div class="container">-->
+    <!-- 에러 메시지 출력 (삭제 권한이 없을 경우) -->
+    <div class="text-xxs" th:if="${errorMessage != null}">
+        <p th:text="${errorMessage}"></p>
+    </div>
     </section>
-    <div class="container">
-
     <!-- 게시물 내용 -->
     <!--제목-->
-    <h1 class="news-item-title h4 mt-0 mb-8" th:text="${community.communityTitle}">제목</h1>
+    <div class="news-item-title h4 mt-0 mb-8" th:text="${community.communityTitle}"></div>
     <!--내용-->
-    <div class="text-xs" th:text="${community.communityContent}">내용</div>
+    <div class="text-xs" th:text="${community.communityContent}"></div>
     <!--조회수, 작성자, 작성일 -->
     <div class="text-xs">
         조회수: <span th:text="${community.communityView}"></span> |
@@ -99,13 +73,13 @@
     </div>
     <div class="button-group">
         <!-- 수정 버튼 (작성자와 로그인한 사용자가 같을 때만 표시) -->
-        <a class="button button-primary button-sm "
+        <a class="button button-primary button-sm"
            th:href="@{/community/update/{communityId}(communityId=${community.communityId})}"
            th:if="${community.memberId == #authentication.name}">수정</a>
         <!-- 삭제 버튼 (작성자와 로그인한 사용자가 같을 때만 표시) -->
         <form method="POST" th:action="@{/community/delete}" th:if="${community.memberId == #authentication.name}">
             <input name="communityId" th:value="${community.communityId}" type="hidden"/>
-            <button class="button button-secondary button-sm " type="submit">삭제</button>
+            <button class="button button-secondary button-sm" type="submit">삭제</button>
         </form>
     </div>
     <!-- 뒤로가기 버튼 -->
@@ -129,7 +103,7 @@
         <!-- 댓글 목록은 여기에 동적으로 추가됩니다. -->
         </tbody>
     </table>
-
+<!--        </div>-->
     <script>
         // 현재 커뮤니티 ID와 사용자 ID를 얻어옵니다.
         const communityId = [[${community.communityId}]];  // 서버에서 동적으로 값을 받아옵니다.
@@ -220,7 +194,6 @@
             loadComments();
         });
     </script>
-    </div>
     <footer class="site-footer center-content-mobile invert-color">
         <div class="container">
             <div class="site-footer-inner">
@@ -269,7 +242,7 @@
             </div>
         </div>
     </footer>
-
 </div>
+
 </body>
 </html>

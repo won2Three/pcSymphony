@@ -8,7 +8,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>PcSymphony</title>
-	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
 </head>
 
 <!--헤더-->
@@ -20,7 +20,7 @@
 				<div class="brand">
 					<h1 class="m-0">
 						<a href="home.html">
-							<img th:src="@{/images/logo.svg}" alt="Tidy" width="32" height="32"></a></h1></div>
+							<img th:src="@{/images/logo.svg}" src="../static/images/logo.svg" alt="Tidy" width="32" height="32"></a></h1></div>
 				<button id="header-nav-toggle" class="header-nav-toggle" aria-controls="primary-menu"
 						aria-expanded="false"><span class="screen-reader">Menu</span> <span class="hamburger"><span
 						class="hamburger-inner"></span></span></button>
@@ -32,12 +32,14 @@
 							<li>
 								<!-- 로그인 전 -->
 								<th:block sec:authorize="not isAuthenticated()">
-									<p><a class="button button-primary button-wide-mobile button-wide-mobile button-sm"
+									<p><a class="button button-primary button-wide-mobile  button-sm"
 										  th:href="@{/member/login}">로그인</a></p>
+									<p><a class="button button-primary button-wide-mobile  button-sm"
+										  th:href="@{/member/join}">회원가입</a></p>
 								</th:block>
 								<!-- 로그인 후 -->
 								<th:block sec:authorize="isAuthenticated()">
-									<p><a class="button button-primary button-wide-mobile button-wide-mobile button-sm"
+									<p><a class="button button-primary button-wide-mobile  button-sm"
 										  th:href="@{/member/logout}">로그아웃</a></p>
 								</th:block>
 							</li>
@@ -263,6 +265,6 @@
 		</div>
 	</footer>
 </div>
-<script src="/js/main.min.js"></script>
+<script th:src="@{/js/main.min.js}" src="../static/js/main.min.js"></script>
 </body>
 </html>
