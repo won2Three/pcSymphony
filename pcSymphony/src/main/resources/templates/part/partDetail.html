@@ -342,6 +342,7 @@
             <th>리뷰 내용</th>
             <th>별점</th>
             <th>작성 날짜</th>
+            <th>삭제</th>
         </tr>
         </thead>
         <tbody id="review-list-body">
@@ -399,6 +400,16 @@
                     dateCell.textContent = new Date(review.partsReviewDate).toLocaleString();  // 날짜 포맷팅
                     row.appendChild(dateCell);
 
+           // 삭제 버튼
+                    const deleteCell = document.createElement('td');
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = '삭제';
+                    deleteButton.onclick = function() {
+                        deleteReview(review.partsReviewId);  // 해당 리뷰 삭제 함수 호출
+                    };
+                    deleteCell.appendChild(deleteButton);
+                    row.appendChild(deleteCell);
+
                     // 테이블에 행 추가
                     tbody.appendChild(row);
                 });
@@ -407,14 +418,34 @@
                 console.error('리뷰 목록을 가져오는 중 오류 발생:', error);
             });
     }
+
+     // 리뷰 삭제 함수
+    function deleteReview(partsReviewId) {
+        const confirmDelete = confirm('이 리뷰를 삭제하시겠습니까?');
+        if (confirmDelete) {
+            // 서버로 DELETE 요청 보내기
+            fetch(`/part/partsReviewDelete`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ partsReviewId: partsReviewId })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('리뷰가 삭제되었습니다.');
+                    window.location.reload(); // 페이지를 새로 고쳐서 리뷰 목록 업데이트
+                } else {
+                    alert('리뷰 삭제에 실패했습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('리뷰 삭제 중 오류 발생:', error);
+                alert('리뷰 삭제에 실패했습니다.');
+            });
+        }
+    }
 </script>
-
-
-
-
-
-
-
 
 
 <script>

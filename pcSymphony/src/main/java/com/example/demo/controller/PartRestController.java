@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.dto.CommunityReplyDTO;
 import com.example.demo.domain.dto.part.PartsReviewDTO;
 import com.example.demo.security.MemberUserDetails;
 import com.example.demo.service.PartService;
@@ -19,7 +20,7 @@ public class PartRestController {
 
     private final PartService partService;
 
-    //댓글 저장
+    //리뷰 저장
     @PostMapping("partsReviewWrite")
     public ResponseEntity<?> partsReviewWrite(@RequestBody PartsReviewDTO reviewDTO,
                                               @AuthenticationPrincipal MemberUserDetails user) {
@@ -40,5 +41,14 @@ public class PartRestController {
                                            @PathVariable("id") Integer id) {
         List<PartsReviewDTO> reviewList = partService.getReviewList(partType, id);
         return ResponseEntity.ok(reviewList);
+    }
+
+    //리뷰 삭제
+    @PostMapping("partsReviewDelete")
+    public ResponseEntity<?> reviewDelete(@RequestBody PartsReviewDTO reviewDTO,
+                                         @AuthenticationPrincipal MemberUserDetails userDetails) {
+        partService.partsReviewDelete(reviewDTO.getPartsReviewId(), userDetails.getUsername());
+        return ResponseEntity.ok().build();
+
     }
 }

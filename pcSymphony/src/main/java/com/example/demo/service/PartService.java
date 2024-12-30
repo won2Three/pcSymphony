@@ -316,4 +316,13 @@ public class PartService {
                 })
                 .collect(Collectors.toList());
     }
+
+    public void partsReviewDelete(Integer partsReviewId, String username) {
+        PartsReviewEntity reviewEntity = partsReviewRepository.findById(partsReviewId)
+                        .orElseThrow(() -> new EntityNotFoundException("리뷰 정보가 없습니다."));
+        if (!username.equals(reviewEntity.getMember().getMemberId())) {
+            throw new RuntimeException("삭제 권한이 없습니다.");
+        }
+        partsReviewRepository.delete(reviewEntity);
+    }
 }
