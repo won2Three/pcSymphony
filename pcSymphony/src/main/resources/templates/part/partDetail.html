@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title th:text="${part.name} + ' 상세 정보'">Part Detail</title>
     <style>
         table {
@@ -201,7 +201,7 @@
 
     <tr>
         <td colspan="2">
-            <button th:data-table-name="${tableName}" th:data-id="${part.id}" onclick="addToCart(this)">장바구니에 담기
+            <button onclick="addToCart(this)" th:data-id="${part.id}" th:data-table-name="${tableName}">장바구니에 담기
             </button>
         </td>
     </tr>
@@ -219,7 +219,7 @@
     <form id="reviewForm">
         <div>
             <label for="partsReviewTitle">리뷰 제목:</label>
-            <input type="text" id="partsReviewTitle" name="partsReviewTitle" placeholder="리뷰 제목을 작성해주세요." required>
+            <input id="partsReviewTitle" name="partsReviewTitle" placeholder="리뷰 제목을 작성해주세요." required type="text">
         </div>
 
         <div>
@@ -240,14 +240,14 @@
         </div>
 
         <!-- 각 부품의 ID는 URL에서 추출하여 자동으로 입력 -->
-        <input type="hidden" id="cpuId" name="cpuId" value="">
-        <input type="hidden" id="cpucoolerId" name="cpucoolerId" value="">
-        <input type="hidden" id="motherboardId" name="motherboardId" value="">
-        <input type="hidden" id="memoryId" name="memoryId" value="">
-        <input type="hidden" id="storageId" name="storageId" value="">
-        <input type="hidden" id="videocardId" name="videocardId" value="">
-        <input type="hidden" id="powersupplyId" name="powersupplyId" value="">
-        <input type="hidden" id="coverId" name="coverId" value="">
+        <input id="cpuId" name="cpuId" type="hidden" value="">
+        <input id="cpucoolerId" name="cpucoolerId" type="hidden" value="">
+        <input id="motherboardId" name="motherboardId" type="hidden" value="">
+        <input id="memoryId" name="memoryId" type="hidden" value="">
+        <input id="storageId" name="storageId" type="hidden" value="">
+        <input id="videocardId" name="videocardId" type="hidden" value="">
+        <input id="powersupplyId" name="powersupplyId" type="hidden" value="">
+        <input id="coverId" name="coverId" type="hidden" value="">
 
         <div>
             <button type="submit">리뷰 저장</button>
@@ -321,7 +321,15 @@
     .then(data => {
         alert('리뷰가 성공적으로 저장되었습니다.');
         document.getElementById('reviewForm').reset(); // 폼 초기화
-    })
+
+      // 리뷰 목록을 새로 갱신
+    const pathParts = window.location.pathname.split('/');
+    const partType = pathParts[2];  // 예: 'cpu', 'memory' 등
+    const partId = parseInt(pathParts[3]);  // 1, 2, 3 등
+
+    // 리뷰 목록을 다시 가져와서 갱신
+    fetchReviews(partType, partId);
+  })
     .catch(error => {
         console.error('Error:', error);  // 오류를 로그로 출력
         alert('리뷰 저장에 실패했습니다.');
@@ -342,6 +350,7 @@
             <th>리뷰 내용</th>
             <th>별점</th>
             <th>작성 날짜</th>
+            <th>수정</th>
             <th>삭제</th>
         </tr>
         </thead>
@@ -400,7 +409,17 @@
                     dateCell.textContent = new Date(review.partsReviewDate).toLocaleString();  // 날짜 포맷팅
                     row.appendChild(dateCell);
 
-           // 삭제 버튼
+                    // 수정 버튼
+                    const editCell = document.createElement('td');
+                    const editButton = document.createElement('button');
+                    editButton.textContent = '수정';
+                    editButton.onclick = function() {
+                    editReview(review.partsReviewId);  // 해당 리뷰 수정 함수 호출
+                    };
+                    editCell.appendChild(editButton);
+                    row.appendChild(editCell);
+
+                    // 삭제 버튼
                     const deleteCell = document.createElement('td');
                     const deleteButton = document.createElement('button');
                     deleteButton.textContent = '삭제';
