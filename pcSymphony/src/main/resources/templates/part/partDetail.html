@@ -427,9 +427,18 @@
                                              <textarea class="edit-content" style="display:none;">${review.partsReviewContent}</textarea>`;
                     row.appendChild(contentCell);
 
-                    // 별점
-                    const ratingCell = document.createElement('td');
-                    ratingCell.textContent = review.partsReviewRating;
+                    // 별점 (수정 가능하도록 만들기)
+                  const ratingCell = document.createElement('td');
+                    ratingCell.innerHTML = `
+                        <span class="review-rating">${review.partsReviewRating}</span>
+                        <select class="edit-rating" style="display:none;">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    `;
                     row.appendChild(ratingCell);
 
                     // 작성 날짜
@@ -498,12 +507,20 @@
         const contentSpan = row.querySelector('.review-content');
         const titleInput = row.querySelector('.edit-title');
         const contentTextarea = row.querySelector('.edit-content');
+        const ratingSelect = row.querySelector('.edit-rating');
+        const ratingSpan = row.querySelector('.review-rating');  // 별점 span
 
-        // 제목과 내용을 수정 가능하도록 전환
+         // 현재 리뷰의 별점 값을 가져와서 select 태그의 기본값으로 설정
+     const currentRating = ratingSpan.textContent.trim();
+    ratingSelect.value = currentRating;
+
+        // 제목, 내용, 별점을 수정 가능하도록 전환
         titleSpan.style.display = 'none';
         contentSpan.style.display = 'none';
+        ratingSpan.style.display = 'none';
         titleInput.style.display = 'inline-block';
         contentTextarea.style.display = 'inline-block';
+        ratingSelect.style.display = 'inline-block';
 
         // 수정 후 저장 버튼 추가
         const editCell = row.querySelector('td:last-child'); // 마지막 수정 버튼 셀 찾기
@@ -513,7 +530,7 @@
             saveButton.textContent = '저장';
             saveButton.classList.add('save-button');
             saveButton.onclick = function() {
-                saveReview(partsReviewId, titleInput.value, contentTextarea.value);
+                saveReview(partsReviewId, titleInput.value, contentTextarea.value, ratingSelect.value);
             };
             editCell.appendChild(saveButton); // 수정 버튼 셀에 저장 버튼 추가
         }
@@ -523,7 +540,7 @@
     }
 
     // 리뷰 수정 후 저장
-    function saveReview(partsReviewId, updatedTitle, updatedContent) {
+    function saveReview(partsReviewId, updatedTitle, updatedContent, updatedRating) {
         const pathParts = window.location.pathname.split('/');
         const partType = pathParts[2];  // 'cpu', 'memory' 등
         const partId = parseInt(pathParts[3]);  // 1, 2, 3 등
@@ -536,6 +553,7 @@
             body: JSON.stringify({
                 partsReviewTitle: updatedTitle,
                 partsReviewContent: updatedContent,
+                partsReviewRating: updatedRating,  // 수정된 별점도 함께 전송
             }),
         })
         .then(response => {
