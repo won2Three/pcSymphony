@@ -51,4 +51,29 @@ public class PartRestController {
         return ResponseEntity.ok().build();
 
     }
+
+    //리뷰 수정
+    @PutMapping("partsReviewUpdate/{id}")
+    public ResponseEntity<?> updateReview(@PathVariable("id") Integer id,
+                                          @RequestBody Map<String, String> requestData,
+                                          @AuthenticationPrincipal MemberUserDetails userDetails) {
+
+        String updatedTitle = requestData.get("partsReviewTitle");
+        String updatedContent = requestData.get("partsReviewContent");
+
+        //수정 처리
+        partService.partsReviewUpdate(id, updatedTitle, updatedContent, userDetails.getUsername());
+        // JSON 응답 반환
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "리뷰가 수정되었습니다.");
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("{partType}/{id}/reviews/update")
+    public ResponseEntity<?> getUpdateList(@PathVariable("partType") String partType,
+                                           @PathVariable("id") Integer id) {
+        List<PartsReviewDTO> reviewDTOList = partService.getReviewList(partType, id);
+        return ResponseEntity.ok(reviewDTOList);
+    }
+
 }
