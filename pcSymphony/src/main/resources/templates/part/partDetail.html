@@ -437,23 +437,19 @@
                     dateCell.textContent = new Date(review.partsReviewDate).toLocaleString();  // 날짜 포맷팅
                     row.appendChild(dateCell);
 
-                    // 수정 버튼
+                    // 수정 버튼 (작성자와 로그인한 사용자 비교 후 표시 여부 결정)
                     const editCell = document.createElement('td');
                     const editButton = document.createElement('button');
                     editButton.textContent = '수정';
-                    editButton.onclick = function() {
-                        checkPermissionAndEditReview(review.partsReviewId, partType, partId);  // 권한 확인 후 수정
-                    };
+                    checkPermissionAndShowButton(review.partsReviewId, 'edit', editButton);  // 권한 확인 후 버튼 보이기
                     editCell.appendChild(editButton);
                     row.appendChild(editCell);
 
-                    // 삭제 버튼
+                    // 삭제 버튼 (작성자와 로그인한 사용자 비교 후 표시 여부 결정)
                     const deleteCell = document.createElement('td');
                     const deleteButton = document.createElement('button');
                     deleteButton.textContent = '삭제';
-                    deleteButton.onclick = function() {
-                        checkPermissionAndDeleteReview(review.partsReviewId);  // 권한 확인 후 삭제
-                    };
+                    checkPermissionAndShowButton(review.partsReviewId, 'delete', deleteButton);  // 권한 확인 후 버튼 보이기
                     deleteCell.appendChild(deleteButton);
                     row.appendChild(deleteCell);
 
@@ -466,17 +462,27 @@
             });
     }
 
-    // 수정 버튼 클릭 시 권한 확인 후 리뷰 수정
-    function checkPermissionAndEditReview(partsReviewId, partType, partId) {
-        fetch(`/part/partsReview/permission/${partsReviewId}?action=edit`, {
+    // 권한 확인 후 버튼을 보이거나 숨기기
+    function checkPermissionAndShowButton(partsReviewId, action, button) {
+        fetch(`/part/partsReview/permission/${partsReviewId}?action=${action}`, {
             method: 'GET',
         })
         .then(response => response.json())
         .then(data => {
             if (data.isAllowed) {
-                editReview(partsReviewId);  // 권한이 있으면 수정 가능
+                // 권한이 있으면 버튼 클릭 이벤트 핸들러 추가
+                if (action === 'edit') {
+                    button.onclick = function() {
+                        editReview(partsReviewId);  // 권한이 있으면 수정
+                    };
+                } else if (action === 'delete') {
+                    button.onclick = function() {
+                        deleteReview(partsReviewId);  // 권한이 있으면 삭제
+                    };
+                }
             } else {
-                alert('수정 권한이 없습니다.');
+                // 권한이 없으면 버튼을 숨김
+                button.style.display = 'none';
             }
         })
         .catch(error => {
@@ -485,7 +491,7 @@
         });
     }
 
-    // 리뷰 수정 후 저장
+    // 수정 버튼 클릭 시 리뷰 수정
     function editReview(partsReviewId) {
         const row = document.querySelector(`tr[data-review-id='${partsReviewId}']`);
         const titleSpan = row.querySelector('.review-title');
@@ -548,25 +554,6 @@
         });
     }
 
-    // 삭제 버튼 클릭 시 권한 확인 후 삭제
-    function checkPermissionAndDeleteReview(partsReviewId) {
-        fetch(`/part/partsReview/permission/${partsReviewId}?action=delete`, {
-            method: 'GET',
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.isAllowed) {
-                deleteReview(partsReviewId);  // 권한이 있으면 삭제 진행
-            } else {
-                alert('삭제 권한이 없습니다.');
-            }
-        })
-        .catch(error => {
-            console.error('권한 확인 중 오류 발생:', error);
-            alert('권한 확인 중 문제가 발생했습니다.');
-        });
-    }
-
     // 리뷰 삭제 함수
     function deleteReview(partsReviewId) {
         const confirmDelete = confirm('이 리뷰를 삭제하시겠습니까?');
@@ -594,7 +581,6 @@
         }
     }
 </script>
-
 
 </body>
 </html>
