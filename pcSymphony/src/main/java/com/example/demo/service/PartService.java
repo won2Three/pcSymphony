@@ -326,7 +326,7 @@ public class PartService {
         partsReviewRepository.delete(reviewEntity);
     }
 
-    public void partsReviewUpdate(int partsReviewId, String updatedTitle, String updatedContent, String username) {
+    public void partsReviewUpdate(int partsReviewId, String updatedTitle, String updatedContent, int updatedRating, String username) {
         //리뷰 확인
         PartsReviewEntity reviewEntity = partsReviewRepository.findById(partsReviewId)
                 .orElseThrow(() -> new EntityNotFoundException("리뷰가 없습니다."));
@@ -338,6 +338,7 @@ public class PartService {
         //게시글 수정
         reviewEntity.setPartsReviewTitle(updatedTitle);
         reviewEntity.setPartsReviewContent(updatedContent);
+        reviewEntity.setPartsReviewRating(updatedRating);
 
         partsReviewRepository.save(reviewEntity);
 

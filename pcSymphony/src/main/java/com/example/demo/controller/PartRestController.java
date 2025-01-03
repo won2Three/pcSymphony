@@ -2,9 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.dto.CommunityReplyDTO;
 import com.example.demo.domain.dto.part.PartsReviewDTO;
+import com.example.demo.domain.entity.part.PartsReviewEntity;
+import com.example.demo.repository.part.PartsReviewRepository;
 import com.example.demo.security.MemberUserDetails;
 import com.example.demo.service.PartService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +23,7 @@ import java.util.Map;
 public class PartRestController {
 
     private final PartService partService;
+    private final PartsReviewRepository partsReviewRepository;
 
     //리뷰 저장
     @PostMapping("partsReviewWrite")
@@ -60,9 +65,10 @@ public class PartRestController {
 
         String updatedTitle = requestData.get("partsReviewTitle");
         String updatedContent = requestData.get("partsReviewContent");
+        int updatedRating = Integer.parseInt(requestData.get("partsReviewRating"));
 
         //수정 처리
-        partService.partsReviewUpdate(id, updatedTitle, updatedContent, userDetails.getUsername());
+        partService.partsReviewUpdate(id, updatedTitle, updatedContent, updatedRating, userDetails.getUsername());
         // JSON 응답 반환
         Map<String, String> response = new HashMap<>();
         response.put("message", "리뷰가 수정되었습니다.");
@@ -74,6 +80,33 @@ public class PartRestController {
                                            @PathVariable("id") Integer id) {
         List<PartsReviewDTO> reviewDTOList = partService.getReviewList(partType, id);
         return ResponseEntity.ok(reviewDTOList);
+    }
+
+    @GetMapping("partsReview/permission/{id}")
+    public ResponseEntity<?> checkPermission(@PathVariable("id") Integer id,
+                                             @RequestParam("action") String action,  // "edit" 또는 "delete"
+                                             @AuthenticationPrincipal MemberUserDetails userDetails) {
+        // 리뷰 확인
+        PartsReviewEntity reviewEntity = partsReviewRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("리뷰가 없습니다."));
+
+        // 작성자 확인
+        boolean hasPermission = reviewEntity.getMember().getMemberId().equals(userDetails.getUsername());
+
+        if (!hasPermission) {
+            return ResponseEntity.ok(Map.of("isAllowed", false));  // 권한이 없으면 false 반환
+        }
+
+        // action에 따라 권한 확인
+        if ("edit".equals(action)) {
+            // 수정 권한 확인 (작성자만 수정 가능)
+            return ResponseEntity.ok(Map.of("isAllowed", true));  // 권한이 있으면 true 반환
+        } else if ("delete".equals(action)) {
+            // 삭제 권한 확인 (작성자만 삭제 가능)
+            return ResponseEntity.ok(Map.of("isAllowed", true));  // 권한이 있으면 true 반환
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효하지 않은 action");
+        }
     }
 
 }
