@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.dto.part.PartDTO;
-import com.example.demo.domain.dto.part.PartsReviewDTO;
+import com.example.demo.domain.dto.PartDTO;
+import com.example.demo.domain.dto.PartsReviewDTO;
 import com.example.demo.domain.entity.MemberEntity;
 import com.example.demo.domain.entity.part.*;
 import com.example.demo.repository.MemberRepository;

@@ -2,7 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.domain.dto.PcReviewDTO;
 import com.example.demo.domain.entity.PcReviewEntity;
+import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.PcReviewRepository;
+import com.example.demo.repository.part.*;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,7 @@ import java.util.Optional;
 public class PcReviewService {
 
     private final PcReviewRepository pcReviewRepository;
-
+    private final PartsReviewRepository partsReviewRepository;
     /**
      * Save PcReviewEntity from PcReviewDTO
      *
@@ -57,14 +60,38 @@ public class PcReviewService {
                 .pcreviewContent(pcReviewDTO.getPcreviewContent())
                 .pcreviewDate(pcReviewDTO.getPcreviewDate())
                 .userId(pcReviewDTO.getUserId())
-                .cpuReviewId(pcReviewDTO.getCpuReviewId())
-                .cpucoolerReviewId(pcReviewDTO.getCpucoolerReviewId())
-                .motherboardId(pcReviewDTO.getMotherboardReviewId())
-                .memoryReviewId(pcReviewDTO.getMemoryReviewId())
-                .storageReviewId(pcReviewDTO.getStorageReviewId())
-                .videocardReviewId(pcReviewDTO.getVideocardReviewId())
-                .powersupplyReviewId(pcReviewDTO.getPowersupplyReviewId())
-                .coverReviewId(pcReviewDTO.getCoverReviewId())
+                .cpuReview(
+                        partsReviewRepository.findById(pcReviewDTO.getCpuReviewId())
+                                .orElseThrow(() -> new EntityNotFoundException("CPU Review not found with id: " + pcReviewDTO.getCpuReviewId()))
+                )
+                .cpucoolerReview(
+                        partsReviewRepository.findById(pcReviewDTO.getCpucoolerReviewId())
+                                .orElseThrow(() -> new EntityNotFoundException("CPU Cooler Review not found with id: " + pcReviewDTO.getCpucoolerReviewId()))
+                )
+                .motherboardReview(
+                        partsReviewRepository.findById(pcReviewDTO.getMotherboardReviewId())
+                                .orElseThrow(() -> new EntityNotFoundException("Motherboard Review not found with id: " + pcReviewDTO.getMotherboardReviewId()))
+                )
+                .memoryReview(
+                        partsReviewRepository.findById(pcReviewDTO.getMemoryReviewId())
+                                .orElseThrow(() -> new EntityNotFoundException("Memory Review not found with id: " + pcReviewDTO.getMemoryReviewId()))
+                )
+                .storageReview(
+                        partsReviewRepository.findById(pcReviewDTO.getStorageReviewId())
+                                .orElseThrow(() -> new EntityNotFoundException("Storage Review not found with id: " + pcReviewDTO.getStorageReviewId()))
+                )
+                .videocardReview(
+                        partsReviewRepository.findById(pcReviewDTO.getVideocardReviewId())
+                                .orElseThrow(() -> new EntityNotFoundException("Video Card Review not found with id: " + pcReviewDTO.getVideocardReviewId()))
+                )
+                .powersupplyReview(
+                        partsReviewRepository.findById(pcReviewDTO.getPowersupplyReviewId())
+                                .orElseThrow(() -> new EntityNotFoundException("Power Supply Review not found with id: " + pcReviewDTO.getPowersupplyReviewId()))
+                )
+                .coverReview(
+                        partsReviewRepository.findById(pcReviewDTO.getCoverReviewId())
+                                .orElseThrow(() -> new EntityNotFoundException("Cover Review not found with id: " + pcReviewDTO.getCoverReviewId()))
+                )
                 .build();
     }
 
@@ -81,14 +108,14 @@ public class PcReviewService {
                 .pcreviewContent(pcReviewEntity.getPcreviewContent())
                 .pcreviewDate(pcReviewEntity.getPcreviewDate())
                 .userId(pcReviewEntity.getUserId())
-                .cpuReviewId(pcReviewEntity.getCpuReviewId())
-                .cpucoolerReviewId(pcReviewEntity.getCpucoolerReviewId())
-                .motherboardReviewId(pcReviewEntity.getMotherboardId())
-                .memoryReviewId(pcReviewEntity.getMemoryReviewId())
-                .storageReviewId(pcReviewEntity.getStorageReviewId())
-                .videocardReviewId(pcReviewEntity.getVideocardReviewId())
-                .powersupplyReviewId(pcReviewEntity.getPowersupplyReviewId())
-                .coverReviewId(pcReviewEntity.getCoverReviewId())
+                .cpuReviewId(pcReviewEntity.getCpuReview().getPartsReviewId())
+                .cpucoolerReviewId(pcReviewEntity.getCpucoolerReview().getPartsReviewId())
+                .motherboardReviewId(pcReviewEntity.getMotherboardReview().getPartsReviewId())
+                .memoryReviewId(pcReviewEntity.getMemoryReview().getPartsReviewId())
+                .storageReviewId(pcReviewEntity.getStorageReview().getPartsReviewId())
+                .videocardReviewId(pcReviewEntity.getVideocardReview().getPartsReviewId())
+                .powersupplyReviewId(pcReviewEntity.getPowersupplyReview().getPartsReviewId())
+                .coverReviewId(pcReviewEntity.getCoverReview().getPartsReviewId())
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.demo.domain.entity;
 
+import com.example.demo.domain.entity.part.PartsReviewEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,27 +34,35 @@ public class PcReviewEntity {
     @Column(name = "user_id", length = 20)
     private String userId; // 작성자 ID
 
-    @Column(name = "cpu_review_id")
-    private Integer cpuReviewId; // CPU 리뷰 ID
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cpu_review_id", referencedColumnName = "partsreview_id")
+    private PartsReviewEntity cpuReview; // CPU 리뷰 ID
 
-    @Column(name = "cpucooler_review_id")
-    private Integer cpucoolerReviewId; // CPU 쿨러 리뷰 ID
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cpucooler_review_id", referencedColumnName = "partsreview_id")
+    private PartsReviewEntity cpucoolerReview; // CPU 쿨러 리뷰 ID
 
-    @Column(name = "motherboard_id")
-    private Integer motherboardId; // 메인보드 ID
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "motherboard_review_id", referencedColumnName = "partsreview_id")
+    private PartsReviewEntity motherboardReview; // 메인보드 리뷰 ID
 
-    @Column(name = "memory_review_id")
-    private Integer memoryReviewId; // 메모리 리뷰 ID
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memory_review_id", referencedColumnName = "partsreview_id")
+    private PartsReviewEntity memoryReview; // 메모리 리뷰 ID
 
-    @Column(name = "storage_review_id")
-    private Integer storageReviewId; // 스토리지 리뷰 ID
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "storage_review_id", referencedColumnName = "partsreview_id")
+    private PartsReviewEntity storageReview; // 스토리지 리뷰 ID
 
-    @Column(name = "videocard_review_id")
-    private Integer videocardReviewId; // 그래픽카드 리뷰 ID
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "videocard_review_id", referencedColumnName = "partsreview_id")
+    private PartsReviewEntity videocardReview; // 그래픽카드 리뷰 ID
 
-    @Column(name = "powersupply_review_id")
-    private Integer powersupplyReviewId; // 파워서플라이 리뷰 ID
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "powersupply_review_id", referencedColumnName = "partsreview_id")
+    private PartsReviewEntity powersupplyReview; // 파워서플라이 리뷰 ID
 
-    @Column(name = "cover_review_id")
-    private Integer coverReviewId; // 케이스 리뷰 ID
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cover_review_id", referencedColumnName = "partsreview_id")
+    private PartsReviewEntity coverReview; // 케이스 리뷰 ID
 }

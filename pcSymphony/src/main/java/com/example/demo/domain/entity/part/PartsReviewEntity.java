@@ -2,6 +2,8 @@ package com.example.demo.domain.entity.part;
 
 import com.example.demo.domain.entity.CommunityEntity;
 import com.example.demo.domain.entity.MemberEntity;
+import com.example.demo.repository.MemberRepository;
+import com.example.demo.repository.part.CpuRepository;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -76,5 +78,7 @@ public class PartsReviewEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cover_id", referencedColumnName = "cover_id")
     CoverEntity cover;
+
+
 
 }

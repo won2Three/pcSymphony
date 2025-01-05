@@ -405,6 +405,7 @@
             .then(reviews => {
                 const tbody = document.getElementById('review-list-body');
                 tbody.innerHTML = '';  // 테이블 초기화
+                console.log(reviews);
                 reviews.forEach(review => {
                     // 리뷰 데이터를 기반으로 테이블 행을 동적으로 생성
                     const row = document.createElement('tr');

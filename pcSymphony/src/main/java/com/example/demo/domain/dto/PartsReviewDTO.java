@@ -1,5 +1,6 @@
-package com.example.demo.domain.dto.part;
+package com.example.demo.domain.dto;
 
+import com.example.demo.domain.entity.MemberEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,5 +42,6 @@ public class PartsReviewDTO {
     Integer powersupplyId;
     Integer coverId;
 
+    // Getter for member
 
 }

@@ -2,15 +2,16 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.dto.PcReviewDTO;
 import com.example.demo.domain.entity.CartEntity;
-import com.example.demo.domain.entity.PartsReviewEntity;
+import com.example.demo.domain.entity.part.PartsReviewEntity;
 import com.example.demo.domain.entity.PcReviewEntity;
 import com.example.demo.repository.CartRepository;
 
-import com.example.demo.repository.PartsReviewRepository;
+import com.example.demo.repository.MemberRepository;
+import com.example.demo.repository.part.*;
 import com.example.demo.repository.PcReviewRepository;
 import com.example.demo.security.MemberUserDetails;
 import com.example.demo.service.CartService;
-import com.example.demo.service.PartsReviewService;
+//import com.example.demo.service.PartsReviewService;
 import com.example.demo.service.PcReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +43,32 @@ public class PcReviewController {
     @Autowired
     private final PartsReviewRepository partsReviewRepository;
 
+    @Autowired
+    private final MemberRepository memberRepository;
 
+    @Autowired
+    private final CpuRepository cpuRepository;
+
+    @Autowired
+    private final CpuCoolerRepository cpuCoolerRepository;
+
+    @Autowired
+    private final MemoryRepository memoryRepository;
+
+    @Autowired
+    private final CoverRepository coverRepository;
+
+    @Autowired
+    private final MotherboardRepository motherboardRepository;
+
+    @Autowired
+    private final PowerSupplyRepository powerSupplyRepository;
+
+    @Autowired
+    private final StorageRepository storageRepository;
+
+    @Autowired
+    private final VideoCardRepository videoCardRepository;
 
     @GetMapping("write")
     public String write(Model model) {
@@ -58,6 +84,7 @@ public class PcReviewController {
     public String write(
             @ModelAttribute PcReviewDTO pcReviewDTO,
             @AuthenticationPrincipal MemberUserDetails user) {
+
         String userName = user.getUsername();
         pcReviewDTO.setUserId(userName);
         CartEntity cartEntity = cartRepository.findByUser_MemberId(userName);
@@ -86,75 +113,74 @@ public class PcReviewController {
 //                partsReviewEntity.setPartsreviewContent(
 //                        review.getContent() != null ? review.getContent() : "Default content"
 //                );
-                partsReviewEntity.setPartsreviewTitle(review.getTitle());
-                partsReviewEntity.setPartsreviewContent(review.getContent());
-                partsReviewEntity.setPartsreviewDate(LocalDateTime.now());
-                partsReviewEntity.setPartsreviewRating(review.getRating());
+                partsReviewEntity.setPartsReviewTitle(review.getTitle());
+                partsReviewEntity.setPartsReviewContent(review.getContent());
+                partsReviewEntity.setPartsReviewDate(LocalDateTime.now());
+                partsReviewEntity.setPartsReviewRating(review.getRating());
 
-                partsReviewEntity.setUserId(userName);
-
+                partsReviewEntity.setMember(memberRepository.findById(userName).orElse(null));
                 // partId를 적절한 필드에 설정
                 switch (partName) {
                     case "cpu" -> {
-                        partsReviewEntity.setCpuId(partId);
+                        partsReviewEntity.setCpu(cpuRepository.findById(partId).orElse(null));
                         PartsReviewEntity savedEntity = partsReviewRepository.save(partsReviewEntity);
-                        Integer partsReviewId = savedEntity.getPartsreviewId();
+                        Integer partsReviewId = savedEntity.getPartsReviewId();
                         // partsReviewId를 CPU 리뷰 ID에 저장
                         pcReviewDTO.setCpuReviewId(partsReviewId);
                         log.info("Saved CPU Review ID: {}", partsReviewId);
                     }
                     case "cpucooler" -> {
-                        partsReviewEntity.setCpucoolerId(partId);
+                        partsReviewEntity.setCpucooler(cpuCoolerRepository.findById(partId).orElse(null));
                         PartsReviewEntity savedEntity = partsReviewRepository.save(partsReviewEntity);
-                        Integer partsReviewId = savedEntity.getPartsreviewId();
+                        Integer partsReviewId = savedEntity.getPartsReviewId();
                         // partsReviewId를 CPU Cooler 리뷰 ID에 저장
                         pcReviewDTO.setCpucoolerReviewId(partsReviewId);
                         log.info("Saved CPU Cooler Review ID: {}", partsReviewId);
                     }
                     case "motherboard" -> {
-                        partsReviewEntity.setMotherboardId(partId);
+                        partsReviewEntity.setMotherboard(motherboardRepository.findById(partId).orElse(null));
                         PartsReviewEntity savedEntity = partsReviewRepository.save(partsReviewEntity);
-                        Integer partsReviewId = savedEntity.getPartsreviewId();
+                        Integer partsReviewId = savedEntity.getPartsReviewId();
                         // partsReviewId를 Motherboard 리뷰 ID에 저장
                         pcReviewDTO.setMotherboardReviewId(partsReviewId);
                         log.info("Saved Motherboard Review ID: {}", partsReviewId);
                     }
                     case "memory" -> {
-                        partsReviewEntity.setMemoryId(partId);
+                        partsReviewEntity.setMemory(memoryRepository.findById(partId).orElse(null));
                         PartsReviewEntity savedEntity = partsReviewRepository.save(partsReviewEntity);
-                        Integer partsReviewId = savedEntity.getPartsreviewId();
+                        Integer partsReviewId = savedEntity.getPartsReviewId();
                         // partsReviewId를 Memory 리뷰 ID에 저장
                         pcReviewDTO.setMemoryReviewId(partsReviewId);
                         log.info("Saved Memory Review ID: {}", partsReviewId);
                     }
                     case "storage" -> {
-                        partsReviewEntity.setStorageId(partId);
+                        partsReviewEntity.setStorage(storageRepository.findById(partId).orElse(null));
                         PartsReviewEntity savedEntity = partsReviewRepository.save(partsReviewEntity);
-                        Integer partsReviewId = savedEntity.getPartsreviewId();
+                        Integer partsReviewId = savedEntity.getPartsReviewId();
                         // partsReviewId를 Storage 리뷰 ID에 저장
                         pcReviewDTO.setStorageReviewId(partsReviewId);
                         log.info("Saved Storage Review ID: {}", partsReviewId);
                     }
                     case "videocard" -> {
-                        partsReviewEntity.setVideocardId(partId);
+                        partsReviewEntity.setVideocard(videoCardRepository.findById(partId).orElse(null));
                         PartsReviewEntity savedEntity = partsReviewRepository.save(partsReviewEntity);
-                        Integer partsReviewId = savedEntity.getPartsreviewId();
+                        Integer partsReviewId = savedEntity.getPartsReviewId();
                         // partsReviewId를 VideoCard 리뷰 ID에 저장
                         pcReviewDTO.setVideocardReviewId(partsReviewId);
                         log.info("Saved VideoCard Review ID: {}", partsReviewId);
                     }
                     case "powersupply" -> {
-                        partsReviewEntity.setPowersupplyId(partId);
+                        partsReviewEntity.setPowersupply(powerSupplyRepository.findById(partId).orElse(null));
                         PartsReviewEntity savedEntity = partsReviewRepository.save(partsReviewEntity);
-                        Integer partsReviewId = savedEntity.getPartsreviewId();
+                        Integer partsReviewId = savedEntity.getPartsReviewId();
                         // partsReviewId를 PowerSupply 리뷰 ID에 저장
                         pcReviewDTO.setPowersupplyReviewId(partsReviewId);
                         log.info("Saved PowerSupply Review ID: {}", partsReviewId);
                     }
                     case "cover" -> {
-                        partsReviewEntity.setCoverId(partId);
+                        partsReviewEntity.setCover(coverRepository.findById(partId).orElse(null));
                         PartsReviewEntity savedEntity = partsReviewRepository.save(partsReviewEntity);
-                        Integer partsReviewId = savedEntity.getPartsreviewId();
+                        Integer partsReviewId = savedEntity.getPartsReviewId();
                         // partsReviewId를 Cover 리뷰 ID에 저장
                         pcReviewDTO.setCoverReviewId(partsReviewId);
                         log.info("Saved Cover Review ID: {}", partsReviewId);

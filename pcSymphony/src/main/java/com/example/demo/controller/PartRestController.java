@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.dto.CommunityReplyDTO;
-import com.example.demo.domain.dto.part.PartsReviewDTO;
+import com.example.demo.domain.dto.PartsReviewDTO;
 import com.example.demo.domain.entity.part.PartsReviewEntity;
 import com.example.demo.repository.part.PartsReviewRepository;
 import com.example.demo.security.MemberUserDetails;
