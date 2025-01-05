@@ -88,23 +88,6 @@ public class CommunityService {
     }
 
     //수정
-//        public void update(int communityId, CommunityDTO communityDto, String username) {
-//         //사용자 확인
-//        MemberEntity memberEntity = memberRepository.findById(username)
-//                .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
-//
-//        CommunityEntity communityEntity = communityRepository.findById(communityId)
-//                .orElseThrow(() -> new EntityNotFoundException("글이 없습니다."));
-//
-//        if (!username.equals(memberEntity.getMemberId())) {
-//            throw new RuntimeException("삭제 권한이 없습니다.");
-//        }
-//
-//        communityRepository.delete(communityEntity);
-//    }
-
-    //수정
-//    public void update(int communityId, CommunityDTO communityDto, String username) {
     public void update(int communityId, CommunityDTO communityDto, String username) {
          //사용자 확인
         MemberEntity memberEntity = memberRepository.findById(username)
@@ -148,7 +131,6 @@ public class CommunityService {
         CommunityEntity communityEntity = communityRepository.findById(replyDTO.getCommunityId())
                 .orElseThrow(() -> new EntityNotFoundException("게시글 정보가 없습니다."));
         CommunityReplyEntity communityReplyEntity = CommunityReplyEntity.builder()
-                .community(communityEntity)
                 .member(memberEntity)
                 .communityReplyContent(replyDTO.getReplyContent())
                 .build();

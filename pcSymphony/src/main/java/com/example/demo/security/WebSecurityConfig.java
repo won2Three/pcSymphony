@@ -2,6 +2,7 @@ package com.example.demo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,7 +30,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(author -> author
                         .requestMatchers(PUBLIC_URLS).permitAll() //인증 없이 접근 가능
 //                                .anyRequest().permitAll() //모든 요청을 인증없이 접근 가능
-                        .anyRequest().authenticated() //그 외 요청은 인증 요구, 로그인사용자만 접근 가능
+                        .requestMatchers(HttpMethod.PUT, "/part/partsReviewUpdate/**").authenticated() // PUT 요청에 대해 인증 요구
+                                .anyRequest().authenticated() //그 외 요청은 인증 요구, 로그인사용자만 접근 가능
                 )
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(formLogin -> formLogin
