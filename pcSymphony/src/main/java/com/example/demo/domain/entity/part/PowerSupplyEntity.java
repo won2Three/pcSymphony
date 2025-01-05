@@ -38,7 +38,7 @@ public class PowerSupplyEntity {
     private String powerSupplyType;
 
     @Column(name = "powersupply_wattage")
-    private Integer powerSupplyWattage;
+    private String powerSupplyWattage;
 
     @Column(name = "powersupply_length")
     private Integer powerSupplyLength;

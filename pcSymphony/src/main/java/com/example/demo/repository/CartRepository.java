@@ -55,6 +55,8 @@ public interface CartRepository extends JpaRepository<CartEntity, Integer> {
     @Transactional
     @Query("UPDATE CartEntity c SET c.cover = NULL WHERE c.cover IS NOT NULL")
     void removeCover();
+
+    // get
 }
 
 //        //가져올 정보 - userid, cpu, cpucooler, motherboard, memory, videocard, storage, powersupply, cover

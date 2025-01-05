@@ -1,4 +1,4 @@
-package com.example.demo.domain.dto.part;
+package com.example.demo.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,7 +54,7 @@ public class PartDTO {
     private String motherboardColor;
 
     private String powerSupplyType;
-    private Integer powerSupplyWattage;
+    private String powerSupplyWattage;
     private Integer powerSupplyLength;
     private String powerSupplyColor;
 
