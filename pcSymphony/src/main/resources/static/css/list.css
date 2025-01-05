@@ -1,0 +1,17 @@
+.write-button {
+    float: right;
+    color: #000;
+}
+#list-title {
+    text-align: left;   /*제목은 왼쪽 정렬*/
+}
+.list-table {
+    width: 100%; /* 테이블의 전체 너비를 100%로 고정 */
+    table-layout: fixed; /* 각 열의 너비를 고정 */
+    border-collapse: collapse; /* 테이블 경계 병합 */
+}
+.list-table th, .list-table td {
+    white-space: nowrap;       /* 텍스트를 한 줄로 유지 */
+    overflow: hidden;          /* 넘친 텍스트 숨기기 */
+    text-overflow: ellipsis;   /* 말줄임(...) 표시 */
+}

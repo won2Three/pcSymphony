@@ -1,0 +1,228 @@
+/* 헤더 스타일 */
+.site-header {
+    position: fixed; /* 헤더를 상단 고정 */
+    top: 0;
+    width: 100%; /* 가로 전체를 차지 */
+    z-index: 1000; /* 다른 요소 위로 오도록 설정 */
+    background-color: #0c1622; /* 배경색 설정 */
+    color: #fff; /* 텍스트 색상 */
+}
+
+
+.site-header-inner {
+    display: flex; /* 플렉스박스로 정렬 */
+    justify-content: space-between; /* 좌우로 요소 배치 */
+    align-items: center; /* 세로 정렬 */
+    height: 80px; /* 헤더 높이 */
+    padding: 0 24px; /* 좌우 여백 */
+}
+
+.brand a {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 로고 스타일 */
+.brand a img {
+    display: inline-block;
+    width: 90px; /* 로고 너비 */
+    height: 90px; /* 로고 높이 */
+    top: 30px;
+}
+.logo-text {
+    display: flex;
+    align-items: center; /* 로고와 텍스트를 같은 라인으로 맞춤 */
+}
+
+.brand span {
+    margin-left: 12px; /* 로고 간격 */
+}
+
+/* 네비게이션 메뉴 */
+.header-nav ul {
+    display: flex;
+    list-style: none; /* 불릿 제거 */
+    padding: 0;
+    margin: 0;
+}
+
+.header-nav ul li {
+    margin: 0 12px; /* 메뉴 간격 */
+}
+
+.header-nav a {
+    color: #fff; /* 링크 기본 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-weight: 500; /* 글자 두께 */
+    padding: 8px 16px; /* 링크 패딩 */
+    transition: color 0.3s; /* 색상 변경 애니메이션 */
+}
+
+.header-nav a:hover {
+    color: #fff; /* 호버 시 텍스트 색상 변경 */
+}
+
+.menu nav ul {
+    display: flex; /* 가로로 배치 */
+    list-style: none; /* 불릿 제거 */
+    margin: 0;
+    padding: 0;
+
+}
+
+.menu nav ul li {
+    margin: 0 12px; /* 버튼 간 간격 */
+}
+
+.menu nav ul li a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: #95A4B4; /* 기본 텍스트 색상 */
+    font-size: 16px; /* 텍스트 크기 */
+    font-weight: 500; /* 글씨 두께 */
+    padding: 8px 16px; /* 내부 여백 */
+    display: inline-block; /* 링크를 블록처럼 취급 */
+    transition: color 0.3s, background-color 0.3s; /* 색상 및 배경 변화 애니메이션 */
+}
+
+/*버튼 스타일*/
+.button {
+    display: inline-flex; /* 버튼을 인라인 플렉스로 설정 */
+    align-items: center; /* 텍스트 세로 정렬 */
+    justify-content: center;
+    padding: 11px 20px; /* 버튼 안 여백 */
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s; /* 애니메이션 */
+}
+
+.button-sm {
+    padding: 8px 16px; /* 작은 버튼 패딩 */
+    height: auto; /* 높이를 자동으로 조정 */
+}
+
+
+/* 햄버거 메뉴 */
+.header-nav-toggle {
+    display: none; /* 기본적으로 숨김 */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.hamburger {
+    width: 24px;
+    height: 24px;
+    position: relative;
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+    background-color: #0c1622; /* 햄버거 선 색상 */
+    height: 2px;
+    position: absolute;
+    width: 24px;
+    transition: all 0.3s;
+}
+
+.hamburger-inner::before {
+    content: '';
+    top: -8px; /* 첫 번째 선 위로 이동 */
+}
+
+.hamburger-inner::after {
+    content: '';
+    bottom: -8px; /* 세 번째 선 아래로 이동 */
+}
+
+.off-nav-is-active .hamburger-inner {
+    transform: rotate(45deg); /* 클릭 시 회전 */
+}
+
+.off-nav-is-active .hamburger-inner::before {
+    top: 0;
+    transform: rotate(90deg); /* 선 수직 회전 */
+}
+
+.off-nav-is-active .hamburger-inner::after {
+    bottom: 0;
+    transform: rotate(90deg); /* 선 수직 회전 */
+}
+
+/* 모바일에서 네비게이션 메뉴 스타일 */
+@media (max-width: 640px) {
+    .header-nav {
+        display: none; /* 기본적으로 숨김 */
+        flex-direction: column; /* 세로 정렬 */
+        background-color: #0c1622;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        opacity: 0; /* 메뉴가 닫혀 있을 때 투명도 */
+        max-height: 0; /* 최대 높이를 0으로 */
+        transition: all 0.3s ease-in-out; /* 열리고 닫히는 애니메이션 */
+    }
+
+    .site-header {
+        position: fixed; /* 상단 고정 유지 */
+    }
+
+    .header-nav.is-active {
+        display: flex; /* 활성화 시 표시 */
+        opacity: 1; /* 투명도 100% */
+        max-height: 500px; /* 최대 높이 설정 */
+    }
+
+    .header-nav-toggle {
+        display: block; /* 모바일에서 보이도록 설정 */
+    }
+}
+
+/* 2*4 파츠리스트 표현 */
+/* 숨김 상태 */
+.hidden {
+    display: none;
+}
+
+.grid {
+    display: grid;
+}
+
+/* 그리드 컨테이너 */
+#parts-grid-container {
+    /*display: grid;*/
+    grid-template-columns: repeat(4, 1fr); /* 4열 배열 */
+    gap: 16px; /* 버튼 간 간격 */
+    padding: 16px;
+    background-color: #f3f3f3; /* 배경색 */
+    margin-top: 16px;
+    border-radius: 8px; /* 둥근 모서리 */
+}
+
+/* 버튼 스타일 */
+#parts-grid-container .grid-button {
+    padding: 12px;
+    text-align: center;
+    background-color: #2174EA;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+#parts-grid-container .grid-button:hover {
+    background-color: #2f7deb;
+}
+
+.body-wrap {
+    margin-top: 300px; /* 헤더 높이만큼 여백 추가 */
+}
+
+/*헤더 사다리꼴 검푸른색 백그라운드 길이 고정*/
+ .hero-inner {
+     height: 120px;
+     padding-bottom: 100px;
+ }
