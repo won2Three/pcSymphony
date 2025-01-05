@@ -15,6 +15,7 @@ article, aside, footer, header, nav, section {
 }
 
 h1 {
+    color: #000;
     font-size: 2em;
     margin: 0.67em 0
 }
@@ -385,7 +386,7 @@ html {
 }
 
 body {
-    color: #627183;
+    color: #000000;
     font-size: 1rem
 }
 
@@ -398,7 +399,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: "Playfair Display", serif;
     font-weight: 900;
     clear: both;
-    color: #101D2D;
+    color: #000;
     word-wrap: break-word;
     overflow-wrap: break-word
 }
@@ -440,7 +441,9 @@ h6, .h6, small, .text-sm {
 .text-xs {
     font-size: 16px;
     line-height: 24px;
-    letter-spacing: -0.1px
+    letter-spacing: -0.1px;
+    word-break: break-word; /* 적절히 줄바꿈 */
+
 }
 
 .text-xxs {
@@ -685,7 +688,6 @@ b, strong {
 }
 
 .button {
-    display: -webkit-inline-box;
     display: inline-flex;
     font-size: 16px;
     line-height: 24px;
@@ -1067,7 +1069,6 @@ textarea.form-input {
 }
 
 .form-switch {
-    display: -webkit-inline-box;
     display: inline-flex;
     -webkit-box-align: center;
     align-items: center;
@@ -1195,8 +1196,8 @@ textarea.form-input {
 }
 
 .invert-color .form-checkbox input:checked, .invert-color .form-radio input:checked {
-    background-color: !important;
-    border-color: !important
+    /*background-color: !important;*/
+    /*border-color: !important*/
 }
 
 .invert-color .form-slider input[type=range] {
@@ -1677,7 +1678,6 @@ textarea.form-input {
 }
 
 .carousel-bullets {
-    display: -webkit-inline-box;
     display: inline-flex
 }
 
@@ -2227,7 +2227,6 @@ textarea.form-input {
     }
 
     .header-nav-toggle + .header-nav ul a:not(.button) {
-        display: -webkit-inline-box;
         display: inline-flex;
         color: #95A4B4;
         padding-top: 12px;
@@ -2274,7 +2273,8 @@ textarea.form-input {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     flex-direction: column;
-    min-height: 100vh
+    min-height: 100vh;
+
 }
 
 .site-content {
@@ -2475,7 +2475,6 @@ textarea.form-input {
 }
 
 .hero-inner > .hero-figure > a {
-    display: -webkit-inline-box;
     display: inline-flex;
     -webkit-box-align: center;
     align-items: center;
@@ -2726,7 +2725,6 @@ ul.pricing-item-features-list li {
 }
 
 .testimonial-item-source {
-    display: -webkit-inline-box;
     display: inline-flex;
     flex-wrap: wrap;
     -webkit-box-align: center;
@@ -3041,12 +3039,11 @@ h4, h5, h6, .h4, .h5, .h6 {
     z-index: -3
 }
 
-.hero-inner {
-    padding-bottom: 168px
-}
+/*.hero-inner {*/
+/*    padding-bottom: 168px*/
+/*}*/
 
 .features-tiles-item-image {
-    display: -webkit-inline-box;
     display: inline-flex;
     border-radius: 50%;
     background: #2174EA
@@ -3057,7 +3054,6 @@ h4, h5, h6, .h4, .h5, .h6 {
 }
 
 .features-tabs-tab-image {
-    display: -webkit-inline-box;
     display: inline-flex;
     border-radius: 50%;
     background: #fff;
@@ -3496,7 +3492,7 @@ ul.pricing-item-features-list li.is-checked::after {
 .m-0 {
     margin: 0
 }
-
+/*section-header center-content*/
 .mt-0 {
     margin-top: 0
 }
@@ -3892,6 +3888,8 @@ ul.pricing-item-features-list li.is-checked::after {
         justify-content: center
     }
 
+
+
     /* 부모 요소에 Grid 설정 */
     .container.grid {
         display: grid;
@@ -3933,7 +3931,6 @@ ul.pricing-item-features-list li.is-checked::after {
         margin: 0; /* 기본 마진 제거 */
         text-align: center; /* 텍스트 가운데 정렬 */
     }
-
 
 }
 

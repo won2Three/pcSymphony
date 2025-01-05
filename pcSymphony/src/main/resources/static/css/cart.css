@@ -1,0 +1,43 @@
+#cart-body {
+    color: #000;
+    font-size: 1rem;
+}
+#cartList-id {
+    color: #000;
+
+}
+/*카테고리 항목 클릭시 해당 파츠 리스트로 이동*/
+.category {
+    text-decoration: underline;
+    color: #000000 !important;
+}
+.category:hover {
+    color: blue;
+}
+/*선택한 제품 없을 시 chose a product 버튼*/
+.no-product-button {
+    color: #000 !important;
+    text-decoration: underline ;
+    cursor: pointer;
+}
+.no-product-button:hover {
+    color: blue;
+}
+/*전체 가격 표현 부분 css*/
+tbody {
+    width: 100%;
+}
+.totalPrice {
+    text-align: left;
+    width: 15%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+/*    버튼 정렬*/
+td button {
+    margin-left: 10px;
+    padding: 5px 10px;
+}
+td {
+    text-align: center;
+}
