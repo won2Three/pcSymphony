@@ -36,29 +36,9 @@ public class CartController {
     @Autowired
     private CartRepository cartRepository;
 
-    @Autowired
-    private CpuRepository cpuRepository;
-    @Autowired
-    private CpuCoolerRepository cpuCoolerRepository;
-    @Autowired
-    private MotherboardRepository motherboardRepository;
-    @Autowired
-    private MemoryRepository memoryRepository;
-    @Autowired
-    private StorageRepository storageRepository;
-    @Autowired
-    private VideoCardRepository videoCardRepository;
-    @Autowired
-    private PowerSupplyRepository powerSupplyRepository;
-    @Autowired
-    private CoverRepository coverRepository;
-
-    @Autowired
-    private MemberRepository memberRepository;
-
     //cart 로 이동
     @GetMapping({"", "/"})
-    public String cart(Model model, HttpServletRequest request) {
+    public String cart(Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String loggedInUserName = authentication.getName(); // 로그인한 사용자 이름 가져오기 (보통 username이 저장됨)

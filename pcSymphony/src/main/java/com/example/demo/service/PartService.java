@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.dto.part.PartDTO;
+import com.example.demo.domain.dto.PartDTO;
 import com.example.demo.domain.entity.part.*;
 import com.example.demo.repository.part.*;
 import org.springframework.stereotype.Service;

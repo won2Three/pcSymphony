@@ -166,7 +166,10 @@
             <button id="Save as text">txt로 저장하기</button>
         </th>
         <th>
-            <button id="create review" th:disabled="${cart.cpu == null or cart.cpucooler == null or cart.motherboard == null or cart.memory == null or cart.storage == null or cart.videocard == null or cart.powersupply == null or cart.cover == null}">리뷰 작성하기</button>
+            <a id="create-review" th:href="@{/pcreview/write}"
+               th:disabled="${cart.cpu == null or cart.cpucooler == null or cart.motherboard == null or cart.memory == null or cart.storage == null or cart.videocard == null or cart.powersupply == null or cart.cover == null}">
+                리뷰 작성하기
+            </a>
         </th>
     </tr>
     </tbody>
