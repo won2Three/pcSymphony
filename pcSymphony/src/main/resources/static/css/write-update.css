@@ -1,0 +1,44 @@
+.community-container {
+    border: 1px solid #ccc;
+    padding: 33px 68px 40px 68px !important;
+    margin-bottom: 30px;
+}
+.communityTitle {
+    width: 70%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.communityContent {
+    width: 100%;
+    height: 400px;
+    box-sizing: border-box;
+    padding: 10px;
+    resize: none;
+
+}
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+.submit-button,
+.cancel-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-left: 10px;
+    border: none;
+    cursor: pointer;
+}
+.submit-button {
+
+}
+.cancel-button {
+
+}
+.form-footer {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 20px;
+    color: #888;
+}
