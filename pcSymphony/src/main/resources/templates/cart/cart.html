@@ -13,45 +13,6 @@
 </head>
 <meta charset="UTF-8">
 <title>Cart</title>
-
-                    const cartItem = categoryMapping[category]; // 카트에서 해당 항목의 key 값
-                    if (!cartItem) return;
-
-                    // Ajax 요청 보내기
-                    fetch(`/cart/removeItem`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ cartItem })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // 성공적으로 삭제되었을 때 화면에서 제품명과 가격을 변경
-                            const priceElement = row.querySelector(".price");
-                            const itemPrice = parseFloat(priceElement.innerText.replace(',', '')) || 0;
-
-                            row.querySelector(".name").innerText = '제품 없음';
-                            row.querySelector("th:nth-child(4)").innerText = '0';
-                            button.setAttribute("disabled", true); // 버튼 비활성화
-
-                            const totalPriceElement = document.querySelector(".totalPrice");
-                            const currentTotalPrice = parseFloat(totalPriceElement.innerText.replace(',', '').replace('원', '')) || 0;
-                            const newTotalPrice = currentTotalPrice - itemPrice;
-
-                            totalPriceElement.innerText = newTotalPrice.toLocaleString() + '달러';
-                        } else {
-                            alert('삭제 실패');
-                        }
-                    })
-                    .catch(error => {
-                        console.error("삭제 실패:", error);
-                    });
-                });
-            });
-        });
-    </script>
 </head>
 <body id="cart-body">
 <!--header-->
@@ -62,110 +23,110 @@
             <h1 id="cartList-id">Cart</h1>
             <table>
                 <thead>
-                    <tr>
-                        <td>번호</td>
-                        <td>카테고리</td>
-                        <td style="width: 300px;">제품명</td>
-                        <td>가격</td>
-                    </tr>
+                <tr>
+                    <td>번호</td>
+                    <td>카테고리</td>
+                    <td style="width: 300px;">제품명</td>
+                    <td>가격</td>
+                </tr>
                 </thead>
                 <tbody id="tbody">
-                    <tr>
-                        <th>3</th>
-                        <th ><a class="category" href="/part/videocard" >VideoCard</a></th>
-                        <th class="name">
-                            <span th:if="${cart.videocard != null}" th:text="${cart.videocard.name}"></span>
-                            <a th:if="${cart.videocard == null}" href="/part/videocard" class="no-product-button">chose a VideoCard</a>
-                        </th>
-                        <th class="price" th:text="${cart.videocard != null ? cart.videocard.price : '0'}">가격</th>
-                        <td>
-                            <button class="deleteButton" th:disabled="${cart.videocard == null}">삭제</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>4</th>
-                        <th ><a class="category" href="/part/memory" >Memory</a></th>
-                        <th class="name">
-                            <span th:if="${cart.memory != null}" th:text="${cart.memory.name}"></span>
-                            <a th:if="${cart.memory == null}" href="/part/memory" class="no-product-button">chose a Memory</a>
-                        </th>
-                        <th class="price" th:text="${cart.memory != null ? cart.memory.price : '0'}">가격</th>
-                        <td>
-                            <button class="deleteButton" th:disabled="${cart.memory == null}">삭제</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <th ><a class="category" href="/part/cpucooler" >CpuCooler</a></th>
-                        <th class="name">
-                            <span th:if="${cart.cpucooler != null}" th:text="${cart.cpucooler.name}"></span>
-                            <a th:if="${cart.cpucooler == null}" href="/part/cpucooler" class="no-product-button">chose a CpuColler</a>
-                        </th>
-                        <th class="price" th:text="${cart.cpucooler != null ? cart.cpucooler.price : '0'}">가격</th>
-                        <td>
-                            <button class="deleteButton" th:disabled="${cart.cpucooler == null}">삭제</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>1</th>
-                        <th ><a class="category" href="/part/cpu" >CPU</a></th>
-                        <th class="name">
-                            <span th:if="${cart.cpu != null}" th:text="${cart.cpu.name}"></span>
-                            <a th:if="${cart.cpu == null}" href="/part/cpu" class="no-product-button">chose a Cpu</a>
-                        </th>
-                        <th class="price" th:text="${cart.cpu != null ? cart.cpu.price : '0'}">가격</th>
-                        <td>
-                            <button class="deleteButton" th:disabled="${cart.cpu == null}">삭제</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>5</th>
-                        <th ><a class="category" href="/part/storage" >Storage</a></th>
-                        <th class="name">
-                            <span th:if="${cart.storage != null}" th:text="${cart.storage.name}"></span>
-                            <a th:if="${cart.storage == null}" href="/part/storage" class="no-product-button">chose a Storage</a>
-                        </th>
-                        <th class="price" th:text="${cart.storage != null ? cart.storage.price : '0'}">가격</th>
-                        <td>
-                            <button class="deleteButton" th:disabled="${cart.storage == null}">삭제</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>6</th>
-                        <th ><a class="category" href="/part/motherboard" >MotherBoard</a></th>
-                        <th class="name">
-                            <span th:if="${cart.motherboard != null}" th:text="${cart.motherboard.name}"></span>
-                            <a th:if="${cart.motherboard == null}" href="/part/motherboard" class="no-product-button">chose a MotherBoard</a>
-                        </th>
-                        <th class="price" th:text="${cart.motherboard != null ? cart.motherboard.price : '0'}">가격</th>
-                        <td>
-                            <button class="deleteButton" th:disabled="${cart.motherboard == null}">삭제</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>7</th>
-                        <th ><a class="category" href="/part/powersupply" >PowerSupply</a></th>
-                        <th class="name">
-                            <span th:if="${cart.powersupply != null}" th:text="${cart.powersupply.name}"></span>
-                            <a th:if="${cart.powersupply == null}" href="/part/powersupply" class="no-product-button">chose a PowerSupply</a>
-                        </th>
-                        <th class="price" th:text="${cart.powersupply != null ? cart.powersupply.price : '0'}">가격</th>
-                        <td>
-                            <button class="deleteButton" th:disabled="${cart.powersupply == null}">삭제</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>8</th>
-                        <th ><a class="category" href="/part/cover" >Case</a></th>
-                        <th class="name">
-                            <span th:if="${cart.cover != null}" th:text="${cart.cover.name}"></span>
-                            <a th:if="${cart.cover == null}" href="/part/cover" class="no-product-button">chose a Case</a>
-                        </th>
-                        <th class="price" th:text="${cart.cover != null ? cart.cover.price : '0'}">가격</th>
-                        <td>
-                            <button class="deleteButton" th:disabled="${cart.cover == null}">삭제</button>
-                        </td>
-                    </tr>
+                <tr>
+                    <th>3</th>
+                    <th ><a class="category" href="/part/videocard" >VideoCard</a></th>
+                    <th class="name">
+                        <span th:if="${cart.videocard != null}" th:text="${cart.videocard.name}"></span>
+                        <a th:if="${cart.videocard == null}" href="/part/videocard" class="no-product-button">chose a VideoCard</a>
+                    </th>
+                    <th class="price" th:text="${cart.videocard != null ? cart.videocard.price : '0'}">가격</th>
+                    <td>
+                        <button class="deleteButton" th:disabled="${cart.videocard == null}">삭제</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>4</th>
+                    <th ><a class="category" href="/part/memory" >Memory</a></th>
+                    <th class="name">
+                        <span th:if="${cart.memory != null}" th:text="${cart.memory.name}"></span>
+                        <a th:if="${cart.memory == null}" href="/part/memory" class="no-product-button">chose a Memory</a>
+                    </th>
+                    <th class="price" th:text="${cart.memory != null ? cart.memory.price : '0'}">가격</th>
+                    <td>
+                        <button class="deleteButton" th:disabled="${cart.memory == null}">삭제</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>2</th>
+                    <th ><a class="category" href="/part/cpucooler" >CpuCooler</a></th>
+                    <th class="name">
+                        <span th:if="${cart.cpucooler != null}" th:text="${cart.cpucooler.name}"></span>
+                        <a th:if="${cart.cpucooler == null}" href="/part/cpucooler" class="no-product-button">chose a CpuColler</a>
+                    </th>
+                    <th class="price" th:text="${cart.cpucooler != null ? cart.cpucooler.price : '0'}">가격</th>
+                    <td>
+                        <button class="deleteButton" th:disabled="${cart.cpucooler == null}">삭제</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th ><a class="category" href="/part/cpu" >CPU</a></th>
+                    <th class="name">
+                        <span th:if="${cart.cpu != null}" th:text="${cart.cpu.name}"></span>
+                        <a th:if="${cart.cpu == null}" href="/part/cpu" class="no-product-button">chose a Cpu</a>
+                    </th>
+                    <th class="price" th:text="${cart.cpu != null ? cart.cpu.price : '0'}">가격</th>
+                    <td>
+                        <button class="deleteButton" th:disabled="${cart.cpu == null}">삭제</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>5</th>
+                    <th ><a class="category" href="/part/storage" >Storage</a></th>
+                    <th class="name">
+                        <span th:if="${cart.storage != null}" th:text="${cart.storage.name}"></span>
+                        <a th:if="${cart.storage == null}" href="/part/storage" class="no-product-button">chose a Storage</a>
+                    </th>
+                    <th class="price" th:text="${cart.storage != null ? cart.storage.price : '0'}">가격</th>
+                    <td>
+                        <button class="deleteButton" th:disabled="${cart.storage == null}">삭제</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>6</th>
+                    <th ><a class="category" href="/part/motherboard" >MotherBoard</a></th>
+                    <th class="name">
+                        <span th:if="${cart.motherboard != null}" th:text="${cart.motherboard.name}"></span>
+                        <a th:if="${cart.motherboard == null}" href="/part/motherboard" class="no-product-button">chose a MotherBoard</a>
+                    </th>
+                    <th class="price" th:text="${cart.motherboard != null ? cart.motherboard.price : '0'}">가격</th>
+                    <td>
+                        <button class="deleteButton" th:disabled="${cart.motherboard == null}">삭제</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>7</th>
+                    <th ><a class="category" href="/part/powersupply" >PowerSupply</a></th>
+                    <th class="name">
+                        <span th:if="${cart.powersupply != null}" th:text="${cart.powersupply.name}"></span>
+                        <a th:if="${cart.powersupply == null}" href="/part/powersupply" class="no-product-button">chose a PowerSupply</a>
+                    </th>
+                    <th class="price" th:text="${cart.powersupply != null ? cart.powersupply.price : '0'}">가격</th>
+                    <td>
+                        <button class="deleteButton" th:disabled="${cart.powersupply == null}">삭제</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>8</th>
+                    <th ><a class="category" href="/part/cover" >Case</a></th>
+                    <th class="name">
+                        <span th:if="${cart.cover != null}" th:text="${cart.cover.name}"></span>
+                        <a th:if="${cart.cover == null}" href="/part/cover" class="no-product-button">chose a Case</a>
+                    </th>
+                    <th class="price" th:text="${cart.cover != null ? cart.cover.price : '0'}">가격</th>
+                    <td>
+                        <button class="deleteButton" th:disabled="${cart.cover == null}">삭제</button>
+                    </td>
+                </tr>
                 </tbody>
             </table>
             <table>

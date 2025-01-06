@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="utf-8">
   <meta content="IE=edge" http-equiv="X-UA-Compatible">
@@ -57,7 +57,7 @@
                 </form>
                 <div class="signin-bottom has-top-divider">
                   <div class="pt-32 text-xs center-content text-color-low">Don't you have an account?
-                    <a class="func-link" href="joinForm.html">회원가입</a></div>
+                    <a class="func-link" th:href="@{/member/join}">회원가입</a></div>
                 </div>
               </div>
             </div>

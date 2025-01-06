@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.entity.CartEntity;
+import com.example.demo.domain.entity.part.CpuEntity;
+import com.example.demo.domain.entity.part.MemoryEntity;
+import com.example.demo.domain.entity.part.MotherboardEntity;
 import com.example.demo.repository.*;
 import com.example.demo.repository.part.*;
 import jakarta.transaction.Transactional;
@@ -115,5 +118,35 @@ public class CartService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    //---------------------------------호환성 서비스-----------------------------------
+
+    //Cpu == Motherboard Socket Check
+    public boolean checkCpuMotherboardCompatibility(CartEntity cart) {
+        CpuEntity cpu = cart.getCpu();
+        MotherboardEntity motherboard = cart.getMotherboard();
+
+        if (cpu != null && motherboard != null) {
+            String cpuSocket = cpu.getCpuSocket();
+            String motherboardSocket = motherboard.getMotherboardSocketCpu();
+
+            return cpuSocket.equals(motherboardSocket);
+        }
+        return false;
+    }
+
+    //Motherboard MemoryType == Memory FormFactor
+    public boolean checkMotherboardMemoryCompatibility(CartEntity cart) {
+        MotherboardEntity motherboard = cart.getMotherboard();
+        MemoryEntity memory = cart.getMemory();
+
+        if (motherboard != null && memory != null) {
+            String motherboardMemoryType = motherboard.getMotherboardMemoryType();
+            String memoryFormFactor = memory.getMemoryFormFactor();
+
+            return motherboardMemoryType.equals(memoryFormFactor);
+        }
+        return false;
     }
 }
