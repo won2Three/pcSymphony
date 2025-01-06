@@ -15,9 +15,9 @@ public class PartDTO {
     private String name;
     private String manufacturer;
     private String part;
-    private Integer price;
+    private Double price;
 
-    private Boolean coverPowerSupply;
+    private String coverPowerSupply;
     private String coverMotherboardFormFactor;
     private String coverMaxVideoCardLength;
     private String coverType;
@@ -54,7 +54,7 @@ public class PartDTO {
     private String motherboardColor;
 
     private String powerSupplyType;
-    private String powerSupplyWattage;
+    private Integer powerSupplyWattage;
     private Integer powerSupplyLength;
     private String powerSupplyColor;
 
@@ -62,7 +62,7 @@ public class PartDTO {
     private String storageFormFactor;
     private String storageCapacity;
 
-    private Integer videoCardLength;
+    private String videoCardLength;
     private Integer videoCardTdp;
     private String videoCardMemory;
     private String videoCardChipset;

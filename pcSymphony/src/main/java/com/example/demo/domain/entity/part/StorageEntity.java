@@ -22,7 +22,7 @@ public class StorageEntity {
     @Column(name = "storage_id")
     private Integer id;
 
-    @Column(name = "storage_name", nullable = false, length = 50)
+    @Column(name = "storage_name", nullable = false, length = 255)
     private String name;
 
     @Column(name = "storage_manufactor", nullable = false, length = 50)
@@ -32,7 +32,7 @@ public class StorageEntity {
     private String part;
 
     @Column(name = "storage_price")
-    private Integer price;
+    private Double price;
 
     @Column(name = "storage_type", nullable = false, length = 50)
     private String storageType;

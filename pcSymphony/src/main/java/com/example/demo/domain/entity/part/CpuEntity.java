@@ -28,7 +28,7 @@ public class CpuEntity {
     @Column(name = "cpu_id")  // 명시적으로 컬럼 이름을 지정
     private Integer id; // cpu_id 필드
 
-    @Column(name = "cpu_name", nullable = false, length = 50)  // 컬럼 이름과 길이, null 허용 여부 지정
+    @Column(name = "cpu_name", nullable = false, length = 255)  // 컬럼 이름과 길이, null 허용 여부 지정
     private String name; // cpu_name 필드
 
     @Column(name = "cpu_manufacturer", nullable = false, length = 50) // null 허용 안 함, 길이 50
@@ -38,7 +38,7 @@ public class CpuEntity {
     private String part; // cpu_part 필드
 
     @Column(name = "cpu_price")
-    private Integer price; // cpu_price 필드
+    private Double price; // cpu_price 필드
 
     @Column(name = "cpu_series", nullable = false, length = 50)
     private String cpuSeries; // cpu_series 필드

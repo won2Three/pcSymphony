@@ -22,7 +22,7 @@ public class VideoCardEntity {
     @Column(name = "videocard_id")
     private Integer id;
 
-    @Column(name = "videocard_name", nullable = false, length = 50)
+    @Column(name = "videocard_name", nullable = false, length = 255)
     private String name;
 
     @Column(name = "videocard_manufactor", nullable = false, length = 50)
@@ -32,10 +32,10 @@ public class VideoCardEntity {
     private String part;
 
     @Column(name = "videocard_price")
-    private Integer price;
+    private Double price;
 
-    @Column(name = "videocard_length")
-    private Integer videoCardLength;
+    @Column(name = "videocard_length", length = 50)
+    private String videoCardLength;
 
     @Column(name = "videocard_tdp")
     private Integer videoCardTdp;

@@ -22,7 +22,7 @@ public class MemoryEntity {
     @Column(name = "memory_id")
     private Integer id;
 
-    @Column(name = "memory_name", nullable = false, length = 50)
+    @Column(name = "memory_name", nullable = false, length = 255)
     private String name;
 
     @Column(name = "memory_manufacturer", nullable = false, length = 50)
@@ -32,7 +32,7 @@ public class MemoryEntity {
     private String part;
 
     @Column(name = "memory_price")
-    private Integer price;
+    private Double price;
 
     @Column(name = "memory_form_factor", nullable = false, length = 50)
     private String memoryFormFactor;

@@ -22,7 +22,7 @@ public class CoverEntity {
     @Column(name = "cover_id")
     private Integer id;
 
-    @Column(name = "cover_name", nullable = false, length = 50)
+    @Column(name = "cover_name", nullable = false, length = 255)
     private String name;
 
     @Column(name = "cover_manufactor", nullable = false, length = 50)
@@ -32,15 +32,15 @@ public class CoverEntity {
     private String part;
 
     @Column(name = "cover_price")
-    private Integer price;
+    private Double price;
 
-    @Column(name = "cover_power_supply")
-    private Boolean coverPowerSupply;
+    @Column(name = "cover_power_supply", length = 100)
+    private String coverPowerSupply;
 
     @Column(name = "cover_motherboard_Form_Factor", nullable = false, length = 50)
     private String coverMotherboardFormFactor;
 
-    @Column(name = "cover_Maximum_Video_Card_Length", nullable = false, length = 50)
+    @Column(name = "cover_Maximum_Video_Card_Length", nullable = false, length = 100)
     private String coverMaxVideoCardLength;
 
     @Column(name = "cover_type", nullable = false, length = 50)

@@ -22,7 +22,7 @@ public class CpuCoolerEntity {
     @Column(name = "cpucooler_id")
     private Integer id;
 
-    @Column(name = "cpucooler_name", nullable = false, length = 50)
+    @Column(name = "cpucooler_name", nullable = false, length = 255)
     private String name;
 
     @Column(name = "cpucooler_manufacturer", nullable = false, length = 50)
@@ -32,7 +32,7 @@ public class CpuCoolerEntity {
     private String part;
 
     @Column(name = "cpucooler_price")
-    private Integer price;
+    private Double price;
 
     @Column(name = "cpucooler_cpu_socket", length = 20)
     private String cpuCoolerCpuSocket;

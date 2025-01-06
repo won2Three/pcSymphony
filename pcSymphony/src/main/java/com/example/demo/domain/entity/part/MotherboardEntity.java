@@ -22,7 +22,7 @@ public class MotherboardEntity {
     @Column(name = "motherboard_id")
     private Integer id;
 
-    @Column(name = "motherboard_name", nullable = false, length = 50)
+    @Column(name = "motherboard_name", nullable = false, length = 255)
     private String name;
 
     @Column(name = "motherboard_manufacturer", nullable = false, length = 50)
@@ -32,7 +32,7 @@ public class MotherboardEntity {
     private String part;
 
     @Column(name = "motherboard_price")
-    private Integer price;
+    private Double price;
 
     @Column(name = "motherboard_socket_cpu", nullable = false, length = 50)
     private String motherboardSocketCpu;

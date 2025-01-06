@@ -22,7 +22,7 @@ public class PowerSupplyEntity {
     @Column(name = "powersupply_id")
     private Integer id;
 
-    @Column(name = "powersupply_name", nullable = false, length = 50)
+    @Column(name = "powersupply_name", nullable = false, length = 255)
     private String name;
 
     @Column(name = "powersupply_manufactor", nullable = false, length = 50)
@@ -32,13 +32,13 @@ public class PowerSupplyEntity {
     private String part;
 
     @Column(name = "powersupply_price")
-    private Integer price;
+    private Double price;
 
     @Column(name = "powersupply_type", nullable = false, length = 50)
     private String powerSupplyType;
 
     @Column(name = "powersupply_wattage")
-    private String powerSupplyWattage;
+    private Integer powerSupplyWattage;
 
     @Column(name = "powersupply_length")
     private Integer powerSupplyLength;
