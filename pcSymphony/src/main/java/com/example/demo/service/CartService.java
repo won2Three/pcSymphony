@@ -122,31 +122,32 @@ public class CartService {
 
     //---------------------------------호환성 서비스-----------------------------------
 
-    //Cpu == Motherboard Socket Check
+    // Cpu == Motherboard Socket Check
     public boolean checkCpuMotherboardCompatibility(CartEntity cart) {
         CpuEntity cpu = cart.getCpu();
         MotherboardEntity motherboard = cart.getMotherboard();
 
+        // CPU와 Motherboard가 모두 존재할 때만 비교
         if (cpu != null && motherboard != null) {
             String cpuSocket = cpu.getCpuSocket();
             String motherboardSocket = motherboard.getMotherboardSocketCpu();
-
             return cpuSocket.equals(motherboardSocket);
         }
-        return false;
+        return false; // 하나라도 없으면 호환성 검사하지 않음
     }
 
-    //Motherboard MemoryType == Memory FormFactor
+    // Motherboard MemoryType == Memory FormFactor Check
     public boolean checkMotherboardMemoryCompatibility(CartEntity cart) {
         MotherboardEntity motherboard = cart.getMotherboard();
         MemoryEntity memory = cart.getMemory();
 
+        // Motherboard와 Memory가 모두 존재할 때만 비교
         if (motherboard != null && memory != null) {
             String motherboardMemoryType = motherboard.getMotherboardMemoryType();
             String memoryFormFactor = memory.getMemoryFormFactor();
-
             return motherboardMemoryType.equals(memoryFormFactor);
         }
-        return false;
+        return false; // 하나라도 없으면 호환성 검사하지 않음
     }
+
 }

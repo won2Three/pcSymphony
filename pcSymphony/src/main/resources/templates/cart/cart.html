@@ -34,7 +34,7 @@
                 <tr>
                     <th>3</th>
                     <th ><a class="category" href="/part/videocard" >VideoCard</a></th>
-                    <th class="name">
+                    <th class="name" data-part="videocard">
                         <span th:if="${cart.videocard != null}" th:text="${cart.videocard.name}"></span>
                         <a th:if="${cart.videocard == null}" href="/part/videocard" class="no-product-button">chose a VideoCard</a>
                     </th>
@@ -46,7 +46,7 @@
                 <tr>
                     <th>4</th>
                     <th ><a class="category" href="/part/memory" >Memory</a></th>
-                    <th class="name">
+                    <th class="name" data-part="memory">
                         <span th:if="${cart.memory != null}" th:text="${cart.memory.name}"></span>
                         <a th:if="${cart.memory == null}" href="/part/memory" class="no-product-button">chose a Memory</a>
                     </th>
@@ -58,7 +58,7 @@
                 <tr>
                     <th>2</th>
                     <th ><a class="category" href="/part/cpucooler" >CpuCooler</a></th>
-                    <th class="name">
+                    <th class="name" data-part="cpucooler">
                         <span th:if="${cart.cpucooler != null}" th:text="${cart.cpucooler.name}"></span>
                         <a th:if="${cart.cpucooler == null}" href="/part/cpucooler" class="no-product-button">chose a CpuColler</a>
                     </th>
@@ -70,7 +70,7 @@
                 <tr>
                     <th>1</th>
                     <th ><a class="category" href="/part/cpu" >CPU</a></th>
-                    <th class="name">
+                    <th class="name" data-part="cpu">
                         <span th:if="${cart.cpu != null}" th:text="${cart.cpu.name}"></span>
                         <a th:if="${cart.cpu == null}" href="/part/cpu" class="no-product-button">chose a Cpu</a>
                     </th>
@@ -82,7 +82,7 @@
                 <tr>
                     <th>5</th>
                     <th ><a class="category" href="/part/storage" >Storage</a></th>
-                    <th class="name">
+                    <th class="name" data-part="storage">
                         <span th:if="${cart.storage != null}" th:text="${cart.storage.name}"></span>
                         <a th:if="${cart.storage == null}" href="/part/storage" class="no-product-button">chose a Storage</a>
                     </th>
@@ -94,7 +94,7 @@
                 <tr>
                     <th>6</th>
                     <th ><a class="category" href="/part/motherboard" >MotherBoard</a></th>
-                    <th class="name">
+                    <th class="name" data-part="motherboard">
                         <span th:if="${cart.motherboard != null}" th:text="${cart.motherboard.name}"></span>
                         <a th:if="${cart.motherboard == null}" href="/part/motherboard" class="no-product-button">chose a MotherBoard</a>
                     </th>
@@ -106,7 +106,7 @@
                 <tr>
                     <th>7</th>
                     <th ><a class="category" href="/part/powersupply" >PowerSupply</a></th>
-                    <th class="name">
+                    <th class="name" data-part="powersupply">
                         <span th:if="${cart.powersupply != null}" th:text="${cart.powersupply.name}"></span>
                         <a th:if="${cart.powersupply == null}" href="/part/powersupply" class="no-product-button">chose a PowerSupply</a>
                     </th>
@@ -118,7 +118,7 @@
                 <tr>
                     <th>8</th>
                     <th ><a class="category" href="/part/cover" >Case</a></th>
-                    <th class="name">
+                    <th class="name" data-part="cover">
                         <span th:if="${cart.cover != null}" th:text="${cart.cover.name}"></span>
                         <a th:if="${cart.cover == null}" href="/part/cover" class="no-product-button">chose a Case</a>
                     </th>

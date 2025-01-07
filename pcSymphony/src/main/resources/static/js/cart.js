@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // 삭제 버튼 처리
     const deleteButtons = document.querySelectorAll(".deleteButton");
 
     deleteButtons.forEach(function (button, index) {
@@ -39,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         button.setAttribute("disabled", true); // 버튼 비활성화
 
                         const totalPriceElement = document.querySelector(".totalPrice");
-                        const currentTotalPrice = parseFloat(totalPriceElement.innerText.replace(',', '').replace('원', '')) || 0;
+                        const currentTotalPrice = parseFloat(totalPriceElement.innerText.replace(',', '').replace('달러', '')) || 0;
                         const newTotalPrice = currentTotalPrice - itemPrice;
 
                         totalPriceElement.innerText = newTotalPrice.toLocaleString() + '달러';
@@ -52,4 +53,60 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
         });
     });
+
+    // 호환성 검사 버튼 클릭 이벤트 추가
+    const compatibilityButton = document.getElementById('Compatibility Check');
+    if (compatibilityButton) {
+        compatibilityButton.addEventListener("click", function () {
+            checkCompatibility();  // checkCompatibility 함수 호출
+        });
+    }
+
+    // 호환성 검사 함수
+    function checkCompatibility() {
+        const cpuElement = document.querySelector('tr th[data-part="cpu"] span');
+        const motherboardElement = document.querySelector('tr th[data-part="motherboard"] span');
+        const memoryElement = document.querySelector('tr th[data-part="memory"] span');
+
+        const cpuSelected = cpuElement && cpuElement.innerText !== '제품 없음';
+        const motherboardSelected = motherboardElement && motherboardElement.innerText !== '제품 없음';
+        const memorySelected = memoryElement && memoryElement.innerText !== '제품 없음';
+
+        // 각 부품 간의 호환성 검사를 개별적으로 진행
+        if (cpuSelected && motherboardSelected) {
+            fetch('/cart/check-cpu-motherboard-compatibility') // 서버에서 CPU와 Motherboard 호환성 검사
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.isCompatible) {
+                        cpuElement.closest('th').style.border = '2px solid red';
+                        motherboardElement.closest('th').style.border = '2px solid red';
+                    } else {
+                        resetBorders(['cpu', 'motherboard']); // 호환되는 경우 테두리 리셋
+                    }
+                });
+        }
+
+        if (motherboardSelected && memorySelected) {
+            fetch('/cart/check-motherboard-memory-compatibility') // 서버에서 Motherboard와 Memory 호환성 검사
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.isCompatible) {
+                        motherboardElement.closest('th').style.border = '2px solid red';
+                        memoryElement.closest('th').style.border = '2px solid red';
+                    } else {
+                        resetBorders(['motherboard', 'memory']); // 호환되는 경우 테두리 리셋
+                    }
+                });
+        }
+    }
+
+    // 호환성 검사 후 호환되지 않는 부품의 테두리 리셋
+    function resetBorders(parts) {
+        parts.forEach(part => {
+            const partElement = document.querySelector(`tr th[data-part="${part}"]`);
+            if (partElement) {
+                partElement.style.border = 'none';
+            }
+        });
+    }
 });

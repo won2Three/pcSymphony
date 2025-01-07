@@ -130,4 +130,85 @@ public class CartRestController {
 
         return ResponseEntity.ok(response);
     }
+
+    //----------------------------------------------호환성 검사----------------------------------------------
+
+    //호환성 검사 공통 엔드포인트
+    @GetMapping("/check-compatibility")
+    public ResponseEntity<Map<String, Object>> checkCompatibility() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserName = authentication.getName();
+
+        // 장바구니 정보 가져오기
+        CartEntity cart = cartRepository.findByUser_MemberId(loggedInUserName);
+
+        // 호환성 체크할 부품 목록
+        Map<String, Boolean> compatibilityResults = new HashMap<>();
+
+        // 각 부품이 존재하면 호환성 체크
+        if (cart.getCpu() != null && cart.getMotherboard() != null) {
+            boolean cpuMotherboardCompatible = cartService.checkCpuMotherboardCompatibility(cart);
+            compatibilityResults.put("cpuMotherboardCompatibility", cpuMotherboardCompatible);
+        }
+
+        if (cart.getMotherboard() != null && cart.getMemory() != null) {
+            boolean motherboardMemoryCompatible = cartService.checkMotherboardMemoryCompatibility(cart);
+            compatibilityResults.put("motherboardMemoryCompatibility", motherboardMemoryCompatible);
+        }
+
+        // 필요한 다른 호환성 검사 추가 가능 (예: GPU, PSU 등)
+
+        // 전체 호환성 결과
+        boolean isCompatible = compatibilityResults.values().stream().allMatch(Boolean::booleanValue);
+
+        // 호환성 검사 결과 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("isCompatible", isCompatible);
+        response.put("compatibilityResults", compatibilityResults);
+
+        return ResponseEntity.ok(response); // JSON 응답 반환
+    }
+
+
+    //Cpu랑 Motherboard 소켓 비교
+    @GetMapping("/check-cpu-motherboard-compatibility")
+    public ResponseEntity<Map<String, Object>> checkCpuMotherboardCompatibility() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserName = authentication.getName(); // 로그인한 사용자 이름 가져오기
+
+        CartEntity cart = cartRepository.findByUser_MemberId(loggedInUserName);
+        boolean isCompatible = cartService.checkCpuMotherboardCompatibility(cart); // 호환성 체크
+
+        // 호환성 체크 결과를 Map에 담아 JSON으로 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("isCompatible", isCompatible);
+
+        // 호환성 체크 세부 사항 (CPU와 Motherboard의 호환성 여부)
+        response.put("cpuCompatibility", isCompatible && cart.getCpu().getCpuSocket().equals(cart.getMotherboard().getMotherboardSocketCpu()));
+        response.put("motherboardCompatibility", isCompatible && cart.getCpu().getCpuSocket().equals(cart.getMotherboard().getMotherboardSocketCpu()));
+
+        System.out.println("호환성 체크 결과: " + response);
+
+        return ResponseEntity.ok(response);  // JSON 응답 반환
+    }
+
+    //Motherboard 타입이랑 Memory 폼팩터 비교
+    @GetMapping("/check-motherboard-memory-compatibility")
+    public ResponseEntity<Map<String, Object>> checkMotherboardMemoryCompatibility() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserName = authentication.getName();
+
+        CartEntity cart = cartRepository.findByUser_MemberId(loggedInUserName);
+        boolean isCompatible = cartService.checkMotherboardMemoryCompatibility(cart);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("isCompatible", isCompatible);
+
+        //호환성 체크 세부 사항
+        response.put("motherboardCompatibility", isCompatible && cart.getMotherboard().getMotherboardMemoryType().equals(cart.getMemory().getMemoryFormFactor()));
+        response.put("memoryCompatibility", isCompatible && cart.getMemory().getMemoryFormFactor().equals(cart.getMotherboard().getMotherboardMemoryType()));
+
+        return ResponseEntity.ok(response);
+    }
+
 }

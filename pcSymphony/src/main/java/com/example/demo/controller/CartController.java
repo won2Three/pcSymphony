@@ -55,45 +55,4 @@ public class CartController {
         return "cart/cart";
     }
 
-    //-------------------------호환성 체크---------------------------//
-
-    //Cpu랑 Motherboard 소켓 비교
-    @GetMapping("/check-cpu-motherboard-compatibility")
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> checkCpuMotherboardCompatibility() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String loggedInUserName = authentication.getName(); // 로그인한 사용자 이름 가져오기
-
-        CartEntity cart = cartRepository.findByUser_MemberId(loggedInUserName);
-        boolean isCompatible = cartService.checkCpuMotherboardCompatibility(cart); // 호환성 체크
-
-        // 호환성 체크 결과를 Map에 담아 JSON으로 반환
-        Map<String, Object> response = new HashMap<>();
-        response.put("isCompatible", isCompatible);
-
-        // 호환성 체크 세부 사항 (CPU와 Motherboard의 호환성 여부)
-        response.put("cpuCompatibility", isCompatible && cart.getCpu().getCpuSocket().equals(cart.getMotherboard().getMotherboardSocketCpu()));
-        response.put("motherboardCompatibility", isCompatible && cart.getCpu().getCpuSocket().equals(cart.getMotherboard().getMotherboardSocketCpu()));
-
-        return ResponseEntity.ok(response);  // JSON 응답 반환
-    }
-
-    //Motherboard 타입이랑 Memory 폼팩터 비교
-    @GetMapping("/check-motherboard-memory-compatibility")
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> checkMotherboardMemoryCompatibility() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String loggedInUserName = authentication.getName();
-
-        CartEntity cart = cartRepository.findByUser_MemberId(loggedInUserName);
-        boolean isCompatible = cartService.checkMotherboardMemoryCompatibility(cart);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("isCompatible", isCompatible);
-
-        response.put("motherboardMemoryCompatibility", isCompatible);
-
-        return ResponseEntity.ok(response);
-    }
-
 }
