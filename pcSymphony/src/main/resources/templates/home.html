@@ -15,9 +15,9 @@
 
 </head>
 
-<body class="has-animations">
+<body>
 <!--헤더-->
-<div th:replace="fragments/header :: headerFragment"></div>
+<div th:replace="~{fragments/header :: headerFragment}"></div>
 <div class="body-wrap">
 
 	<main class="site-content">
@@ -44,7 +44,7 @@
 							<p class="mb-0">PcGuide에 대한 내용입니다.</p></div>
 					</div>
 					<div class="tiles-wrap">
-						<article class="tiles-item reveal-from-bottom">
+						<article class="tiles-item">
 							<div class="tiles-item-inner has-shadow">
 								<figure class="news-item-image m-0">
 									<img src="../images/news-image-01.jpg" alt="News 01"
@@ -60,7 +60,7 @@
 								</div>
 							</div>
 						</article>
-						<article class="tiles-item reveal-from-bottom" data-reveal-delay="200">
+						<article class="tiles-item">
 							<div class="tiles-item-inner has-shadow">
 								<figure class="news-item-image m-0">
 									<img src="/images/news-image-02.jpg" alt="News 02"
@@ -76,7 +76,7 @@
 								</div>
 							</div>
 						</article>
-						<article class="tiles-item reveal-from-bottom" data-reveal-delay="400">
+						<article class="tiles-item">
 							<div class="tiles-item-inner has-shadow">
 								<figure class="news-item-image m-0"><img src="/images/news-image-03.jpg" alt="News 03"
 																		 width="344" height="194"></figure>
@@ -104,7 +104,7 @@
 							<p class="mb-0">PcReview에 대한 내용입니다.</p></div>
 					</div>
 					<div class="tiles-wrap">
-						<article class="tiles-item reveal-from-bottom">
+						<article class="tiles-item">
 							<div class="tiles-item-inner has-shadow">
 								<figure class="news-item-image m-0">
 									<img src="/images/news-image-01.jpg" alt="News 01"
@@ -120,7 +120,7 @@
 								</div>
 							</div>
 						</article>
-						<article class="tiles-item reveal-from-bottom" data-reveal-delay="200">
+						<article class="tiles-item">
 							<div class="tiles-item-inner has-shadow">
 								<figure class="news-item-image m-0">
 									<img src="/images/news-image-02.jpg" alt="News 02"
@@ -136,7 +136,7 @@
 								</div>
 							</div>
 						</article>
-						<article class="tiles-item reveal-from-bottom" data-reveal-delay="400">
+						<article class="tiles-item">
 							<div class="tiles-item-inner has-shadow">
 								<figure class="news-item-image m-0"><img src="/images/news-image-03.jpg" alt="News 03"
 																		 width="344" height="194"></figure>
@@ -159,6 +159,6 @@
 
 	</main>
 </div>
+<div th:replace="~{fragments/footer :: footerFragment}"></div>
 </body>
-<div th:replace="fragments/footer :: footerFragment"></div>
 </html>

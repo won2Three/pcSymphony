@@ -13,49 +13,10 @@
 </head>
 <meta charset="UTF-8">
 <title>Cart</title>
-
-                    const cartItem = categoryMapping[category]; // 카트에서 해당 항목의 key 값
-                    if (!cartItem) return;
-
-                    // Ajax 요청 보내기
-                    fetch(`/cart/removeItem`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ cartItem })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // 성공적으로 삭제되었을 때 화면에서 제품명과 가격을 변경
-                            const priceElement = row.querySelector(".price");
-                            const itemPrice = parseFloat(priceElement.innerText.replace(',', '')) || 0;
-
-                            row.querySelector(".name").innerText = '제품 없음';
-                            row.querySelector("th:nth-child(4)").innerText = '0';
-                            button.setAttribute("disabled", true); // 버튼 비활성화
-
-                            const totalPriceElement = document.querySelector(".totalPrice");
-                            const currentTotalPrice = parseFloat(totalPriceElement.innerText.replace(',', '').replace('원', '')) || 0;
-                            const newTotalPrice = currentTotalPrice - itemPrice;
-
-                            totalPriceElement.innerText = newTotalPrice.toLocaleString() + '달러';
-                        } else {
-                            alert('삭제 실패');
-                        }
-                    })
-                    .catch(error => {
-                        console.error("삭제 실패:", error);
-                    });
-                });
-            });
-        });
-    </script>
 </head>
 <body id="cart-body">
 <!--header-->
-<div th:replace="fragments/header :: headerFragment"></div>
+<div th:replace="~{fragments/header :: headerFragment}"></div>
 <div class="body-wrap">
     <main class="site-content">
         <div class="container">
@@ -191,7 +152,7 @@
     </main>
 </div>
 <!--footer-->
-<div th:replace="fragments/footer :: footerFragment"></div>
+<div th:replace="~{fragments/footer :: footerFragment}"></div>
 </body>
 </html>
 

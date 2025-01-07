@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "VideoCard": "videocard",
                 "Memory": "memory",
                 "Storage": "storage",
-                "Motherboard": "motherboard",
+                "MotherBoard": "motherboard",
                 "PowerSupply": "powersupply",
                 "Case": "cover"
             };

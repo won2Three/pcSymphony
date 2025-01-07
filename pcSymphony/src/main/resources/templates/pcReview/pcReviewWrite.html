@@ -1,185 +1,215 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="../../static/css/pcReviewWrite.css" rel="stylesheet" th:href="@{/css/pcReviewWrite.css}">
+    <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
+    <script src="../../static/js/pcReviewWrite.js" th:src="@{/js/pcReviewWrite.js}"></script>
+
     <title>PC 리뷰 작성</title>
 </head>
 <body>
-<h1>PC 리뷰 작성</h1>
-<form action="/pcreview/write" method="post">
-    <!-- 전체 리뷰 제목 및 내용 -->
-    <fieldset>
-        <legend>전체 리뷰</legend>
-        <label for="pcReviewTitle">전체 리뷰 제목:</label>
-        <input type="text" id="pcReviewTitle" name="pcreviewTitle" required>
-        <br>
-        <label for="pcReviewContent">전체 리뷰 내용:</label>
-        <textarea id="pcReviewContent" name="pcreviewContent" rows="5" cols="50" required></textarea>
-        <br>
-        <label for="pcReviewRating">별점:</label>
-        <select id="pcReviewRating" name="pcReviewRating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+<div th:replace="~{fragments/header :: headerFragment}"></div>
+<div class="body-wrap">
+    <main class="site-content">
+        <div class="container">
 
-    <!-- CPU 리뷰 -->
-    <fieldset>
-        <legend>CPU 리뷰</legend>
+            <a href="/community/list" ><h1>PC 리뷰</h1></a>
+            <form action="/pcreview/write" method="post">
+                <!-- 전체 리뷰 제목 및 내용 -->
+                <fieldset style="border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;">
+                    <legend>전체 리뷰</legend>
+                    <label for="pcReviewTitle">전체 리뷰 제목:</label>
+                    <input id="pcReviewTitle" name="pcreviewTitle" required type="text">
+                    <br>
+                    <label for="pcReviewContent">전체 리뷰 내용:</label>
+                    <textarea cols="50" id="pcReviewContent" name="pcreviewContent" required rows="5"></textarea>
+                    <br>
+                    <label for="pcReviewRating">별점:</label>
+                    <select id="pcReviewRating" name="pcReviewRating" required>
+                        <option value="1">1점</option>
+                        <option value="2">2점</option>
+                        <option value="3">3점</option>
+                        <option value="4">4점</option>
+                        <option value="5">5점</option>
+                    </select>
+                </fieldset>
 
-        <label for="cpuTitle" th:text="'CPU 제목: ' + ${cart.cpu.name}">CPU 제목:</label>
-        <input type="text" id="cpuTitle" name="partReviews[cpu].title" required>
-        <br>
-        <label for="cpuContent">CPU 내용:</label>
-        <textarea id="cpuContent" name="partReviews[cpu].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="cpuRating">별점:</label>
-        <select id="cpuRating" name="partReviews[cpu].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                <!-- CPU 리뷰 -->
+                <fieldset style="">
+                    <legend>CPU 리뷰</legend>
 
-    <!-- CPU Cooler 리뷰 -->
-    <fieldset>
-        <legend>CPU Cooler 리뷰</legend>
-        <label for="cpuCoolerTitle" th:text="'CPU Cooler 제목: ' + ${cart.cpucooler.name}">CPU Cooler 제목:</label>
-        <input type="text" id="cpuCoolerTitle" name="partReviews[cpucooler].title" required>
-        <br>
-        <label for="cpuCoolerContent">CPU Cooler 내용:</label>
-        <textarea id="cpuCoolerContent" name="partReviews[cpucooler].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="cpuCoolerRating">별점:</label>
-        <select id="cpuCoolerRating" name="partReviews[cpucooler].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                    <label for="cpuTitle" th:text="'CPU 제목: ' + ${cart.cpu.name}">CPU 제목:</label>
+                    <input id="cpuTitle" name="partReviews[cpu].title" required type="text">
+                    <br>
+                    <label for="cpuContent">CPU 내용:</label>
+                    <textarea cols="50" id="cpuContent" name="partReviews[cpu].content" required rows="3"></textarea>
+                    <br>
+                    <label for="cpuRating">별점:</label>
+                    <select id="cpuRating" name="partReviews[cpu].rating" required>
+                        <option value="1">1점</option>
+                        <option value="2">2점</option>
+                        <option value="3">3점</option>
+                        <option value="4">4점</option>
+                        <option value="5">5점</option>
+                    </select>
+                </fieldset>
 
-    <!-- Motherboard 리뷰 -->
-    <fieldset>
-        <legend>Motherboard 리뷰</legend>
-        <label for="motherboardTitle" th:text="'Motherboard 제목: ' + ${cart.motherboard.name}">Motherboard 제목:</label>
-        <input type="text" id="motherboardTitle" name="partReviews[motherboard].title" required>
-        <br>
-        <label for="motherboardContent">Motherboard 내용:</label>
-        <textarea id="motherboardContent" name="partReviews[motherboard].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="motherboardRating">별점:</label>
-        <select id="motherboardRating" name="partReviews[motherboard].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                <!-- CPU Cooler 리뷰 -->
+                <fieldset>
+                    <legend>CPU Cooler 리뷰</legend>
+                    <label for="cpuCoolerTitle" th:text="'CPU Cooler 제목: ' + ${cart.cpucooler.name}">CPU Cooler
+                        제목:</label>
+                    <input id="cpuCoolerTitle" name="partReviews[cpucooler].title" required type="text">
+                    <br>
+                    <label for="cpuCoolerContent">CPU Cooler 내용:</label>
+                    <textarea cols="50" id="cpuCoolerContent" name="partReviews[cpucooler].content" required
+                              rows="3"></textarea>
+                    <br>
+                    <label for="cpuCoolerRating">별점:</label>
+                    <select id="cpuCoolerRating" name="partReviews[cpucooler].rating" required>
+                        <option value="1">1점</option>
+                        <option value="2">2점</option>
+                        <option value="3">3점</option>
+                        <option value="4">4점</option>
+                        <option value="5">5점</option>
+                    </select>
+                </fieldset>
 
-    <!-- Memory 리뷰 -->
-    <fieldset>
-        <legend>Memory 리뷰</legend>
-        <label for="memoryTitle" th:text="'Memory 제목: ' + ${cart.memory.name}">Memory 제목:</label>
-        <input type="text" id="memoryTitle" name="partReviews[memory].title" required>
-        <br>
-        <label for="memoryContent">Memory 내용:</label>
-        <textarea id="memoryContent" name="partReviews[memory].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="memoryRating">별점:</label>
-        <select id="memoryRating" name="partReviews[memory].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                <!-- Motherboard 리뷰 -->
+                <fieldset>
+                    <legend>Motherboard 리뷰</legend>
+                    <label for="motherboardTitle" th:text="'Motherboard 제목: ' + ${cart.motherboard.name}">Motherboard
+                        제목:</label>
+                    <input id="motherboardTitle" name="partReviews[motherboard].title" required type="text">
+                    <br>
+                    <label for="motherboardContent">Motherboard 내용:</label>
+                    <textarea cols="50" id="motherboardContent" name="partReviews[motherboard].content" required
+                              rows="3"></textarea>
+                    <br>
+                    <label for="motherboardRating">별점:</label>
+                    <select id="motherboardRating" name="partReviews[motherboard].rating" required>
+                        <option value="1">1점</option>
+                        <option value="2">2점</option>
+                        <option value="3">3점</option>
+                        <option value="4">4점</option>
+                        <option value="5">5점</option>
+                    </select>
+                </fieldset>
 
-    <!-- Storage 리뷰 -->
-    <fieldset>
-        <legend>Storage 리뷰</legend>
-        <label for="storageTitle" th:text="'Storage 제목: ' + ${cart.storage.name}">Storage 제목:</label>
-        <input type="text" id="storageTitle" name="partReviews[storage].title" required>
-        <br>
-        <label for="storageContent">Storage 내용:</label>
-        <textarea id="storageContent" name="partReviews[storage].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="storageRating">별점:</label>
-        <select id="storageRating" name="partReviews[storage].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                <!-- Memory 리뷰 -->
+                <fieldset>
+                    <legend>Memory 리뷰</legend>
+                    <label for="memoryTitle" th:text="'Memory 제목: ' + ${cart.memory.name}">Memory 제목:</label>
+                    <input id="memoryTitle" name="partReviews[memory].title" required type="text">
+                    <br>
+                    <label for="memoryContent">Memory 내용:</label>
+                    <textarea cols="50" id="memoryContent" name="partReviews[memory].content" required
+                              rows="3"></textarea>
+                    <br>
+                    <label for="memoryRating">별점:</label>
+                    <select id="memoryRating" name="partReviews[memory].rating" required>
+                        <option value="1">1점</option>
+                        <option value="2">2점</option>
+                        <option value="3">3점</option>
+                        <option value="4">4점</option>
+                        <option value="5">5점</option>
+                    </select>
+                </fieldset>
 
-    <!-- VideoCard 리뷰 -->
-    <fieldset>
-        <legend>VideoCard 리뷰</legend>
-        <label for="videoCardTitle" th:text="'VideoCard 제목: ' + ${cart.videocard.name}">VideoCard 제목:</label>
-        <input type="text" id="videoCardTitle" name="partReviews[videocard].title" required>
-        <br>
-        <label for="videoCardContent">VideoCard 내용:</label>
-        <textarea id="videoCardContent" name="partReviews[videocard].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="videoCardRating">별점:</label>
-        <select id="videoCardRating" name="partReviews[videocard].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                <!-- Storage 리뷰 -->
+                <fieldset>
+                    <legend>Storage 리뷰</legend>
+                    <label for="storageTitle" th:text="'Storage 제목: ' + ${cart.storage.name}">Storage 제목:</label>
+                    <input id="storageTitle" name="partReviews[storage].title" required type="text">
+                    <br>
+                    <label for="storageContent">Storage 내용:</label>
+                    <textarea cols="50" id="storageContent" name="partReviews[storage].content" required
+                              rows="3"></textarea>
+                    <br>
+                    <label for="storageRating">별점:</label>
+                    <select id="storageRating" name="partReviews[storage].rating" required>
+                        <option value="1">1점</option>
+                        <option value="2">2점</option>
+                        <option value="3">3점</option>
+                        <option value="4">4점</option>
+                        <option value="5">5점</option>
+                    </select>
+                </fieldset>
 
-    <!-- PowerSupply 리뷰 -->
-    <fieldset>
-        <legend>PowerSupply 리뷰</legend>
-        <label for="powerSupplyTitle" th:text="'PowerSupply 제목: ' + ${cart.powersupply.name}">PowerSupply 제목:</label>
-        <input type="text" id="powerSupplyTitle" name="partReviews[powersupply].title" required>
-        <br>
-        <label for="powerSupplyContent">PowerSupply 내용:</label>
-        <textarea id="powerSupplyContent" name="partReviews[powersupply].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="powerSupplyRating">별점:</label>
-        <select id="powerSupplyRating" name="partReviews[powersupply].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                <!-- VideoCard 리뷰 -->
+                <fieldset>
+                    <legend>VideoCard 리뷰</legend>
+                    <label for="videoCardTitle" th:text="'VideoCard 제목: ' + ${cart.videocard.name}">VideoCard
+                        제목:</label>
+                    <input id="videoCardTitle" name="partReviews[videocard].title" required type="text">
+                    <br>
+                    <label for="videoCardContent">VideoCard 내용:</label>
+                    <textarea cols="50" id="videoCardContent" name="partReviews[videocard].content" required
+                              rows="3"></textarea>
+                    <br>
+                    <label for="videoCardRating">별점:</label>
+                    <select id="videoCardRating" name="partReviews[videocard].rating" required>
+                        <option value="1">1점</option>
+                        <option value="2">2점</option>
+                        <option value="3">3점</option>
+                        <option value="4">4점</option>
+                        <option value="5">5점</option>
+                    </select>
+                </fieldset>
 
-    <!-- Cover 리뷰 -->
-    <fieldset>
-        <legend>Cover 리뷰</legend>
-        <label for="coverTitle" th:text="'Cover 제목: ' + ${cart.cover.name}">Cover 제목:</label>
-        <input type="text" id="coverTitle" name="partReviews[cover].title" required>
-        <br>
-        <label for="coverContent">Cover 내용:</label>
-        <textarea id="coverContent" name="partReviews[cover].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="coverRating">별점:</label>
-        <select id="coverRating" name="partReviews[cover].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                <!-- PowerSupply 리뷰 -->
+                <fieldset>
+                    <legend>PowerSupply 리뷰</legend>
+                    <label for="powerSupplyTitle" th:text="'PowerSupply 제목: ' + ${cart.powersupply.name}">PowerSupply
+                        제목:</label>
+                    <input id="powerSupplyTitle" name="partReviews[powersupply].title" required type="text">
+                    <br>
+                    <label for="powerSupplyContent">PowerSupply 내용:</label>
+                    <textarea cols="50" id="powerSupplyContent" name="partReviews[powersupply].content" required
+                              rows="3"></textarea>
+                    <br>
+                    <label for="powerSupplyRating">별점:</label>
+                    <select id="powerSupplyRating" name="partReviews[powersupply].rating" required>
+                        <option value="1">1점</option>
+                        <option value="2">2점</option>
+                        <option value="3">3점</option>
+                        <option value="4">4점</option>
+                        <option value="5">5점</option>
+                    </select>
+                </fieldset>
 
-    <button type="submit">리뷰 저장하기</button>
-</form>
+                <!-- Cover 리뷰 -->
+                <fieldset>
+                    <legend>Cover 리뷰</legend>
+                    <label for="coverTitle" th:text="'Cover 제목: ' + ${cart.cover.name}">Cover 제목:</label>
+                    <input id="coverTitle" name="partReviews[cover].title" required type="text">
+                    <br>
+                    <label for="coverContent">Cover 내용:</label>
+                    <textarea cols="50" id="coverContent" name="partReviews[cover].content" required
+                              rows="3"></textarea>
+                    <br>
+                    <label for="coverRating">별점:</label>
+                    <select id="coverRating" name="partReviews[cover].rating" required>
+                        <option value="1">1점</option>
+                        <option value="2">2점</option>
+                        <option value="3">3점</option>
+                        <option value="4">4점</option>
+                        <option value="5">5점</option>
+                    </select>
+                </fieldset>
+
+                <button type="submit">리뷰 저장하기</button>
+            </form>
+        </div>
+    </main>
+</div>
+</div>
+<div th:replace="~{fragments/header :: headerFragment}"></div>
 </body>
 </html>

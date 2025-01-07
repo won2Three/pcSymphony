@@ -1,5 +1,5 @@
     // 현재 커뮤니티 ID와 사용자 ID를 얻어옵니다.
-    const communityId = [[${community.communityId}]];  // 서버에서 동적으로 값을 받아옵니다.
+    const communityId = '[[${community.communityId}]];'  // 서버에서 동적으로 값을 받아옵니다.
     const userId = '[[${#authentication.name}]];' // 로그인한 사용자 ID를 서버에서 받아옵니다.
 
     // 댓글 목록을 로드하는 함수
