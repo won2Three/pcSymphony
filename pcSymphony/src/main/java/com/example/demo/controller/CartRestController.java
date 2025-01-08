@@ -211,4 +211,31 @@ public class CartRestController {
         return ResponseEntity.ok(response);
     }
 
+    // Cpu타입이랑 Memory비교
+    @PostMapping("/check-cpu-memory-compatibility")
+    public ResponseEntity<Map<String, Object>> checkCpuMemoryCompatibility(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "User is not authenticated."));
+        }
+
+        String userId = principal.getName();
+        CartEntity cart = cartRepository.findByUser_MemberId(userId);
+
+        if (cart == null || cart.getCpu() == null || cart.getMemory() == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Incomplete cart data for compatibility check."));
+        }
+
+        boolean isCompatible = cartService.checkCpuMemoryCompatibility(cart);
+
+        return ResponseEntity.ok(Map.of(
+                "isCompatible", isCompatible,
+                "cpuName", cart.getCpu().getName(),
+                "memoryType", cart.getMemory().getMemoryFormFactor()
+        ));
+    }
+
+
+
 }

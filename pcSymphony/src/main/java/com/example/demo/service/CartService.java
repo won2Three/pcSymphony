@@ -10,10 +10,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -150,4 +147,61 @@ public class CartService {
         return false; // 하나라도 없으면 호환성 검사하지 않음
     }
 
-}
+    //Cpu == Memory
+    // CPU와 메모리 호환성 확인 메서드 (CartEntity 기반)
+    public boolean checkCpuMemoryCompatibility(CartEntity cart) {
+        CpuEntity cpu = cart.getCpu();
+        MemoryEntity memory = cart.getMemory();
+
+        if (cpu == null || memory == null) {
+            throw new IllegalArgumentException("CPU or Memory is missing in the cart.");
+        }
+
+        List<String> supportedMemoryTypes = getSupportedMemoryTypes(cpu);
+        return supportedMemoryTypes.contains(memory.getMemoryFormFactor());
+    }
+
+    // CPU 엔티티 기반으로 지원 메모리 유형 반환
+    private List<String> getSupportedMemoryTypes(CpuEntity cpu) {
+        String manufacturer = cpu.getManufacturer();
+        String name = cpu.getName();
+
+        if ("Intel".equalsIgnoreCase(manufacturer)) {
+            return getIntelSupportedMemoryTypes(name);
+        } else if ("AMD".equalsIgnoreCase(manufacturer)) {
+            return getAmdSupportedMemoryTypes(name);
+        }
+        return Collections.emptyList();
+    }
+
+    // Intel CPU의 지원 메모리 유형
+    private List<String> getIntelSupportedMemoryTypes(String cpuName) {
+        if (cpuName.matches(".*-13.*") || cpuName.matches(".*-12.*")) {
+            return Arrays.asList("DDR4", "DDR5");
+        } else if (cpuName.matches(".*-8.*|.*-9.*|.*-10.*|.*-11.*")) {
+            return List.of("DDR4");
+        } else if (cpuName.matches(".*-6.*|.*-7.*")) {
+            return Arrays.asList("DDR3", "DDR4");
+        }
+        return Collections.emptyList();
+    }
+
+    // AMD CPU의 지원 메모리 유형
+    private List<String> getAmdSupportedMemoryTypes(String cpuName) {
+        if (cpuName.matches(".*Ryzen.*[1-5][0-9]{3}.*")) {
+            return List.of("DDR4");
+        } else if (cpuName.matches(".*Ryzen.*7[0-9]{3}.*")) {
+            return List.of("DDR5");
+        } else if (cpuName.matches(".*Threadripper.*")) {
+            return List.of("DDR4");
+        } else if (cpuName.matches(".*EPYC.*1.*|.*EPYC.*2.*|.*EPYC.*3.*")) {
+            return List.of("DDR4");
+        } else if (cpuName.matches(".*EPYC.*4.*")) {
+            return List.of("DDR5");
+        }
+        return Collections.emptyList();
+    }
+    }
+
+
+
