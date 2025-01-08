@@ -157,7 +157,15 @@ public class CartService {
             throw new IllegalArgumentException("CPU or Memory is missing in the cart.");
         }
 
+        System.out.println("CPU Series: " + cpu.getCpuSeries());  // CPU 시리즈 출력
+        System.out.println("Memory Form Factor: " + memory.getMemoryFormFactor());  // 메모리 폼 팩터 출력
+
+
         List<String> supportedMemoryTypes = getSupportedMemoryTypes(cpu);
+
+        // 비교된 메모리 유형 출력
+        System.out.println("Supported Memory Types: " + supportedMemoryTypes);  // 지원되는 메모리 유형 출력
+
         return supportedMemoryTypes.contains(memory.getMemoryFormFactor());
     }
 
@@ -188,6 +196,14 @@ public class CartService {
 
     // AMD CPU의 지원 메모리 유형
     private List<String> getAmdSupportedMemoryTypes(String cpuName) {
+        // Ryzen 1000~5000 시리즈: DDR4
+        if (cpuName.matches(".*Ryzen.*[1-5][0-9]{3}X.*")) {
+            return List.of("DDR4");
+        }
+        // Ryzen 7000 시리즈: DDR5
+        else if (cpuName.matches(".*Ryzen.*7[0-9]{3}X.*")) {
+            return List.of("DDR5");
+        }
         if (cpuName.matches(".*Ryzen.*[1-5][0-9]{3}.*")) {
             return List.of("DDR4");
         } else if (cpuName.matches(".*Ryzen.*7[0-9]{3}.*")) {
