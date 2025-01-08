@@ -7,15 +7,23 @@
     <meta content="width=device-width,initial-scale=1" name="viewport">
     <title>PcSymphony</title>
     <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
-<!--    <link href="../../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">-->
+    <link href="../../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
 <!--    <script src="../../static/js/footer.js" th:src="@{/js/footer.js}"></script>-->
-
+<style>
+    .footer-container {
+        width: 100%;
+        margin: 0 auto;
+        padding-left: 16px;
+        padding-right: 16px;
+        max-width: 1128px;
+    }
+</style>
 
 </head>
 <body>
 <!--푸터-->
 <footer class="site-footer center-content-mobile invert-color" th:fragment="footerFragment">
-    <div class="container">
+    <div class="footer-container">
         <div class="site-footer-inner">
             <div class="footer-top space-between text-xxs">
                 <div class="brand"><a th:href="@{/}">

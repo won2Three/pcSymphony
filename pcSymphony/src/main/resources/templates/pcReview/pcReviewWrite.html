@@ -4,32 +4,69 @@
     <meta charset="UTF-8">
     <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="../../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
+
     <link href="../../static/css/pcReviewWrite.css" rel="stylesheet" th:href="@{/css/pcReviewWrite.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
-    <script src="../../static/js/pcReviewWrite.js" th:src="@{/js/pcReviewWrite.js}"></script>
+<!--    <script src="../../static/js/pcReviewWrite.js" th:src="@{/js/pcReviewWrite.js}"></script>-->
+    <style>
+        .pcReviewContent {
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: -0.1px;
+            max-width: 100%;
+            overflow: auto;
+            padding: 12px 12px 12px 12px;
+            margin-top: 24px;
+            margin-bottom: 24px;
+            border-width: 2px;
+            border-style: groove;
+            border-color: threedface;
+            border-image: initial;
+        }
+        .pcReviewTitle {
+            all: unset; /* 모든 스타일 초기화 */
+            cursor: pointer; /* 링크처럼 보이게 */
+            color: #0c1622;
 
+        }
+        .container-like {
+            width: 100%;
+            max-width: 1128px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 16px;
+            font-family: "Playfair Display", serif;
+            font-weight: 900;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        .container {
+            border: #95A4B4 solid 1px;
+        }
+    </style>
     <title>PC 리뷰 작성</title>
 </head>
 <body>
 <div th:replace="~{fragments/header :: headerFragment}"></div>
 <div class="body-wrap">
     <main class="site-content">
+            <a href="/pcReview/pcReviewList" class="pcReviewTitle"><h1 class="container-like">PC 리뷰</h1></a>
         <div class="container">
 
-            <a href="/community/list" ><h1>PC 리뷰</h1></a>
             <form action="/pcreview/write" method="post">
+
                 <!-- 전체 리뷰 제목 및 내용 -->
-                <fieldset style="border-width: 2px;
-    border-style: groove;
-    border-color: threedface;
-    border-image: initial;">
-                    <legend>전체 리뷰</legend>
+                <fieldset class="pcReviewContent">
+                    <legend><h5>전체 리뷰</h5></legend>
                     <label for="pcReviewTitle">전체 리뷰 제목:</label>
+                    <br>
                     <input id="pcReviewTitle" name="pcreviewTitle" required type="text">
                     <br>
                     <label for="pcReviewContent">전체 리뷰 내용:</label>
                     <textarea cols="50" id="pcReviewContent" name="pcreviewContent" required rows="5"></textarea>
                     <br>
+
                     <label for="pcReviewRating">별점:</label>
                     <select id="pcReviewRating" name="pcReviewRating" required>
                         <option value="1">1점</option>
@@ -210,6 +247,6 @@
     </main>
 </div>
 </div>
-<div th:replace="~{fragments/header :: headerFragment}"></div>
+<div th:replace="~{fragments/footer :: footerFragment}"></div>
 </body>
 </html>

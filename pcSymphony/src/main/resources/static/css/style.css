@@ -15,7 +15,6 @@ article, aside, footer, header, nav, section {
 }
 
 h1 {
-    color: #000;
     font-size: 2em;
     margin: 0.67em 0
 }
@@ -399,7 +398,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: "Playfair Display", serif;
     font-weight: 900;
     clear: both;
-    color: #000;
     word-wrap: break-word;
     overflow-wrap: break-word
 }
@@ -456,16 +454,16 @@ figcaption {
     line-height: 22px
 }
 
-a:not(.button) {
-    color: #627183;
-    text-decoration: underline
-}
+/*a:not(.button) {*/
+/*    color: #627183;*/
+/*    text-decoration: underline*/
+/*}*/
 
-a:not(.button):hover, a:not(.button):active {
-    color: #2174EA;
-    outline: 0;
-    text-decoration: none
-}
+/*a:not(.button):hover, a:not(.button):active {*/
+/*    color: #2174EA;*/
+/*    outline: 0;*/
+/*    text-decoration: none*/
+/*}*/
 
 a.func-link {
     color: #2174EA
@@ -650,8 +648,8 @@ b, strong {
 
 .container, .container-sm, .container-xs {
     width: 100%;
-    margin: 0 auto;
-    padding-left: 16px;
+    margin: 0 auto 36px auto;
+        padding-left: 16px;
     padding-right: 16px
 }
 

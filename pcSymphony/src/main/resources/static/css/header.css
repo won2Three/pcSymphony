@@ -7,7 +7,13 @@
     background-color: #0c1622; /* 배경색 설정 */
     color: #fff; /* 텍스트 색상 */
 }
-
+.header-container {
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 16px;
+    padding-right: 16px;
+    max-width: 1128px;
+}
 
 .site-header-inner {
     display: flex; /* 플렉스박스로 정렬 */
