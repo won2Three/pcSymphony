@@ -173,10 +173,6 @@ public class CartService {
             throw new IllegalArgumentException("CPU or Memory is missing in the cart.");
         }
 
-        System.out.println("CPU Series: " + cpu.getCpuSeries());  // CPU 시리즈 출력
-        System.out.println("Memory Form Factor: " + memory.getMemoryFormFactor());  // 메모리 폼 팩터 출력
-
-
         List<String> supportedMemoryTypes = getSupportedMemoryTypes(cpu);
 
         // 비교된 메모리 유형 출력
