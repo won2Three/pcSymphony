@@ -234,22 +234,58 @@ public class CartService {
         return Collections.emptyList();
     }
 
-    //Motherboard == Cover
-    public boolean checkMotherboardCoverCompatibility(String motherboardFormFactor, String coverMotherboardFormFactor) {
+//    //Motherboard == Cover
+//    public boolean checkMotherboardCoverCompatibility(String motherboardFormFactor, String coverMotherboardFormFactor) {
+//
+//        // form factor 값을 비교
+//        int motherboardValue = getFormFactorValue(motherboardFormFactor);
+//        int coverValue = getFormFactorValue(coverMotherboardFormFactor);
+//
+//        // 값 확인을 위한 로그 출력
+//        System.out.println("Motherboard Form Factor: " + motherboardFormFactor + " (Value: " + motherboardValue + ")");
+//        System.out.println("Cover Form Factor: " + coverMotherboardFormFactor + " (Value: " + coverValue + ")");
+//
+//
+//        return motherboardValue <= coverValue;
+//    }
+//
+//    private int getFormFactorValue(String formFactor) {
+//        switch (formFactor) {
+//            case "mATX":
+//                return 1;
+//            case "ATX":
+//                return 2;
+//            case "eATX":
+//                return 3;
+//            default:
+//                return 0; // 기본 값
+//        }
+//    }
+
+    public boolean checkMotherboardCoverCompatibility(CartEntity cart) {
+        MotherboardEntity motherboard = cart.getMotherboard();
+        CoverEntity cover = cart.getCover();
+
+        if (motherboard == null || cover == null) {
+            throw new IllegalArgumentException("CPU or Memory is missing in the cart.");
+        }
+
+        System.out.println("Motherboard Form Factor: " + motherboard.getMotherboardFormFactor());
+        System.out.println("Cover Form Factor: " + cover.getCoverMotherboardFormFactor());
 
         // form factor 값을 비교
-        int motherboardValue = getFormFactorValue(motherboardFormFactor);
-        int coverValue = getFormFactorValue(coverMotherboardFormFactor);
+        int motherboardValue = getFormFactorValue(motherboard.getMotherboardFormFactor());
+        int coverValue = getFormFactorValue(cover.getCoverMotherboardFormFactor());
 
         // 값 확인을 위한 로그 출력
-        System.out.println("Motherboard Form Factor: " + motherboardFormFactor + " (Value: " + motherboardValue + ")");
-        System.out.println("Cover Form Factor: " + coverMotherboardFormFactor + " (Value: " + coverValue + ")");
+        System.out.println("Motherboard Form Factor(Value: " + motherboardValue + ")");
+        System.out.println("Cover Form Factor(Value: " + coverValue + ")");
 
 
         return motherboardValue <= coverValue;
     }
 
-    private int getFormFactorValue(String formFactor) {
+        private int getFormFactorValue(String formFactor) {
         switch (formFactor) {
             case "mATX":
                 return 1;
@@ -261,6 +297,26 @@ public class CartService {
                 return 0; // 기본 값
         }
     }
+
+//    public boolean checkCpuMemoryCompatibility(CartEntity cart) {
+//        CpuEntity cpu = cart.getCpu();
+//        MemoryEntity memory = cart.getMemory();
+//
+//        if (cpu == null || memory == null) {
+//            throw new IllegalArgumentException("CPU or Memory is missing in the cart.");
+//        }
+//
+//        System.out.println("CPU Series: " + cpu.getCpuSeries());  // CPU 시리즈 출력
+//        System.out.println("Memory Form Factor: " + memory.getMemoryFormFactor());  // 메모리 폼 팩터 출력
+//
+//
+//        List<String> supportedMemoryTypes = getSupportedMemoryTypes(cpu);
+//
+//        // 비교된 메모리 유형 출력
+//        System.out.println("Supported Memory Types: " + supportedMemoryTypes);  // 지원되는 메모리 유형 출력
+//
+//        return supportedMemoryTypes.contains(memory.getMemoryFormFactor());
+//    }
 
 
 

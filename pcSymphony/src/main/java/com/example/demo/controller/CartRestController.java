@@ -238,18 +238,28 @@ public class CartRestController {
 
     // Motherboard-Cover 호환성 검사
     @PostMapping("/check-motherboard-cover-compatibility")
-    public ResponseEntity<Map<String, Boolean>> checkMotherboardCoverCompatibility(@RequestBody Map<String, String> request) {
-        String motherboard = request.get("motherboard");
-        String cover = request.get("cover");
+    public ResponseEntity<Map<String, Object>> checkMotherboardCoverCompatibility(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "User is not authenticated."));
+        }
+        String userId = principal.getName();
+        CartEntity cart = cartRepository.findByUser_MemberId(userId);
 
-        // 호환성 검사 로직
-        boolean isCompatible = cartService.checkMotherboardCoverCompatibility(motherboard, cover);
+        if (cart == null || cart.getMotherboard() == null || cart.getCover() == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Incomplete cart data for compatibility check."));
+        }
+        boolean isCompatible = cartService.checkMotherboardCoverCompatibility(cart);
 
-        // 결과를 반환
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("isCompatible", isCompatible);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(Map.of(
+                "isCompatible", isCompatible,
+                "motherboardFormFactor", cart.getMotherboard().getMotherboardFormFactor(),
+                "coverFormFactor", cart.getCover().getCoverMotherboardFormFactor()
+        ));
     }
+
+
 
 
 
