@@ -28,11 +28,8 @@ public class PowerSupplyEntity {
     @Column(name = "powersupply_manufactor", nullable = false, length = 50)
     private String manufacturer;
 
-    @Column(name = "powersupply_part", nullable = false, length = 50)
-    private String part;
-
     @Column(name = "powersupply_price")
-    private Double price;
+    private double price;
 
     @Column(name = "powersupply_type", nullable = false, length = 50)
     private String powerSupplyType;
@@ -40,10 +37,5 @@ public class PowerSupplyEntity {
     @Column(name = "powersupply_wattage")
     private Integer powerSupplyWattage;
 
-    @Column(name = "powersupply_length")
-    private Integer powerSupplyLength;
-
-    @Column(name = "powersupply_color", length = 20)
-    private String powerSupplyColor;
 
 }

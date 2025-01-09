@@ -28,9 +28,6 @@ public class CoverEntity {
     @Column(name = "cover_manufactor", nullable = false, length = 50)
     private String manufacturer;
 
-    @Column(name = "cover_part", nullable = false, length = 50)
-    private String part;
-
     @Column(name = "cover_price")
     private Double price;
 
@@ -40,12 +37,6 @@ public class CoverEntity {
     @Column(name = "cover_motherboard_Form_Factor", nullable = false, length = 50)
     private String coverMotherboardFormFactor;
 
-    @Column(name = "cover_Maximum_Video_Card_Length", nullable = false, length = 100)
-    private String coverMaxVideoCardLength;
-
-    @Column(name = "cover_type", nullable = false, length = 50)
-    private String coverType;
-
-    @Column(name = "cover_color", nullable = false, length = 20)
-    private String coverColor;
+    @Column(name = "cover_Maximum_Video_Card_Length")
+    private Integer coverMaxVideoCardLength;
 }
