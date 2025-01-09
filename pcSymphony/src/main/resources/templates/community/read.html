@@ -138,11 +138,28 @@
 </div>
 <!--footer-->
 <div th:replace="fragments/footer :: footerFragment"></div>
-<script>
-    // 현재 커뮤니티 ID와 사용자 ID를 얻어옵니다.
-    const communityId = [[${community.communityId}]];  // 서버에서 동적으로 값을 받아옵니다.
-    const userId = '[[${#authentication.name}]];' // 로그인한 사용자 ID를 서버에서 받아옵니다.
 
+<input type="text" id="communityId" th:value="${community.communityId}" disabled>
+<input type="text" id="userId" th:value="${#authentication.name}" disabled>
+<!--    // 현재 커뮤니티 ID와 사용자 ID를 얻어옵니다.-->
+<!--    // communityId 값 가져오기-->
+<!--    const communityId = document.getElementById('communityId').value;-->
+<!--    console.log('Community ID:', communityId);-->
+
+<!--    // userName 값 가져오기-->
+<!--    const userId = document.getElementById('userName').value;-->
+<!--    console.log('User Name:', userId);-->
+<script>
+    // communityId 값 가져오기
+    const communityId = document.getElementById('communityId').value;
+
+    // userName 값 가져오기
+    const userId = document.getElementById('userId').value;
+
+
+    // 현재 커뮤니티 ID와 사용자 ID를 얻어옵니다.
+    console.log('Community ID:', communityId);
+    console.log('User Id:', userId);
     // 댓글 목록을 로드하는 함수
     function loadComments() {
         $.ajax({

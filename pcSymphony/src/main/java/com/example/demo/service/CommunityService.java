@@ -126,12 +126,14 @@ public class CommunityService {
 
     //댓글 저장
     public void communityReplyWrite(CommunityReplyDTO replyDTO) {
+
         MemberEntity memberEntity = memberRepository.findById(replyDTO.getMemberId())
                 .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
         CommunityEntity communityEntity = communityRepository.findById(replyDTO.getCommunityId())
                 .orElseThrow(() -> new EntityNotFoundException("게시글 정보가 없습니다."));
         CommunityReplyEntity communityReplyEntity = CommunityReplyEntity.builder()
                 .member(memberEntity)
+                .community(communityEntity)
                 .communityReplyContent(replyDTO.getReplyContent())
                 .build();
 

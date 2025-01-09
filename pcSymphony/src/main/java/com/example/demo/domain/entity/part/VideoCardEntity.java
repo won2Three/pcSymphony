@@ -28,31 +28,25 @@ public class VideoCardEntity {
     @Column(name = "videocard_manufactor", nullable = false, length = 50)
     private String manufacturer;
 
-    @Column(name = "videocard_part", nullable = false, length = 50)
-    private String part;
-
     @Column(name = "videocard_price")
     private Double price;
 
-    @Column(name = "videocard_length", length = 50)
-    private String videoCardLength;
+    @Column(name = "videocard_length")
+    private Double videoCardLength;
 
     @Column(name = "videocard_tdp")
     private Integer videoCardTdp;
 
-    @Column(name = "videocard_memory", length = 50)
-    private String videoCardMemory;
+    @Column(name = "videocard_memory")
+    private Integer videoCardMemory;
 
     @Column(name = "videocard_chipset", length = 50)
     private String videoCardChipset;
 
-    @Column(name = "videocard_color", length = 20)
-    private String videoCardColor;
+    @Column(name = "videocard_core_clock", length = 50)
+    private String videoCardCoreClock;
 
-    @Column(name = "videocard_core_clock")
-    private Integer videoCardCoreClock;
-
-    @Column(name = "videocard_boost_clock")
-    private Integer videoCardBoostClock;
+    @Column(name = "videocard_boost_clock", length = 50)
+    private String videoCardBoostClock;
 
 }

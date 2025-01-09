@@ -34,26 +34,14 @@ public class CpuEntity {
     @Column(name = "cpu_manufacturer", nullable = false, length = 50) // null 허용 안 함, 길이 50
     private String manufacturer; // cpu_manufacturer 필드
 
-    @Column(name = "cpu_part", nullable = false, length = 50) // null 허용 안 함, 길이 50
-    private String part; // cpu_part 필드
-
     @Column(name = "cpu_price")
     private Double price; // cpu_price 필드
-
-    @Column(name = "cpu_series", nullable = false, length = 50)
-    private String cpuSeries; // cpu_series 필드
 
     @Column(name = "cpu_socket", nullable = false, length = 50)
     private String cpuSocket; // cpu_socket 필드
 
-    @Column(name = "cpu_includes_cooler", nullable = false)
-    private Boolean cpuIncludesCooler; // cpu_includes_cooler 필드
-
     @Column(name = "cpu_tdp", nullable = false)
     private Integer cpuTdp; // cpu_tdp 필드
-
-    @Column(name = "cpu_microarchitecture", nullable = false, length = 50)
-    private String cpuMicroarchitecture; // cpu_microarchitecture 필드
 
     @Column(name = "cpu_core_count")
     private Integer cpuCoreCount; // cpu_core_count 필드
@@ -61,9 +49,9 @@ public class CpuEntity {
     @Column(name = "cpu_thread_count")
     private Integer cpuThreadCount; // cpu_thread_count 필드
 
-    @Column(name = "cpu_performance_core_clock")
-    private Integer cpuPerformanceCoreClock; // cpu_performance_core_clock 필드
+    @Column(name = "cpu_performance_core_clock", length = 50)
+    private String cpuPerformanceCoreClock; // cpu_performance_core_clock 필드
 
-    @Column(name = "cpu_performance_core_boost_clock")
-    private Integer cpuPerformanceCoreBoostClock; // cpu_performance_core_boost_clock 필드
+    @Column(name = "cpu_performance_core_boost_clock", length = 50)
+    private String cpuPerformanceCoreBoostClock; // cpu_performance_core_boost_clock 필드
 }

@@ -25,7 +25,6 @@
                     <th>ID</th>
                     <th>이름</th>
                     <th>제조사</th>
-                    <th>파트</th>
                     <th>가격</th>
                 </tr>
                 </thead>
@@ -34,7 +33,6 @@
                     <td th:text="${part.id}">ID</td>
                     <td th:text="${part.name}">Name</td>
                     <td th:text="${part.manufacturer}">Manufacturer</td>
-                    <td th:text="${part.part}">Part</td>
                     <td th:text="${part.price}">Price</td>
                 </tr>
                 </tbody>
@@ -42,52 +40,37 @@
                 <!-- CoverDTO 속성들 -->
                 <thead>
                 <tr th:if="${tableName == 'cover'}">
-                    <th>파워 서플라이 여부</th>
                     <th>메인보드 폼팩터</th>
                     <th>최대 비디오 카드 길이</th>
-                    <th>타입</th>
-                    <th>색상</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:if="${tableName == 'cover'}">
-                    <td th:text="${part.coverPowerSupply} ? 'Yes' : 'No'">Cover Power Supply</td>
                     <td th:text="${part.coverMotherboardFormFactor}">Cover Motherboard Form Factor</td>
                     <td th:text="${part.coverMaxVideoCardLength}">Cover Max Video Card Length</td>
-                    <td th:text="${part.coverType}">Cover Type</td>
-                    <td th:text="${part.coverColor}">Cover Color</td>
                 </tr>
                 </tbody>
 
                 <!-- CpuCoolerDTO 속성들 -->
                 <thead>
                 <tr th:if="${tableName == 'cpucooler'}">
-                    <th>CPU 소켓</th>
-                    <th>수냉 여부</th>
-                    <th>색상</th>
-                    <th>소음 수준</th>
-                    <th>팬 RPM</th>
+                    <th>CPU쿨러 소켓</th>
+                    <th>CPU쿨러 높이</th>
 
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:if="${tableName == 'cpucooler'}">
-                    <td th:text="${part.cpuCoolerCpuSocket}">CPU Cooler CPU Socket</td>
-                    <td th:text="${part.cpuCoolerWaterCooled} ? 'Yes' : 'No'">Water Cooled</td>
-                    <td th:text="${part.cpuCoolerColor}">CPU Cooler Color</td>
-                    <td th:text="${part.cpuCoolerNoiseLevel}">Noise Level</td>
-                    <td th:text="${part.cpuCoolerFanRpm}">Fan RPM</td>
+                    <td th:text="${part.cpuCoolerMotherboardSockets}">CPU Motherboard Socket</td>
+                    <td th:text="${part.cpuCoolerHeight}">CpuCooler Height</td>
                 </tr>
                 </tbody>
 
                 <!-- CpuDTO 속성들 -->
                 <thead>
                 <tr th:if="${tableName == 'cpu'}">
-                    <th>시리즈</th>
                     <th>소켓</th>
-                    <th>쿨러 포함 여부</th>
                     <th>TDP</th>
-                    <th>마이크로아키텍처</th>
                     <th>코어 수</th>
                     <th>스레드 수</th>
                     <th>성능 코어 클럭</th>
@@ -96,11 +79,8 @@
                 </thead>
                 <tbody>
                 <tr th:if="${tableName == 'cpu'}">
-                    <td th:text="${part.cpuSeries}">Series</td>
                     <td th:text="${part.cpuSocket}">Socket</td>
-                    <td th:text="${part.cpuIncludesCooler} ? 'Yes' : 'No'">Includes Cooler</td>
                     <td th:text="${part.cpuTdp}">TDP</td>
-                    <td th:text="${part.cpuMicroarchitecture}">Microarchitecture</td>
                     <td th:text="${part.cpuCoreCount}">Core Count</td>
                     <td th:text="${part.cpuThreadCount}">Thread Count</td>
                     <td th:text="${part.cpuPerformanceCoreClock}">Performance Core Clock</td>
@@ -112,16 +92,14 @@
                 <thead>
                 <tr th:if="${tableName == 'memory'}">
                     <th>메모리 폼팩터</th>
-                    <th>색상</th>
-                    <th>모듈</th>
+                    <th>크기</th>
                     <th>속도</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:if="${tableName == 'memory'}">
                     <td th:text="${part.memoryFormFactor}">Memory Form Factor</td>
-                    <td th:text="${part.memoryColor}">Memory Color</td>
-                    <td th:text="${part.memoryModule}">Memory Module</td>
+                    <td th:text="${part.memorySize}">Memory Module</td>
                     <td th:text="${part.memorySpeed}">Memory Speed</td>
                 </tr>
                 </tbody>
@@ -135,6 +113,7 @@
                     <th>칩셋</th>
                     <th>메모리 슬롯 수</th>
                     <th>슬롯 수 (M.2)</th>
+                    <th>최대 메모리 양</th>
 
                 </tr>
                 </thead>
@@ -146,6 +125,7 @@
                     <td th:text="${part.motherboardChipset}">Motherboard Chipset</td>
                     <td th:text="${part.motherboardMemorySlotCount}">Motherboard Memory Slot Count</td>
                     <td th:text="${part.motherboardMdot2SlotCount}">Motherboard M.2 Slot Count</td>
+                    <td th:text="${part.motherboardMemoryMax}">Motherboard Memory Max</td>
                 </tr>
                 </tbody>
 
@@ -154,16 +134,12 @@
                 <tr th:if="${tableName == 'powersupply'}">
                     <th>전원 종류</th>
                     <th>전력(W)</th>
-                    <th>길이</th>
-                    <th>색상</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:if="${tableName == 'powersupply'}">
                     <td th:text="${part.powerSupplyType}">Power Supply Type</td>
                     <td th:text="${part.powerSupplyWattage}">Power Supply Wattage</td>
-                    <td th:text="${part.powerSupplyLength}">Power Supply Length</td>
-                    <td th:text="${part.powerSupplyColor}">Power Supply Color</td>
                 </tr>
                 </tbody>
 
@@ -190,7 +166,6 @@
                     <th>비디오 카드 TDP</th>
                     <th>메모리</th>
                     <th>칩셋</th>
-                    <th>색상</th>
                     <th>코어 클럭</th>
                     <th>부스트 클럭</th>
                 </tr>
@@ -201,7 +176,6 @@
                     <td th:text="${part.videoCardTdp}">Video Card TDP</td>
                     <td th:text="${part.videoCardMemory}">Video Card Memory</td>
                     <td th:text="${part.videoCardChipset}">Video Card Chipset</td>
-                    <td th:text="${part.videoCardColor}">Video Card Color</td>
                     <td th:text="${part.videoCardCoreClock}">Core Clock</td>
                     <td th:text="${part.videoCardBoostClock}">Boost Clock</td>
                 </tr>
