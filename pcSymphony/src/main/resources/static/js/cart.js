@@ -74,11 +74,14 @@ document.addEventListener("DOMContentLoaded", function () {
             fetch('/cart/check-cpu-motherboard-compatibility')
                 .then(response => response.json())
                 .then(data => {
+                    const cpuMotherboardStatus = document.querySelector('#cpu-motherboard-compatibility');
+
                     if (!data.isCompatible) {
-                        cpuElement.closest('th').style.border = '2px solid red';
-                        motherboardElement.closest('th').style.border = '2px solid red';
+                        cpuMotherboardStatus.classList.remove("compatible");
+                        cpuMotherboardStatus.classList.add("incompatible");
                     } else {
-                        resetBorders(['cpu', 'motherboard']);
+                        cpuMotherboardStatus.classList.remove("incompatible");
+                        cpuMotherboardStatus.classList.add("compatible");
                     }
                 });
         }
@@ -87,11 +90,14 @@ document.addEventListener("DOMContentLoaded", function () {
             fetch('/cart/check-motherboard-memory-compatibility')
                 .then(response => response.json())
                 .then(data => {
+                    const motherboardMemoryStatus = document.querySelector('#motherboard-memory-compatibility');
+
                     if (!data.isCompatible) {
-                        motherboardElement.closest('th').style.border = '2px solid red';
-                        memoryElement.closest('th').style.border = '2px solid red';
+                        motherboardMemoryStatus.classList.remove("compatible");
+                        motherboardMemoryStatus.classList.add("incompatible");
                     } else {
-                        resetBorders(['motherboard', 'memory']);
+                        motherboardMemoryStatus.classList.remove("incompatible");
+                        motherboardMemoryStatus.classList.add("compatible");
                     }
                 });
         }
@@ -105,28 +111,54 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(response => response.json())
             .then(data => {
-                const isCompatible = data.isCompatible;
-                const cpuCell = cpuElement.closest('th');
-                const memoryCell = memoryElement.closest('th');
+                const cpuMemoryStatus = document.querySelector('#cpu-memory-compatibility');
 
-                if (isCompatible) {
-                    cpuCell.style.border = 'none';
-                    memoryCell.style.border = 'none';
+                if (data.isCompatible) {
+                    cpuMemoryStatus.classList.remove("incompatible");
+                    cpuMemoryStatus.classList.add("compatible");
                 } else {
-                    cpuCell.style.border = '2px solid red';
-                    memoryCell.style.border = '2px solid red';
+                    cpuMemoryStatus.classList.remove("compatible");
+                    cpuMemoryStatus.classList.add("incompatible");
                 }
             });
         }
-    }
 
-    // 호환성 검사 후 호환되지 않는 부품의 테두리 리셋
-    function resetBorders(parts) {
-        parts.forEach(part => {
-            const partElement = document.querySelector(`tr th[data-part="${part}"]`);
-            if (partElement) {
-                partElement.style.border = 'none';
+        // Motherboard-Cover 호환성 검사 함수
+        function checkMotherboardCoverCompatibility() {
+            const motherboardElement = document.querySelector('tr th[data-part="motherboard"] span');
+            const coverElement = document.querySelector('tr th[data-part="cover"] span');
+
+            const motherboardSelected = motherboardElement && motherboardElement.innerText !== '제품 없음';
+            const coverSelected = coverElement && coverElement.innerText !== '제품 없음';
+
+            // 두 부품이 모두 선택되었을 때만 검사를 진행
+            if (motherboardSelected && coverSelected) {
+                fetch('/cart/check-motherboard-cover-compatibility', {
+                    method: 'POST',  // 변경: GET -> POST
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        motherboard: motherboardElement.innerText,
+                        cover: coverElement.innerText
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const motherboardCoverStatus = document.querySelector('#motherboard-cover-compatibility');
+
+                    if (!data.isCompatible) {
+                        motherboardCoverStatus.classList.remove("compatible");
+                        motherboardCoverStatus.classList.add("incompatible");
+                    } else {
+                        motherboardCoverStatus.classList.remove("incompatible");
+                        motherboardCoverStatus.classList.add("compatible");
+                    }
+                });
             }
-        });
+        }
+
+        // Motherboard와 Cover 호환성 검사 호출
+        checkMotherboardCoverCompatibility();
     }
 });

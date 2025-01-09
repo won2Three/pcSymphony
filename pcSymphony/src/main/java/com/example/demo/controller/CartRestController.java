@@ -236,6 +236,22 @@ public class CartRestController {
         ));
     }
 
+    // Motherboard-Cover 호환성 검사
+    @PostMapping("/check-motherboard-cover-compatibility")
+    public ResponseEntity<Map<String, Boolean>> checkMotherboardCoverCompatibility(@RequestBody Map<String, String> request) {
+        String motherboard = request.get("motherboard");
+        String cover = request.get("cover");
+
+        // 호환성 검사 로직
+        boolean isCompatible = cartService.checkMotherboardCoverCompatibility(motherboard, cover);
+
+        // 결과를 반환
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("isCompatible", isCompatible);
+        return ResponseEntity.ok(response);
+    }
+
+
 
 
 }

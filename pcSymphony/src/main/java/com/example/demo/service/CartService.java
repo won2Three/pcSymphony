@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.entity.CartEntity;
+import com.example.demo.domain.entity.part.CoverEntity;
 import com.example.demo.domain.entity.part.CpuEntity;
 import com.example.demo.domain.entity.part.MemoryEntity;
 import com.example.demo.domain.entity.part.MotherboardEntity;
@@ -128,8 +129,13 @@ public class CartService {
         if (cpu != null && motherboard != null) {
             String cpuSocket = cpu.getCpuSocket();
             String motherboardSocket = motherboard.getMotherboardSocketCpu();
+            System.out.println("test--------------------------------------------------");
+            System.out.println("motherboardSocketCpu" + motherboard.getMotherboardSocketCpu());
+            System.out.println("cpuSocket" + cpu.getCpuSocket());
+            System.out.println("test--------------------------------------------------");
             return cpuSocket.equals(motherboardSocket);
         }
+
         return false; // 하나라도 없으면 호환성 검사하지 않음
     }
 
@@ -142,8 +148,18 @@ public class CartService {
         if (motherboard != null && memory != null) {
             String motherboardMemoryType = motherboard.getMotherboardMemoryType();
             String memoryFormFactor = memory.getMemoryFormFactor();
-            return motherboardMemoryType.equals(memoryFormFactor);
+            System.out.println("test--------------------------------------------------");
+            System.out.println("motherboardMemoryType" + motherboard.getMotherboardMemoryType());
+            System.out.println("memoryFormFactor" + memory.getMemoryFormFactor());
+            System.out.println("test--------------------------------------------------");
+//            return motherboardMemoryType.equals(memoryFormFactor);
+
+            // 비교 후 결과 출력
+            boolean isCompatible = motherboardMemoryType.equals(memoryFormFactor);
+            System.out.println("호환성 검사 결과: " + isCompatible);
+            return isCompatible;
         }
+
         return false; // 하나라도 없으면 호환성 검사하지 않음
     }
 
@@ -217,7 +233,39 @@ public class CartService {
         }
         return Collections.emptyList();
     }
+
+    //Motherboard == Cover
+    public boolean checkMotherboardCoverCompatibility(String motherboardFormFactor, String coverMotherboardFormFactor) {
+
+        // form factor 값을 비교
+        int motherboardValue = getFormFactorValue(motherboardFormFactor);
+        int coverValue = getFormFactorValue(coverMotherboardFormFactor);
+
+        // 값 확인을 위한 로그 출력
+        System.out.println("Motherboard Form Factor: " + motherboardFormFactor + " (Value: " + motherboardValue + ")");
+        System.out.println("Cover Form Factor: " + coverMotherboardFormFactor + " (Value: " + coverValue + ")");
+
+
+        return motherboardValue <= coverValue;
     }
+
+    private int getFormFactorValue(String formFactor) {
+        switch (formFactor) {
+            case "mATX":
+                return 1;
+            case "ATX":
+                return 2;
+            case "eATX":
+                return 3;
+            default:
+                return 0; // 기본 값
+        }
+    }
+
+
+
+
+}
 
 
 

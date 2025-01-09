@@ -41,3 +41,22 @@ td button {
 td {
     text-align: center;
 }
+
+/*--------------------------호환성 체크---------------------------*/
+#compatibility-check-results {
+    margin-top: 20px;
+}
+
+.compatibility-status {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.compatible {
+    color: green;
+}
+
+.incompatible {
+    color: red;
+}
+
