@@ -9,98 +9,6 @@
     <link href="../../static/css/pcReviewWrite.css" rel="stylesheet" th:href="@{/css/pcReviewWrite.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
     <!--    <script src="../../static/js/pcReviewWrite.js" th:src="@{/js/pcReviewWrite.js}"></script>-->
-    <style>
-
-        .pcReviewContent {
-            font-size: 16px;
-            line-height: 24px;
-            letter-spacing: -0.1px;
-            max-width: 100%;
-            overflow: auto;
-            padding: 24px;
-            margin-top: 24px;
-            margin-bottom: 24px;
-            border-width: 2px;
-            border-style: groove;
-            border-color: threedface;
-            border-image: initial;
-        }
-
-        .pcReviewTitleName {
-            all: unset; /* 모든 스타일 초기화 */
-            cursor: pointer; /* 링크처럼 보이게 */
-            color: #0c1622;
-
-        }
-
-        /*큰 제목 스타일*/
-        .container-like {
-            width: 100%;
-            max-width: 1128px;
-            margin: 0 auto;
-            padding-left: 16px;
-            padding-right: 16px;
-            font-family: "Playfair Display", serif;
-            font-weight: 900;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            border-bottom: #0c1622 solid 3px;
-            box-sizing: border-box; /* padding을 border 길이에서 제외 */
-
-        }
-
-        .container {
-            padding: 33px 68px 40px;
-            border: 2px #95A4B4 solid ;
-            border-width: 0 2px 2px;
-            margin-top: 0px;
-        }
-
-        /*리뷰 제목 스타일*/
-        .pcReviewTitle {
-            border: #95A4B4 1px solid;
-            width: 70%; /* 입력 칸의 너비를 70%로 설정 */
-            padding: 10px; /* 입력 칸 안쪽에 10px의 여백 추가 */
-            box-sizing: border-box; /* 패딩을 포함한 너비로 계산 */
-            border-radius: 1px; /* 테두리 모서리를 약간 둥글게 설정 */
-            margin: 10px auto 10px auto;
-
-        }
-
-        /*전체 리뷰의 내용 스타일*/
-        .pcReviewTextarea {
-            border: #95A4B4 1px solid;
-            width: 100%; /* 입력 칸의 너비를 100%로 설정 */
-            height: 400px;
-            padding: 10px; /* 입력 칸 안쪽에 10px의 여백 추가 */
-            box-sizing: border-box; /* 패딩을 포함한 너비로 계산 */
-            border-radius: 2px; /* 테두리 모서리를 약간 둥글게 설정 */
-            margin: 10px auto 10px auto;
-            resize: vertical; /* 세로 크기만 조정 가능하도록 설정 */
-        }
-        /*파츠 리뷰의 내용 스타일*/
-        .pcReviewPartsTextarea {
-            border: #95A4B4 1px solid;
-            width: 100%; /* 입력 칸의 너비를 100%로 설정 */
-            height: 100px;
-            padding: 10px; /* 입력 칸 안쪽에 10px의 여백 추가 */
-            box-sizing: border-box; /* 패딩을 포함한 너비로 계산 */
-            border-radius: 2px; /* 테두리 모서리를 약간 둥글게 설정 */
-            margin: 10px auto 10px auto;
-            resize: vertical; /* 세로 크기만 조정 가능하도록 설정 */
-        }
-        fieldset {
-            margin-bottom: 10px;
-        }
-        .container {
-            margin-bottom: 24px;
-        }
-        .button-container {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-    </style>
     <title>PC 리뷰 작성</title>
 </head>
 <body>
@@ -117,12 +25,15 @@
                     <legend><h5>전체 리뷰</h5></legend>
                     <label for="pcReviewTitle">전체 리뷰 제목:</label>
                     <br>
-                    <input class="pcReviewTitle" id="pcReviewTitle" name="pcreviewTitle" placeholder="제목을 입력하세요" required
+                    <input class="pcReviewTitle" id="pcReviewTitle" name="pcreviewTitle" placeholder="제목을 입력하세요"
+                           required
                            type="text">
                     <br>
-                    <textarea class="pcReviewTextarea" id="pcReviewContent" name="pcreviewContent" placeholder="내용을 입력하세요" required
+                    <textarea class="pcReviewTextarea" id="pcReviewContent" name="pcreviewContent"
+                              placeholder="내용을 입력하세요" required
                               rows="5"></textarea>
                     <br>
+                    <!--아직 기능 연결 안됨-->
                     <label for="imageUpload">이미지 업로드:</label>
                     <input accept="image/*" id="imageUpload" name="imageUpload" type="file">
                     <br>
@@ -139,18 +50,19 @@
                     </select>
                 </fieldset>
 
-                <!--               partsReview-->
+                <!--partsReview-->
                 <fieldset class="pcReviewContent">
                     <legend><h5>파츠 리뷰</h5></legend>
                     <!-- CPU 리뷰 -->
                     <fieldset style="">
                         <label for="cpuTitle" th:text="'CPU 제목: ' + ${cart.cpu.name}">CPU 리뷰:</label>
                         <br>
-                        <input class="pcReviewTitle" id="cpuTitle" name="partReviews[cpu].title" placeholder="제목을 입력하세요." required
+                        <input class="pcReviewTitle" id="cpuTitle" name="partReviews[cpu].title"
+                               placeholder="제목을 입력하세요." required
                                type="text">
                         <br>
-                        <textarea class="pcReviewPartsTextarea" id="cpuContent" name="partReviews[cpu].content" required
-                                  rows="3" placeholder="내용을 입력하세요"></textarea>
+                        <textarea class="pcReviewPartsTextarea" id="cpuContent" name="partReviews[cpu].content" placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
                         <br>
                         <label for="cpuRating">별점:</label>
                         <select id="cpuRating" name="partReviews[cpu].rating" required>
@@ -167,11 +79,12 @@
                         <label for="cpuCoolerTitle" th:text="'CPU Cooler 제목: ' + ${cart.cpucooler.name}">CPU Cooler
                             리뷰:</label>
                         <br>
-                        <input class="pcReviewTitle" id="cpuCoolerTitle" name="partReviews[cpucooler].title" required
-                               type="text" placeholder="제목을 입력하세요.">
+                        <input class="pcReviewTitle" id="cpuCoolerTitle" name="partReviews[cpucooler].title" placeholder="제목을 입력하세요."
+                               required type="text">
                         <br>
-                        <textarea class="pcReviewPartsTextarea" id="cpuCoolerContent" name="partReviews[cpucooler].content" required
-                                  rows="3" placeholder="내용을 입력하세요"></textarea>
+                        <textarea class="pcReviewPartsTextarea" id="cpuCoolerContent"
+                                  name="partReviews[cpucooler].content" placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
                         <br>
                         <label for="cpuCoolerRating">별점:</label>
                         <select id="cpuCoolerRating" name="partReviews[cpucooler].rating" required>
@@ -188,10 +101,12 @@
                         <label for="motherboardTitle" th:text="'Motherboard 제목: ' + ${cart.motherboard.name}">Motherboard
                             리뷰:</label>
                         <br>
-                        <input class="pcReviewTitle" id="motherboardTitle" name="partReviews[motherboard].title" required type="text" placeholder="제목을 입력하세요.">
+                        <input class="pcReviewTitle" id="motherboardTitle" name="partReviews[motherboard].title"
+                               placeholder="제목을 입력하세요." required type="text">
                         <br>
-                        <textarea class="pcReviewPartsTextarea" id="motherboardContent" name="partReviews[motherboard].content" required
-                                  rows="3" placeholder="내용을 입력하세요"></textarea>
+                        <textarea class="pcReviewPartsTextarea" id="motherboardContent"
+                                  name="partReviews[motherboard].content" placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
                         <br>
                         <label for="motherboardRating">별점:</label>
                         <select id="motherboardRating" name="partReviews[motherboard].rating" required>
@@ -207,10 +122,12 @@
                     <fieldset>
                         <label for="memoryTitle" th:text="'Memory 제목: ' + ${cart.memory.name}">Memory 리뷰</label>
                         <br>
-                        <input class="pcReviewTitle" id="memoryTitle" name="partReviews[memory].title" required type="text" placeholder="제목을 입력하세요.">
+                        <input class="pcReviewTitle" id="memoryTitle" name="partReviews[memory].title" placeholder="제목을 입력하세요."
+                               required type="text">
                         <br>
-                        <textarea class="pcReviewPartsTextarea" id="memoryContent" name="partReviews[memory].content" required
-                                  rows="3" placeholder="내용을 입력하세요"></textarea>
+                        <textarea class="pcReviewPartsTextarea" id="memoryContent" name="partReviews[memory].content"
+                                  placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
                         <br>
                         <label for="memoryRating">별점:</label>
                         <select id="memoryRating" name="partReviews[memory].rating" required>
@@ -226,10 +143,12 @@
                     <fieldset>
                         <label for="storageTitle" th:text="'Storage 제목: ' + ${cart.storage.name}">Storage 리뷰:</label>
                         <br>
-                        <input class="pcReviewTitle" id="storageTitle" name="partReviews[storage].title" required type="text" placeholder="제목을 입력하세요.">
+                        <input class="pcReviewTitle" id="storageTitle" name="partReviews[storage].title" placeholder="제목을 입력하세요."
+                               required type="text">
                         <br>
-                        <textarea class="pcReviewPartsTextarea" id="storageContent" name="partReviews[storage].content" required
-                                  rows="3" placeholder="내용을 입력하세요"></textarea>
+                        <textarea class="pcReviewPartsTextarea" id="storageContent" name="partReviews[storage].content"
+                                  placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
                         <br>
                         <label for="storageRating">별점:</label>
                         <select id="storageRating" name="partReviews[storage].rating" required>
@@ -246,10 +165,12 @@
                         <label for="videoCardTitle" th:text="'VideoCard 제목: ' + ${cart.videocard.name}">VideoCard
                             리뷰:</label>
                         <br>
-                        <input class="pcReviewTitle" id="videoCardTitle" name="partReviews[videocard].title" required type="text" placeholder="제목을 입력하세요.">
+                        <input class="pcReviewTitle" id="videoCardTitle" name="partReviews[videocard].title" placeholder="제목을 입력하세요."
+                               required type="text">
                         <br>
-                        <textarea class="pcReviewPartsTextarea" id="videoCardContent" name="partReviews[videocard].content" required
-                                  rows="3" placeholder="내용을 입력하세요"></textarea>
+                        <textarea class="pcReviewPartsTextarea" id="videoCardContent"
+                                  name="partReviews[videocard].content" placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
                         <br>
                         <label for="videoCardRating">별점:</label>
                         <select id="videoCardRating" name="partReviews[videocard].rating" required>
@@ -266,10 +187,12 @@
                         <label for="powerSupplyTitle" th:text="'PowerSupply 제목: ' + ${cart.powersupply.name}">PowerSupply
                             리뷰:</label>
                         <br>
-                        <input class="pcReviewTitle" id="powerSupplyTitle" name="partReviews[powersupply].title" required type="text" placeholder="제목을 입력하세요.">
+                        <input class="pcReviewTitle" id="powerSupplyTitle" name="partReviews[powersupply].title"
+                               placeholder="제목을 입력하세요." required type="text">
                         <br>
-                        <textarea class="pcReviewPartsTextarea" id="powerSupplyContent" name="partReviews[powersupply].content" required
-                                  rows="3" placeholder="내용을 입력하세요"></textarea>
+                        <textarea class="pcReviewPartsTextarea" id="powerSupplyContent"
+                                  name="partReviews[powersupply].content" placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
                         <br>
                         <label for="powerSupplyRating">별점:</label>
                         <select id="powerSupplyRating" name="partReviews[powersupply].rating" required>
@@ -285,10 +208,12 @@
                     <fieldset>
                         <label for="coverTitle" th:text="'Cover 제목: ' + ${cart.cover.name}">Cover 리뷰:</label>
                         <br>
-                        <input class="pcReviewTitle" id="coverTitle" name="partReviews[cover].title" required type="text" placeholder="제목을 입력하세요.">
+                        <input class="pcReviewTitle" id="coverTitle" name="partReviews[cover].title" placeholder="제목을 입력하세요."
+                               required type="text">
                         <br>
-                        <textarea class="pcReviewPartsTextarea" id="coverContent" name="partReviews[cover].content" required
-                                  rows="3" placeholder="내용을 입력하세요"></textarea>
+                        <textarea class="pcReviewPartsTextarea" id="coverContent" name="partReviews[cover].content"
+                                  placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
                         <br>
                         <label for="coverRating">별점:</label>
                         <select id="coverRating" name="partReviews[cover].rating" required>
@@ -301,8 +226,8 @@
                     </fieldset>
                 </fieldset>
                 <div class="button-container" style="text-align: right">
-                    <button class="gray-button" type="button" th:href="@{pcReview/pcReviewList}">취소</button>
-                <button class="blue-button" type="submit">등록</button>
+                    <button class="gray-button" th:href="@{pcReview/pcReviewList}" type="button">취소</button>
+                    <button class="blue-button" type="submit">등록</button>
                 </div>
             </form>
         </div>

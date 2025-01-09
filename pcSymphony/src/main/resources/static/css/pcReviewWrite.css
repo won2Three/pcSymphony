@@ -1,0 +1,94 @@
+
+.pcReviewContent {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.1px;
+    max-width: 100%;
+    overflow: auto;
+    padding: 24px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;
+}
+
+.pcReviewTitleName {
+    all: unset; /* 모든 스타일 초기화 */
+    cursor: pointer; /* 링크처럼 보이게 */
+    color: #0c1622;
+
+}
+
+/*큰 제목 스타일*/
+.container-like {
+    width: 100%;
+    max-width: 1128px;
+    margin: 0 auto;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-family: "Playfair Display", serif;
+    font-weight: 900;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    border-bottom: #0c1622 solid 3px;
+    box-sizing: border-box; /* padding을 border 길이에서 제외 */
+
+}
+
+.container {
+    padding: 33px 68px 40px;
+    border: #95A4B4 solid;
+    border-width: 0 2px 2px;
+    margin-top: 0px;
+}
+
+/*리뷰 제목 스타일*/
+.pcReviewTitle {
+    border: #95A4B4 1px solid;
+    width: 70%; /* 입력 칸의 너비를 70%로 설정 */
+    padding: 10px; /* 입력 칸 안쪽에 10px의 여백 추가 */
+    box-sizing: border-box; /* 패딩을 포함한 너비로 계산 */
+    border-radius: 1px; /* 테두리 모서리를 약간 둥글게 설정 */
+    margin: 10px auto 10px auto;
+
+}
+
+/*전체 리뷰의 내용 스타일*/
+.pcReviewTextarea {
+    border: #95A4B4 1px solid;
+    width: 100%; /* 입력 칸의 너비를 100%로 설정 */
+    height: 400px;
+    padding: 10px; /* 입력 칸 안쪽에 10px의 여백 추가 */
+    box-sizing: border-box; /* 패딩을 포함한 너비로 계산 */
+    border-radius: 2px; /* 테두리 모서리를 약간 둥글게 설정 */
+    margin: 10px auto 10px auto;
+    resize: vertical; /* 세로 크기만 조정 가능하도록 설정 */
+}
+
+/*파츠 리뷰의 내용 스타일*/
+.pcReviewPartsTextarea {
+    border: #95A4B4 1px solid;
+    width: 100%; /* 입력 칸의 너비를 100%로 설정 */
+    height: 100px;
+    padding: 10px; /* 입력 칸 안쪽에 10px의 여백 추가 */
+    box-sizing: border-box; /* 패딩을 포함한 너비로 계산 */
+    border-radius: 2px; /* 테두리 모서리를 약간 둥글게 설정 */
+    margin: 10px auto 10px auto;
+    resize: vertical; /* 세로 크기만 조정 가능하도록 설정 */
+}
+
+fieldset {
+    margin-bottom: 10px;
+}
+
+.container {
+    margin-bottom: 24px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}

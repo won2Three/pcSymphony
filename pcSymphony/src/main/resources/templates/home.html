@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js"
-	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+<html class="no-js" lang="en"
+      xmlns:th="http://www.thymeleaf.org"
 >
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>PcSymphony</title>
-	<link rel="stylesheet" th:href="@{/css/style.css}" href="../static/css/style.css">
-	<link href="../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
-	<script src="../static/js/header.js" th:src="@{/js/header.js}"></script>
-	<script th:src="@{/js/main.min.js}" src="../static/js/main.min.js"></script>
-
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+    <title>PcSymphony</title>
+    <link href="../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
+    <script src="../static/js/header.js" th:src="@{/js/header.js}"></script>
+    <script src="../static/js/main.min.js" th:src="@{/js/main.min.js}"></script>
+    <title>pcSymphony_Home</title>
 </head>
 
 <body>
@@ -20,144 +20,160 @@
 <div th:replace="~{fragments/header :: headerFragment}"></div>
 <div class="body-wrap">
 
-	<main class="site-content">
-		<section class="roadmap section has-top-divider">
-			<div class="container">
-				<div class="roadmap-inner section-inner">
-					<div class="section-header center-content">
-						<div class="container-xs">
-							<h2 class="mt-0 mb-16">Pick Parts. Build Your PC. Compare and Share.</h2>
-							<a class="button button-primary button-wide-mobile grid-item" th:href="@{/cart}"
-							style="display: inline-block">Cart</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+    <main class="site-content">
+        <section class="roadmap section has-top-divider">
+            <div class="container">
+                <div class="roadmap-inner section-inner">
+                    <div class="section-header center-content">
+                        <div class="container-xs">
+                            <h2 class="mt-0 mb-16">Pick Parts. Build Your PC. Compare and Share.</h2>
+                            <a class="button button-primary button-wide-mobile grid-item" style="display: inline-block"
+                               th:href="@{/cart}">Cart</a>
+                        </div>
+                        <div class="tiles-wrap">
+                            <article class="tiles-item">
+                                <div class="tiles-item-inner has-shadow">
+                                    <a href="/part/cpu">
+                                        <figure class="news-item-imgae m-0">
+                                            <img alt="CPU image" src="/images/nav-cpu.png">
+                                        </figure>
+                                        <div class="news-item-content">
+                                            <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8">
+                                                CPU</h3>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-		<!--pcGuide-->
-		<section class="news section illustration-section-01">
-			<div class="container">
-				<div class="news-inner section-inner">
-					<div class="section-header center-content">
-						<div class="container-xs"><h2 class="mt-0 mb-16">pcGuide</h2>
-							<p class="mb-0">PcGuide에 대한 내용입니다.</p></div>
-					</div>
-					<div class="tiles-wrap">
-						<article class="tiles-item">
-							<div class="tiles-item-inner has-shadow">
-								<figure class="news-item-image m-0">
-									<img src="../images/news-image-01.jpg" alt="News 01"
-										 width="344" height="194"></figure>
-								<div class="news-item-content">
-									<div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
-										to build anything</a></h3>
-										<p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
-											elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
-											minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-											ex.</p></div>
-									<div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
-								</div>
-							</div>
-						</article>
-						<article class="tiles-item">
-							<div class="tiles-item-inner has-shadow">
-								<figure class="news-item-image m-0">
-									<img src="/images/news-image-02.jpg" alt="News 02"
-										 width="344" height="194"></figure>
-								<div class="news-item-content">
-									<div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
-										to build anything</a></h3>
-										<p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
-											elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
-											minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-											ex.</p></div>
-									<div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
-								</div>
-							</div>
-						</article>
-						<article class="tiles-item">
-							<div class="tiles-item-inner has-shadow">
-								<figure class="news-item-image m-0"><img src="/images/news-image-03.jpg" alt="News 03"
-																		 width="344" height="194"></figure>
-								<div class="news-item-content">
-									<div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
-										to build anything</a></h3>
-										<p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
-											elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
-											minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-											ex.</p></div>
-									<div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
-								</div>
-							</div>
-						</article>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!--PcReview-->
-		<section class="roadmap section has-top-divider">
-			<div class="container">
-				<div class="roadmap-inner section-inner">
-					<div class="section-header center-content">
-						<div class="container-xs"><h2 class="mt-0 mb-16">PcReview</h2>
-							<p class="mb-0">PcReview에 대한 내용입니다.</p></div>
-					</div>
-					<div class="tiles-wrap">
-						<article class="tiles-item">
-							<div class="tiles-item-inner has-shadow">
-								<figure class="news-item-image m-0">
-									<img src="/images/news-image-01.jpg" alt="News 01"
-										 width="344" height="194"></figure>
-								<div class="news-item-content">
-									<div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
-										to build anything</a></h3>
-										<p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
-											elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
-											minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-											ex.</p></div>
-									<div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
-								</div>
-							</div>
-						</article>
-						<article class="tiles-item">
-							<div class="tiles-item-inner has-shadow">
-								<figure class="news-item-image m-0">
-									<img src="/images/news-image-02.jpg" alt="News 02"
-										 width="344" height="194"></figure>
-								<div class="news-item-content">
-									<div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
-										to build anything</a></h3>
-										<p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
-											elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
-											minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-											ex.</p></div>
-									<div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
-								</div>
-							</div>
-						</article>
-						<article class="tiles-item">
-							<div class="tiles-item-inner has-shadow">
-								<figure class="news-item-image m-0"><img src="/images/news-image-03.jpg" alt="News 03"
-																		 width="344" height="194"></figure>
-								<div class="news-item-content">
-									<div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
-										to build anything</a></h3>
-										<p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
-											elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
-											minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-											ex.</p></div>
-									<div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
-								</div>
-							</div>
-						</article>
-					</div>
-				</div>
-			</div>
-		</section>
+        <!--pcGuide-->
+        <section class="news section illustration-section-01">
+            <div class="container">
+                <div class="news-inner section-inner">
+                    <div class="section-header center-content">
+                        <div class="container-xs"><h2 class="mt-0 mb-16">pcGuide</h2>
+                            <p class="mb-0">PcGuide에 대한 내용입니다.</p></div>
+                    </div>
+                    <div class="tiles-wrap">
+                        <article class="tiles-item">
+                            <div class="tiles-item-inner has-shadow">
+                                <figure class="news-item-image m-0">
+                                    <img alt="News 01" height="194"
+                                         src="../images/news-image-01.jpg" width="344"></figure>
+                                <div class="news-item-content">
+                                    <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
+                                        to build anything</a></h3>
+                                        <p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                                            ex.</p></div>
+                                    <div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="tiles-item">
+                            <div class="tiles-item-inner has-shadow">
+                                <figure class="news-item-image m-0">
+                                    <img alt="News 02" height="194"
+                                         src="/images/news-image-02.jpg" width="344"></figure>
+                                <div class="news-item-content">
+                                    <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
+                                        to build anything</a></h3>
+                                        <p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                                            ex.</p></div>
+                                    <div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="tiles-item">
+                            <div class="tiles-item-inner has-shadow">
+                                <figure class="news-item-image m-0"><img alt="News 03" height="194"
+                                                                         src="/images/news-image-03.jpg" width="344"></figure>
+                                <div class="news-item-content">
+                                    <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
+                                        to build anything</a></h3>
+                                        <p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                                            ex.</p></div>
+                                    <div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--PcReview-->
+        <section class="roadmap section has-top-divider">
+            <div class="container">
+                <div class="roadmap-inner section-inner">
+                    <div class="section-header center-content">
+                        <div class="container-xs"><h2 class="mt-0 mb-16">PcReview</h2>
+                            <p class="mb-0">PcReview에 대한 내용입니다.</p></div>
+                    </div>
+                    <div class="tiles-wrap">
+                        <article class="tiles-item">
+                            <div class="tiles-item-inner has-shadow">
+                                <figure class="news-item-image m-0">
+                                    <img alt="News 01" height="194"
+                                         src="/images/news-image-01.jpg" width="344"></figure>
+                                <div class="news-item-content">
+                                    <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
+                                        to build anything</a></h3>
+                                        <p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                                            ex.</p></div>
+                                    <div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="tiles-item">
+                            <div class="tiles-item-inner has-shadow">
+                                <figure class="news-item-image m-0">
+                                    <img alt="News 02" height="194"
+                                         src="/images/news-image-02.jpg" width="344"></figure>
+                                <div class="news-item-content">
+                                    <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
+                                        to build anything</a></h3>
+                                        <p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                                            ex.</p></div>
+                                    <div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="tiles-item">
+                            <div class="tiles-item-inner has-shadow">
+                                <figure class="news-item-image m-0"><img alt="News 03" height="194"
+                                                                         src="/images/news-image-03.jpg" width="344"></figure>
+                                <div class="news-item-content">
+                                    <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
+                                        to build anything</a></h3>
+                                        <p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
+                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                                            ex.</p></div>
+                                    <div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
 
 
-	</main>
+    </main>
 </div>
 <div th:replace="~{fragments/footer :: footerFragment}"></div>
 </body>
