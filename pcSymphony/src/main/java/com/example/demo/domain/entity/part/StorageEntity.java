@@ -28,9 +28,6 @@ public class StorageEntity {
     @Column(name = "storage_manufactor", nullable = false, length = 50)
     private String manufacturer;
 
-    @Column(name = "storage_part", nullable = false, length = 50)
-    private String part;
-
     @Column(name = "storage_price")
     private Double price;
 

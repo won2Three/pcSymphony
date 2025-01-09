@@ -28,9 +28,6 @@ public class MotherboardEntity {
     @Column(name = "motherboard_manufacturer", nullable = false, length = 50)
     private String manufacturer;
 
-    @Column(name = "motherboard_part", nullable = false, length = 50)
-    private String part;
-
     @Column(name = "motherboard_price")
     private Double price;
 
@@ -54,8 +51,4 @@ public class MotherboardEntity {
 
     @Column(name = "motherboard_memory_max")
     private Integer motherboardMemoryMax;
-
-    @Column(name = "motherboard_color", length = 20)
-    private String motherboardColor;
-
 }

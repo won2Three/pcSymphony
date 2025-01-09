@@ -14,35 +14,25 @@ public class PartDTO {
     private Integer id;
     private String name;
     private String manufacturer;
-    private String part;
     private Double price;
 
     private String coverPowerSupply;
     private String coverMotherboardFormFactor;
-    private String coverMaxVideoCardLength;
-    private String coverType;
-    private String coverColor;
+    private Integer coverMaxVideoCardLength;
 
-    private String cpuCoolerCpuSocket;
-    private Boolean cpuCoolerWaterCooled;
-    private String cpuCoolerColor;
-    private Integer cpuCoolerNoiseLevel;
-    private String cpuCoolerFanRpm;
+    private String cpuCoolerMotherboardSockets;
+    private Double cpuCoolerHeight;
 
-    private String cpuSeries;
     private String cpuSocket;
-    private Boolean cpuIncludesCooler;
     private Integer cpuTdp;
-    private String cpuMicroarchitecture;
     private Integer cpuCoreCount;
     private Integer cpuThreadCount;
-    private Integer cpuPerformanceCoreClock;
-    private Integer cpuPerformanceCoreBoostClock;
+    private String cpuPerformanceCoreClock;
+    private String cpuPerformanceCoreBoostClock;
 
     private String memoryFormFactor;
-    private String memoryColor;
-    private String memoryModule;
-    private Integer memorySpeed;
+    private Integer memorySize;
+    private String memorySpeed;
 
     private String motherboardSocketCpu;
     private String motherboardFormFactor;
@@ -51,22 +41,18 @@ public class PartDTO {
     private Integer motherboardMemorySlotCount;
     private Integer motherboardMdot2SlotCount;
     private Integer motherboardMemoryMax;
-    private String motherboardColor;
 
     private String powerSupplyType;
     private Integer powerSupplyWattage;
-    private Integer powerSupplyLength;
-    private String powerSupplyColor;
 
     private String storageType;
     private String storageFormFactor;
     private String storageCapacity;
 
-    private String videoCardLength;
+    private Double videoCardLength;
     private Integer videoCardTdp;
-    private String videoCardMemory;
+    private Integer videoCardMemory;
     private String videoCardChipset;
-    private String videoCardColor;
-    private Integer videoCardCoreClock;
-    private Integer videoCardBoostClock;
+    private String videoCardCoreClock;
+    private String videoCardBoostClock;
 }

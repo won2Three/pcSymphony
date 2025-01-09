@@ -28,22 +28,16 @@ public class MemoryEntity {
     @Column(name = "memory_manufacturer", nullable = false, length = 50)
     private String manufacturer;
 
-    @Column(name = "memory_part", nullable = false, length = 50)
-    private String part;
-
     @Column(name = "memory_price")
     private Double price;
 
     @Column(name = "memory_form_factor", nullable = false, length = 50)
     private String memoryFormFactor;
 
-    @Column(name = "memory_color", length = 20)
-    private String memoryColor;
+    @Column(name = "memory_size")
+    private Integer memorySize;
 
-    @Column(name = "memory_module", length = 50)
-    private String memoryModule;
-
-    @Column(name = "memory_speed")
-    private Integer memorySpeed;
+    @Column(name = "memory_speed", length = 100)
+    private String memorySpeed;
 
 }
