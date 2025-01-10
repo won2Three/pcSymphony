@@ -158,7 +158,89 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        // Motherboard와 Cover 호환성 검사 호출
+        // Motherboard와 Cover 호환성 검사
         checkMotherboardCoverCompatibility();
+
+        // Videocard-Cover 호환성 검사 함수
+        function checkVideocardCoverCompatibility() {
+            const videoCardElement = document.querySelector('tr th[data-part="videocard"] span');
+            const coverElement = document.querySelector('tr th[data-part="cover"] span');
+
+            const videoCardSelected = videoCardElement && videoCardElement.innerText !== '제품 없음';
+            const coverSelected = coverElement && coverElement.innerText !== '제품 없음';
+
+            if (videoCardSelected && coverSelected) {
+                fetch('/cart/check-videocard-cover-compatibility', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        videocard: videoCardElement.innerText,
+                        cover: coverElement.innerText
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const videocardCoverStatus = document.querySelector('#videocard-cover-compatibility');
+
+                    if (!data.isCompatible) {
+                        videocardCoverStatus.classList.remove("compatible");
+                        videocardCoverStatus.classList.add("incompatible");
+                    } else {
+                        videocardCoverStatus.classList.remove("incompatible");
+                        videocardCoverStatus.classList.add("compatible");
+                    }
+                });
+            }
+        }
+
+        // powerSupply와 Cover 호환성 검사 호출
+        checkVideocardCoverCompatibility();
+
+        // PowerSupply와 Cover 호환성 검사 함수
+        function checkPowerSupplyCoverCompatibility() {
+            const powersupplyElement = document.querySelector('tr th[data-part="powersupply"] span');
+            const coverElement = document.querySelector('tr th[data-part="cover"] span');
+
+            const powersupplySelected = powersupplyElement && powersupplyElement.innerText !== '제품 없음';
+            const coverSelected = coverElement && coverElement.innerText !== '제품 없음';
+
+            // 두 부품이 모두 선택되었을 때만 검사를 진행
+            if (powersupplySelected && coverSelected) {
+                fetch('/cart/check-powersupply-cover-compatibility', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        powersupply: powersupplyElement.innerText,
+                        cover: coverElement.innerText
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const powersupplyCoverStatus = document.querySelector('#powersupply-cover-compatibility');
+
+                    if (!data.isCompatible) {
+                        powersupplyCoverStatus.classList.remove("compatible");
+                        powersupplyCoverStatus.classList.add("incompatible");
+                    } else {
+                        powersupplyCoverStatus.classList.remove("incompatible");
+                        powersupplyCoverStatus.classList.add("compatible");
+                    }
+                });
+            }
+        }
+
+        // PowerSupply와 Cover 호환성 검사
+        checkPowerSupplyCoverCompatibility();
+
+        // PowerSupply - Case 호환성 검사 결과를 바로 초록색으로 변경
+        const powersupplyCaseStatus = document.querySelector('#powersupply-case-compatibility2');
+        if (powersupplyCaseStatus) {
+            powersupplyCaseStatus.classList.remove("incompatible");
+            powersupplyCaseStatus.classList.add("compatible");
+        }
     }
 });

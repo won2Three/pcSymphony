@@ -1,10 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.entity.CartEntity;
-import com.example.demo.domain.entity.part.CoverEntity;
-import com.example.demo.domain.entity.part.CpuEntity;
-import com.example.demo.domain.entity.part.MemoryEntity;
-import com.example.demo.domain.entity.part.MotherboardEntity;
+import com.example.demo.domain.entity.part.*;
 import com.example.demo.repository.*;
 import com.example.demo.repository.part.*;
 import jakarta.transaction.Transactional;
@@ -148,14 +145,17 @@ public class CartService {
         if (motherboard != null && memory != null) {
             String motherboardMemoryType = motherboard.getMotherboardMemoryType();
             String memoryFormFactor = memory.getMemoryFormFactor();
+
+            String memoryTypeFromFormFactor = memoryFormFactor.split("-")[0];
+
             System.out.println("test--------------------------------------------------");
             System.out.println("motherboardMemoryType" + motherboard.getMotherboardMemoryType());
             System.out.println("memoryFormFactor" + memory.getMemoryFormFactor());
+            System.out.println("memoryTypeFromFormFactor" + memoryTypeFromFormFactor);
             System.out.println("test--------------------------------------------------");
-//            return motherboardMemoryType.equals(memoryFormFactor);
 
             // 비교 후 결과 출력
-            boolean isCompatible = motherboardMemoryType.equals(memoryFormFactor);
+            boolean isCompatible = motherboardMemoryType.equals(memoryTypeFromFormFactor);
             System.out.println("호환성 검사 결과: " + isCompatible);
             return isCompatible;
         }
@@ -164,7 +164,6 @@ public class CartService {
     }
 
     //Cpu == Memory
-    // CPU와 메모리 호환성 확인 메서드 (CartEntity 기반)
     public boolean checkCpuMemoryCompatibility(CartEntity cart) {
         CpuEntity cpu = cart.getCpu();
         MemoryEntity memory = cart.getMemory();
@@ -173,12 +172,14 @@ public class CartService {
             throw new IllegalArgumentException("CPU or Memory is missing in the cart.");
         }
 
+        String memoryTypeFromFormFactor = memory.getMemoryFormFactor().split("-")[0];
+
         List<String> supportedMemoryTypes = getSupportedMemoryTypes(cpu);
 
         // 비교된 메모리 유형 출력
         System.out.println("Supported Memory Types: " + supportedMemoryTypes);  // 지원되는 메모리 유형 출력
 
-        return supportedMemoryTypes.contains(memory.getMemoryFormFactor());
+        return supportedMemoryTypes.contains(memoryTypeFromFormFactor);
     }
 
     // CPU 엔티티 기반으로 지원 메모리 유형 반환
@@ -197,73 +198,50 @@ public class CartService {
     // Intel CPU의 지원 메모리 유형
     private List<String> getIntelSupportedMemoryTypes(String cpuName) {
         if (cpuName.matches(".*-13.*") || cpuName.matches(".*-12.*")) {
-            return Arrays.asList("DDR4", "DDR5");
+            return Arrays.asList("DDR4", "DDR5"); // 12, 13세대는 DDR4, DDR5 지원
         } else if (cpuName.matches(".*-8.*|.*-9.*|.*-10.*|.*-11.*")) {
-            return List.of("DDR4");
+            return List.of("DDR4"); // 8~11세대는 DDR4 지원
         } else if (cpuName.matches(".*-6.*|.*-7.*")) {
-            return Arrays.asList("DDR3", "DDR4");
+            return Arrays.asList("DDR3", "DDR4"); // 6~7세대는 DDR3, DDR4 지원
         }
         return Collections.emptyList();
     }
 
     // AMD CPU의 지원 메모리 유형
     private List<String> getAmdSupportedMemoryTypes(String cpuName) {
-        // Ryzen 1000~5000 시리즈: DDR4
-        if (cpuName.matches(".*Ryzen.*[1-5][0-9]{3}X.*")) {
+        // Ryzen 1000~5000 시리즈는 DDR4 지원
+        if (cpuName.matches(".*Ryzen.*[1-5][0-9]{3}X?")) {
             return List.of("DDR4");
         }
-        // Ryzen 7000 시리즈: DDR5
-        else if (cpuName.matches(".*Ryzen.*7[0-9]{3}X.*")) {
+        // Ryzen 7000 시리즈는 DDR5 지원
+        else if (cpuName.matches(".*Ryzen.*7[0-9]{3}X?")) {
             return List.of("DDR5");
         }
-        if (cpuName.matches(".*Ryzen.*[1-5][0-9]{3}.*")) {
+
+        // Threadripper 시리즈 전부 DDR4
+        if (cpuName.matches(".*Threadripper.*")) {
             return List.of("DDR4");
-        } else if (cpuName.matches(".*Ryzen.*7[0-9]{3}.*")) {
-            return List.of("DDR5");
-        } else if (cpuName.matches(".*Threadripper.*")) {
-            return List.of("DDR4");
-        } else if (cpuName.matches(".*EPYC.*1.*|.*EPYC.*2.*|.*EPYC.*3.*")) {
+        }
+
+        // EPYC 시리즈 1~3세대 DDR4, 4세대 DDR5
+        if (cpuName.matches(".*EPYC.*1.*|.*EPYC.*2.*|.*EPYC.*3.*")) {
             return List.of("DDR4");
         } else if (cpuName.matches(".*EPYC.*4.*")) {
             return List.of("DDR5");
         }
+
         return Collections.emptyList();
     }
 
-//    //Motherboard == Cover
-//    public boolean checkMotherboardCoverCompatibility(String motherboardFormFactor, String coverMotherboardFormFactor) {
-//
-//        // form factor 값을 비교
-//        int motherboardValue = getFormFactorValue(motherboardFormFactor);
-//        int coverValue = getFormFactorValue(coverMotherboardFormFactor);
-//
-//        // 값 확인을 위한 로그 출력
-//        System.out.println("Motherboard Form Factor: " + motherboardFormFactor + " (Value: " + motherboardValue + ")");
-//        System.out.println("Cover Form Factor: " + coverMotherboardFormFactor + " (Value: " + coverValue + ")");
-//
-//
-//        return motherboardValue <= coverValue;
-//    }
-//
-//    private int getFormFactorValue(String formFactor) {
-//        switch (formFactor) {
-//            case "mATX":
-//                return 1;
-//            case "ATX":
-//                return 2;
-//            case "eATX":
-//                return 3;
-//            default:
-//                return 0; // 기본 값
-//        }
-//    }
 
+
+    //Motherboard == Cover
     public boolean checkMotherboardCoverCompatibility(CartEntity cart) {
         MotherboardEntity motherboard = cart.getMotherboard();
         CoverEntity cover = cart.getCover();
 
         if (motherboard == null || cover == null) {
-            throw new IllegalArgumentException("CPU or Memory is missing in the cart.");
+            throw new IllegalArgumentException("Motherboard or Cover is missing in the cart.");
         }
 
         System.out.println("Motherboard Form Factor: " + motherboard.getMotherboardFormFactor());
@@ -281,39 +259,71 @@ public class CartService {
         return motherboardValue <= coverValue;
     }
 
-        private int getFormFactorValue(String formFactor) {
-        switch (formFactor) {
-            case "mATX":
-                return 1;
-            case "ATX":
-                return 2;
-            case "eATX":
-                return 3;
-            default:
-                return 0; // 기본 값
+    private int getFormFactorValue(String formFactor) {
+        if (formFactor.contains("Mini-ITX")) {
+            return 1;
+        } else if (formFactor.contains("Micro-ATX")) {
+            return 2;
+        } else if (formFactor.contains("ATX")) {
+            return 3;
+        } else if (formFactor.contains("E-ATX")) {
+            return 4;
+        } else {
+            return 0; // 기본 값
         }
     }
 
-//    public boolean checkCpuMemoryCompatibility(CartEntity cart) {
-//        CpuEntity cpu = cart.getCpu();
-//        MemoryEntity memory = cart.getMemory();
-//
-//        if (cpu == null || memory == null) {
-//            throw new IllegalArgumentException("CPU or Memory is missing in the cart.");
-//        }
-//
-//        System.out.println("CPU Series: " + cpu.getCpuSeries());  // CPU 시리즈 출력
-//        System.out.println("Memory Form Factor: " + memory.getMemoryFormFactor());  // 메모리 폼 팩터 출력
-//
-//
-//        List<String> supportedMemoryTypes = getSupportedMemoryTypes(cpu);
-//
-//        // 비교된 메모리 유형 출력
-//        System.out.println("Supported Memory Types: " + supportedMemoryTypes);  // 지원되는 메모리 유형 출력
-//
-//        return supportedMemoryTypes.contains(memory.getMemoryFormFactor());
-//    }
+    //Videocard == Cover
+    public boolean checkVideocardCoverCompatibility(CartEntity cart) {
+        VideoCardEntity videoCard = cart.getVideocard();
+        CoverEntity cover = cart.getCover();
 
+        if (videoCard == null || cover == null) {
+            throw new IllegalArgumentException("VideoCard or Cover is missing in the cart.");
+        }
+
+        Double videoCardLength = videoCard.getVideoCardLength();
+        Integer coverMaxVideoCardLength = cover.getCoverMaxVideoCardLength();
+
+        if (coverMaxVideoCardLength != null) {
+            System.out.println("videoCard length: " + videoCard.getVideoCardLength());
+            System.out.println("Cover length: " + cover.getCoverMaxVideoCardLength());
+            // Integer 값을 Double로 변환하여 비교
+            return videoCardLength <= coverMaxVideoCardLength.doubleValue();
+        }
+        return false; // 커버의 최대 비디오 카드 길이가 null인 경우 비교하지 않음
+    }
+
+    // PowerSupply == Cover
+    public boolean checkPowerSupplyCoverCompatibility(CartEntity cart) {
+        PowerSupplyEntity powerSupply = cart.getPowersupply();
+        CoverEntity cover = cart.getCover();
+
+        if (powerSupply == null || cover == null) {
+            throw new IllegalArgumentException("PowerSupply or Cover is missing in the cart.");
+        }
+
+        System.out.println("PowerSupply Type: " + powerSupply.getPowerSupplyType());
+        System.out.println("Cover PowerSupply: " + cover.getCoverPowerSupply());
+
+        // PowerSupply Type과 Cover PowerSupply를 ','로 분리하여 각각의 form factor로 변환
+        String[] powerSupplyTypes = powerSupply.getPowerSupplyType().split(",\\s*");  // ','로 분리하고, 공백도 제거
+        String coverPowerSupply = cover.getCoverPowerSupply();
+
+        // 값 확인을 위한 로그 출력
+        System.out.println("PowerSupply Types: " + String.join(", ", powerSupplyTypes));
+        System.out.println("Cover PowerSupply: " + coverPowerSupply);
+
+        // PowerSupply 타입들 중 하나라도 Cover PowerSupply와 일치하면 true
+        for (String powerSupplyType : powerSupplyTypes) {
+            if (powerSupplyType.equalsIgnoreCase(coverPowerSupply)) {
+                return true;
+            }
+        }
+
+        // 일치하는 값이 없으면 false
+        return false;
+    }
 
 
 

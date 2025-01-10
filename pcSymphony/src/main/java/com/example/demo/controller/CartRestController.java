@@ -259,6 +259,51 @@ public class CartRestController {
         ));
     }
 
+    @PostMapping("/check-videocard-cover-compatibility")
+    public ResponseEntity<Map<String, Object>> checkVidoecardCoverCompatibility(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "User is not authenticated."));
+        }
+        String userId = principal.getName();
+        CartEntity cart = cartRepository.findByUser_MemberId(userId);
+
+        if (cart == null || cart.getVideocard() == null || cart.getCover() == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Incomplete cart data for compatibility check."));
+        }
+        boolean isCompatible = cartService.checkVideocardCoverCompatibility(cart);
+
+        return ResponseEntity.ok(Map.of(
+                "isCompatible", isCompatible,
+                "videocardLength", cart.getVideocard().getVideoCardLength(),
+                "coverLength", cart.getCover().getCoverMaxVideoCardLength()
+        ));
+    }
+
+    // PowerSupply-Cover 호환성 검사
+    @PostMapping("/check-powersupply-cover-compatibility")
+    public ResponseEntity<Map<String, Object>> checkPowerSupplyCoverCompatibility(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "User is not authenticated."));
+        }
+        String userId = principal.getName();
+        CartEntity cart = cartRepository.findByUser_MemberId(userId);
+
+        if (cart == null || cart.getPowersupply() == null || cart.getCover() == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Incomplete cart data for compatibility check."));
+        }
+        boolean isCompatible = cartService.checkPowerSupplyCoverCompatibility(cart);
+
+        return ResponseEntity.ok(Map.of(
+                "isCompatible", isCompatible,
+                "powerSupplyType", cart.getPowersupply().getPowerSupplyType(),
+                "coverPowerSupply", cart.getCover().getCoverPowerSupply()
+        ));
+    }
+
 
 
 
