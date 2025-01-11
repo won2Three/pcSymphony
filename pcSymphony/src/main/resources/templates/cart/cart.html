@@ -8,6 +8,9 @@
     <link href="../../static/css/cart.css" rel="stylesheet" th:href="@{/css/cart.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
     <script src="../../static/js/cart.js" th:src="@{/js/cart.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 </head>
 <body id="cart-body">
 <!--header-->
@@ -131,7 +134,7 @@
                 <th class="totalPrice" th:text="' : $' + ${#numbers.formatDecimal(totalPrice, 0, 0)}">Total Price</th>
             <div class="table-buttons">
                 <button id="Compatibility Check">Compatibility Check</button>
-                <button id="save as text">Save As Text</button>
+                <button id="save as image">Save As Image</button>
                 <button id="create review" th:disabled="${cart.cpu == null or cart.cpucooler == null or cart.motherboard == null or cart.memory == null or cart.storage == null or cart.videocard == null or cart.powersupply == null or cart.cover == null}">
                     Write a Review
                 </button>

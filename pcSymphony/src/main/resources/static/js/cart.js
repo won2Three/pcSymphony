@@ -340,4 +340,33 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         // --- 모달 관련 코드 끝 ---
     }
+
+ // "Save As Image" 버튼 클릭 이벤트 추가
+    const saveAsImageButton = document.getElementById('save as image');
+    if (saveAsImageButton) {
+        saveAsImageButton.addEventListener("click", function () {
+            saveCartAsImage();
+        });
+    }
+
+ // 카트 내용을 이미지로 저장하는 함수
+ function saveCartAsImage() {
+     // 카트 내용을 담고 있는 영역 (예: 테이블 또는 전체 카트 섹션)
+     const cartContent = document.querySelector("table"); // 카트 전체 영역
+
+     // html2canvas로 카트 영역을 캡처
+     html2canvas(cartContent).then(function (canvas) {
+         // 캡처한 이미지 데이터를 Data URL로 변환
+         const imageUrl = canvas.toDataURL('image/png'); // 'image/png' 형식으로 캡처
+
+         // Data URL을 사용하여 이미지 다운로드
+         const link = document.createElement('a');
+         link.href = imageUrl;
+         link.download = 'cart-items.png'; // 다운로드할 이미지 파일 이름 설정
+         link.click(); // 이미지 다운로드 실행
+     }).catch(function (error) {
+               console.error("Error capturing the content as an image:", error);
+           });
+ }
+
 });
