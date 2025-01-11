@@ -19,10 +19,11 @@
             <table>
                 <thead>
                 <tr>
-                    <td>Number</td>
-                    <td>Category</td>
-                    <td>Name</td>
-                    <td>Price</td>
+                    <th>Number</th>
+                    <th>Category</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th></th> <!-- 빈 공간을 위한 열 -->
                 </tr>
                 </thead>
                 <tbody id="tbody">
@@ -147,6 +148,18 @@
                 <p id="powersupply-case-compatibility2" class="compatibility-status">Case - PowerSupply Include</p>
                 <button id="view-details-button" class="compatibility-button">Compatibility Detail</button>
             </aside>
+
+            <!-- 모달창 HTML 추가 -->
+            <div id="compatibility-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button" id="close-modal">&times;</span>
+                    <h2>Compatibility Check Results</h2>
+                    <ul id="incompatible-results">
+                        <!-- 비호환된 항목들이 여기에 동적으로 추가될 것입니다. -->
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </main>
 </div>

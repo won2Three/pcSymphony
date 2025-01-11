@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({cartItem})
+                body: JSON.stringify({ cartItem })
             })
             .then(response => response.json())
             .then(data => {
@@ -242,5 +242,102 @@ document.addEventListener("DOMContentLoaded", function () {
             powersupplyCaseStatus.classList.remove("incompatible");
             powersupplyCaseStatus.classList.add("compatible");
         }
+
+        // --- 모달 관련 코드 시작 ---
+        // 모달 요소 찾기
+        const modal = document.getElementById('compatibility-modal');
+        const closeModalButton = document.getElementById('close-modal');
+        const incompatibleResultsList = document.getElementById('incompatible-results');
+
+        // Compatibility Detail 버튼 클릭 시 모달 열기
+        const compatibilityButtonModal = document.getElementById('view-details-button'); // 중복 선언 문제를 해결
+
+        if (compatibilityButtonModal) {
+            compatibilityButtonModal.addEventListener("click", function () {
+                showModal();
+            });
+        }
+
+        // 모달 창 닫기
+        if (closeModalButton) {
+            closeModalButton.addEventListener("click", function () {
+                closeModal();
+            });
+        }
+
+        // 모달 창 외부 클릭 시 모달 닫기
+        window.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        function showModal() {
+            incompatibleResultsList.innerHTML = ""; // 모달을 열 때마다 기존 결과를 초기화
+
+             // 각 부품별 비호환성 메시지를 관리하는 객체
+             const compatibilityMessages = {
+                 "cpu-motherboard-compatibility": {
+                     title: "CPU - Motherboard Socket Incompatibility",
+                     message: "The socket type of the CPU does not match the motherboard. Please choose a CPU and motherboard with compatible socket types."
+                 },
+                 "motherboard-memory-compatibility": {
+                     title: "Motherboard - Memory Form Factor Incompatibility",
+                     message: "The form factor of the memory is not compatible with the motherboard. Please choose memory with the correct form factor for the motherboard."
+                 },
+                 "cpu-memory-compatibility": {
+                     title: "Memory - CPU Compatibility Issue",
+                     message: "The memory form factor may not be compatible with the CPU manufacturer. Please ensure the memory is compatible with your CPU's requirements."
+                 },
+                 "motherboard-cover-compatibility": {
+                     title: "Motherboard - Case Form Factor Incompatibility",
+                     message: "The form factor of the motherboard does not match the case. Please choose a case that supports the motherboard's form factor."
+                 },
+                 "videocard-cover-compatibility": {
+                     title: "Videocard - Case Size Incompatibility",
+                     message: "The length of the videocard exceeds the available space in the case. Please choose a smaller videocard or a larger case."
+                 },
+                 "powersupply-cover-compatibility": {
+                     title: "Power Supply - Case Compatibility Issue",
+                     message: "The type of power supply does not match the case. Please select a power supply that fits your case's specifications."
+                 }
+             };
+
+           // 각 부품별 비호환성 상태를 확인하고, 해당 항목에 맞는 문구를 추가
+             const compatibilityStatuses = document.querySelectorAll('.compatibility-status');
+
+             compatibilityStatuses.forEach(function (status) {
+                 if (status.classList.contains('incompatible')) {
+                     const listItem = document.createElement('li');
+
+                     // 비호환 항목 제목과 메시지를 추가
+                     const compatibilityData = compatibilityMessages[status.id];
+
+                     if (compatibilityData) {
+                         // 제목
+                         const titleElement = document.createElement('strong');
+                         titleElement.innerText = compatibilityData.title;
+                         listItem.appendChild(titleElement);
+
+                         // 비호환 항목에 대한 설명
+                         const messageElement = document.createElement('p');
+                         messageElement.classList.add('compatibility-message');
+                         messageElement.innerText = compatibilityData.message;
+                         listItem.appendChild(messageElement);
+                     }
+
+                     incompatibleResultsList.appendChild(listItem); // 비호환 항목과 문구를 리스트에 추가
+                 }
+             });
+
+
+            // 모달 열기
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            modal.style.display = "none"; // 모달 닫기
+        }
+        // --- 모달 관련 코드 끝 ---
     }
 });
