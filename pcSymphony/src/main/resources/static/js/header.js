@@ -4,38 +4,65 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 버튼 데이터를 정의합니다.
     const partsItems = [
-        { name: "CPU", href: "/part/cpu" },
-        { name: "CPU Cooler", href: "/part/cpucooler" },
-        { name: "VideoCard", href: "/part/videocard" },
-        { name: "Memory", href: "/part/memory" },
-        { name: "Storage", href: "/part/storage" },
-        { name: "Motherboard", href: "/part/motherboard" },
-        { name: "PowerSupply", href: "/part/powersupply" },
-        { name: "Case", href: "/part/cover" },
+        { img: "/images/nav-cpu.png", name: "CPU", href: "/part/cpu" },
+        { img: "/images/nav-cpucooler.png", name: "CPU Cooler", href: "/part/cpucooler" },
+        { img: "/images/nav-videocard.png", name: "VideoCard", href: "/part/videocard" },
+        { img: "/images/nav-memory.png", name: "Memory", href: "/part/memory" },
+        { img: "/images/nav-ssd.png", name: "Storage", href: "/part/storage" },
+        { img: "/images/nav-motherboard.png", name: "Motherboard", href: "/part/motherboard" },
+        { img: "/images/nav-powersupply.png", name: "PowerSupply", href: "/part/powersupply" },
+        { img: "/images/nav-case.png", name: "Case", href: "/part/cover" },
     ];
 
-    // 그리드에 버튼을 동적으로 추가
-    function displayGridButtons() {
-        partsGridContainer.innerHTML = ""; // 기존 버튼 초기화
-        partsItems.forEach((item) => {
-            const button = document.createElement("a");
-            button.href = item.href;
-            button.textContent = item.name;
-            button.className = "grid-button";
-            partsGridContainer.appendChild(button);
-        });
-    }
 
-    // 마우스가 버튼 또는 메뉴 위에 있으면 메뉴 표시
+// 이미지를 미리 렌더링합니다.
+    partsItems.forEach((item) => {
+        const button = document.createElement("a");
+        button.href = item.href;
+        button.className = "grid-button";
+
+        // 이미지 요소 생성
+        const img = document.createElement("img");
+        img.src = item.img;
+        img.alt = item.name;
+
+        // 텍스트 요소 생성
+        const text = document.createElement("span");
+        text.textContent = item.name;
+
+        // 버튼에 이미지와 텍스트 추가
+        button.appendChild(img);
+        button.appendChild(text);
+
+        // 컨테이너에 버튼 추가 (초기 상태로 숨김)
+        button.style.display = "none"; // 처음에는 숨김 처리
+        partsGridContainer.appendChild(button);
+    });
+
+
+// 마우스 이벤트 처리
     partsButton.addEventListener("mouseenter", function () {
+        const buttons = partsGridContainer.querySelectorAll(".grid-button");
+        buttons.forEach((button) => {
+            button.style.display = "flex"; // 마우스 호버 시 표시
+        });
         partsGridContainer.classList.remove("hidden");
         partsGridContainer.classList.add("grid");
-        displayGridButtons();
     });
 
-    // 마우스가 버튼과 메뉴를 모두 벗어나면 메뉴 숨김
     partsButton.addEventListener("mouseleave", function () {
-        partsGridContainer.classList.add("hidden");
-        partsGridContainer.classList.remove("grid");
+        setTimeout(() => {
+            if (!partsGridContainer.matches(":hover")) {
+                const buttons = partsGridContainer.querySelectorAll(".grid-button");
+                buttons.forEach((button) => {
+                    button.style.display = "none"; // 마우스 벗어나면 숨김
+                });
+                partsGridContainer.classList.add("hidden");
+                partsGridContainer.classList.remove("grid");
+            }
+        }, 200);
     });
+
+
+
 });

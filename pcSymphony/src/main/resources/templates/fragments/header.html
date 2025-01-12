@@ -10,10 +10,7 @@
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
     <style>
-        .brand {
-            display: flex;
-            align-items: center;
-        }
+
     </style>
 </head>
 <body>
@@ -31,36 +28,35 @@
                         PcSymphony
                         </span>
                     </a>
-
                 </h2>
             </div>
-            <button class="header-nav-toggle" id="header-nav-toggle">
-                <span class="screen-reader">Menu</span>
-                <span class="hamburger"><span class="hamburger-inner"></span></span>
-            </button>
+<!--            <button class="header-nav-toggle" id="header-nav-toggle">-->
+<!--                <span class="screen-reader">Menu</span>-->
+<!--                <span class="hamburger"><span class="hamburger-inner"></span></span>-->
+<!--            </button>-->
             <nav class="header-nav" id="header-nav">
                 <ul class="list-reset header-nav-right">
                     <li>
                         <!-- 로그인 전 -->
                         <th:block sec:authorize="not isAuthenticated()">
-                            <p><a class="button button-primary button-wide-mobile button-sm" th:href="@{/member/login}">로그인</a>
+                            <p><a class="menu-link" th:href="@{/member/login}">Login</a>
                             </p>
-                            <p><a class="button button-primary button-wide-mobile button-sm" th:href="@{/member/join}">회원가입</a>
+                            <p><a class="menu-link" th:href="@{/member/join}">Sign Up</a>
                             </p>
                         </th:block>
                         <!-- 로그인 후 -->
                         <th:block sec:authorize="isAuthenticated()">
-                            <p><a class="button button-primary button-wide-mobile button-sm"
-                                  th:href="@{/member/logout}">로그아웃</a></p>
+                            <p><a class="menu-link"
+                                  th:href="@{/member/logout}">Logout</a></p>
                         </th:block>
                     </li>
                 </ul>
             </nav>
         </div>
-        <div class="hero-inner section-inner">
+        <div class="hero-inner ">
             <div class="split-wrap">
                 <!-- 여기에 컨텐츠 추가 -->
-                <div bottommargin="0" leftmargin="0" rightmargin="0" style="background-color:#0c1622" topmargin="0">
+                <div>
                     <div class="menu">
                         <nav>
                             <ul>
@@ -70,13 +66,11 @@
                                     <!-- 2x4 버튼을 표시할 컨테이너 -->
                                     <div class="hidden" id="parts-grid-container"></div>
                                 </li>
-                                <li><a th:href="@{guide/guideList}">Guide</a></li>
+                                <li><a th:href="@{guides/guideList}">Guide</a></li>
                                 <li><a th:href="@{/community/list}">Community</a></li>
                                 <li><a th:href="@{pcreview/list}">Review</a></li>
                             </ul>
                         </nav>
-                    <!-- 2x4 버튼을 표시할 컨테이너 -->
-                    <div class="hidden" id="parts-grid-container"></div>
                     </div>
                 </div>
             </div>

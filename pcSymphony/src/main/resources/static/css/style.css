@@ -2128,6 +2128,7 @@ textarea.form-input {
 .header-nav .header-nav-inner {
     display: -webkit-box;
     display: flex;
+    align-items: center;
     -webkit-box-flex: 1;
     flex-grow: 1
 }
@@ -2174,8 +2175,8 @@ textarea.form-input {
 }
 
 .header-nav-right {
-    /*display: flex;*/
-    /*align-items: center;*/
+    display: flex;
+    align-items: center;
     -webkit-box-pack: end;
     justify-content: flex-end
 }
