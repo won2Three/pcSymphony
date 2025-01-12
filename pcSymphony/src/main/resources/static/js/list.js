@@ -21,9 +21,9 @@
     let html = `
                                 <tr>
                                     <td>${board.communityId}</td>
-                                    <td>${board.communityView}</td>
                                     <td><a href="read?communityId=${board.communityId}">${board.communityTitle}</a></td>
                                     <td>${board.memberId}</td>
+                                    <td>${board.communityView}</td>
                                     <td>${board.communityDate}</td>
                                 </tr>
                             `;
