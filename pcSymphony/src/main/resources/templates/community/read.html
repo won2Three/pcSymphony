@@ -6,80 +6,42 @@
     <script src="../../static/js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
     <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
-    <!--    <link href="../../static/css/read.css" rel="stylesheet" th:href="@{/css/read.css}">-->
+        <link href="../../static/css/read.css" rel="stylesheet" th:href="@{/css/read.css}">
     <script src="../../static/js/main.min.js" th:src="@{/js/main.min.js}"></script>
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
     <script src="../../static/js/read.js" th:src="@{/js/read.js}"></script>
 
-    <style>
-        /* 게시판 컨테이너 스타일 */
-        .community-container {
-            /*background-color: #f0f0f0; !* 약간 회색이 섞인 흰색 *!*/
-            /*border-radius: 8px;*/
-            padding: 40px;
-            width: 100%;
-            /*max-width: 900px;*/
-            /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
-            word-wrap: break-word; /* 긴 단어도 줄바꿈 */
-            word-break: break-word; /* 적절히 줄바꿈 */
-            overflow-wrap: break-word; /* 최신 브라우저 호환 */
-        }
 
-        #community-title {
-            font-size: 32px;
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 20px;
-            min-height: 100px;
-            /*white-space: pre-wrap;*/
-        }
-
-        .community-content {
-            font-size: 16px;
-            color: #000;
-            margin-bottom: 20px;
-            min-height: 400px;
-            white-space: pre-wrap;
-            word-wrap: break-word; /* 긴 단어도 줄바꿈 */
-            word-break: break-word; /* 적절히 줄바꿈 */
-            overflow-wrap: break-word; /* 최신 브라우저 호환 */
-        }
-
-        #community-info {
-            font-size: 14px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .body-wrap {
-            color: #000;
-        }
-    </style>
 </head>
 <body>
 <!-- Header Fragment 포함 -->
-<div th:replace="fragments/header :: headerFragment"></div>
-<div class="container">
-    <div class="body-wrap ">
-        <main class="site-content">
+<div th:replace="~{fragments/header :: headerFragment}"></div>
+<div class="body-wrap ">
+    <main class="site-content">
+        <a class="titleName" href="/community/list"><h1 class="container-like">Community</h1></a>
+        <div class="container">
             <div class="community-container">
-                <!-- 에러 메시지 출력 (삭제 권한이 없을 경우) -->
+                <!-- 에러 메시지 출력 (삭제 권한`이 없을 경우) -->
                 <div class="error-message" th:if="${errorMessage != null}">
                     <p th:text="${errorMessage}"></p>
                 </div>
-
-                <!-- 게시물 제목 -->
-                <div id="community-title" th:text="${community.communityTitle}">제목</div>
-
-                <!-- 게시물 내용 -->
-                <div id="community-content" th:text="${community.communityContent}">내용</div>
-
-                <!-- 게시물 정보 -->
-                <div id="community-info">
-                    조회수: <span th:text="${community.communityView}"></span> |
-                    작성자: <span th:text="${community.memberId}"></span> |
-                    작성일: <span th:text="${#temporals.format(community.communityDate, 'yyyy-MM-dd HH:mm')}"></span>
+                <div class="title-header">
+                    <!-- 게시물 제목 -->
+                    <div id="community-title" th:text="${community.communityTitle}">제목</div>
+                    <!-- 게시물 정보 -->
+                    <div id="community-info">
+                        작성자: <span th:text="${community.memberId}"></span>
+                        조회수: <span th:text="${community.communityView}"></span>
+                        작성일: <span th:text="${#temporals.format(community.communityDate, 'yyyy-MM-dd HH:mm')}"></span>
+                    </div>
                 </div>
+                    <!-- 업로드한 이미지를 표시 -->
+<!--                <div id="uploadedImages" style="margin-top: 10px; display: flex; align-items: center;">-->
+                    <img th:class="big-image" th:src="@{/images/nav-case.png}" alt="Image"/>
+                    <img th:class="big-image" th:src="@{/images/nav-case.png}" alt="Image"/>
+                <!-- 게시물 내용 -->
+                <div class="community-content" th:text="${community.communityContent}">내용</div>
+
 
                 <!--    &lt;!&ndash; 수정/삭제 버튼 &ndash;&gt;-->
                 <!--    <div class="edit-delete-buttons">-->
@@ -94,9 +56,9 @@
                 <!--    </div>-->
 
                 <!-- 수정/삭제 버튼 -->
-                <div class="edit-delete-buttons">
+                <div class="button-container">
                     <!-- 수정 버튼 (작성자와 로그인한 사용자가 같을 때만 표시) -->
-                    <button><a class="edit-button"
+                    <button class="blue-button"><a
                                th:href="@{/community/update/{communityId}(communityId=${community.communityId})}"
                                th:if="${community.memberId == #authentication.name}">수정</a></button>
 
@@ -104,19 +66,20 @@
                     <form method="POST" th:action="@{/community/delete}"
                           th:if="${community.memberId == #authentication.name}">
                         <input name="communityId" th:value="${community.communityId}" type="hidden"/>
-                        <button class="delete-button" type="submit">삭제</button>
+                        <button class="gray-button" type="submit">삭제</button>
                     </form>
                 </div>
 
 
-                <!-- 뒤로가기 버튼 -->
-                <button><a class="back-button" href="/community/list">목록으로 돌아가기</a></button>
 
                 <!-- 리플 작성 폼 시작 -->
-                <form id="replyForm">
-                    <label for="communityReplyContent">리플입력</label>
-                    <input id="communityReplyContent" name="replyContent" style="width:500px"/> <!-- 댓글 입력 필드 -->
-                    <button id="replyWriteButton" type="button">저장</button>
+                <form class="replyForm">
+                    <div class="inputWrapper">
+                    <label for="communityReplyContent" class="replyLabel">리플입력</label>
+                    <textarea  id="communityReplyContent" name="replyContent" placeholder="댓글을 입력하세요."></textarea>
+                    <!-- 댓글 입력 필드 -->
+                    </div>
+                    <button class="blue-button" id="replyWriteButton" type="button">저장</button>
                 </form>
 
                 <!-- 리플 목록 출력 시작 -->
@@ -124,23 +87,28 @@
                     <thead>
                     <tr>
                         <th>작성자</th>
-                        <th>내용</th>
-                        <th>삭제</th>
+                        <th colspan="3">내용</th>
                     </tr>
                     </thead>
                     <tbody>
                     <!-- 댓글 목록은 여기에 동적으로 추가됩니다. -->
                     </tbody>
                 </table>
+                <div class="button-footerContainer">
+                <!-- 뒤로가기 버튼 -->
+                <button class="white-button"><a href="/community/list">목록</a></button>
+                <!--글쓰기 버튼-->
+                <button class="blue-button"><a href="write">글쓰기</a></button>
+                </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
+</div>
 </div>
 <!--footer-->
-<div th:replace="fragments/footer :: footerFragment"></div>
 
-<input type="text" id="communityId" th:value="${community.communityId}" disabled style="display: none;">
-<input type="text" id="userId" th:value="${#authentication.name}" disabled style="display: none;">
+<input type="hidden"  id="communityId" th:value="${community.communityId}" disabled>
+<input type="hidden" id="userId" th:value="${#authentication.name}" disabled>
 <!--    // 현재 커뮤니티 ID와 사용자 ID를 얻어옵니다.-->
 <!--    // communityId 값 가져오기-->
 <!--    const communityId = document.getElementById('communityId').value;-->
@@ -149,6 +117,9 @@
 <!--    // userName 값 가져오기-->
 <!--    const userId = document.getElementById('userName').value;-->
 <!--    console.log('User Name:', userId);-->
+<div th:replace="~{fragments/footer :: footerFragment}"></div>
+
+</body>
 <script>
     // communityId 값 가져오기
     const communityId = document.getElementById('communityId').value;
@@ -172,11 +143,11 @@
                 // 서버에서 받은 댓글 데이터를 HTML로 출력
                 data.forEach(function (comment) {
                     const commentHtml = `
-                        <tr id="comment-${comment.communityReplyId}">
-                            <td>${comment.memberId}</td>
-                            <td>${comment.replyContent}</td>
-                            <td>
-                                <button onclick="deleteComment(${comment.communityReplyId})">삭제</button>
+                        <tr  id="comment-${comment.communityReplyId}">
+                            <td class="replyWriteId">${comment.memberId}</td>
+                            <td class="replyWriteContent">${comment.replyContent}</td>
+                            <td style="text-align: right">
+                                <button class="gray-button" onclick="deleteComment(${comment.communityReplyId})">삭제</button>
                             </td>
                         </tr>
                     `;
@@ -246,5 +217,4 @@
     });
 </script>
 
-</body>
 </html>

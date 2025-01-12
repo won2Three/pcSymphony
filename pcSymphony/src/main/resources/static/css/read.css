@@ -1,168 +1,87 @@
-    /* 배경 색상 */
-body {
-    background-color: #333; /* 진회색 배경 */
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-/* 게시판 컨테이너 스타일 */
-.community-container {
-    background-color: #f0f0f0; /* 약간 회색이 섞인 흰색 */
-    border-radius: 8px;
-    padding: 40px;
-    width: 100%;
-    max-width: 900px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 30px; /* 각 구간 사이의 간격 */
-    word-wrap: break-word; /* 긴 단어도 줄바꿈 */
-    word-break: break-word; /* 적절히 줄바꿈 */
-    overflow-wrap: break-word; /* 최신 브라우저 호환 */
-}
-
-/* 제목 및 텍스트 스타일 */
-h1 {
-    text-align: center;
-    font-size: 24px;
-    color: #000;
-    margin-bottom: 20px;
-}
-
 #community-title {
     font-size: 32px;
     font-weight: bold;
     color: #000;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .community-content {
     font-size: 16px;
+    color: #000;
+    margin-bottom: 20px;
+    min-height: 400px;
+    white-space: pre-wrap;
+    word-wrap: break-word; /* 긴 단어도 줄바꿈 */
+    word-break: break-word; /* 적절히 줄바꿈 */
+    overflow-wrap: break-word; /* 최신 브라우저 호환 */
+    max-width: 900px;
+}
+
+#community-info {
+    font-size: 14px;
     color: #333;
-    margin-bottom: 20px;
-
 }
 
-.community-info {
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 20px;
+a {
+    all: unset;
 }
-
-/* 게시물 상세보기 구역 */
-.post-detail {
-    display: block;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.button-footerContainer {
+    display: flex; /* 플렉스 컨테이너 설정 */
+    justify-content: space-between; /* 버튼 사이를 양 끝으로 배치 */
+    align-items: center; /* 세로 방향 정렬 */
+    gap: 10px; /* 버튼 간 간격 */
 }
-
-/* 댓글 구역 */
-.comments-section {
-    display: block;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/*리플 입력란 스타일*/
+.replyForm {
+    display: flex; /* 플렉스 컨테이너 */
+    flex-direction: column; /* 세로 정렬 */
+    align-items: flex-end; /* 우측 정렬 */
+    padding: 12px;
+    border-top: #0c1622 solid 3px;
+    border-bottom: #0c1622 solid 3px;
+    gap: 10px; /* 필드 간 간격 */
 }
-
-.reply {
-    width: 100%; /* 가로 전체를 차지 */
-    margin-top: 10px;
-    border-collapse: collapse; /* 테이블 셀 간격 정리 */
+.inputWrapper {
+    display: flex; /* 라벨과 입력란을 같은 라인에 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    width: 100%; /* 입력 필드의 너비 조정 */
+    gap: 10px; /* 라벨과 입력란 사이 간격 */
 }
-
-.reply th,
-.reply td {
+#communityReplyContent {
+    flex: 1; /* 입력란이 남은 공간을 채우도록 설정 */
+    min-height: 100px; /* 최소 높이 */
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #95A4B4;
+    font-size: 13px;
+    color: #333;
+    line-height: 18px;
+    white-space: pre-wrap; /* 줄바꿈 유지 */
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+    word-break: break-word; /* 적절히 줄바꿈 */
+    overflow-wrap: break-word; /* 최신 브라우저 호환 */
+    resize: none; /* 크기 조절 비활성화 */
 }
-
-.reply th {
-    background-color: #f1f1f1;
-}
-
-/* 댓글 삭제 버튼 */
-.reply button {
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.reply button:hover {
-    background-color: #ff3333;
-}
-
-/* 댓글 입력란 구역 */
-.comment-input-section {
-    display: block;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.comment-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.replyLabel {
     font-size: 14px;
-    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    width: 80px; /* 라벨의 최소 너비 설정 */
+    text-align: center; /* 라벨 텍스트 정렬 */
 }
-
-.submit-button {
-    background-color: #4c9aff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.blue-button {
+    align-self: flex-end; /* 버튼도 우측 정렬 */
 }
-
-.submit-button:hover {
-    background-color: #3577d6;
+/*.gray-button {*/
+/*    text-align: right;*/
+/*}*/
+.replyWriteId {
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+    word-break: break-word; /* 적절히 줄바꿈 */
+    width: 15%;
 }
-
-/* 버튼 스타일 */
-.edit-delete-buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-.edit-button,
-.delete-button {
-    background-color: #4c9aff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.edit-button:hover,
-.delete-button:hover {
-    background-color: #3577d6;
-}
-
-.back-button {
-    background-color: #ddd;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.back-button:hover {
-    background-color: #bbb;
+.replyWriteContent {
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+    word-break: break-word; /* 적절히 줄바꿈 */
+    width: 70%;
 }

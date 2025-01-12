@@ -1,500 +1,468 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>PC 리뷰 상세</title>
-    <style>
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            border: 1px solid #000;
-        }
-        th, td {
-            border: 1px solid #000;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        caption {
-            margin-bottom: 10px;
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-        .form-row {
-            display: none;
-        }
+    <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="../../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
 
+    <link href="../../static/css/pcReviewRead.css" rel="stylesheet" th:href="@{/css/pcReviewRead.css}">
+    <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
+    <!--    <script src="../../static/js/pcReviewWrite.js" th:src="@{/js/pcReviewWrite.js}"></script>-->
+    <title>PC리뷰 read</title>
 
-    </style>
 </head>
 <body>
-    <table>
-        <caption>PC 리뷰 상세 정보</caption>
-        <!-- view -->
-        <tr id="pcReviewRow" th:data-id="${pcReview.pcreviewId}">
-            <th>리뷰 ID</th>
-            <td id="pcReviewId" th:text="${pcReview.pcreviewId}">리뷰 ID</td>
-            <th>리뷰 제목</th>
-            <td id="pcReviewTitle" th:text="${pcReview.pcreviewTitle}">리뷰 제목</td>
-            <th>리뷰 내용</th>
-            <td id="pcReviewContent" th:text="${pcReview.pcreviewContent}">리뷰 내용</td>
-            <th>작성 날짜</th>
-            <td id="pcReviewDate" th:text="${pcReview.pcreviewDate}">작성 날짜</td>
-            <th>작성자 ID</th>
-            <td id="pcReviewUserId" th:text="${pcReview.userId}">작성자 ID</td>
-            <td><button id="editPcReviewButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
-        </tr>
+<div th:replace="~{fragments/header :: headerFragment}"></div>
+<div class="body-wrap">
+    <main class="site-content">
+        <a href="/pcReview/pcReviewList"><h1 class="container-like">PC 리뷰</h1></a>
+        <div class="container">
+            <div id="pcReviewRow" th:data-id="${pcReview.pcreviewId}">
+                <div class="title-header">
+                    <!--전체 리뷰의 제목이 들어감-->
+                    <div class="community-title" id="pcReviewTitle" th:text="${pcReview.pcreviewTitle}">제목</div>
+                    <!-- 게시물 정보 -->
+                    <div id="pcReviewInfo">
+                        <!--리뷰ID-->
+                        글 번호 : <span id="pcReviewId" th:text="${pcReview.pcreviewId}"></span>
+                        작성자: <span id="pcReviewUserId" th:text="${pcReview.userId}"></span>
+                        작성일: <span id="pcReviewDate" th:text="${pcReview.pcreviewDate}"></span>
+                    </div>
+                </div>
+                <!-- 업로드한 이미지를 표시 -->
+                <div class="big-image" id="uploadedImages">
+                    <img alt="Uploaded Image" th:src="@{/images/nav-case.png}">
+                </div>
+                <!-- 게시물 내용 -->
+                <div class="community-content" id="pcReviewContent" th:text="${pcReview.pcreviewContent}">내용</div>
+                <div class="button-container">
+                    <button class="blue-button" id="editpcReviewButton">수정</button>
+                </div>
+            </div>
 
-        <!-- update -->
-        <tr id="editPcReviewRow" class="form-row">
-            <th>리뷰 ID</th>
-            <td th:text="${pcReview.pcreviewId}">리뷰 ID</td>
-            <th>리뷰 제목</th>
-            <td><input type="text" id="editPcReviewTitle" value=""></td>
-            <th>리뷰 내용</th>
-            <td><input type="text" id="editPcReviewContent" value=""></td>
-            <th>작성 날짜</th>
-            <td th:text="${pcReview.pcreviewDate}">작성 날짜</td>
-            <th>작성자 ID</th>
-            <td th:text="${pcReview.userId}">작성자 ID</td>
-            <td><button id="savePcReviewButton">완료</button></td>
-            <td><button id="cancelPcReviewButton">취소</button></td>
-        </tr>
+            <!-- update -->
+            <div class="form-row" id="editPcReviewRow">
+                <!--전체 리뷰의 제목이 들어감-->
+                <input id="editPcReviewTitle" placeholder="제목" type="text" value="">제목</input>
+                <!-- 게시물 정보 -->
+                <div>
+                    <!--리뷰ID-->
+                    글 번호 : <span th:text="${pcReview.pcreviewId}"></span>
+                    작성자: <span th:text="${pcReview.userId}"></span>
+                    작성일: <span th:text="${pcReview.pcreviewDate}"></span>
+                </div>
+                <!-- 업로드한 이미지를 표시 -->
+                <div class="big-image" id="여기에id값넣기">
+                    <img alt="Uploaded Image" th:src="@{/images/nav-case.png}">
+                </div>
+                <!-- 게시물 내용 -->
+                <textarea id="editPcReviewContent" placeholder="내용">내용</textarea>
+                <button class="blue-button" id="savePcReviewButton">완료</button>
+                <button class="gray-button" id="cancelPcReviewButton">취소</button>
+            </div>
 
-        <tr style="height: 20px;"></tr>
+            <!--파츠 리뷰-->
+            <div class="community-title">PartsReview</div>
+            <!-- CPU리뷰 -->
+            <fieldset class="readPartsContainer" id="cpuRow" th:data-id="${pcReview.cpuReview.partsReviewId}">
+                <legend><label class="partsTitle">
+                    <!-- 썸네일 이미지 -->
+                    <img alt="CPU Image" class="small-image" th:src="@{/images/nav-cpu.png}">
+                    <!-- CPU 이름 -->
+                    <span th:text="${pcReview.cpuReview.cpu.name}">[CPU 이름]</span>
+                </label></legend>
+                <div>제목</div>
+                <div class="readPartsTitles" id="cpuTitle" th:text="${pcReview.cpuReview.partsReviewTitle}">CPU 리뷰 제목</div>
+                <div>내용</div>
+                <div id="cpuContent" class="readPartsContent"
+                     th:text="${pcReview.cpuReview.partsReviewContent}">CPU 리뷰 내용
+                </div>
+                <div>평점</div>
+                <div id="cpuRating" th:text="${pcReview.cpuReview.partsReviewRating}">CPU 리뷰 평점</div>
+                <div class="button-container">
+                    <button class="blue-button" id="editCpuButton">수정</button>
+                </div>
+            </fieldset>
+            <!--            수정코드-->
+            <div class="form-row" id="editCpuRow">
+                <div>CPU 리뷰 제목</div>
+                <div><input id="editCpuTitle" type="text" value=""></div>
+                <div>CPU 리뷰 내용</div>
+                <div><input id="editCpuContent" type="text" value=""></div>
+                <div>CPU 리뷰 평점</div>
+                <div>
+                    <select id="editCpuRating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="blue-button" id="saveCpuButton">완료</button>
+                    <button class="gray-button" id="cancelCpuButton">취소</button>
+                </div>
+            </div>
 
-        <!-- CPU -->
-        <!-- 기본코드 시작 -->
-        <tr id="cpuRow" th:data-id="${pcReview.cpuReview.partsReviewId}">
-            <th>CPU 리뷰 제목</th>
-            <td id="cpuTitle" th:text="${pcReview.cpuReview.partsReviewTitle}">CPU 리뷰 제목</td>
-            <th>CPU 리뷰 내용</th>
-            <td id="cpuContent" th:text="${pcReview.cpuReview.partsReviewContent}">CPU 리뷰 내용</td>
-            <th>CPU 리뷰 평점</th>
-            <td id="cpuRating" th:text="${pcReview.cpuReview.partsReviewRating}">CPU 리뷰 평점</td>
-            <td><button id="editCpuButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
-            <th>작성날짜</th>
-            <td id="cpuDate" th:text="${pcReview.cpuReview.partsReviewDate}">CPU 리뷰 평점</td>
-        </tr>
-        <!-- 기본코드 끝 -->
+            <!-- cpucooler리뷰 -->
+            <fieldset class="readPartsContainer" id="cpucoolerRow" th:data-id="${pcReview.cpucoolerReview.partsReviewId}">
+                <legend><label class="partsTitle">
+                    <img alt="cpucooler Image" class="small-image" th:src="@{/images/nav-cpucooler.png}">
+                    <span th:text="${pcReview.cpucoolerReview.cpucooler.name}">[cpucooler 이름]</span>
+                </label></legend>
+                <div>제목</div>
+                <div class="readPartsTitles" id="cpucoolerTitle" th:text="${pcReview.cpucoolerReview.partsReviewTitle}">cpucooler 리뷰 제목</div>
+                <div>내용</div>
+                <div class="readPartsContent" id="cpucoolerContent" th:text="${pcReview.cpucoolerReview.partsReviewContent}">cpucooler 리뷰 내용</div>
+                <div>평점</div>
+                <div id="cpucoolerRating" th:text="${pcReview.cpucoolerReview.partsReviewRating}">cpucooler 리뷰 평점</div>
+                <div class="button-container">
+                    <button class="blue-button" id="editCpucoolerButton">수정</button>
+                </div>
+            </fieldset>
+            <div class="form-row" id="editCpucoolerRow">
+                <div>제목</div>
+                <div><input id="editCpucoolerTitle" type="text" value=""></div>
+                <div>내용</div>
+                <div><input id="editCpucoolerContent" type="text" value=""></div>
+                <div>평점</div>
+                <div>
+                    <select id="editCpucoolerRating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="blue-button" id="saveCpucoolerButton">완료</button>
+                    <button class="gray-button" id="cancelCpucoolerButton">취소</button>
+                </div>
+            </div>
 
-        <!-- 수정코드 시작 -->
-        <tr class ="form-row" id="editCpuRow">
-            <th>CPU 리뷰 제목</th>
-            <td><input type="text" id="editCpuTitle" value=""></td>
-            <th>CPU 리뷰 내용</th>
-            <td><input type="text" id="editCpuContent" value=""></td>
-            <th>CPU 리뷰 평점</th>
-            <td>
-                <select id="editCpuRating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </td>
-            <td>
-                <button id="saveCpuButton">완료</button>
-                <button id="cancelCpuButton">취소</button>
-            </td>
-        </tr>
-        <!-- 수정코드 끝 -->
+            <!-- Motherboard -->
+            <fieldset class="readPartsContainer" id="motherboardRow" th:data-id="${pcReview.motherboardReview.partsReviewId}">
+                <legend><label class="partsTitle">
+                    <img alt="motherboard Image" class="small-image" th:src="@{/images/nav-motherboard.png}">
+                    <span th:text="${pcReview.motherboardReview.motherboard.name}">[motherboard 이름]</span>
+                </label></legend>
+                <div>제목</div>
+                <div class="readPartsTitles" id="motherboardTitle" th:text="${pcReview.motherboardReview.partsReviewTitle}">motherboard 리뷰 제목</div>
+                <div>내용</div>
+                <div class="readPartsContent" id="motherboardContent" th:text="${pcReview.motherboardReview.partsReviewContent}">motherboard 리뷰 내용</div>
+                <div>평점</div>
+                <div id="motherboardRating" th:text="${pcReview.motherboardReview.partsReviewRating}">motherboard 리뷰 평점</div>
+                <div class="button-container">
+                    <button class="blue-button" id="editMotherboardButton">수정</button>
+                </div>
+            </fieldset>
+            <div class="form-row" id="editMotherboardRow">
+                <div>제목</div>
+                <div><input id="editMotherboardTitle" type="text" value=""></div>
+                <div>내용</div>
+                <div><input id="editMotherboardContent" type="text" value=""></div>
+                <div>평점</div>
+                <div>
+                    <select id="editMotherboardRating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="blue-button" id="saveMotherboardButton">완료</button>
+                    <button class="gray-button" id="cancelMotherboardButton">취소</button>
+                </div>
+            </div>
 
-        <!-- cpucooler -->
-        <tr id="cpucoolerRow" th:data-id="${pcReview.cpucoolerReview.partsReviewId}">
-            <th>cpucooler 리뷰 제목</th>
-            <td id="cpucoolerTitle" th:text="${pcReview.cpucoolerReview.partsReviewTitle}">cpucooler 리뷰 제목</td>
-            <th>cpucooler 리뷰 내용</th>
-            <td id="cpucoolerContent" th:text="${pcReview.cpucoolerReview.partsReviewContent}">cpucooler 리뷰 내용</td>
-            <th>cpucooler 리뷰 평점</th>
-            <td id="cpucoolerRating" th:text="${pcReview.cpucoolerReview.partsReviewRating}">cpucooler 리뷰 평점</td>
-            <td><button id="editCpucoolerButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
-            <th>작성날짜</th>
-            <td id="cpucoolerDate" th:text="${pcReview.cpucoolerReview.partsReviewDate}">CPU 리뷰 평점</td>
-        </tr>
-        <tr class="form-row" id="editCpucoolerRow">
-            <th>cpucooler 리뷰 제목</th>
-            <td><input type="text" id="editCpucoolerTitle" value=""></td>
-            <th>cpucooler 리뷰 내용</th>
-            <td><input type="text" id="editCpucoolerContent" value=""></td>
-            <th>cpucooler 리뷰 평점</th>
-            <td>
-                <select id="editCpucoolerRating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </td>
-            <td>
-                <button id="saveCpucoolerButton">완료</button>
-                <button id="cancelCpucoolerButton">취소</button>
-            </td>
-        </tr>
+            <!-- Memory -->
+            <fieldset class="readPartsContainer" id="memoryRow" th:data-id="${pcReview.memoryReview.partsReviewId}">
+                <legend><label class="partsTitle">
+                    <img alt="memory Image" class="small-image" th:src="@{/images/nav-memory.png}">
+                    <span th:text="${pcReview.memoryReview.memory.name}">[memory 이름]</span>
+                </label></legend>
+                <div>제목</div>
+                <div class="readPartsTitles" id="memoryTitle" th:text="${pcReview.memoryReview.partsReviewTitle}">memory 리뷰 제목</div>
+                <div>내용</div>
+                <div class="readPartsContent" id="memoryContent" th:text="${pcReview.memoryReview.partsReviewContent}">memory 리뷰 내용</div>
+                <div>평점</div>
+                <div id="memoryRating" th:text="${pcReview.memoryReview.partsReviewRating}">memory 리뷰 평점</div>
+                <div class="button-container">
+                    <button class="blue-button" id="editMemoryButton">수정</button>
+                </div>
+            </fieldset>
+            <div class="form-row" id="editMemoryRow">
+                <div>제목</div>
+                <div><input id="editMemoryTitle" type="text" value=""></div>
+                <div>내용</div>
+                <div><input id="editMemoryContent" type="text" value=""></div>
+                <div>평점</div>
+                <div>
+                    <select id="editMemoryRating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="blue-button" id="saveMemoryButton">완료</button>
+                    <button class="gray-button" id="cancelMemoryButton">취소</button>
+                </div>
+            </div>
 
-        <!-- motherboard -->
-        <tr id="motherboardRow" th:data-id="${pcReview.motherboardReview.partsReviewId}">
-            <th>motherboard 리뷰 제목</th>
-            <td id="motherboardTitle" th:text="${pcReview.motherboardReview.partsReviewTitle}">motherboard 리뷰 제목</td>
-            <th>motherboard 리뷰 내용</th>
-            <td id="motherboardContent" th:text="${pcReview.motherboardReview.partsReviewContent}">motherboard 리뷰 내용</td>
-            <th>motherboard 리뷰 평점</th>
-            <td id="motherboardRating" th:text="${pcReview.motherboardReview.partsReviewRating}">motherboard 리뷰 평점</td>
-            <td><button id="editMotherboardButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
-            <th>작성날짜</th>
-            <td id="motherboardDate" th:text="${pcReview.motherboardReview.partsReviewDate}">CPU 리뷰 평점</td>
-        </tr>
-        <tr class="form-row" id="editMotherboardRow">
-            <th>motherboard 리뷰 제목</th>
-            <td><input type="text" id="editMotherboardTitle" value=""></td>
-            <th>motherboard 리뷰 내용</th>
-            <td><input type="text" id="editMotherboardContent" value=""></td>
-            <th>motherboard 리뷰 평점</th>
-            <td>
-                <select id="editMotherboardRating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </td>
-            <td>
-                <button id="saveMotherboardButton">완료</button>
-                <button id="cancelMotherboardButton">취소</button>
-            </td>
-        </tr>
+            <!-- Storage -->
+            <fieldset class="readPartsContainer" id="storageRow" th:data-id="${pcReview.storageReview.partsReviewId}">
+                <legend><label class="partsTitle">
+                    <img alt="storage Image" class="small-image" th:src="@{/images/nav-ssd.png}">
+                    <span th:text="${pcReview.storageReview.storage.name}">[storage 이름]</span>
+                </label></legend>
+                <div>제목</div>
+                <div class="readPartsTitles" id="storageTitle" th:text="${pcReview.storageReview.partsReviewTitle}">storage 리뷰 제목</div>
+                <div>내용</div>
+                <div class="readPartsContent" id="storageContent" th:text="${pcReview.storageReview.partsReviewContent}">storage 리뷰 내용</div>
+                <div>평점</div>
+                <div id="storageRating" th:text="${pcReview.storageReview.partsReviewRating}">storage 리뷰 평점</div>
+                <div class="button-container">
+                    <button class="blue-button" id="editStorageButton">수정</button>
+                </div>
+            </fieldset>
+            <div class="form-row" id="editStorageRow">
+                <div>제목</div>
+                <div><input id="editStorageTitle" type="text" value=""></div>
+                <div>내용</div>
+                <div><input id="editStorageContent" type="text" value=""></div>
+                <div>평점</div>
+                <div>
+                    <select id="editStorageRating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="blue-button" id="saveStorageButton">완료</button>
+                    <button class="gray-button" id="cancelStorageButton">취소</button>
+                </div>
+            </div>
+            <!-- Video Card -->
+            <fieldset class="readPartsContainer" id="videocardRow" th:data-id="${pcReview.videocardReview.partsReviewId}">
+                <legend><label class="partsTitle">
+                    <img alt="videocard Image" class="small-image" th:src="@{/images/nav-videocard.png}">
+                    <span th:text="${pcReview.videocardReview.videocard.name}">[videocard 이름]</span>
+                </label></legend>
+                <div>제목</div>
+                <div class="readPartsTitles" id="videocardTitle" th:text="${pcReview.videocardReview.partsReviewTitle}">videocard 리뷰 제목</div>
+                <div>내용</div>
+                <div class="readPartsContent" id="videocardContent" th:text="${pcReview.videocardReview.partsReviewContent}">videocard 리뷰 내용</div>
+                <div>평점</div>
+                <div id="videocardRating" th:text="${pcReview.videocardReview.partsReviewRating}">videocard 리뷰 평점</div>
+                <div class="button-container">
+                    <button class="blue-button" id="editVideocardButton">수정</button>
+                </div>
+            </fieldset>
+            <div class="form-row" id="editVideocardRow">
+                <div>제목</div>
+                <div><input id="editVideocardTitle" type="text" value=""></div>
+                <div>내용</div>
+                <div><input id="editVideocardContent" type="text" value=""></div>
+                <div>평점</div>
+                <div>
+                    <select id="editVideocardRating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="blue-button" id="saveVideocardButton">완료</button>
+                    <button class="gray-button" id="cancelVideocardButton">취소</button>
+                </div>
+            </div>
 
-        <!-- Memory -->
-        <tr id="memoryRow" th:data-id="${pcReview.memoryReview.partsReviewId}">
-            <th>Memory 리뷰 제목</th>
-            <td id="memoryTitle" th:text="${pcReview.memoryReview.partsReviewTitle}">Memory 리뷰 제목</td>
-            <th>Memory 리뷰 내용</th>
-            <td id="memoryContent" th:text="${pcReview.memoryReview.partsReviewContent}">Memory 리뷰 내용</td>
-            <th>Memory 리뷰 평점</th>
-            <td id="memoryRating" th:text="${pcReview.memoryReview.partsReviewRating}">Memory 리뷰 평점</td>
-            <td><button id="editMemoryButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
-            <th>작성날짜</th>
-            <td id="memoryDate" th:text="${pcReview.memoryReview.partsReviewDate}">CPU 리뷰 평점</td>
+            <!-- Power Supply -->
+            <fieldset class="readPartsContainer" id="powersupplyRow" th:data-id="${pcReview.powersupplyReview.partsReviewId}">
+                <legend><label class="partsTitle">
+                    <img alt="powersupply Image" class="small-image" th:src="@{/images/nav-powersupply.png}">
+                    <span th:text="${pcReview.powersupplyReview.powersupply.name}">[powersupply 이름]</span>
+                </label></legend>
+                <div>제목</div>
+                <div class="readPartsTitles" id="powersupplyTitle" th:text="${pcReview.powersupplyReview.partsReviewTitle}">powersupply 리뷰 제목</div>
+                <div>내용</div>
+                <div class="readPartsContent" id="powersupplyContent" th:text="${pcReview.powersupplyReview.partsReviewContent}">powersupply 리뷰 내용</div>
+                <div>평점</div>
+                <div id="powersupplyRating" th:text="${pcReview.powersupplyReview.partsReviewRating}">powersupply 리뷰 평점</div>
+                <div class="button-container">
+                    <button class="blue-button" id="editPowersupplyButton">수정</button>
+                </div>
+            </fieldset>
+            <div class="form-row" id="editPowersupplyRow">
+                <div>제목</div>
+                <div><input id="editPowersupplyTitle" type="text" value=""></div>
+                <div>내용</div>
+                <div><input id="editPowersupplyContent" type="text" value=""></div>
+                <div>평점</div>
+                <div>
+                    <select id="editPowersupplyRating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="blue-button" id="savePowersupplyButton">완료</button>
+                    <button class="gray-button" id="cancelPowersupplyButton">취소</button>
+                </div>
+            </div>
 
-        </tr>
-        <tr class="form-row" id="editMemoryRow">
-            <th>Memory 리뷰 제목</th>
-            <td><input type="text" id="editMemoryTitle" value=""></td>
-            <th>Memory 리뷰 내용</th>
-            <td><input type="text" id="editMemoryContent" value=""></td>
-            <th>Memory 리뷰 평점</th>
-            <td>
-                <select id="editMemoryRating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </td>
-            <td>
-                <button id="saveMemoryButton">완료</button>
-                <button id="cancelMemoryButton">취소</button>
-            </td>
-        </tr>
-        <!-- Storage -->
-        <tr id="storageRow" th:data-id="${pcReview.storageReview.partsReviewId}">
-            <th>Storage 리뷰 제목</th>
-            <td id="storageTitle" th:text="${pcReview.storageReview.partsReviewTitle}">Storage 리뷰 제목</td>
-            <th>Storage 리뷰 내용</th>
-            <td id="storageContent" th:text="${pcReview.storageReview.partsReviewContent}">Storage 리뷰 내용</td>
-            <th>Storage 리뷰 평점</th>
-            <td id="storageRating" th:text="${pcReview.storageReview.partsReviewRating}">Storage 리뷰 평점</td>
-            <td><button id="editStorageButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
-            <th>작성날짜</th>
-            <td id="storageDate" th:text="${pcReview.storageReview.partsReviewDate}">CPU 리뷰 평점</td>
-        </tr>
-        <tr class="form-row" id="editStorageRow">
-            <th>Storage 리뷰 제목</th>
-            <td><input type="text" id="editStorageTitle" value=""></td>
-            <th>Storage 리뷰 내용</th>
-            <td><input type="text" id="editStorageContent" value=""></td>
-            <th>Storage 리뷰 평점</th>
-            <td>
-                <select id="editStorageRating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </td>
-            <td>
-                <button id="saveStorageButton">완료</button>
-                <button id="cancelStorageButton">취소</button>
-            </td>
-        </tr>
+            <!-- Cover -->
+            <fieldset class="readPartsContainer" id="coverRow" th:data-id="${pcReview.coverReview.partsReviewId}">
+                <legend><label class="partsTitle">
+                    <img alt="cover Image" class="small-image" th:src="@{/images/nav-case.png}">
+                    <span th:text="${pcReview.coverReview.cover.name}">[cover 이름]</span>
+                </label></legend>
+                <div>제목</div>
+                <div class="readPartsTitles" id="coverTitle" th:text="${pcReview.coverReview.partsReviewTitle}">cover 리뷰 제목</div>
+                <div>내용</div>
+                <div class="readPartsContent" id="coverContent" th:text="${pcReview.coverReview.partsReviewContent}">cover 리뷰 내용</div>
+                <div>평점</div>
+                <div id="coverRating" th:text="${pcReview.coverReview.partsReviewRating}">cover 리뷰 평점</div>
+                <div class="button-container">
+                    <button class="blue-button" id="editCoverButton">수정</button>
+                </div>
+            </fieldset>
+            <div class="form-row" id="editCoverRow">
+                <div>제목</div>
+                <div><input id="editCoverTitle" type="text" value=""></div>
+                <div>내용</div>
+                <div><input id="editCoverContent" type="text" value=""></div>
+                <div>평점</div>
+                <div>
+                    <select id="editCoverRating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="blue-button" id="saveCoverButton">완료</button>
+                    <button class="gray-button" id="cancelCoverButton">취소</button>
+                </div>
+            </div>
 
-        <!-- Video Card -->
-        <tr id="videocardRow" th:data-id="${pcReview.videocardReview.partsReviewId}">
-            <th>Video Card 리뷰 제목</th>
-            <td id="videocardTitle" th:text="${pcReview.videocardReview.partsReviewTitle}">Video Card 리뷰 제목</td>
-            <th>Video Card 리뷰 내용</th>
-            <td id="videocardContent" th:text="${pcReview.videocardReview.partsReviewContent}">Video Card 리뷰 내용</td>
-            <th>Video Card 리뷰 평점</th>
-            <td id="videocardRating" th:text="${pcReview.videocardReview.partsReviewRating}">Video Card 리뷰 평점</td>
-            <td><button id="editVideocardButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
-            <th>작성날짜</th>
-            <td id="videocardDate" th:text="${pcReview.videocardReview.partsReviewDate}">CPU 리뷰 평점</td>
-        </tr>
-        <tr class="form-row" id="editVideocardRow">
-            <th>Video Card 리뷰 제목</th>
-            <td><input type="text" id="editVideocardTitle" value=""></td>
-            <th>Video Card 리뷰 내용</th>
-            <td><input type="text" id="editVideocardContent" value=""></td>
-            <th>Video Card 리뷰 평점</th>
-            <td>
-                <select id="editVideocardRating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </td>
-            <td>
-                <button id="saveVideocardButton">완료</button>
-                <button id="cancelVideocardButton">취소</button>
-            </td>
-        </tr>
 
-        <!-- Power Supply -->
-        <tr id="powersupplyRow" th:data-id="${pcReview.powersupplyReview.partsReviewId}">
-            <th>Power Supply 리뷰 제목</th>
-            <td id="powersupplyTitle" th:text="${pcReview.powersupplyReview.partsReviewTitle}">Power Supply 리뷰 제목</td>
-            <th>Power Supply 리뷰 내용</th>
-            <td id="powersupplyContent" th:text="${pcReview.powersupplyReview.partsReviewContent}">Power Supply 리뷰 내용</td>
-            <th>Power Supply 리뷰 평점</th>
-            <td id="powersupplyRating" th:text="${pcReview.powersupplyReview.partsReviewRating}">Power Supply 리뷰 평점</td>
-            <td><button id="editPowersupplyButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
-            <th>작성날짜</th>
-            <td id="powersupplyDate" th:text="${pcReview.powersupplyReview.partsReviewDate}">CPU 리뷰 평점</td>
-        </tr>
-        <tr class="form-row" id="editPowersupplyRow">
-            <th>Power Supply 리뷰 제목</th>
-            <td><input type="text" id="editPowersupplyTitle" value=""></td>
-            <th>Power Supply 리뷰 내용</th>
-            <td><input type="text" id="editPowersupplyContent" value=""></td>
-            <th>Power Supply 리뷰 평점</th>
-            <td>
-                <select id="editPowersupplyRating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </td>
-            <td>
-                <button id="savePowersupplyButton">완료</button>
-                <button id="cancelPowersupplyButton">취소</button>
-            </td>
-        </tr>
+            <div class="content">
+                <!-- 기존 PC 리뷰 상세 테이블 여기에 위치 -->
 
-        <!-- Cover -->
-        <tr id="coverRow" th:data-id="${pcReview.coverReview.partsReviewId}">
-            <th>Cover 리뷰 제목</th>
-            <td id="coverTitle" th:text="${pcReview.coverReview.partsReviewTitle}">Cover 리뷰 제목</td>
-            <th>Cover 리뷰 내용</th>
-            <td id="coverContent" th:text="${pcReview.coverReview.partsReviewContent}">Cover 리뷰 내용</td>
-            <th>Cover 리뷰 평점</th>
-            <td id="coverRating" th:text="${pcReview.coverReview.partsReviewRating}">Cover 리뷰 평점</td>
-            <td><button id="editCoverButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
-            <th>작성날짜</th>
-            <td id="coverDate" th:text="${pcReview.coverReview.partsReviewDate}">CPU 리뷰 평점</td>
-        </tr>
-        <tr class="form-row" id="editCoverRow">
-            <th>Cover 리뷰 제목</th>
-            <td><input type="text" id="editCoverTitle" value=""></td>
-            <th>Cover 리뷰 내용</th>
-            <td><input type="text" id="editCoverContent" value=""></td>
-            <th>Cover 리뷰 평점</th>
-            <td>
-                <select id="editCoverRating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </td>
-            <td>
-                <button id="saveCoverButton">완료</button>
-                <button id="cancelCoverButton">취소</button>
-            </td>
-        </tr>
-    </table>
+            </div>
 
-    <div class="content">
-        <!-- 기존 PC 리뷰 상세 테이블 여기에 위치 -->
+            <!-- 댓글 입력 폼 -->
+            <form class="replyForm" id="commentForm">
+                <div class="inputWrapper">
 
-        <!-- 댓글 입력 폼 -->
-        <form id="commentForm" class="comment-form">
-            <label for="pcReviewCommentContent">리플 입력</label>
-            <input id="pcReviewCommentContent" name="commentContent" placeholder="댓글을 입력하세요" style="width:500px" />
-            <button id="commentWriteButton" type="button">저장</button>
-        </form>
+                <label for="pcReviewCommentContent" class="replyLabel">리플 입력</label>
+                    <textarea id="pcReviewCommentContent" name="commentContent" placeholder="댓글을 입력하세요"></textarea>
+                    <!--댓글 입력 필드-->
+                </div>
+                <button class="blue-button" id="commentWriteButton" type="button">저장</button>
+            </form>
 
-        <!-- 댓글 목록 출력 -->
-        <table class="comment" id="commentTable">
-            <thead>
-            <tr>
-                <th>작성자</th>
-                <th>내용</th>
-                <th>삭제</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- 댓글 목록은 여기에서 동적으로 추가됩니다. -->
-            </tbody>
-        </table>
-    </div>
+            <!-- 댓글 목록 출력 -->
+            <table class="reply" id="commentTable">
+                <thead>
+                <tr>
+                    <th style="width: 20%">작성자</th>
+                    <th style="width: 60%">내용</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- 댓글 목록은 여기에서 동적으로 추가됩니다. -->
+                </tbody>
+            </table>
+            <div class="button-footerContainer">
+                <!-- 뒤로가기 버튼 -->
+                <button class="white-button"><a href="/pcreview/list">목록</a></button>
+                <!--글쓰기 버튼-->
+                <button class="blue-button"><a href="pcReviewWrite.html">글쓰기</a></button>
+            </div>
+<!--            스크립트 안에 들어간 댓글 출력 id의 스타일-->
+<!--            .replyWriteId {-->
+<!--            word-wrap: break-word; /* 긴 단어 줄바꿈 */-->
+<!--            word-break: break-word; /* 적절히 줄바꿈 */-->
+<!--            width: 15%;-->
+<!--            }-->
+<!--            스크립트 안에 들어간 댓글 출력 content의 스타일-->
+<!--            .replyWriteContent {-->
+<!--            word-wrap: break-word; /* 긴 단어 줄바꿈 */-->
+<!--            word-break: break-word; /* 적절히 줄바꿈 */-->
+<!--            width: 70%;-->
+<!--            }-->
+        </div>
+    </main>
+</div>
+<!-- pcReviewId -->
+<input disabled id="userId" th:value="${#authentication.name}" type="hidden">
+<div th:replace="~{fragments/footer :: footerFragment}"></div>
 
-    <form method="POST" th:action="@{/pcreview/delete}"
-          th:if="${pcReview.userId == #authentication.name}">
-        <input name="pcreviewId" th:value="${pcReview.pcreviewId}" type="hidden"/>
-        <button class="delete-button" type="submit">삭제</button>
-    </form>
-    <form th:action="@{/pcreview/list}">
-        <button class="delete-button" type="submit">리스트</button>
-    </form>
-
-    <!-- pcReviewId -->
-    <input type="text" id="userId" th:value="${#authentication.name}" disabled style="display: none;">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha384-UG8ao2jwOWB7/oDdObZc6ItJmwUkR/PfMyt9Qs5AwX7PsnYn1CRKCTWyncPTWvaS" crossorigin="anonymous"></script>
-
+</body>
 <script>
 
-    // pcReviewId 값 가져오기
-    const pcReviewId = document.getElementById('pcReviewId').textContent.trim();
+    // communityId 값 가져오기
+    const pcReviewId = document.getElementById('pcReviewId').value;
 
     // userName 값 가져오기
     const userId = document.getElementById('userId').value;
 
-    function getMySQLFormattedTimestamp() {
-        const now = new Date();
-
-        // 로컬 시간 계산
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-
-        // MySQL 형식 (로컬 시간)
-        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
-    }
-
-
-
-    console.log("pcReviewId 값:", pcReviewId);
-    console.log("userId 값:", userId);
-    function loadComments() {
-        $.ajax({
-            url: '/pcreview/commentList?pcreviewId=' + pcReviewId, // GET 방식으로 파라미터 전달
-            type: 'GET',
-            success: function (data) {
-                const commentTableBody = $('#commentTable tbody');
-                commentTableBody.empty(); // 기존 댓글 목록을 비웁니다.
-
-                // 서버에서 받은 댓글 데이터를 HTML로 출력
-                data.forEach(function (comment) {
-                    let deleteButton = '';
-                    if (comment.userId === userId) {
-                        // 현재 로그인한 사용자의 댓글일 때만 삭제 버튼 표시
-                        deleteButton = `<button onclick="deleteComment(${comment.pcreviewCommentId})">삭제</button>`;
-                    }
-
-                    const commentHtml = `
-                        <tr id="comment-${comment.pcreviewCommentId}">
-                            <td>${comment.userId}</td>
-                            <td>${comment.pcreviewCommentContent}</td>
-                            <td>${deleteButton}</td>
-                        </tr>
-                    `;
-                    commentTableBody.append(commentHtml);
-                });
-            },
-            error: function (xhr, status, error) {
-                alert('댓글 목록 불러오기 실패');
-            }
-        });
-    }
-
-    // 댓글을 삭제하는 함수
-    function deleteComment(commentId) {
-        const deleteData = {
-            pcreviewId: pcReviewId, // 리뷰 ID
-            pcreviewCommentId: commentId, // 삭제할 댓글 ID
-            userId: userId // 사용자 ID
-        };
-
-        $.ajax({
-            url: '/pcreview/commentDelete', // 적절한 URL로 변경
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(deleteData),
-            success: function () {
-                loadComments(); // 댓글 목록 새로고침
-            },
-            error: function () {
-                alert('댓글 삭제 실패!');
-            }
-        });
-    }
-
     // 댓글을 저장하는 함수
-     $('#commentWriteButton').click(function () {
-         const commentContent = $('#pcReviewCommentContent').val();
-         if (!commentContent) {
-             alert('댓글을 입력하세요.');
-             return;
-         }
+    //     $('#commentWriteButton').click(function () {
+    //         const commentContent = $('#communitycommentContent').val();
+    //         if (!commentContent) {
+    //             alert('댓글을 입력하세요.');
+    //             return;
+    //         }
+    //
+    //         const commentData = {
+    //             pcreviewId: pcReviewId,
+    //             memberId: userId,
+    //             commentContent: commentContent
+    //         };
+    //
+    // $.ajax({
+    //     url: '/pcreview/commentWrite',
+    //     type: 'POST',
+    //     contentType: 'application/json',
+    //     data: JSON.stringify(commentData),
+    //     success: function () {
+    //         $('#communityCommentContent').val(''); // 댓글 입력란 초기화
+    //         loadComments(); // 댓글 목록 새로고침
+    //     },
+    //     error: function () {
+    //         alert('댓글 저장 실패!');
+    //     }
+    // });
+    // });
 
-         const commentData = {
-             pcreviewId: pcReviewId,
-             userId: userId,
-             pcreviewCommentContent: commentContent
-         };
-
-         $.ajax({
-             url: '/pcreview/commentWrite',
-             type: 'POST',
-             contentType: 'application/json',
-             data: JSON.stringify(commentData),
-             success: function () {
-                 $('#pcReviewCommentContent').val(''); // 댓글 입력란 초기화
-                 loadComments(); // 댓글 목록 새로고침
-             },
-             error: function () {
-                 alert('댓글 저장 실패!');
-             }
-         });
-     });
-
-    // 페이지 로드 시 댓글 목록 불러오기
-    $(document).ready(function () {
-        loadComments();
-    });
 
     // PcReviewHandling
     document.addEventListener("DOMContentLoaded", function () {
         const pcReviewRow = document.getElementById("pcReviewRow");
         const editPcReviewRow = document.getElementById("editPcReviewRow");
 
-        const editButton = document.getElementById("editPcReviewButton");
+        const editButton = document.getElementById("editpcReviewButton");
         const saveButton = document.getElementById("savePcReviewButton");
         const cancelButton = document.getElementById("cancelPcReviewButton");
 
@@ -517,9 +485,6 @@
 
             document.getElementById("pcReviewTitle").textContent = updatedTitle;
             document.getElementById("pcReviewContent").textContent = updatedContent;
-            const currentTime = getMySQLFormattedTimestamp();
-            document.getElementById("pcReviewDate").textContent = currentTime;
-
 
             pcReviewRow.style.display = "table-row";
             editPcReviewRow.style.display = "none";
@@ -589,8 +554,6 @@
         cpuTitle.textContent = updatedTitle;
         cpuContent.textContent = updatedContent;
         cpuRating.textContent = updatedRating; // 평점 업데이트
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("cpuDate").textContent = currentTime;
         editCpuRow.style.display = 'none';
         cpuRow.style.display = 'table-row';
 
@@ -655,8 +618,6 @@
         cpucoolerTitle.textContent = updatedTitle;
         cpucoolerContent.textContent = updatedContent;
         cpucoolerRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("cpucoolerDate").textContent = currentTime;
         editCpucoolerRow.style.display = 'none';
         cpucoolerRow.style.display = 'table-row';
 
@@ -720,8 +681,6 @@
         motherboardTitle.textContent = updatedTitle;
         motherboardContent.textContent = updatedContent;
         motherboardRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("motherboardDate").textContent = currentTime;
         editMotherboardRow.style.display = 'none';
         motherboardRow.style.display = 'table-row';
 
@@ -786,8 +745,6 @@
         memoryTitle.textContent = updatedTitle;
         memoryContent.textContent = updatedContent;
         memoryRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("memoryDate").textContent = currentTime;
         editMemoryRow.style.display = 'none';
         memoryRow.style.display = 'table-row';
 
@@ -851,8 +808,6 @@
         storageTitle.textContent = updatedTitle;
         storageContent.textContent = updatedContent;
         storageRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("storageDate").textContent = currentTime;
         editStorageRow.style.display = 'none';
         storageRow.style.display = 'table-row';
 
@@ -917,8 +872,6 @@
         videocardTitle.textContent = updatedTitle;
         videocardContent.textContent = updatedContent;
         videocardRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("videocardDate").textContent = currentTime;
         editVideocardRow.style.display = 'none';
         videocardRow.style.display = 'table-row';
 
@@ -983,8 +936,6 @@
         powersupplyTitle.textContent = updatedTitle;
         powersupplyContent.textContent = updatedContent;
         powersupplyRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("powersupplyDate").textContent = currentTime;
         editPowersupplyRow.style.display = 'none';
         powersupplyRow.style.display = 'table-row';
 
@@ -1049,8 +1000,6 @@
         coverTitle.textContent = updatedTitle;
         coverContent.textContent = updatedContent;
         coverRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("coverDate").textContent = currentTime;
         editCoverRow.style.display = 'none';
         coverRow.style.display = 'table-row';
 
@@ -1081,5 +1030,4 @@
 
 
 </script>
-</body>
 </html>

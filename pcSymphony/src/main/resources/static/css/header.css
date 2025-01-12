@@ -7,7 +7,13 @@
     background-color: #0c1622; /* 배경색 설정 */
     color: #fff; /* 텍스트 색상 */
 }
-
+.header-container {
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 16px;
+    padding-right: 16px;
+    max-width: 1128px;
+}
 
 .site-header-inner {
     display: flex; /* 플렉스박스로 정렬 */
@@ -45,6 +51,7 @@
     list-style: none; /* 불릿 제거 */
     padding: 0;
     margin: 0;
+    align-items: center;
 }
 
 .header-nav ul li {
@@ -192,12 +199,12 @@
 
 /* 그리드 컨테이너 */
 #parts-grid-container {
+    position: absolute;
     /*display: grid;*/
     grid-template-columns: repeat(4, 1fr); /* 4열 배열 */
     gap: 16px; /* 버튼 간 간격 */
     padding: 16px;
     background-color: #f3f3f3; /* 배경색 */
-    margin-top: 16px;
     border-radius: 8px; /* 둥근 모서리 */
 }
 

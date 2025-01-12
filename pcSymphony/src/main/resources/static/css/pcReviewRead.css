@@ -1,0 +1,123 @@
+.community-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+
+#pcReviewInfo {
+    font-size: 14px;
+    color: #333;
+}
+
+.form-row {
+    display: none;
+
+}
+
+#pcReviewRow {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border: solid #0c1622;
+    border-width: 0 0 3px 0;
+}
+.partsName {
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+    font-weight: bold;
+}
+.partsTitle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+/*파츠리뷰의 개별 범위, 리뷰 제목, 리뷰 내용 스타일*/
+.readPartsContainer {
+    padding: 20px;
+    margin-top: 20px;
+    border: #95A4B4 solid 1px;
+}
+.readPartsTitles {
+    font-size: 14px;
+    width: 70%;
+    padding: 5px;
+    border: #95A4B4 1px solid;
+    white-space: pre-wrap; /* 줄바꿈 유지 */
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+    word-break: break-word; /* 적절히 줄바꿈 */
+    overflow-wrap: break-word; /* 최신 브라우저 호환 */
+    resize: none; /* 크기 조절 비활성화 */
+    /*overflow-y: scroll; !* 세로 스크롤 활성화 *!*/
+}
+.readPartsContent {
+    font-size: 14px;
+    width: 100%;
+    padding: 5px;
+    border: #95A4B4 1px solid;
+    white-space: pre-wrap; /* 줄바꿈 유지 */
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+    word-break: break-word; /* 적절히 줄바꿈 */
+    overflow-wrap: break-word; /* 최신 브라우저 호환 */
+    resize: none; /* 크기 조절 비활성화 */
+}
+/*리플 입력란 스타일*/
+.replyForm {
+    display: flex; /* 플렉스 컨테이너 */
+    flex-direction: column; /* 세로 정렬 */
+    align-items: flex-end; /* 우측 정렬 */
+    padding: 12px;
+    border-top: #0c1622 solid 3px;
+    border-bottom: #0c1622 solid 3px;
+    gap: 10px; /* 필드 간 간격 */
+    margin-top: 20px;
+}
+.inputWrapper {
+    display: flex; /* 라벨과 입력란을 같은 라인에 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    width: 100%; /* 입력 필드의 너비 조정 */
+    gap: 10px; /* 라벨과 입력란 사이 간격 */
+}
+#communityReplyContent {
+    flex: 1; /* 입력란이 남은 공간을 채우도록 설정 */
+    min-height: 100px; /* 최소 높이 */
+    padding: 10px;
+    border: 1px solid #95A4B4;
+    font-size: 13px;
+    color: #333;
+    line-height: 18px;
+    white-space: pre-wrap; /* 줄바꿈 유지 */
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+    word-break: break-word; /* 적절히 줄바꿈 */
+    overflow-wrap: break-word; /* 최신 브라우저 호환 */
+    resize: none; /* 크기 조절 비활성화 */
+}
+.replyLabel {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    width: 80px; /* 라벨의 최소 너비 설정 */
+    text-align: center; /* 라벨 텍스트 정렬 */
+}
+#pcReviewCommentContent {
+    flex: 1; /* 입력란이 남은 공간을 채우도록 설정 */
+    min-height: 100px; /* 최소 높이 */
+    padding: 10px;
+    border: 1px solid #95A4B4;
+    font-size: 13px;
+    color: #333;
+    line-height: 18px;
+    white-space: pre-wrap; /* 줄바꿈 유지 */
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+    word-break: break-word; /* 적절히 줄바꿈 */
+    overflow-wrap: break-word; /* 최신 브라우저 호환 */
+    resize: none; /* 크기 조절 비활성화 */
+}
+.button-footerContainer {
+    display: flex; /* 플렉스 컨테이너 설정 */
+    justify-content: space-between; /* 버튼 사이를 양 끝으로 배치 */
+    align-items: center; /* 세로 방향 정렬 */
+    gap: 10px; /* 버튼 간 간격 */
+}

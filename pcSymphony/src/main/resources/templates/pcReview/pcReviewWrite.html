@@ -1,185 +1,292 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="../../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <link href="../../static/css/pcReviewWrite.css" rel="stylesheet" th:href="@{/css/pcReviewWrite.css}">
+    <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
+    <!--    <script src="../../static/js/pcReviewWrite.js" th:src="@{/js/pcReviewWrite.js}"></script>-->
     <title>PC 리뷰 작성</title>
+    <style>
+
+    </style>
 </head>
 <body>
-<h1>PC 리뷰 작성</h1>
-<form action="/pcreview/write" method="post">
-    <!-- 전체 리뷰 제목 및 내용 -->
-    <fieldset>
-        <legend>전체 리뷰</legend>
-        <label for="pcReviewTitle">전체 리뷰 제목:</label>
-        <input type="text" id="pcReviewTitle" name="pcreviewTitle" required>
-        <br>
-        <label for="pcReviewContent">전체 리뷰 내용:</label>
-        <textarea id="pcReviewContent" name="pcreviewContent" rows="5" cols="50" required></textarea>
-        <br>
-        <label for="pcReviewRating">별점:</label>
-        <select id="pcReviewRating" name="pcReviewRating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+<div th:replace="~{fragments/header :: headerFragment}"></div>
+<div class="body-wrap">
+    <main class="site-content">
+        <a class="titleName" href="/pcReview/pcReviewList"><h1 class="container-like">PC 리뷰</h1></a>
+        <div class="container">
 
-    <!-- CPU 리뷰 -->
-    <fieldset>
-        <legend>CPU 리뷰</legend>
+            <form action="/pcreview/write" method="post">
+                <!-- 전체 리뷰 제목 및 내용 -->
+                <fieldset class="pcReviewContent" style="margin-top: 0px">
+                <label for="imageUpload">이미지 업로드:</label>
+                <input accept="image/*" id="imageUpload" name="imageUpload" type="file">
+                <br>
+                <div id="uploadedImages" style="margin-top: 10px; display: flex; align-items: center;">
+                    <!-- 업로드한 이미지를 작은 썸네일로 표시 -->
+                </div>
+                    <legend><h5>전체 리뷰</h5></legend>
+                    <label for="pcReviewTitle">전체 리뷰 제목:</label>
+                    <br>
+                    <input class="pcReviewTitle" id="pcReviewTitle" name="pcreviewTitle" placeholder="제목을 입력하세요"
+                           required
+                           type="text">
+                    <br>
+                    <textarea class="pcReviewTextarea" id="pcReviewContent" name="pcreviewContent"
+                              placeholder="내용을 입력하세요" required
+                              rows="5"></textarea>
+                    <br>
+                    <label for="pcReviewRating">별점:</label>
+                    <select id="pcReviewRating" name="pcReviewRating" required>
+                        <option value="1">1점</option>
+                        <option value="2">2점</option>
+                        <option value="3">3점</option>
+                        <option value="4">4점</option>
+                        <option value="5">5점</option>
+                    </select>
+                </fieldset>
 
-        <label for="cpuTitle" th:text="'CPU 제목: ' + ${cart.cpu.name}">CPU 제목:</label>
-        <input type="text" id="cpuTitle" name="partReviews[cpu].title" required>
-        <br>
-        <label for="cpuContent">CPU 내용:</label>
-        <textarea id="cpuContent" name="partReviews[cpu].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="cpuRating">별점:</label>
-        <select id="cpuRating" name="partReviews[cpu].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                <!--partsReview-->
+                <fieldset class="pcReviewContent">
+                    <legend><h5>파츠 리뷰</h5></legend>
+                    <!-- CPU 리뷰 -->
+                    <fieldset class="partsContent">
+                        <label for="cpuTitle" class="partsTitle">
+                            <!-- CPU 제목 텍스트 -->
+                            <span class="partsName">CPU</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-cpu.png}" alt="CPU Image" class="partsImage">
+                            <!-- CPU 이름 -->
+                            <span th:text="${cart.cpu.name}">[CPU 이름]</span>
+                        </label>
+                        <br>
+                        <input class="pcReviewTitle" id="cpuTitle" name="partReviews[cpu].title"
+                               placeholder="제목을 입력하세요." required
+                               type="text">
+                        <br>
+                        <textarea class="pcReviewPartsTextarea" id="cpuContent" name="partReviews[cpu].content" placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
+                        <br>
+                        <label for="cpuRating">별점:</label>
+                        <select id="cpuRating" name="partReviews[cpu].rating" required>
+                            <option value="1">1점</option>
+                            <option value="2">2점</option>
+                            <option value="3">3점</option>
+                            <option value="4">4점</option>
+                            <option value="5">5점</option>
+                        </select>
+                    </fieldset>
 
-    <!-- CPU Cooler 리뷰 -->
-    <fieldset>
-        <legend>CPU Cooler 리뷰</legend>
-        <label for="cpuCoolerTitle" th:text="'CPU Cooler 제목: ' + ${cart.cpucooler.name}">CPU Cooler 제목:</label>
-        <input type="text" id="cpuCoolerTitle" name="partReviews[cpucooler].title" required>
-        <br>
-        <label for="cpuCoolerContent">CPU Cooler 내용:</label>
-        <textarea id="cpuCoolerContent" name="partReviews[cpucooler].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="cpuCoolerRating">별점:</label>
-        <select id="cpuCoolerRating" name="partReviews[cpucooler].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                    <!-- CPU Cooler 리뷰 -->
+                    <fieldset class="partsContent">
+                        <label for="cpuCoolerTitle" class="partsTitle">
+                            <!-- CPUCooler 제목 텍스트 -->
+                            <span class="partsName">CPUCooler</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-cpucooler.png}" alt="CPUCooler Image" class="partsImage">
+                            <!-- CPUCooler 이름 -->
+                            <span th:text="${cart.cpucooler.name}">[CPUCooler 이름]</span>
+                        </label>
+                        <br>
+                        <input class="pcReviewTitle" id="cpuCoolerTitle" name="partReviews[cpucooler].title" placeholder="제목을 입력하세요."
+                               required type="text">
+                        <br>
+                        <textarea class="pcReviewPartsTextarea" id="cpuCoolerContent"
+                                  name="partReviews[cpucooler].content" placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
+                        <br>
+                        <label for="cpuCoolerRating">별점:</label>
+                        <select id="cpuCoolerRating" name="partReviews[cpucooler].rating" required>
+                            <option value="1">1점</option>
+                            <option value="2">2점</option>
+                            <option value="3">3점</option>
+                            <option value="4">4점</option>
+                            <option value="5">5점</option>
+                        </select>
+                    </fieldset>
 
-    <!-- Motherboard 리뷰 -->
-    <fieldset>
-        <legend>Motherboard 리뷰</legend>
-        <label for="motherboardTitle" th:text="'Motherboard 제목: ' + ${cart.motherboard.name}">Motherboard 제목:</label>
-        <input type="text" id="motherboardTitle" name="partReviews[motherboard].title" required>
-        <br>
-        <label for="motherboardContent">Motherboard 내용:</label>
-        <textarea id="motherboardContent" name="partReviews[motherboard].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="motherboardRating">별점:</label>
-        <select id="motherboardRating" name="partReviews[motherboard].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                    <!-- Motherboard 리뷰 -->
+                    <fieldset class="partsContent">
+                        <label for="motherboardTitle" class="partsTitle">
+                            <!-- Motherboard 제목 텍스트 -->
+                            <span class="partsName">Motherboard</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-motherboard.png}" alt="Motherboard Image" class="partsImage">
+                            <!-- Motherboard 이름 -->
+                            <span th:text="${cart.motherboard.name}">[Motherboard 이름]</span>
+                        </label>
+                        <br>
+                        <input class="pcReviewTitle" id="motherboardTitle" name="partReviews[motherboard].title"
+                               placeholder="제목을 입력하세요." required type="text">
+                        <br>
+                        <textarea class="pcReviewPartsTextarea" id="motherboardContent"
+                                  name="partReviews[motherboard].content" placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
+                        <br>
+                        <label for="motherboardRating">별점:</label>
+                        <select id="motherboardRating" name="partReviews[motherboard].rating" required>
+                            <option value="1">1점</option>
+                            <option value="2">2점</option>
+                            <option value="3">3점</option>
+                            <option value="4">4점</option>
+                            <option value="5">5점</option>
+                        </select>
+                    </fieldset>
 
-    <!-- Memory 리뷰 -->
-    <fieldset>
-        <legend>Memory 리뷰</legend>
-        <label for="memoryTitle" th:text="'Memory 제목: ' + ${cart.memory.name}">Memory 제목:</label>
-        <input type="text" id="memoryTitle" name="partReviews[memory].title" required>
-        <br>
-        <label for="memoryContent">Memory 내용:</label>
-        <textarea id="memoryContent" name="partReviews[memory].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="memoryRating">별점:</label>
-        <select id="memoryRating" name="partReviews[memory].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                    <!-- Memory 리뷰 -->
+                    <fieldset class="partsContent">
+                        <label for="memoryTitle" class="partsTitle">
+                            <!-- Memory 제목 텍스트 -->
+                            <span class="partsName">Memory</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-memory.png}" alt="Memory Image" class="partsImage">
+                            <!-- Memory 이름 -->
+                            <span th:text="${cart.memory.name}">[Memory 이름]</span>
+                        </label>
+                        <br>
+                        <input class="pcReviewTitle" id="memoryTitle" name="partReviews[memory].title" placeholder="제목을 입력하세요."
+                               required type="text">
+                        <br>
+                        <textarea class="pcReviewPartsTextarea" id="memoryContent" name="partReviews[memory].content"
+                                  placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
+                        <br>
+                        <label for="memoryRating">별점:</label>
+                        <select id="memoryRating" name="partReviews[memory].rating" required>
+                            <option value="1">1점</option>
+                            <option value="2">2점</option>
+                            <option value="3">3점</option>
+                            <option value="4">4점</option>
+                            <option value="5">5점</option>
+                        </select>
+                    </fieldset>
 
-    <!-- Storage 리뷰 -->
-    <fieldset>
-        <legend>Storage 리뷰</legend>
-        <label for="storageTitle" th:text="'Storage 제목: ' + ${cart.storage.name}">Storage 제목:</label>
-        <input type="text" id="storageTitle" name="partReviews[storage].title" required>
-        <br>
-        <label for="storageContent">Storage 내용:</label>
-        <textarea id="storageContent" name="partReviews[storage].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="storageRating">별점:</label>
-        <select id="storageRating" name="partReviews[storage].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                    <!-- Storage 리뷰 -->
+                    <fieldset class="partsContent">
+                        <label for="storageTitle" class="partsTitle">
+                            <!-- Storage 제목 텍스트 -->
+                            <span class="partsName">Storage</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-ssd.png}" alt="Storage Image" class="partsImage">
+                            <!-- Storage 이름 -->
+                            <span th:text="${cart.storage.name}">[Storage 이름]</span>
+                        </label>
+                        <br>
+                        <input class="pcReviewTitle" id="storageTitle" name="partReviews[storage].title" placeholder="제목을 입력하세요."
+                               required type="text">
+                        <br>
+                        <textarea class="pcReviewPartsTextarea" id="storageContent" name="partReviews[storage].content"
+                                  placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
+                        <br>
+                        <label for="storageRating">별점:</label>
+                        <select id="storageRating" name="partReviews[storage].rating" required>
+                            <option value="1">1점</option>
+                            <option value="2">2점</option>
+                            <option value="3">3점</option>
+                            <option value="4">4점</option>
+                            <option value="5">5점</option>
+                        </select>
+                    </fieldset>
 
-    <!-- VideoCard 리뷰 -->
-    <fieldset>
-        <legend>VideoCard 리뷰</legend>
-        <label for="videoCardTitle" th:text="'VideoCard 제목: ' + ${cart.videocard.name}">VideoCard 제목:</label>
-        <input type="text" id="videoCardTitle" name="partReviews[videocard].title" required>
-        <br>
-        <label for="videoCardContent">VideoCard 내용:</label>
-        <textarea id="videoCardContent" name="partReviews[videocard].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="videoCardRating">별점:</label>
-        <select id="videoCardRating" name="partReviews[videocard].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                    <!-- VideoCard 리뷰 -->
+                    <fieldset class="partsContent">
+                        <label for="videoCardTitle" class="partsTitle">
+                            <!-- VideoCard 제목 텍스트 -->
+                            <span class="partsName">VideoCard</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-videocard.png}" alt="VideoCard Image" class="partsImage">
+                            <!-- VideoCard 이름 -->
+                            <span th:text="${cart.videocard.name}">[VideoCard 이름]</span>
+                        </label>
+                        <br>
+                        <input class="pcReviewTitle" id="videoCardTitle" name="partReviews[videocard].title" placeholder="제목을 입력하세요."
+                               required type="text">
+                        <br>
+                        <textarea class="pcReviewPartsTextarea" id="videoCardContent"
+                                  name="partReviews[videocard].content" placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
+                        <br>
+                        <label for="videoCardRating">별점:</label>
+                        <select id="videoCardRating" name="partReviews[videocard].rating" required>
+                            <option value="1">1점</option>
+                            <option value="2">2점</option>
+                            <option value="3">3점</option>
+                            <option value="4">4점</option>
+                            <option value="5">5점</option>
+                        </select>
+                    </fieldset>
 
-    <!-- PowerSupply 리뷰 -->
-    <fieldset>
-        <legend>PowerSupply 리뷰</legend>
-        <label for="powerSupplyTitle" th:text="'PowerSupply 제목: ' + ${cart.powersupply.name}">PowerSupply 제목:</label>
-        <input type="text" id="powerSupplyTitle" name="partReviews[powersupply].title" required>
-        <br>
-        <label for="powerSupplyContent">PowerSupply 내용:</label>
-        <textarea id="powerSupplyContent" name="partReviews[powersupply].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="powerSupplyRating">별점:</label>
-        <select id="powerSupplyRating" name="partReviews[powersupply].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
+                    <!-- PowerSupply 리뷰 -->
+                    <fieldset class="partsContent">
+                        <label for="powerSupplyTitle" class="partsTitle">
+                            <!-- PowerSupply 제목 텍스트 -->
+                            <span class="partsName">PowerSupply</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-powersupply.png}" alt="PowerSupply Image" class="partsImage">
+                            <!-- PowerSupply 이름 -->
+                            <span th:text="${cart.powersupply.name}">[PowerSupply 이름]</span>
+                        </label>
+                        <br>
+                        <input class="pcReviewTitle" id="powerSupplyTitle" name="partReviews[powersupply].title"
+                               placeholder="제목을 입력하세요." required type="text">
+                        <br>
+                        <textarea class="pcReviewPartsTextarea" id="powerSupplyContent"
+                                  name="partReviews[powersupply].content" placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
+                        <br>
+                        <label for="powerSupplyRating">별점:</label>
+                        <select id="powerSupplyRating" name="partReviews[powersupply].rating" required>
+                            <option value="1">1점</option>
+                            <option value="2">2점</option>
+                            <option value="3">3점</option>
+                            <option value="4">4점</option>
+                            <option value="5">5점</option>
+                        </select>
+                    </fieldset>
 
-    <!-- Cover 리뷰 -->
-    <fieldset>
-        <legend>Cover 리뷰</legend>
-        <label for="coverTitle" th:text="'Cover 제목: ' + ${cart.cover.name}">Cover 제목:</label>
-        <input type="text" id="coverTitle" name="partReviews[cover].title" required>
-        <br>
-        <label for="coverContent">Cover 내용:</label>
-        <textarea id="coverContent" name="partReviews[cover].content" rows="3" cols="50" required></textarea>
-        <br>
-        <label for="coverRating">별점:</label>
-        <select id="coverRating" name="partReviews[cover].rating" required>
-            <option value="1">1점</option>
-            <option value="2">2점</option>
-            <option value="3">3점</option>
-            <option value="4">4점</option>
-            <option value="5">5점</option>
-        </select>
-    </fieldset>
-
-    <button type="submit">리뷰 저장하기</button>
-</form>
+                    <!-- Cover 리뷰 -->
+                    <fieldset>
+                        <label for="coverTitle" class="partsTitle">
+                            <!-- Cover 제목 텍스트 -->
+                            <span class="partsName">Cover</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-case.png}" alt="Cover Image" class="partsImage">
+                            <!-- Cover 이름 -->
+                            <span th:text="${cart.cover.name}">[Cover 이름]</span>
+                        </label>
+                        <br>
+                        <input class="pcReviewTitle" id="coverTitle" name="partReviews[cover].title" placeholder="제목을 입력하세요."
+                               required type="text">
+                        <br>
+                        <textarea class="pcReviewPartsTextarea" id="coverContent" name="partReviews[cover].content"
+                                  placeholder="내용을 입력하세요"
+                                  required rows="3"></textarea>
+                        <br>
+                        <label for="coverRating">별점:</label>
+                        <select id="coverRating" name="partReviews[cover].rating" required>
+                            <option value="1">1점</option>
+                            <option value="2">2점</option>
+                            <option value="3">3점</option>
+                            <option value="4">4점</option>
+                            <option value="5">5점</option>
+                        </select>
+                    </fieldset>
+                </fieldset>
+                <div class="button-container">
+                    <button class="gray-button" th:href="@{pcReview/pcReviewList}" type="button">취소</button>
+                    <button class="blue-button" type="submit">등록</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</div>
+<div th:replace="~{fragments/footer :: footerFragment}"></div>
 </body>
 </html>

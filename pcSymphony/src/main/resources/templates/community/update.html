@@ -14,7 +14,7 @@
 
 </head>
 <body>
-<div th:replace="fragments/header :: headerFragment"></div>
+<div th:replace="~{fragments/header :: headerFragment}"></div>
 <div class="body-wrap ">
     <main class="site-content">
         <div class="container community-container">
@@ -39,6 +39,10 @@
                 <!-- 게시물 ID (수정 시 해당 게시물 ID를 전달) -->
                 <input name="communityId" th:value="${community.communityId}" type="hidden"/>
 
+                <!--아직 이미지 업로드 기능 연결 안됨-->
+                <label for="imageUpload">이미지 업로드:</label>
+                <input accept="image/*" id="imageUpload" name="imageUpload" type="file">
+
                 <div class="button-container">
                     <!-- 제출 버튼 -->
                     <button class="submit-button" type="submit">수정 완료</button>
@@ -57,5 +61,5 @@
 </div>
 </div>
 </body>
-<div th:replace="fragments/footer :: footerFragment"></div>
+<div th:replace="~{fragments/footer :: footerFragment}"></div>
 </html>

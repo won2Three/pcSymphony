@@ -15,7 +15,7 @@
 </head>
 <body>
 <!-- Header Fragment 포함 -->
-<div th:replace="fragments/header :: headerFragment"></div>
+<div th:replace="~{fragments/header :: headerFragment}"></div>
 <div class="body-wrap">
     <main class="site-content">
         <div class="container">
@@ -53,5 +53,5 @@
 </div>
 </body>
 <!--footer-->
-<div th:replace="fragments/footer :: footerFragment"></div>
+<div th:replace="~{fragments/footer :: footerFragment}"></div>
 </html>

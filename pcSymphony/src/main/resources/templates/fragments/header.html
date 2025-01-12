@@ -9,18 +9,24 @@
     <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
-
+    <style>
+        .brand {
+            display: flex;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
 <!-- 헤더 -->
 <header class="site-header hero section has-bg-color" th:fragment="headerFragment">
 
-    <div class="container">
+    <div class="header-container">
         <div class="site-header-inner">
             <div class="brand">
-                <h2 >
+                <h2>
                     <a class="logo-text" href="../home.html" th:href="@{/}">
-                        <img class="logo" alt="PcSymphony"  src="../../static/images/pc-Icon.png" th:src="@{/images/pc-Icon.png}">
+                        <img alt="PcSymphony" class="logo" src="../../static/images/pc-Icon.png"
+                             th:src="@{/images/pc-Icon.png}">
                         <span>
                         PcSymphony
                         </span>
@@ -56,15 +62,18 @@
                 <!-- 여기에 컨텐츠 추가 -->
                 <div bottommargin="0" leftmargin="0" rightmargin="0" style="background-color:#0c1622" topmargin="0">
                     <div class="menu">
-                        <nav class="clearfix">
-                            <ul class="clearfix">
+                        <nav>
+                            <ul>
                                 <li><a th:href="@{/cart}">Cart</a></li> <!--""<-여기 부분에 URL 작성하면 됨-->
-                                <li><a href="#" id="partsbutton">Parts</a></li>
+                                <li id="partsbutton">
+                                    <a href="#">Parts</a>
+                                    <!-- 2x4 버튼을 표시할 컨테이너 -->
+                                    <div class="hidden" id="parts-grid-container"></div>
+                                </li>
                                 <li><a th:href="@{guide/guideList}">Guide</a></li>
                                 <li><a th:href="@{/community/list}">Community</a></li>
                                 <li><a th:href="@{pcreview/list}">Review</a></li>
                             </ul>
-                            <a href="#" id="pull"></a>
                         </nav>
                     <!-- 2x4 버튼을 표시할 컨테이너 -->
                     <div class="hidden" id="parts-grid-container"></div>

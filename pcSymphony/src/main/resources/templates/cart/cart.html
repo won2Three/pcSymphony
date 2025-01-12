@@ -8,6 +8,22 @@
     <link href="../../static/css/cart.css" rel="stylesheet" th:href="@{/css/cart.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
     <script src="../../static/js/cart.js" th:src="@{/js/cart.js}"></script>
+    <title>CART</title>
+
+</head>
+<meta charset="UTF-8">
+<title>Cart</title>
+</head>
+<body id="cart-body"><!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${tableName} + ' List'">Parts List</title>
+    <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="../../static/css/cart.css" rel="stylesheet" th:href="@{/css/cart.css}">
+    <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
+    <script src="../../static/js/cart.js" th:src="@{/js/cart.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
@@ -132,13 +148,13 @@
                 <th></th>
                 <th class="totalPrice">Total Price</th>
                 <th class="totalPrice" th:text="' : $' + ${#numbers.formatDecimal(totalPrice, 0, 0)}">Total Price</th>
-            <div class="table-buttons">
-                <button id="Compatibility Check">Compatibility Check</button>
-                <button id="save as image">Save As Image</button>
-                <button id="create review" th:disabled="${cart.cpu == null or cart.cpucooler == null or cart.motherboard == null or cart.memory == null or cart.storage == null or cart.videocard == null or cart.powersupply == null or cart.cover == null}">
-                    Write a Review
-                </button>
-            </div>
+                <div class="table-buttons">
+                    <button id="Compatibility Check">Compatibility Check</button>
+                    <button id="save as image">Save As Image</button>
+                    <button id="create review" th:disabled="${cart.cpu == null or cart.cpucooler == null or cart.motherboard == null or cart.memory == null or cart.storage == null or cart.videocard == null or cart.powersupply == null or cart.cover == null}">
+                        Write a Review
+                    </button>
+                </div>
             </tr>
             <!-- 호환성 결과 표시 부분 -->
             <aside id="compatibility-check-results" style="margin-top: 20px;">
@@ -168,6 +184,159 @@
 </div>
 <!--footer-->
 <div th:replace="fragments/footer :: footerFragment"></div>
+</body>
+</html>
+
+<!--
+1. 부품 선택 안했을 시 해당 파츠리스트로 이동 버튼 o
+2. 선택시 바로 카트로 되돌아오기
+3. 부품 선택 후 제품명에 마우스 올릴시 해당 제품 디테일로 이동 o
+4. 부품 카테고리도 클릭하면 해당 부품 리스트로 이동 o
+5. 부품 다 선택안해서 리뷰 작성버튼 활성화 x일때 부품을 전부 선택해야
+    리뷰작성이 가능해진다는 경고문구 추가하기
+6. 와트수 표시, 와트수 표시 문구에 클릭시 조그마한 창 띄워서 어느 부품이
+전기 얼마먹고 총량 얼마인지 표시하기
+7. 로그인 안해도 파츠 구경 가능 //선택 가능하게(아마 불가능)//-->
+<!--header-->
+<div th:replace="~{fragments/header :: headerFragment}"></div>
+<div class="body-wrap">
+    <main class="site-content">
+        <div class="container">
+            <h1 id="cartList-id">Cart</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <td>번호</td>
+                        <td>카테고리</td>
+                        <td style="width: 600px;">제품명</td>
+                        <td>가격</td>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    <tr>
+                        <th>1</th>
+                        <th ><a class="category" href="/part/cpu" >CPU</a></th>
+                        <th class="name">
+                            <span th:if="${cart.cpu != null}" th:text="${cart.cpu.name}"></span>
+                            <a th:if="${cart.cpu == null}" href="/part/cpu" class="no-product-button">chose a Cpu</a>
+                        </th>
+                        <th class="price" th:text="${cart.cpu != null ? cart.cpu.price : '0'}">가격</th>
+                        <td>
+                            <button class="deleteButton" th:disabled="${cart.cpu == null}">삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>2</th>
+                        <th ><a class="category" href="/part/cpucooler" >CpuCooler</a></th>
+                        <th class="name">
+                            <span th:if="${cart.cpucooler != null}" th:text="${cart.cpucooler.name}"></span>
+                            <a th:if="${cart.cpucooler == null}" href="/part/cpucooler" class="no-product-button">chose a CpuColler</a>
+                        </th>
+                        <th class="price" th:text="${cart.cpucooler != null ? cart.cpucooler.price : '0'}">가격</th>
+                        <td>
+                            <button class="deleteButton" th:disabled="${cart.cpucooler == null}">삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>3</th>
+                        <th ><a class="category" href="/part/motherboard" >MotherBoard</a></th>
+                        <th class="name">
+                            <span th:if="${cart.motherboard != null}" th:text="${cart.motherboard.name}"></span>
+                            <a th:if="${cart.motherboard == null}" href="/part/motherboard" class="no-product-button">chose a MotherBoard</a>
+                        </th>
+                        <th class="price" th:text="${cart.motherboard != null ? cart.motherboard.price : '0'}">가격</th>
+                        <td>
+                            <button class="deleteButton" th:disabled="${cart.motherboard == null}">삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>4</th>
+                        <th ><a class="category" href="/part/memory" >Memory</a></th>
+                        <th class="name">
+                            <span th:if="${cart.memory != null}" th:text="${cart.memory.name}"></span>
+                            <a th:if="${cart.memory == null}" href="/part/memory" class="no-product-button">chose a Memory</a>
+                        </th>
+                        <th class="price" th:text="${cart.memory != null ? cart.memory.price : '0'}">가격</th>
+                        <td>
+                            <button class="deleteButton" th:disabled="${cart.memory == null}">삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>5</th>
+                        <th ><a class="category" href="/part/storage" >Storage</a></th>
+                        <th class="name">
+                            <span th:if="${cart.storage != null}" th:text="${cart.storage.name}"></span>
+                            <a th:if="${cart.storage == null}" href="/part/storage" class="no-product-button">chose a Storage</a>
+                        </th>
+                        <th class="price" th:text="${cart.storage != null ? cart.storage.price : '0'}">가격</th>
+                        <td>
+                            <button class="deleteButton" th:disabled="${cart.storage == null}">삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>6</th>
+                        <th ><a class="category" href="/part/videocard" >VideoCard</a></th>
+                        <th class="name">
+                            <span th:if="${cart.videocard != null}" th:text="${cart.videocard.name}"></span>
+                            <a th:if="${cart.videocard == null}" href="/part/videocard" class="no-product-button">chose a VideoCard</a>
+                        </th>
+                        <th class="price" th:text="${cart.videocard != null ? cart.videocard.price : '0'}">가격</th>
+                        <td>
+                            <button class="deleteButton" th:disabled="${cart.videocard == null}">삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>7</th>
+                        <th ><a class="category" href="/part/powersupply" >PowerSupply</a></th>
+                        <th class="name">
+                            <span th:if="${cart.powersupply != null}" th:text="${cart.powersupply.name}"></span>
+                            <a th:if="${cart.powersupply == null}" href="/part/powersupply" class="no-product-button">chose a PowerSupply</a>
+                        </th>
+                        <th class="price" th:text="${cart.powersupply != null ? cart.powersupply.price : '0'}">가격</th>
+                        <td>
+                            <button class="deleteButton" th:disabled="${cart.powersupply == null}">삭제</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>8</th>
+                        <th ><a class="category" href="/part/cover" >Case</a></th>
+                        <th class="name">
+                            <span th:if="${cart.cover != null}" th:text="${cart.cover.name}"></span>
+                            <a th:if="${cart.cover == null}" href="/part/cover" class="no-product-button">chose a Case</a>
+                        </th>
+                        <th class="price" th:text="${cart.cover != null ? cart.cover.price : '0'}">가격</th>
+                        <td>
+                            <button class="deleteButton" th:disabled="${cart.cover == null}">삭제</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <tr>
+                    <th>
+                    <th style="text-align: left;">전체 가격</th>
+                    <th class="totalPrice" th:text="${#numbers.formatDecimal(totalPrice, 0, 0)} + '달러'">전체 가격</th>
+
+
+                    </th>
+                    <td>
+                        <button id="Compatibility Check">호환성체크</button>
+                    </td>
+                    <td>
+                        <button id="Save as text">txt로 저장하기</button>
+                    </td>
+                    <td>
+                        <button id="create review" th:onclick="|location.href='@{/pcreview/write}'|"
+                                th:disabled="${cart.cpu == null or cart.cpucooler == null or cart.motherboard == null or cart.memory == null or
+                                cart.storage == null or cart.videocard == null or cart.powersupply == null or cart.cover == null}">리뷰 작성하기</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </main>
+</div>
+<!--footer-->
+<div th:replace="~{fragments/footer :: footerFragment}"></div>
 </body>
 </html>
 

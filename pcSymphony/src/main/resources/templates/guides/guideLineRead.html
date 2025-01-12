@@ -1,0 +1,123 @@
+<head>
+    <meta charset="UTF-8">
+    <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="../../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <link href="../../static/css/guideLineRead.css" rel="stylesheet" th:href="@{/css/guideLineRead.css}">
+    <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
+    <!--    <script src="../../static/js/pcReviewWrite.js" th:src="@{/js/pcReviewWrite.js}"></script>-->
+    <title>GuideLine</title>
+
+</head>
+<body>
+<div th:replace="~{fragments/header :: headerFragment}"></div>
+<div class="body-wrap">
+    <div class="site-content">
+        <a class="titleName" href=""><h1 class="container-like">GuideLine</h1></a>
+        <div class="container">
+            <!--    레프트 사이드 바-->
+            <aside class="leftSideBar" >
+                <img alt="Guide Image" class="guideImage" th:src="@{/images/nav-case.png}">
+                <section class="partsListContainer">
+                    <h5>part List</h5>
+                    <!-- CPU -->
+                    <div class="category-name">CPU</div>
+                    <label class="image-name">
+                        <img alt="CPU Image" class="small-image" src="/images/nav-cpu.png">
+                        <div class="partsName-price">
+                            <a href="/part/cpu" th:text="${cpu이름조회하는link}">CPU 이름</a>
+                            <div th:text="${cpu가격조회하는link}">CPU 가격</div>
+                        </div>
+                    </label>
+                    <!-- CPU Cooler -->
+                    <div class="category-name">CPUCooler</div>
+                    <label class="image-name">
+                        <img alt="CPUCooler Image" class="small-image" src="/images/nav-cpucooler.png">
+                        <div class="partsName-price">
+                            <a href="/part/cpucooler" th:text="${2}">CPUCooler 이름</a>
+                            <div th:text="${2}">CPUCooler 가격</div>
+                        </div>
+                    </label>
+                    <!-- Motherboard -->
+                    <div class="category-name">Motherboard</div>
+                    <label class="image-name">
+                        <img alt="Motherboard Image" class="small-image" src="/images/nav-motherboard.png">
+                        <div class="partsName-price">
+                            <a href="/part/motherboard" th:text="${3}">Motherboard 이름</a>
+                            <div th:text="${3}">Motherboard 가격</div>
+                        </div>
+                    </label>
+                    <!-- Memory -->
+                    <div class="category-name">Memory</div>
+                    <label class="image-name">
+                        <img alt="Memory Image" class="small-image" src="/images/nav-memory.png">
+                        <div class="partsName-price">
+                            <a href="/part/memory" th:text="${4}">Memory 이름</a>
+                            <div th:text="${4}">Memory 가격</div>
+                        </div>
+                    </label>
+                    <!-- Storage -->
+                    <div class="category-name">Storage</div>
+                    <label class="image-name">
+                        <img alt="Storage Image" class="small-image" src="/images/nav-ssd.png">
+                        <div class="partsName-price">
+                            <a href="/part/storage" th:text="${5}">Storage 이름</a>
+                            <div th:text="${5}">Storage 가격</div>
+                        </div>
+                    </label>
+                    <!-- Videocard -->
+                    <div class="category-name">Videocard</div>
+                    <label class="image-name">
+                        <img alt="Videocard Image" class="small-image" src="/images/nav-videocard.png">
+                        <div class="partsName-price">
+                            <a href="/part/videocard" th:text="${6}">Videocard 이름</a>
+                            <div th:text="${6}">Videocard 가격</div>
+                        </div>
+                    </label>
+                    <!-- PowerSupply -->
+                    <div class="category-name">PowerSupply</div>
+                    <label class="image-name">
+                        <img alt="PowerSupply Image" class="small-image" src="/images/nav-powersupply.png">
+                        <div class="partsName-price">
+                            <a href="/part/powersupply" th:text="${7}">PowerSupply 이름</a>
+                            <div th:text="${7}">PowerSupply 가격</div>
+                        </div>
+                    </label>
+                    <!-- Case -->
+                    <div class="category-name">Case</div>
+                    <label class="image-name">
+                        <img alt="Case Image" class="small-image" src="/images/nav-case.png">
+                        <div class="partsName-price">
+                            <a href="/part/cover" th:text="${8}">Case 이름</a>
+                            <div th:text="${8}">Case 가격</div>
+                        </div>
+                    </label>
+                    <label class="partsPrice">
+                        <span>Total Price : </span>
+                        <span th:text="${9}">$전체 가격</span>
+                    </label>
+                </section>
+            </aside>
+            <!--    메인 컨테이너-->
+            <main class="main-container" >
+                <div class="title-header">
+                <!--가이드라인의`guideline_title` 조회-->
+                <div class="community-title" id="1" th:text="${1}">제목</div>
+                    <div class="guideline-Info">
+                <!--`guideline_id`조회-->
+                    글 번호 : <span id="2" th:text="${2}"></span>
+                    <!--작성일?-->
+                    </div>
+                </div>
+                <!-- 게시물 내용, `guideline_content`조회 -->
+                <div class="community-content" id="3" th:text="${3}">내용</div>
+
+            </main>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/footer :: footerFragment}"></div>
+
+</body>
+</html>

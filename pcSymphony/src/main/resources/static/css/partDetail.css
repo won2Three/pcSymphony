@@ -1,6 +1,71 @@
-#partDetail-body {
-    color: #000;
+/*이미지와 제목을 한 라인으로*/
+.label-container {
+    display: flex; /* 가로 방향 정렬 */
+    align-items: center; /* 세로 방향 정렬 */
+    gap: 10px; /* 이미지와 텍스트 사이의 간격 */
 }
-h1 {
-    text-align: center;
+/*리플 입력란 스타일*/
+.reviewForm {
+    display: flex; /* 플렉스 컨테이너 */
+    flex-direction: column; /* 세로 정렬 */
+    align-items: flex-end; /* 우측 정렬 */
+    padding: 12px;
+    border-top: #0c1622 solid 3px;
+    border-bottom: #0c1622 solid 3px;
+    gap: 10px; /* 필드 간 간격 */
 }
+
+.inputWrapper {
+    display: flex; /* 라벨과 입력란을 같은 라인에 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    width: 100%; /* 입력 필드의 너비 조정 */
+    gap: 10px; /* 라벨과 입력란 사이 간격 */
+}
+
+#partsReviewContent, #partsReviewTitle {
+    padding: 10px;
+    border: 1px solid #95A4B4;
+    font-size: 13px;
+    color: #333;
+    line-height: 18px;
+    white-space: pre-wrap; /* 줄바꿈 유지 */
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+    word-break: break-word; /* 적절히 줄바꿈 */
+    overflow-wrap: break-word; /* 최신 브라우저 호환 */
+    resize: none; /* 크기 조절 비활성화 */
+}
+#partsReviewTitle {
+    width: 70%;
+    height: 40px;
+}
+#partsReviewContent {
+    flex: 1; /* 입력란이 남은 공간을 채우도록 설정 */
+    min-height: 100px; /* 최소 높이 */
+}
+.replyLabel {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    width: 80px; /* 라벨의 최소 너비 설정 */
+    text-align: center; /* 라벨 텍스트 정렬 */
+}
+#review-list-body {
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+    word-break: break-word; /* 적절히 줄바꿈 */
+    overflow-wrap: break-word; /* 최신 브라우저 호환 */
+
+}
+
+.blue-button {
+    align-self: flex-end; /* 버튼도 우측 정렬 */
+}
+.starAndSave {
+    display: flex; /* 플렉스 컨테이너 설정 */
+    justify-content: space-between; /* 버튼 사이를 양 끝으로 배치 */
+    align-items: center; /* 세로 방향 정렬 */
+    gap: 10px; /* 버튼 간 간격 */        }
+/*html, .body-wrap {*/
+/*    background-color: #f4f4f3;*/
+/*    position: relative;*/
+/*}*/

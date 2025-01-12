@@ -20,10 +20,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class    PartsReviewService {
+public class PartsReviewService {
 
-    @Autowired
-    private final PartsReviewRepository partsReviewRepository;
 
     public static PartsReviewDTO toDTO(PartsReviewEntity entity) {
         PartsReviewDTO dto = new PartsReviewDTO();
@@ -105,6 +103,8 @@ public class    PartsReviewService {
         }
         return entity;
     }
+    @Autowired
+    private final PartsReviewRepository partsReviewRepository;
 
     public PartsReviewEntity updatePartsReview(Integer id, String title, String content, int rating) {
         // 엔티티 조회
