@@ -129,31 +129,31 @@ public class CommunityController {
 //    return "redirect:/community/list"; // 수정 후 목록으로 리다이렉트
 //}
 
-@PostMapping("update/{id}")
-public String update(@PathVariable("id") Integer id,
-                     @ModelAttribute CommunityDTO communityDto,
-                     @AuthenticationPrincipal MemberUserDetails userDetails,
-                     RedirectAttributes redirectAttributes) { // RedirectAttributes 추가
+    @PostMapping("update/{id}")
+    public String update(@PathVariable("id") Integer id,
+                         @ModelAttribute CommunityDTO communityDto,
+                         @AuthenticationPrincipal MemberUserDetails userDetails,
+                         RedirectAttributes redirectAttributes) { // RedirectAttributes 추가
 
-    // 기존 게시글 가져오기
-    CommunityDTO existingCommunity = communityService.getCommunity(id);
+        // 기존 게시글 가져오기
+        CommunityDTO existingCommunity = communityService.getCommunity(id);
 
-    // 사용자 확인
-    if (!userDetails.getUsername().equals(existingCommunity.getMemberId())) {
-        // 권한이 없으면 에러 메시지 추가 후 read 페이지로 리다이렉트
-        redirectAttributes.addFlashAttribute("errorMessage", "수정 권한이 없습니다.");
-        return "redirect:/community/read?communityId=" + id; // read 페이지로 리다이렉트
+        // 사용자 확인
+        if (!userDetails.getUsername().equals(existingCommunity.getMemberId())) {
+            // 권한이 없으면 에러 메시지 추가 후 read 페이지로 리다이렉트
+            redirectAttributes.addFlashAttribute("errorMessage", "수정 권한이 없습니다.");
+            return "redirect:/community/read?communityId=" + id; // read 페이지로 리다이렉트
+        }
+
+        // 기존 게시글에 새로운 내용 덮어쓰기
+        existingCommunity.setCommunityTitle(communityDto.getCommunityTitle());
+        existingCommunity.setCommunityContent(communityDto.getCommunityContent());
+
+        // 게시글 수정 처리
+        communityService.update(id, existingCommunity, userDetails.getUsername());
+
+        return "redirect:/community/list"; // 수정 후 목록으로 리다이렉트
     }
-
-    // 기존 게시글에 새로운 내용 덮어쓰기
-    existingCommunity.setCommunityTitle(communityDto.getCommunityTitle());
-    existingCommunity.setCommunityContent(communityDto.getCommunityContent());
-
-    // 게시글 수정 처리
-    communityService.update(id, existingCommunity, userDetails.getUsername());
-
-    return "redirect:/community/list"; // 수정 후 목록으로 리다이렉트
-}
 
 
 

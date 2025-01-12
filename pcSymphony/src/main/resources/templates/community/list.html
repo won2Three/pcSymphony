@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>커뮤니티 게시판</title>
     <script src="../../static/js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
-        <link rel="stylesheet" th:href="@{/css/list.css}" href="../../static/css/list.css">
+    <link rel="stylesheet" th:href="@{/css/list.css}" href="../../static/css/list.css">
     <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
     <script src="../../static/js/main.min.js" th:src="@{/js/main.min.js}"></script>
@@ -20,32 +20,32 @@
     <main class="site-content">
         <div class="container">
             <div class="community-container">
-                <h1>커뮤니티 게시판</h1>
+                <h1>Community Board</h1>
 
                 <!-- 글쓰기 버튼 (링크로 변환) -->
-                <button class="write-button"><a  id="writeButton" href="write" >글쓰기</a></button>
+                <button class="write-button"><a  id="writeButton" href="write" >Write Post</a></button>
 
                 <!-- 테이블 -->
                 <table class="list-table">
                     <thead>
                     <tr>
-                        <th style="width: 10%;">번호</th>
-                        <th style="width: 15%;">조회수</th>
-                        <th id="list-title" style="width: 40%;">제목</th>
-                        <th style="width: 20%;">작성자</th>
-                        <th style="width: 15%;">작성일</th>
+                        <th style="width: 10%;">No.</th>
+                        <th id="list-title" style="width: 40%;">Title</th>
+                        <th style="width: 20%;">Author</th>
+                        <th style="width: 15%;">Views</th>
+                        <th style="width: 15%;">Date</th>
                     </tr>
                     </thead>
                     <tbody id="tbody">
                     <!-- 글 목록 출력 영역 -->
                     <tr>
-                        <td colspan="5" style="text-align: center;">목록이 없습니다.</td>
+                        <td colspan="5" style="text-align: center;">No Posts available.</td>
                     </tr>
                     </tbody>
                 </table>
 
                 <div class="form-footer">
-                    <p>게시판에 대한 문의나 의견이 있으시면 관리자가 도움을 드리겠습니다.</p>
+                    <p>If you have any questions or feedback about the board, the administrator will assist you.</p>
                 </div>
             </div>
         </div>

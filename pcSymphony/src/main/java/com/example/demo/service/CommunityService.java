@@ -89,7 +89,7 @@ public class CommunityService {
 
     //수정
     public void update(int communityId, CommunityDTO communityDto, String username) {
-         //사용자 확인
+        //사용자 확인
         MemberEntity memberEntity = memberRepository.findById(username)
                 .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
 
@@ -181,5 +181,4 @@ public class CommunityService {
         community.setCommunityView(community.getCommunityView() + 1);
         communityRepository.save(community);
     }
-    }
-
+}
