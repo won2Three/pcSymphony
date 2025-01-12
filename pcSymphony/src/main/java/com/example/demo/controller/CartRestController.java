@@ -130,4 +130,183 @@ public class CartRestController {
 
         return ResponseEntity.ok(response);
     }
+
+    //----------------------------------------------호환성 검사----------------------------------------------
+
+    //호환성 검사 공통 엔드포인트
+    @GetMapping("/check-compatibility")
+    public ResponseEntity<Map<String, Object>> checkCompatibility() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserName = authentication.getName();
+
+        // 장바구니 정보 가져오기
+        CartEntity cart = cartRepository.findByUser_MemberId(loggedInUserName);
+
+        // 호환성 체크할 부품 목록
+        Map<String, Boolean> compatibilityResults = new HashMap<>();
+
+        // 각 부품이 존재하면 호환성 체크
+        if (cart.getCpu() != null && cart.getMotherboard() != null) {
+            boolean cpuMotherboardCompatible = cartService.checkCpuMotherboardCompatibility(cart);
+            compatibilityResults.put("cpuMotherboardCompatibility", cpuMotherboardCompatible);
+        }
+
+        if (cart.getMotherboard() != null && cart.getMemory() != null) {
+            boolean motherboardMemoryCompatible = cartService.checkMotherboardMemoryCompatibility(cart);
+            compatibilityResults.put("motherboardMemoryCompatibility", motherboardMemoryCompatible);
+        }
+
+        // 필요한 다른 호환성 검사 추가 가능 (예: GPU, PSU 등)
+
+        // 전체 호환성 결과
+        boolean isCompatible = compatibilityResults.values().stream().allMatch(Boolean::booleanValue);
+
+        // 호환성 검사 결과 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("isCompatible", isCompatible);
+        response.put("compatibilityResults", compatibilityResults);
+
+        return ResponseEntity.ok(response); // JSON 응답 반환
+    }
+
+
+    //Cpu랑 Motherboard 소켓 비교
+    @GetMapping("/check-cpu-motherboard-compatibility")
+    public ResponseEntity<Map<String, Object>> checkCpuMotherboardCompatibility() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserName = authentication.getName(); // 로그인한 사용자 이름 가져오기
+
+        CartEntity cart = cartRepository.findByUser_MemberId(loggedInUserName);
+        boolean isCompatible = cartService.checkCpuMotherboardCompatibility(cart); // 호환성 체크
+
+        // 호환성 체크 결과를 Map에 담아 JSON으로 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("isCompatible", isCompatible);
+
+        // 호환성 체크 세부 사항 (CPU와 Motherboard의 호환성 여부)
+        response.put("cpuCompatibility", isCompatible && cart.getCpu().getCpuSocket().equals(cart.getMotherboard().getMotherboardSocketCpu()));
+        response.put("motherboardCompatibility", isCompatible && cart.getCpu().getCpuSocket().equals(cart.getMotherboard().getMotherboardSocketCpu()));
+
+        System.out.println("호환성 체크 결과: " + response);
+
+        return ResponseEntity.ok(response);  // JSON 응답 반환
+    }
+
+    //Motherboard 타입이랑 Memory 폼팩터 비교
+    @GetMapping("/check-motherboard-memory-compatibility")
+    public ResponseEntity<Map<String, Object>> checkMotherboardMemoryCompatibility() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserName = authentication.getName();
+
+        CartEntity cart = cartRepository.findByUser_MemberId(loggedInUserName);
+        boolean isCompatible = cartService.checkMotherboardMemoryCompatibility(cart);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("isCompatible", isCompatible);
+
+        //호환성 체크 세부 사항
+        response.put("motherboardCompatibility", isCompatible && cart.getMotherboard().getMotherboardMemoryType().equals(cart.getMemory().getMemoryFormFactor()));
+        response.put("memoryCompatibility", isCompatible && cart.getMemory().getMemoryFormFactor().equals(cart.getMotherboard().getMotherboardMemoryType()));
+
+        return ResponseEntity.ok(response);
+    }
+
+    // Cpu타입이랑 Memory비교
+    @PostMapping("/check-cpu-memory-compatibility")
+    public ResponseEntity<Map<String, Object>> checkCpuMemoryCompatibility(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "User is not authenticated."));
+        }
+
+        String userId = principal.getName();
+        CartEntity cart = cartRepository.findByUser_MemberId(userId);
+
+        if (cart == null || cart.getCpu() == null || cart.getMemory() == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Incomplete cart data for compatibility check."));
+        }
+
+        boolean isCompatible = cartService.checkCpuMemoryCompatibility(cart);
+
+        return ResponseEntity.ok(Map.of(
+                "isCompatible", isCompatible,
+                "cpuName", cart.getCpu().getName(),
+                "memoryType", cart.getMemory().getMemoryFormFactor()
+        ));
+    }
+
+    // Motherboard-Cover 호환성 검사
+    @PostMapping("/check-motherboard-cover-compatibility")
+    public ResponseEntity<Map<String, Object>> checkMotherboardCoverCompatibility(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "User is not authenticated."));
+        }
+        String userId = principal.getName();
+        CartEntity cart = cartRepository.findByUser_MemberId(userId);
+
+        if (cart == null || cart.getMotherboard() == null || cart.getCover() == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Incomplete cart data for compatibility check."));
+        }
+        boolean isCompatible = cartService.checkMotherboardCoverCompatibility(cart);
+
+        return ResponseEntity.ok(Map.of(
+                "isCompatible", isCompatible,
+                "motherboardFormFactor", cart.getMotherboard().getMotherboardFormFactor(),
+                "coverFormFactor", cart.getCover().getCoverMotherboardFormFactor()
+        ));
+    }
+
+    @PostMapping("/check-videocard-cover-compatibility")
+    public ResponseEntity<Map<String, Object>> checkVidoecardCoverCompatibility(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "User is not authenticated."));
+        }
+        String userId = principal.getName();
+        CartEntity cart = cartRepository.findByUser_MemberId(userId);
+
+        if (cart == null || cart.getVideocard() == null || cart.getCover() == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Incomplete cart data for compatibility check."));
+        }
+        boolean isCompatible = cartService.checkVideocardCoverCompatibility(cart);
+
+        return ResponseEntity.ok(Map.of(
+                "isCompatible", isCompatible,
+                "videocardLength", cart.getVideocard().getVideoCardLength(),
+                "coverLength", cart.getCover().getCoverMaxVideoCardLength()
+        ));
+    }
+
+    // PowerSupply-Cover 호환성 검사
+    @PostMapping("/check-powersupply-cover-compatibility")
+    public ResponseEntity<Map<String, Object>> checkPowerSupplyCoverCompatibility(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "User is not authenticated."));
+        }
+        String userId = principal.getName();
+        CartEntity cart = cartRepository.findByUser_MemberId(userId);
+
+        if (cart == null || cart.getPowersupply() == null || cart.getCover() == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Incomplete cart data for compatibility check."));
+        }
+        boolean isCompatible = cartService.checkPowerSupplyCoverCompatibility(cart);
+
+        return ResponseEntity.ok(Map.of(
+                "isCompatible", isCompatible,
+                "powerSupplyType", cart.getPowersupply().getPowerSupplyType(),
+                "coverPowerSupply", cart.getCover().getCoverPowerSupply()
+        ));
+    }
+
+
+
+
+
+
 }

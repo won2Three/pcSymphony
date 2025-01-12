@@ -1,43 +1,402 @@
+/* 테이블 가운데 정렬, 가로너비 */
+table {
+    width: 100%;
+}
+
+th, td {
+    text-align: center;
+    padding: 10px;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+    width: 10%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+    width: 25%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+    width: 40%;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+    width: 25%;
+}
+
+th:nth-child(5), td:nth-child(5) {
+    width: 1%; /* 삭제 버튼 자리를 비워두기 위한 최소 너비 설정 */
+    padding: 0; /* 불필요한 여백 제거 */
+    text-align: center; /* 삭제 버튼이 들어갈 공간을 중앙 정렬 */
+}
+
 #cart-body {
     color: #000;
     font-size: 1rem;
 }
-#cartList-id {
-    color: #000;
 
+
+/* 카테고리 항목 클릭 시 해당 파츠 리스트로 이동 */
+th.category a{
+    text-decoration: none;
+    color: #000;
 }
-/*카테고리 항목 클릭시 해당 파츠 리스트로 이동*/
-.category {
-    text-decoration: underline;
-    color: #000000 !important;
+
+th.category:hover {
+color: blue;
 }
-.category:hover {
-    color: blue;
-}
-/*선택한 제품 없을 시 chose a product 버튼*/
+/* 선택한 제품 없을 시 chose a product 버튼 */
 .no-product-button {
     color: #000 !important;
-    text-decoration: underline ;
+    text-decoration: underline;
     cursor: pointer;
 }
+
 .no-product-button:hover {
     color: blue;
 }
-/*전체 가격 표현 부분 css*/
+
+/* 전체 가격 표현 부분 css */
 tbody {
     width: 100%;
 }
-.totalPrice {
+
+td.totalPrice {
     text-align: left;
-    width: 15%;
     white-space: nowrap;
     overflow: hidden;
+    vertical-align: middle;
 }
-/*    버튼 정렬*/
+
+/* 버튼들 가로로 배치 */
+.table-buttons {
+    display: flex;
+    justify-content: flex-end; /* 가로로 가운데 정렬 */
+    align-items: center;
+    gap: 20px; /* 버튼 간 간격 */
+    vertical-align: middle;
+    margin-top: -35px;
+
+}
+
+/* 버튼 정렬 */
 td button {
     margin-left: 10px;
     padding: 5px 10px;
+    align-self: center;
+    flex-shrink: 0;
 }
+
 td {
-    text-align: center;
+    display: flex;
+    justify-content: center; /* 가로로 중앙 정렬 */
+        align-items: center; /* 세로로 중앙 정렬 */
+    padding: 10px;
+}
+
+tr {
+display : flex;
+width: 100%;
+align-items: center;
+text-align: center;
+ justify-content: space-between; /* 좌우 배치 */
+display: flex;
+}
+
+
+/*--------------------------호환성 체크---------------------------*/
+#compatibility-check-results {
+    margin-top: 20px;
+}
+
+.compatibility-status {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.compatible {
+    color: green;
+}
+
+.incompatible {
+    color: red;
+}
+
+/*--------------------------호환성 체크 사이드바---------------------------*/
+#compatibility-check-results {
+    position: fixed; /* 고정 위치 */
+    top: 100px; /* 화면 상단에서의 거리 */
+    right: 20px; /* 화면 오른쪽에서의 거리 */
+    width: 20%; /* 사이드바 너비 */
+    background-color: #f9f9f9; /* 배경색 */
+    border: 1px solid #ccc; /* 테두리 */
+    border-radius: 8px; /* 둥근 모서리 */
+    padding: 20px; /* 내부 여백 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    z-index: 1000; /* 다른 요소 위에 표시 */
+    overflow-x: hidden; /* 내용이 많을 경우 스크롤 */
+    max-height: none; /* 최대 높이 설정 */
+    margin-left: 20px; /* 사이드바와 본문 사이에 간격을 추가 */
+    box-sizing: border-box; /* 사이드바의 패딩을 포함한 너비 계산 */
+}
+
+.compatibility-status {
+    font-size: 16px;
+    margin-bottom: 10px;
+    position: relative; /* 아이콘을 적절히 배치하기 위해 상대적 위치 지정 */
+    padding-left: 20px; /* 아이콘과 텍스트 간 간격 추가 */
+}
+
+.compatible {
+    color: green;
+}
+
+.compatible::before {
+    content: '✔'; /* 초록색 체크 아이콘 */
+    color: green;
+    position: absolute;
+    left: 0; /* 텍스트 왼쪽에 아이콘 위치 */
+    top: 0;
+    font-size: 20px; /* 아이콘 크기 조정 */
+}
+
+.incompatible {
+    color: red;
+}
+
+.incompatible::before {
+    content: '✘'; /* 빨간색 엑스 아이콘 */
+    color: red;
+    position: absolute;
+    left: 0; /* 텍스트 왼쪽에 아이콘 위치 */
+    top: 0;
+    font-size: 20px; /* 아이콘 크기 조정 */
+}
+/* 메인 콘텐츠와 호환성 체크 사이드바 간격 조정 */
+.body-wrap {
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    gap: 20px; /* 콘텐츠와 사이드바 사이의 간격 */
+}
+
+.main-container {
+    flex: 1; /* 메인 콘텐츠가 남은 공간을 차지 */
+}
+
+/* 자세히 보기 버튼 스타일 */
+#view-details-button {
+    display: block; /* 버튼을 블록 요소로 설정 */
+    width: 100%; /* 사이드바 너비에 맞게 버튼 크기 조정 */
+    margin-top: 20px; /* 상단 요소와 간격 */
+    padding: 10px; /* 내부 여백 */
+    font-size: 16px; /* 글자 크기 */
+    font-weight: bold; /* 글자 굵기 */
+    color: #fff; /* 글자 색상 */
+    background-color: #007bff; /* 버튼 배경색 */
+    border: none; /* 테두리 제거 */
+    border-radius: 5px; /* 둥근 모서리 */
+    cursor: pointer; /* 커서 변경 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
+    transition: background-color 0.3s ease; /* 배경색 전환 효과 */
+}
+
+#view-details-button:hover {
+    background-color: #0056b3; /* 호버 시 더 진한 색상 */
+}
+
+/* cart 목록을 왼쪽으로 더 붙이기 위한 스타일 */
+.body-wrap {
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    margin-right: 20px; /* 오른쪽 여백을 줄여서 사이드바가 확장될 공간을 확보 */
+}
+
+.site-content {
+    width: 75%; /* 전체 너비의 75%로 설정하여 왼쪽에 더 많은 공간을 확보 */
+    padding: 0; /* 불필요한 패딩을 제거 */
+}
+
+table {
+    margin-left: 0; /* 테이블 왼쪽 여백 없애기 */
+    width: 100%; /* 테이블의 너비를 100%로 설정하여 부모 요소에 맞춤 */
+}
+
+#cart-body {
+    margin-left: 0; /* 전체적으로 왼쪽 마진을 0으로 설정 */
+}
+
+/* 삭제 버튼 스타일 */
+.deleteButton {
+    background-color: red; /* 빨간색 배경 */
+    color: white; /* 글자 색은 흰색 */
+    border: none; /* 테두리 없애기 */
+    padding: 8px 16px; /* 패딩은 적당히 */
+    font-size: 14px; /* 폰트 크기 */
+    cursor: pointer; /* 커서가 손가락 모양으로 바뀌게 */
+    transition: background-color 0.3s ease; /* 부드러운 색상 변화 */
+    border-radius: 5px; /* 둥근 모서리 */
+    width: auto; /* 버튼 크기는 내용에 맞게 */
+}
+
+/* 삭제 버튼에 마우스를 올렸을 때 */
+.deleteButton:hover {
+    background-color: darkred; /* hover 시 어두운 빨간색 배경 */
+    transform: scale(1.05); /* 약간 확대되는 효과 */
+}
+
+/* 공통 버튼 스타일 */
+button {
+    background-color: #007bff; /* 기본 배경색 */
+    color: white; /* 글자 색 */
+    border: none; /* 테두리 제거 */
+    padding: 10px 20px; /* 패딩 */
+    font-size: 14px; /* 폰트 크기 */
+    cursor: pointer; /* 손가락 모양의 커서 */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* 효과 */
+    border-radius: 5px; /* 둥근 모서리 */
+    width: auto; /* 버튼 크기는 내용에 맞게 */
+}
+
+/* hover 효과 */
+button:hover {
+    background-color: #0056b3; /* hover 시 색상이 진해짐 */
+    transform: scale(1.05); /* 약간 확대되는 효과 */
+}
+
+/* 리뷰 작성하기 버튼 */
+#create review,
+#save as text,
+#Compatibility Check {
+    background-color: #007bff; /* 기본 배경색은 view-details-button과 동일 */
+}
+
+/* 각 버튼에 hover 시 색상 조정 */
+#create review,
+#save as text,
+#Compatibility Check:hover {
+    background-color: #0056b3; /* hover 시 색상이 진해짐 */
+}
+
+/* 각 버튼에 대해 세로로 안 나오는지 확인 */
+#save as text, #create review, #Compatibility Check {
+    display: inline-block; /* 버튼을 inline-block으로 설정하여 가로로 배치 */
+}
+
+/* ------------------------- 모달 ------------------------------- */
+
+/* 모달창 기본 스타일 */
+.modal {
+    display: none; /* 기본적으로 숨겨짐 */
+    position: fixed;
+    z-index: 1001; /* 다른 요소 위에 표시 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* 어두운 배경 */
+    padding-top: 60px; /* 상단 여백 */
+    overflow: auto; /* 내용이 많을 경우 스크롤 */
+    box-sizing: border-box;
+}
+
+/* 모달 콘텐츠 */
+.modal-content {
+    background-color: #fff; /* 흰색 배경 */
+    margin: 5% auto; /* 화면 중앙에 위치 */
+    padding: 30px; /* 충분한 내부 여백 */
+    border: 1px solid #ccc; /* 부드러운 테두리 */
+    border-radius: 8px; /* 둥근 모서리 */
+    width: 80%;
+    max-width: 600px; /* 최대 너비 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+}
+
+/* 모달 닫기 버튼 */
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #0056b3; /* hover 시 파란색으로 변경 */
+    transform: scale(1.1); /* 살짝 확대되는 효과 */
+}
+
+/* 모달 내용 텍스트 스타일 */
+.modal-content p,
+.modal-content ul {
+    font-size: 16px; /* 읽기 쉬운 크기 */
+    line-height: 1.6; /* 행간 여백 */
+    color: #333; /* 어두운 글씨 색 */
+}
+
+.modal-content ul {
+    list-style-type: none; /* 기본 목록 스타일 없애기 */
+    padding-left: 0; /* 왼쪽 여백 없애기 */
+}
+
+.modal-content li {
+    padding-left: 20px; /* 항목 간 간격 */
+    position: relative; /* 아이콘을 적절히 배치하기 위해 위치 지정 */
+}
+
+.modal-content li::before {
+    content: '➤'; /* 리스트 아이콘 */
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 20px;
+    color: #007bff; /* 아이콘 색상 */
+}
+
+/* 모달 오픈 시 애니메이션 */
+@keyframes modalOpen {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-content {
+    animation: modalOpen 0.4s ease-out;
+}
+
+/* 모달 바깥 영역 클릭 시 모달 닫히는 효과 */
+.modal:focus {
+    outline: none; /* 포커스 시 테두리 없애기 */
+}
+
+/* ------------------------- 모달 관련 버튼 ------------------------------- */
+.modal .modal-button {
+    background-color: #007bff; /* 버튼 배경 색 */
+    color: #fff; /* 글자 색 */
+    border: none; /* 테두리 없애기 */
+    padding: 12px 20px; /* 여백 */
+    font-size: 16px; /* 폰트 크기 */
+    cursor: pointer;
+    border-radius: 5px; /* 둥근 모서리 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* 효과 */
+    display: block;
+    width: 100%; /* 버튼이 모달 콘텐츠 너비에 맞게 설정 */
+    margin-top: 20px;
+}
+
+/* 모달 버튼 hover 효과 */
+.modal .modal-button:hover {
+    background-color: #0056b3; /* hover 시 배경 색상 */
+    transform: scale(1.05); /* 살짝 확대되는 효과 */
 }
