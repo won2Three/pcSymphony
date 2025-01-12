@@ -14,28 +14,12 @@
     border-image: initial;
 }
 
-.pcReviewTitleName {
+.TitleName {
     all: unset; /* 모든 스타일 초기화 */
     cursor: pointer; /* 링크처럼 보이게 */
     color: #0c1622;
-
 }
 
-/*큰 제목 스타일*/
-.container-like {
-    width: 100%;
-    max-width: 1128px;
-    margin: 0 auto;
-    padding-left: 16px;
-    padding-right: 16px;
-    font-family: "Playfair Display", serif;
-    font-weight: 900;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    border-bottom: #0c1622 solid 3px;
-    box-sizing: border-box; /* padding을 border 길이에서 제외 */
-
-}
 
 .container {
     padding: 33px 68px 40px;
@@ -91,4 +75,18 @@ fieldset {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    text-align: right
 }
+
+/*이미지 스타일*/
+
+ .partsTitle {
+     display: flex;
+     align-items: center;
+ }
+
+ .partsImage {
+     width: 50px;
+     height: 50px;
+     object-fit: cover;
+ }

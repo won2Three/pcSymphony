@@ -56,19 +56,19 @@
                 <!-- 여기에 컨텐츠 추가 -->
                 <div bottommargin="0" leftmargin="0" rightmargin="0" style="background-color:#0c1622" topmargin="0">
                     <div class="menu">
-                        <nav class="clearfix">
-                            <ul class="clearfix">
+                        <nav>
+                            <ul>
                                 <li><a th:href="@{/cart}">Cart</a></li> <!--""<-여기 부분에 URL 작성하면 됨-->
-                                <li><a href="#" id="partsbutton">Parts</a></li>
+                                <li id="partsbutton">
+                                    <a href="#">Parts</a>
+                                    <!-- 2x4 버튼을 표시할 컨테이너 -->
+                                    <div class="hidden" id="parts-grid-container"></div>
+                                </li>
                                 <li><a th:href="@{guide/guideList}">Guide</a></li>
                                 <li><a th:href="@{/community/list}">Community</a></li>
                                 <li><a th:href="@{/pcReview/pcReviewlist}">Review</a></li>
                             </ul>
-                            <a href="#" id="pull"></a>
                         </nav>
-                    <!-- 2x4 버튼을 표시할 컨테이너 -->
-                    <div class="hidden" id="parts-grid-container"></div>
-                    </div>
                 </div>
             </div>
         </div>

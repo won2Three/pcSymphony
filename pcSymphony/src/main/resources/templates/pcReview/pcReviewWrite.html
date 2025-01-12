@@ -15,7 +15,7 @@
 <div th:replace="~{fragments/header :: headerFragment}"></div>
 <div class="body-wrap">
     <main class="site-content">
-        <a class="pcReviewTitleName" href="/pcReview/pcReviewList"><h1 class="container-like">PC 리뷰</h1></a>
+        <a class="titleName" href="/pcReview/pcReviewList"><h1 class="container-like">PC 리뷰</h1></a>
         <div class="container">
 
             <form action="/pcreview/write" method="post">
@@ -54,8 +54,15 @@
                 <fieldset class="pcReviewContent">
                     <legend><h5>파츠 리뷰</h5></legend>
                     <!-- CPU 리뷰 -->
-                    <fieldset style="">
-                        <label for="cpuTitle" th:text="'CPU 제목: ' + ${cart.cpu.name}">CPU 리뷰:</label>
+                    <fieldset>
+                        <label for="cpuTitle" class="partsTitle">
+                            <!-- CPU 제목 텍스트 -->
+                            <span>CPU:</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-cpu.png}" alt="CPU Image" class="partsImage">
+                            <!-- CPU 이름 -->
+                            <span th:text="${cart.cpu.name}">[CPU 이름]</span>
+                        </label>
                         <br>
                         <input class="pcReviewTitle" id="cpuTitle" name="partReviews[cpu].title"
                                placeholder="제목을 입력하세요." required
@@ -76,8 +83,14 @@
 
                     <!-- CPU Cooler 리뷰 -->
                     <fieldset>
-                        <label for="cpuCoolerTitle" th:text="'CPU Cooler 제목: ' + ${cart.cpucooler.name}">CPU Cooler
-                            리뷰:</label>
+                        <label for="cpuCoolerTitle" class="partsTitle">
+                            <!-- CPUCooler 제목 텍스트 -->
+                            <span>CPUCooler:</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-cpucooler.png}" alt="CPUCooler Image" class="partsImage">
+                            <!-- CPUCooler 이름 -->
+                            <span th:text="${cart.cpucooler.name}">[CPUCooler 이름]</span>
+                        </label>
                         <br>
                         <input class="pcReviewTitle" id="cpuCoolerTitle" name="partReviews[cpucooler].title" placeholder="제목을 입력하세요."
                                required type="text">
@@ -98,8 +111,14 @@
 
                     <!-- Motherboard 리뷰 -->
                     <fieldset>
-                        <label for="motherboardTitle" th:text="'Motherboard 제목: ' + ${cart.motherboard.name}">Motherboard
-                            리뷰:</label>
+                        <label for="motherboardTitle" class="partsTitle">
+                            <!-- Motherboard 제목 텍스트 -->
+                            <span>Motherboard:</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-motherboard.png}" alt="Motherboard Image" class="partsImage">
+                            <!-- Motherboard 이름 -->
+                            <span th:text="${cart.motherboard.name}">[Motherboard 이름]</span>
+                        </label>
                         <br>
                         <input class="pcReviewTitle" id="motherboardTitle" name="partReviews[motherboard].title"
                                placeholder="제목을 입력하세요." required type="text">
@@ -120,7 +139,14 @@
 
                     <!-- Memory 리뷰 -->
                     <fieldset>
-                        <label for="memoryTitle" th:text="'Memory 제목: ' + ${cart.memory.name}">Memory 리뷰</label>
+                        <label for="memoryTitle" class="partsTitle">
+                            <!-- Memory 제목 텍스트 -->
+                            <span>Memory:</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-memory.png}" alt="Memory Image" class="partsImage">
+                            <!-- Memory 이름 -->
+                            <span th:text="${cart.memory.name}">[Memory 이름]</span>
+                        </label>
                         <br>
                         <input class="pcReviewTitle" id="memoryTitle" name="partReviews[memory].title" placeholder="제목을 입력하세요."
                                required type="text">
@@ -141,7 +167,14 @@
 
                     <!-- Storage 리뷰 -->
                     <fieldset>
-                        <label for="storageTitle" th:text="'Storage 제목: ' + ${cart.storage.name}">Storage 리뷰:</label>
+                        <label for="storageTitle" class="partsTitle">
+                            <!-- Storage 제목 텍스트 -->
+                            <span>Storage:</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-ssd.png}" alt="Storage Image" class="partsImage">
+                            <!-- Storage 이름 -->
+                            <span th:text="${cart.storage.name}">[Storage 이름]</span>
+                        </label>
                         <br>
                         <input class="pcReviewTitle" id="storageTitle" name="partReviews[storage].title" placeholder="제목을 입력하세요."
                                required type="text">
@@ -162,8 +195,14 @@
 
                     <!-- VideoCard 리뷰 -->
                     <fieldset>
-                        <label for="videoCardTitle" th:text="'VideoCard 제목: ' + ${cart.videocard.name}">VideoCard
-                            리뷰:</label>
+                        <label for="videoCardTitle" class="partsTitle">
+                            <!-- VideoCard 제목 텍스트 -->
+                            <span>VideoCard:</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-videocard.png}" alt="VideoCard Image" class="partsImage">
+                            <!-- VideoCard 이름 -->
+                            <span th:text="${cart.videocard.name}">[VideoCard 이름]</span>
+                        </label>
                         <br>
                         <input class="pcReviewTitle" id="videoCardTitle" name="partReviews[videocard].title" placeholder="제목을 입력하세요."
                                required type="text">
@@ -184,8 +223,14 @@
 
                     <!-- PowerSupply 리뷰 -->
                     <fieldset>
-                        <label for="powerSupplyTitle" th:text="'PowerSupply 제목: ' + ${cart.powersupply.name}">PowerSupply
-                            리뷰:</label>
+                        <label for="powerSupplyTitle" class="partsTitle">
+                            <!-- PowerSupply 제목 텍스트 -->
+                            <span>PowerSupply:</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-powersupply.png}" alt="PowerSupply Image" class="partsImage">
+                            <!-- PowerSupply 이름 -->
+                            <span th:text="${cart.powersupply.name}">[PowerSupply 이름]</span>
+                        </label>
                         <br>
                         <input class="pcReviewTitle" id="powerSupplyTitle" name="partReviews[powersupply].title"
                                placeholder="제목을 입력하세요." required type="text">
@@ -206,7 +251,14 @@
 
                     <!-- Cover 리뷰 -->
                     <fieldset>
-                        <label for="coverTitle" th:text="'Cover 제목: ' + ${cart.cover.name}">Cover 리뷰:</label>
+                        <label for="coverTitle" class="partsTitle">
+                            <!-- Cover 제목 텍스트 -->
+                            <span>Cover:</span>
+                            <!-- 썸네일 이미지 -->
+                            <img th:src="@{/images/nav-case.png}" alt="Cover Image" class="partsImage">
+                            <!-- Cover 이름 -->
+                            <span th:text="${cart.cover.name}">[Cover 이름]</span>
+                        </label>
                         <br>
                         <input class="pcReviewTitle" id="coverTitle" name="partReviews[cover].title" placeholder="제목을 입력하세요."
                                required type="text">
@@ -225,7 +277,7 @@
                         </select>
                     </fieldset>
                 </fieldset>
-                <div class="button-container" style="text-align: right">
+                <div class="button-container">
                     <button class="gray-button" th:href="@{pcReview/pcReviewList}" type="button">취소</button>
                     <button class="blue-button" type="submit">등록</button>
                 </div>

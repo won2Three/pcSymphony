@@ -198,12 +198,12 @@
 
 /* 그리드 컨테이너 */
 #parts-grid-container {
+    position: absolute;
     /*display: grid;*/
     grid-template-columns: repeat(4, 1fr); /* 4열 배열 */
     gap: 16px; /* 버튼 간 간격 */
     padding: 16px;
     background-color: #f3f3f3; /* 배경색 */
-    margin-top: 16px;
     border-radius: 8px; /* 둥근 모서리 */
 }
 
