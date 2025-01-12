@@ -4,64 +4,11 @@
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
     <link href="../../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
 
-    <link href="../../static/css/guidesRead.css" rel="stylesheet" th:href="@{/css/guidesRead.css}">
+    <link href="../../static/css/guideLineRead.css" rel="stylesheet" th:href="@{/css/guideLineRead.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
     <!--    <script src="../../static/js/pcReviewWrite.js" th:src="@{/js/pcReviewWrite.js}"></script>-->
     <title>GuideLine</title>
-    <style>
-        .leftSideBar {
-            width: 30%;
-            padding: 20px;
-            box-sizing: border-box;
-            float: left;
-        }
 
-        .main-container {
-            width: 70%;
-            padding: 20px;
-            box-sizing: border-box;
-            float: right;
-        }
-
-        .guideImage {
-            border: #95A4B4 1px solid;
-            width: 100%;
-            padding: 5px;
-            object-fit: contain;
-        }
-
-        h5 {
-            padding-bottom: 10px;
-            border-bottom: #95A4B4 1px solid;
-        }
-
-        .category-name {
-            color: #555;
-            font-size: 13px;
-        }
-
-        .partsName-price {
-            font-size: 12px;
-
-        }
-
-        .image-name {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-            border-bottom: #95A4B4 1px solid;
-            word-wrap: break-word; /* 긴 단어도 줄바꿈 */
-            word-break: break-word; /* 적절히 줄바꿈 */
-            overflow-wrap: break-word; /* 최신 브라우저 호환 */
-        }
-        .partsPrice {
-            font-size: 12px;
-            display: flex;
-            justify-content: space-between;
-        }
-    </style>
 </head>
 <body>
 <div th:replace="~{fragments/header :: headerFragment}"></div>
@@ -70,10 +17,11 @@
         <a class="titleName" href=""><h1 class="container-like">PC 리뷰</h1></a>
         <div class="container">
             <!--    레프트 사이드 바-->
-            <aside class="leftSideBar" style="border: #95A4B4 1px solid">
+            <aside class="leftSideBar" >
                 <img alt="Guide Image" class="guideImage" th:src="@{/images/nav-case.png}">
                 <section class="partsListContainer">
                     <h5>part List</h5>
+                    <!-- CPU -->
                     <div class="category-name">CPU</div>
                     <label class="image-name">
                         <img alt="CPU Image" class="small-image" src="/images/nav-cpu.png">
@@ -82,6 +30,7 @@
                             <div th:text="${cpu가격조회하는link}">CPU 가격</div>
                         </div>
                     </label>
+                    <!-- CPU Cooler -->
                     <div class="category-name">CPUCooler</div>
                     <label class="image-name">
                         <img alt="CPUCooler Image" class="small-image" src="/images/nav-cpucooler.png">
@@ -90,6 +39,7 @@
                             <div th:text="${2}">CPUCooler 가격</div>
                         </div>
                     </label>
+                    <!-- Motherboard -->
                     <div class="category-name">Motherboard</div>
                     <label class="image-name">
                         <img alt="Motherboard Image" class="small-image" src="/images/nav-motherboard.png">
@@ -98,6 +48,7 @@
                             <div th:text="${3}">Motherboard 가격</div>
                         </div>
                     </label>
+                    <!-- Memory -->
                     <div class="category-name">Memory</div>
                     <label class="image-name">
                         <img alt="Memory Image" class="small-image" src="/images/nav-memory.png">
@@ -106,6 +57,7 @@
                             <div th:text="${4}">Memory 가격</div>
                         </div>
                     </label>
+                    <!-- Storage -->
                     <div class="category-name">Storage</div>
                     <label class="image-name">
                         <img alt="Storage Image" class="small-image" src="/images/nav-ssd.png">
@@ -114,6 +66,7 @@
                             <div th:text="${5}">Storage 가격</div>
                         </div>
                     </label>
+                    <!-- Videocard -->
                     <div class="category-name">Videocard</div>
                     <label class="image-name">
                         <img alt="Videocard Image" class="small-image" src="/images/nav-videocard.png">
@@ -122,6 +75,7 @@
                             <div th:text="${6}">Videocard 가격</div>
                         </div>
                     </label>
+                    <!-- PowerSupply -->
                     <div class="category-name">PowerSupply</div>
                     <label class="image-name">
                         <img alt="PowerSupply Image" class="small-image" src="/images/nav-powersupply.png">
@@ -130,6 +84,7 @@
                             <div th:text="${7}">PowerSupply 가격</div>
                         </div>
                     </label>
+                    <!-- Case -->
                     <div class="category-name">Case</div>
                     <label class="image-name">
                         <img alt="Case Image" class="small-image" src="/images/nav-case.png">
@@ -145,9 +100,18 @@
                 </section>
             </aside>
             <!--    메인 컨테이너-->
-            <main class="main-container" style="border: #95A4B4 1px solid;">
-<!--                -->
-                <div class="community-title" id="pcReviewTitle" th:text="${pcReview.pcreviewTitle}">제목</div>
+            <main class="main-container" >
+                <div class="title-header">
+                <!--가이드라인의`guideline_title` 조회-->
+                <div class="community-title" id="1" th:text="${1}">제목</div>
+                    <div class="guideline-Info">
+                <!--`guideline_id`조회-->
+                    글 번호 : <span id="2" th:text="${2}"></span>
+                    <!--작성일?-->
+                    </div>
+                </div>
+                <!-- 게시물 내용, `guideline_content`조회 -->
+                <div class="community-content" id="3" th:text="${3}">내용</div>
 
             </main>
         </div>

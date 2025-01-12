@@ -63,9 +63,6 @@
     resize: vertical; /* 세로 크기만 조정 가능하도록 설정 */
 }
 
-fieldset {
-    margin-bottom: 10px;
-}
 
 .container {
     margin-bottom: 24px;
@@ -83,6 +80,7 @@ fieldset {
  .partsTitle {
      display: flex;
      align-items: center;
+     gap: 10px;
  }
 
  .partsImage {
@@ -90,3 +88,20 @@ fieldset {
      height: 50px;
      object-fit: cover;
  }
+.partsName {
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+    font-weight: bold;
+}
+/*파츠 리뷰 입력창 사이에 구분선*/
+.partsContent {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border: solid #95A4B4;
+    border-width: 0 0 1px 0;
+}
+/*html, .body-wrap {*/
+/*    background-color: #f4f4f3;*/
+/*    position: relative;*/
+/*}*/

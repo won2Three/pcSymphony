@@ -1,0 +1,73 @@
+.leftSideBar {
+    width: 30%;
+    padding: 20px 20px 20px 20px;
+    box-sizing: border-box;
+    float: left;
+}
+
+.main-container {
+    width: 70%;
+    padding: 20px;
+    box-sizing: border-box;
+    float: right;
+}
+
+.guideImage {
+    border: #95A4B4 1px solid;
+    width: 100%;
+    padding: 5px;
+    object-fit: contain;
+}
+
+h5 {
+    padding-bottom: 10px;
+    border-bottom: #95A4B4 1px solid;
+}
+
+.category-name {
+    color: #555;
+    font-size: 13px;
+}
+
+.partsName-price {
+    font-size: 12px;
+
+}
+
+.image-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: #95A4B4 1px solid;
+    word-wrap: break-word; /* 긴 단어도 줄바꿈 */
+    word-break: break-word; /* 적절히 줄바꿈 */
+    overflow-wrap: break-word; /* 최신 브라우저 호환 */
+}
+.partsPrice {
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+.community-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 10px;
+}
+.guideline-Info {
+    font-size: 14px;
+    color: #333;
+}
+.community-content {
+    font-size: 16px;
+    color: #000;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    min-height: 200px;
+    white-space: pre-wrap;
+    word-wrap: break-word; /* 긴 단어도 줄바꿈 */
+    word-break: break-word; /* 적절히 줄바꿈 */
+    overflow-wrap: break-word; /* 최신 브라우저 호환 */
+}

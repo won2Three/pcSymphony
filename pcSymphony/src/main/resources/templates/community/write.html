@@ -30,11 +30,15 @@
         <!-- 작성자 정보는 자동으로 설정될 수 있도록 hidden 필드로 처리하거나, 세션에서 가져오는 방식 -->
         <!-- <input type="hidden" name="memberId" value="${sessionMemberId}" /> -->
 
+        <!--아직 이미지 업로드 기능 연결 안됨-->
+        <label for="imageUpload">이미지 업로드:</label>
+        <input accept="image/*" id="imageUpload" name="imageUpload" type="file">
+
         <div class="button-container">
         <!-- 제출 버튼 -->
-        <button type="submit" class="submit-button">작성 완료</button>
+        <button type="submit" class="blue-button">작성 완료</button>
         <!-- 취소 버튼 (목록으로 돌아가기) -->
-        <button class="cancel-button"><a href="list" >취소</a></button>
+        <button class="gray-button"><a href="list" >취소</a></button>
         </div>
     </form>
 

@@ -9,7 +9,12 @@
     <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
-
+    <style>
+        .brand {
+            display: flex;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
 <!-- 헤더 -->
@@ -18,9 +23,10 @@
     <div class="header-container">
         <div class="site-header-inner">
             <div class="brand">
-                <h2 >
+                <h2>
                     <a class="logo-text" href="../home.html" th:href="@{/}">
-                        <img class="logo" alt="PcSymphony"  src="../../static/images/pc-Icon.png" th:src="@{/images/pc-Icon.png}">
+                        <img alt="PcSymphony" class="logo" src="../../static/images/pc-Icon.png"
+                             th:src="@{/images/pc-Icon.png}">
                         <span>
                         PcSymphony
                         </span>
@@ -69,6 +75,7 @@
                                 <li><a th:href="@{/pcReview/pcReviewlist}">Review</a></li>
                             </ul>
                         </nav>
+                    </div>
                 </div>
             </div>
         </div>

@@ -8,7 +8,6 @@
 //     // 현재 커뮤니티 ID와 사용자 ID를 얻어옵니다.
 //     console.log('Community ID:', communityId);
 //     console.log('User Id:', userId);
-//
 //     // 댓글 목록을 로드하는 함수
 //     function loadComments() {
 //     $.ajax({
@@ -21,11 +20,11 @@
 //             // 서버에서 받은 댓글 데이터를 HTML로 출력
 //             data.forEach(function (comment) {
 //                 const commentHtml = `
-//                         <tr id="comment-${comment.communityReplyId}">
-//                             <td>${comment.memberId}</td>
-//                             <td>${comment.replyContent}</td>
-//                             <td>
-//                                 <button onclick="deleteComment(${comment.communityReplyId})">삭제</button>
+//                         <tr  id="comment-${comment.communityReplyId}">
+//                             <td class="replyWriteId">${comment.memberId}</td>
+//                             <td class="replyWriteContent">${comment.replyContent}</td>
+//                             <td style="text-align: right">
+//                                 <button class="gray-button" onclick="deleteComment(${comment.communityReplyId})">삭제</button>
 //                             </td>
 //                         </tr>
 //                     `;

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.dto.PartsReviewDTO;
 import com.example.demo.domain.dto.PcReviewDTO;
 import com.example.demo.domain.entity.CartEntity;
 import com.example.demo.domain.entity.part.PartsReviewEntity;
@@ -12,10 +13,12 @@ import com.example.demo.repository.PcReviewRepository;
 import com.example.demo.security.MemberUserDetails;
 import com.example.demo.service.CartService;
 //import com.example.demo.service.PartsReviewService;
+import com.example.demo.service.PartsReviewService;
 import com.example.demo.service.PcReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,8 +26,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -39,6 +42,9 @@ public class PcReviewController {
 
     @Autowired
     private final PcReviewService pcReviewService;
+
+    @Autowired
+    private final PcReviewRepository pcReviewRepository;
 
     @Autowired
     private final PartsReviewRepository partsReviewRepository;
@@ -70,10 +76,18 @@ public class PcReviewController {
     @Autowired
     private final VideoCardRepository videoCardRepository;
 
+    @Autowired
+    private final PartsReviewService partsReviewService;
+
+
+
+//    @Autowired
+//    private final
+
     @GetMapping("write")
     public String write(Model model) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String loggedInUserName = authentication.getName(); // 로그인한 사용자 이름 가져오기 (보통 username이 저장됨)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUserName = authentication.getName(); // 로그인한 사용자 이름 가져오기 (보통 username이 저장됨)
         System.out.println(loggedInUserName);
         CartEntity cart = cartRepository.findByUser_MemberId(loggedInUserName);
         model.addAttribute("cart", cart);
@@ -194,7 +208,49 @@ public class PcReviewController {
         pcReviewService.savePcReview(pcReviewDTO);
 
 
-        return "redirect:/pcReview/pcReviewlist";
+        return "redirect:/pcreview/list";
     }
+
+    @GetMapping("list")
+    public String getPcReviewList(Model model) {
+        List<PcReviewEntity> pcReviewList = pcReviewRepository.findAll();
+//        model.addAttribute("tableName", "cpu");
+//        System.out.println("test1---------------------------------------------------");
+//        System.out.println(pcReviewList);
+//        System.out.println("test2---------------------------------------------------");
+        model.addAttribute("pcReviews", pcReviewList);
+        return "pcReview/pcReviewList";
+    }
+
+    @GetMapping("/read/{id}")
+    public String read(@PathVariable int id, Model model) {
+        PcReviewEntity pcReviewEntity = pcReviewRepository.getReferenceById(id);
+        System.out.println(pcReviewEntity);
+        model.addAttribute("pcReview", pcReviewEntity);
+        return "pcReview/pcReviewRead";
+    }
+
+    @PostMapping("/updateParts")
+    public ResponseEntity<String> updatePartsReview(@RequestBody PartsReviewDTO request) {
+        partsReviewService.updatePartsReview(request.getPartsReviewId(), request.getPartsReviewTitle(), request.getPartsReviewContent(), request.getPartsReviewRating());
+        return ResponseEntity.ok("리뷰가 성공적으로 수정되었습니다.");
+    }
+
+    @PostMapping("/updatePcReview")
+    public ResponseEntity<String> updatePcReview(@RequestBody PcReviewDTO request) {
+        pcReviewService.updatePcReview(request.getPcreviewId(), request.getPcreviewTitle(), request.getPcreviewContent());
+        return ResponseEntity.ok("리뷰가 성공적으로 수정되었습니다.");
+    }
+//
+//    @PostMapping("commentWrite")
+//    public ResponseEntity<?> commentWrite(@RequestBody CommunityReplyDTO replyDTO,
+//                                                 @AuthenticationPrincipal MemberUserDetails user) {
+//        replyDTO.setMemberId(user.getUsername());
+//        pcReviewService.pcReviewCommentWrite(replyDTO);
+//
+//        return ResponseEntity.ok().build();
+//    }
+
+
 
 }

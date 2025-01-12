@@ -7,6 +7,13 @@
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
     <link href="../../static/css/partList.css" rel="stylesheet" th:href="@{/css/partList.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
+    <style>
+        .part-item {
+            display: flex;
+            align-items: center; /* 이미지와 텍스트를 수직 중앙 정렬 */
+            gap: 10px; /* 이미지와 텍스트 사이 간격 */
+        }
+    </style>
 </head>
 <body id="partList-body">
 <!-- Header Fragment 포함 -->
@@ -18,16 +25,17 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Number</th>
                         <th>Name</th>
-                        <th>manufacturer</th>
+                        <th>Manufacturer</th>
                         <th>Price</th>
-                        <th>Details</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="part : ${parts}">
                         <td th:text="${part.id}">1</td>
-                        <td>
+                        <td class="part-item">
+                            <img class="small-image" alt="part image" th:src="@{/images/nav-cpu.png}">
                             <!-- 제목을 클릭하면 partDetail.html로 이동 -->
                             <a id="partList-Atag" th:href="@{/part/{tableName}/{id}(tableName=${tableName}, id=${part.id})}"
                                th:text="${part.name}">Part Name</a>

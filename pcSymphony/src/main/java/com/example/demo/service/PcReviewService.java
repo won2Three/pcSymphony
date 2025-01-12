@@ -2,12 +2,12 @@ package com.example.demo.service;
 
 import com.example.demo.domain.dto.PcReviewDTO;
 import com.example.demo.domain.entity.PcReviewEntity;
-import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.PcReviewRepository;
 import com.example.demo.repository.part.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,6 +19,7 @@ import java.util.Optional;
 public class PcReviewService {
 
     private final PcReviewRepository pcReviewRepository;
+@Autowired
     private final PartsReviewRepository partsReviewRepository;
     /**
      * Save PcReviewEntity from PcReviewDTO
@@ -118,4 +119,17 @@ public class PcReviewService {
                 .coverReviewId(pcReviewEntity.getCoverReview().getPartsReviewId())
                 .build();
     }
+
+    public void updatePcReview(int reviewId, String reviewTitle, String reviewContent) {
+        PcReviewEntity pcReview = pcReviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다. ID: " + reviewId));
+
+        pcReview.setPcreviewTitle(reviewTitle);
+        pcReview.setPcreviewContent(reviewContent);
+
+        pcReviewRepository.save(pcReview); // 변경 사항 저장
+    }
+//
+
+
 }

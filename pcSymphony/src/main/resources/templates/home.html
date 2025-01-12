@@ -53,8 +53,8 @@
                         <!--메인 문구-->
                         <div class="container-xs">
                             <h2 class="mt-0 mb-16">Pick Parts. Build Your PC. Compare and Share.</h2>
-                            <a class="button button-primary button-wide-mobile grid-item" style="display: inline-block"
-                               th:href="@{/cart}">Cart</a>
+                            <button class="button blue-button button-wide-mobile grid-item"><a
+                               th:href="@{/cart}">Cart</a></button>
                         </div>
                         <!--파츠 디테일 이동 버튼-->
                         <div class="partsTiles-wrap">
@@ -90,13 +90,61 @@
                                     </a>
                                 </div>
                             </article>
-
+                            <!--motherboard-->
                             <article class="partsTiles-item">
                                 <div class="partsTiles-item-inner has-shadow">
-                                    <a href="/part/cpu">
+                                    <a href="/part/motherboard">
                                         <figure class="news-item-image m-0">
-                                            <img alt="CPU image" height="100"
-                                                 src="/images/nav-cpu.png" width="100">
+                                            <img alt="motherboard image" height="100"
+                                                 src="/images/nav-motherboard.png" width="100">
+                                        </figure>
+                                        <div class="news-item-content">
+                                            <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8">
+                                                Motherboard</h3>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </article>
+<!--                            Memory-->
+                            <article class="partsTiles-item">
+                                <div class="partsTiles-item-inner has-shadow">
+                                    <a href="/part/memory">
+                                        <figure class="news-item-image m-0">
+                                            <img alt="Memory image" height="100"
+                                                 src="/images/nav-memory.png" width="100">
+                                        </figure>
+                                        <div class="news-item-content">
+                                            <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8">
+                                                Memory</h3>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </article>
+<!--                            Storage-->
+                            <article class="partsTiles-item">
+                                <div class="partsTiles-item-inner has-shadow">
+                                    <a href="/part/storage">
+                                        <figure class="news-item-image m-0">
+                                            <img alt="Storage image" height="100"
+                                                 src="/images/nav-ssd.png" width="100">
+                                        </figure>
+                                        <div class="news-item-content">
+                                            <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8">
+                                                Storage</h3>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </article>
+<!--                            Videocard-->
+                            <article class="partsTiles-item">
+                                <div class="partsTiles-item-inner has-shadow">
+                                    <a href="/part/videocard">
+                                        <figure class="news-item-image m-0">
+                                            <img alt="Videocard image" height="100"
+                                                 src="/images/nav-videocard.png" width="100">
                                         </figure>
                                         <div class="news-item-content">
                                             <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8">
@@ -106,76 +154,33 @@
                                     </a>
                                 </div>
                             </article>
+<!--                            powersupply-->
                             <article class="partsTiles-item">
                                 <div class="partsTiles-item-inner has-shadow">
-                                    <a href="/part/cpu">
+                                    <a href="/part/powersupply">
                                         <figure class="news-item-image m-0">
-                                            <img alt="CPU image" height="100"
-                                                 src="/images/nav-cpu.png" width="100">
+                                            <img alt="Powersupply image" height="100"
+                                                 src="/images/nav-powersupply.png" width="100">
                                         </figure>
                                         <div class="news-item-content">
                                             <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8">
-                                                CPU</h3>
+                                                Powersupply</h3>
                                             </div>
                                         </div>
                                     </a>
                                 </div>
                             </article>
+<!--                            Case-->
                             <article class="partsTiles-item">
                                 <div class="partsTiles-item-inner has-shadow">
-                                    <a href="/part/cpu">
+                                    <a href="/part/cover">
                                         <figure class="news-item-image m-0">
-                                            <img alt="CPU image" height="100"
-                                                 src="/images/nav-cpu.png" width="100">
+                                            <img alt="Case image" height="100"
+                                                 src="/images/nav-case.png" width="100">
                                         </figure>
                                         <div class="news-item-content">
                                             <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8">
-                                                CPU</h3>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </article>
-                            <article class="partsTiles-item">
-                                <div class="partsTiles-item-inner has-shadow">
-                                    <a href="/part/cpu">
-                                        <figure class="news-item-image m-0">
-                                            <img alt="CPU image" height="100"
-                                                 src="/images/nav-cpu.png" width="100">
-                                        </figure>
-                                        <div class="news-item-content">
-                                            <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8">
-                                                CPU</h3>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </article>
-                            <article class="partsTiles-item">
-                                <div class="partsTiles-item-inner has-shadow">
-                                    <a href="/part/cpu">
-                                        <figure class="news-item-image m-0">
-                                            <img alt="CPU image" height="100"
-                                                 src="/images/nav-cpu.png" width="100">
-                                        </figure>
-                                        <div class="news-item-content">
-                                            <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8">
-                                                CPU</h3>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </article>
-                            <article class="partsTiles-item">
-                                <div class="partsTiles-item-inner has-shadow">
-                                    <a href="/part/cpu">
-                                        <figure class="news-item-image m-0">
-                                            <img alt="CPU image" height="100"
-                                                 src="/images/nav-cpu.png" width="100">
-                                        </figure>
-                                        <div class="news-item-content">
-                                            <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8">
-                                                CPU</h3>
+                                                Case</h3>
                                             </div>
                                         </div>
                                     </a>

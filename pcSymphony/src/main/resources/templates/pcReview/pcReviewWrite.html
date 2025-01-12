@@ -10,6 +10,9 @@
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
     <!--    <script src="../../static/js/pcReviewWrite.js" th:src="@{/js/pcReviewWrite.js}"></script>-->
     <title>PC 리뷰 작성</title>
+    <style>
+
+    </style>
 </head>
 <body>
 <div th:replace="~{fragments/header :: headerFragment}"></div>
@@ -19,9 +22,14 @@
         <div class="container">
 
             <form action="/pcreview/write" method="post">
-
                 <!-- 전체 리뷰 제목 및 내용 -->
                 <fieldset class="pcReviewContent" style="margin-top: 0px">
+                <label for="imageUpload">이미지 업로드:</label>
+                <input accept="image/*" id="imageUpload" name="imageUpload" type="file">
+                <br>
+                <div id="uploadedImages" style="margin-top: 10px; display: flex; align-items: center;">
+                    <!-- 업로드한 이미지를 작은 썸네일로 표시 -->
+                </div>
                     <legend><h5>전체 리뷰</h5></legend>
                     <label for="pcReviewTitle">전체 리뷰 제목:</label>
                     <br>
@@ -33,13 +41,6 @@
                               placeholder="내용을 입력하세요" required
                               rows="5"></textarea>
                     <br>
-                    <!--아직 기능 연결 안됨-->
-                    <label for="imageUpload">이미지 업로드:</label>
-                    <input accept="image/*" id="imageUpload" name="imageUpload" type="file">
-                    <br>
-                    <div id="uploadedImages" style="margin-top: 10px; display: flex; align-items: center;">
-                        <!-- 업로드한 이미지를 작은 썸네일로 표시 -->
-                    </div>
                     <label for="pcReviewRating">별점:</label>
                     <select id="pcReviewRating" name="pcReviewRating" required>
                         <option value="1">1점</option>
@@ -54,10 +55,10 @@
                 <fieldset class="pcReviewContent">
                     <legend><h5>파츠 리뷰</h5></legend>
                     <!-- CPU 리뷰 -->
-                    <fieldset>
+                    <fieldset class="partsContent">
                         <label for="cpuTitle" class="partsTitle">
                             <!-- CPU 제목 텍스트 -->
-                            <span>CPU:</span>
+                            <span class="partsName">CPU</span>
                             <!-- 썸네일 이미지 -->
                             <img th:src="@{/images/nav-cpu.png}" alt="CPU Image" class="partsImage">
                             <!-- CPU 이름 -->
@@ -82,10 +83,10 @@
                     </fieldset>
 
                     <!-- CPU Cooler 리뷰 -->
-                    <fieldset>
+                    <fieldset class="partsContent">
                         <label for="cpuCoolerTitle" class="partsTitle">
                             <!-- CPUCooler 제목 텍스트 -->
-                            <span>CPUCooler:</span>
+                            <span class="partsName">CPUCooler</span>
                             <!-- 썸네일 이미지 -->
                             <img th:src="@{/images/nav-cpucooler.png}" alt="CPUCooler Image" class="partsImage">
                             <!-- CPUCooler 이름 -->
@@ -110,10 +111,10 @@
                     </fieldset>
 
                     <!-- Motherboard 리뷰 -->
-                    <fieldset>
+                    <fieldset class="partsContent">
                         <label for="motherboardTitle" class="partsTitle">
                             <!-- Motherboard 제목 텍스트 -->
-                            <span>Motherboard:</span>
+                            <span class="partsName">Motherboard</span>
                             <!-- 썸네일 이미지 -->
                             <img th:src="@{/images/nav-motherboard.png}" alt="Motherboard Image" class="partsImage">
                             <!-- Motherboard 이름 -->
@@ -138,10 +139,10 @@
                     </fieldset>
 
                     <!-- Memory 리뷰 -->
-                    <fieldset>
+                    <fieldset class="partsContent">
                         <label for="memoryTitle" class="partsTitle">
                             <!-- Memory 제목 텍스트 -->
-                            <span>Memory:</span>
+                            <span class="partsName">Memory</span>
                             <!-- 썸네일 이미지 -->
                             <img th:src="@{/images/nav-memory.png}" alt="Memory Image" class="partsImage">
                             <!-- Memory 이름 -->
@@ -166,10 +167,10 @@
                     </fieldset>
 
                     <!-- Storage 리뷰 -->
-                    <fieldset>
+                    <fieldset class="partsContent">
                         <label for="storageTitle" class="partsTitle">
                             <!-- Storage 제목 텍스트 -->
-                            <span>Storage:</span>
+                            <span class="partsName">Storage</span>
                             <!-- 썸네일 이미지 -->
                             <img th:src="@{/images/nav-ssd.png}" alt="Storage Image" class="partsImage">
                             <!-- Storage 이름 -->
@@ -194,10 +195,10 @@
                     </fieldset>
 
                     <!-- VideoCard 리뷰 -->
-                    <fieldset>
+                    <fieldset class="partsContent">
                         <label for="videoCardTitle" class="partsTitle">
                             <!-- VideoCard 제목 텍스트 -->
-                            <span>VideoCard:</span>
+                            <span class="partsName">VideoCard</span>
                             <!-- 썸네일 이미지 -->
                             <img th:src="@{/images/nav-videocard.png}" alt="VideoCard Image" class="partsImage">
                             <!-- VideoCard 이름 -->
@@ -222,10 +223,10 @@
                     </fieldset>
 
                     <!-- PowerSupply 리뷰 -->
-                    <fieldset>
+                    <fieldset class="partsContent">
                         <label for="powerSupplyTitle" class="partsTitle">
                             <!-- PowerSupply 제목 텍스트 -->
-                            <span>PowerSupply:</span>
+                            <span class="partsName">PowerSupply</span>
                             <!-- 썸네일 이미지 -->
                             <img th:src="@{/images/nav-powersupply.png}" alt="PowerSupply Image" class="partsImage">
                             <!-- PowerSupply 이름 -->
@@ -253,7 +254,7 @@
                     <fieldset>
                         <label for="coverTitle" class="partsTitle">
                             <!-- Cover 제목 텍스트 -->
-                            <span>Cover:</span>
+                            <span class="partsName">Cover</span>
                             <!-- 썸네일 이미지 -->
                             <img th:src="@{/images/nav-case.png}" alt="Cover Image" class="partsImage">
                             <!-- Cover 이름 -->
