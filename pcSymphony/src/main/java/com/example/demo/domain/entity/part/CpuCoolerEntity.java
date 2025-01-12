@@ -37,4 +37,6 @@ public class CpuCoolerEntity {
     @Column(name = "cpucooler_height")
     private double cpuCoolerHeight;
 
+    @Column(name = "cpucooler_image_url", length = 1000)
+    private String imageUrl; // CPU 이미지 경로 필드
 }

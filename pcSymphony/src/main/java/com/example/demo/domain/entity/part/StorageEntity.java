@@ -40,4 +40,6 @@ public class StorageEntity {
     @Column(name = "storage_capacity", length = 50)
     private String storageCapacity;
 
+    @Column(name = "storage_image_url", length = 1000)
+    private String imageUrl; // CPU 이미지 경로 필드
 }

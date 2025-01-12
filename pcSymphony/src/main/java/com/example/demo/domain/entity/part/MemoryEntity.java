@@ -40,4 +40,6 @@ public class MemoryEntity {
     @Column(name = "memory_speed", length = 100)
     private String memorySpeed;
 
+    @Column(name = "memory_image_url", length = 1000)
+    private String imageUrl; // CPU 이미지 경로 필드
 }

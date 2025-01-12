@@ -37,5 +37,6 @@ public class PowerSupplyEntity {
     @Column(name = "powersupply_wattage")
     private Integer powerSupplyWattage;
 
-
+    @Column(name = "powersupply_image_url", length = 1000)
+    private String imageUrl; // CPU 이미지 경로 필드
 }

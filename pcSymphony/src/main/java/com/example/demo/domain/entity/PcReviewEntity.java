@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -29,7 +30,11 @@ public class PcReviewEntity {
     private String pcreviewContent; // 리뷰 내용
 
     @Column(name = "pcreview_date", nullable = false, updatable = false)
-    private LocalDateTime pcreviewDate; // 작성 날짜
+    private LocalDateTime pcreviewMadeDate; // 작성 날짜
+
+    @LastModifiedDate
+    @Column(name = "last_modified_date", insertable = false, updatable = false)
+    private LocalDateTime pcreviewDate;
 
     @Column(name = "user_id", length = 20)
     private String userId; // 작성자 ID

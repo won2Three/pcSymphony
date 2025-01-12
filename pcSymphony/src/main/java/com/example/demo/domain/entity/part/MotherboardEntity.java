@@ -51,4 +51,7 @@ public class MotherboardEntity {
 
     @Column(name = "motherboard_memory_max")
     private Integer motherboardMemoryMax;
+
+    @Column(name = "motherboard_image_url", length = 1000)
+    private String imageUrl; // CPU 이미지 경로 필드
 }

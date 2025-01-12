@@ -54,4 +54,7 @@ public class CpuEntity {
 
     @Column(name = "cpu_performance_core_boost_clock", length = 50)
     private String cpuPerformanceCoreBoostClock; // cpu_performance_core_boost_clock 필드
+
+    @Column(name = "cpu_image_url", length = 1000)
+    private String imageUrl; // CPU 이미지 경로 필드
 }

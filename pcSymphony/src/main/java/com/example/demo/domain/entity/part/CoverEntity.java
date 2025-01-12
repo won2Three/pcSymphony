@@ -39,4 +39,7 @@ public class CoverEntity {
 
     @Column(name = "cover_Maximum_Video_Card_Length")
     private Integer coverMaxVideoCardLength;
+
+    @Column(name = "cover_image_url", length = 1000)
+    private String imageUrl; // CPU 이미지 경로 필드
 }

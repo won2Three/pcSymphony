@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -42,7 +43,10 @@ public class CommunityEntity {
     @CreatedDate
     @Column(name = "community_date",
             columnDefinition = "timestamp default current_timestamp")
-    LocalDateTime communityDate;
+    LocalDateTime communityMadeDate;
 
+    @LastModifiedDate
+    @Column(name = "last_modified_date", insertable = false, updatable = false)
+    private LocalDateTime communityDate;
 }
 

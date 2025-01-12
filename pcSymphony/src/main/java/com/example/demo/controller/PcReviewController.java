@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.dto.PartsReviewDTO;
+import com.example.demo.domain.dto.PcReviewCommentDTO;
 import com.example.demo.domain.dto.PcReviewDTO;
 import com.example.demo.domain.entity.CartEntity;
 import com.example.demo.domain.entity.part.PartsReviewEntity;
@@ -12,10 +14,13 @@ import com.example.demo.repository.PcReviewRepository;
 import com.example.demo.security.MemberUserDetails;
 import com.example.demo.service.CartService;
 //import com.example.demo.service.PartsReviewService;
+import com.example.demo.service.PartsReviewService;
 import com.example.demo.service.PcReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,52 +28,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
+import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("pcreview")
 public class PcReviewController {
-    @Autowired
     private final CartService cartService;
-
-    @Autowired
     private final CartRepository cartRepository;
-
-    @Autowired
     private final PcReviewService pcReviewService;
-
-    @Autowired
+    private final PcReviewRepository pcReviewRepository;
     private final PartsReviewRepository partsReviewRepository;
-
-    @Autowired
     private final MemberRepository memberRepository;
-
-    @Autowired
     private final CpuRepository cpuRepository;
-
-    @Autowired
     private final CpuCoolerRepository cpuCoolerRepository;
-
-    @Autowired
     private final MemoryRepository memoryRepository;
-
-    @Autowired
     private final CoverRepository coverRepository;
-
-    @Autowired
     private final MotherboardRepository motherboardRepository;
-
-    @Autowired
     private final PowerSupplyRepository powerSupplyRepository;
-
-    @Autowired
     private final StorageRepository storageRepository;
-
-    @Autowired
     private final VideoCardRepository videoCardRepository;
+    private final PartsReviewService partsReviewService;
 
     @GetMapping("write")
     public String write(Model model) {
@@ -194,7 +177,77 @@ public class PcReviewController {
         pcReviewService.savePcReview(pcReviewDTO);
 
 
-        return "redirect:/pcReview/pcReviewlist";
+        return "redirect:/pcreview/list";
     }
 
+    @GetMapping("list")
+    public String getPcReviewList(Model model) {
+        List<PcReviewEntity> pcReviewList = pcReviewRepository.findAll();
+//        model.addAttribute("tableName", "cpu");
+//        System.out.println("test1---------------------------------------------------");
+//        System.out.println(pcReviewList);
+//        System.out.println("test2---------------------------------------------------");
+        model.addAttribute("pcReviews", pcReviewList);
+        return "pcReview/pcReviewList";
+    }
+
+    @GetMapping("/read/{id}")
+    public String read(@PathVariable int id, Model model) {
+        PcReviewEntity pcReviewEntity = pcReviewRepository.getReferenceById(id);
+        System.out.println(pcReviewEntity);
+        model.addAttribute("pcReview", pcReviewEntity);
+        return "pcReview/pcReviewRead";
+    }
+
+    @PostMapping("/updateParts")
+    public ResponseEntity<String> updatePartsReview(@RequestBody PartsReviewDTO request) {
+        partsReviewService.updatePartsReview(request.getPartsReviewId(), request.getPartsReviewTitle(), request.getPartsReviewContent(), request.getPartsReviewRating());
+        return ResponseEntity.ok("리뷰가 성공적으로 수정되었습니다.");
+    }
+
+    @PostMapping("/updatePcReview")
+    public ResponseEntity<String> updatePcReview(@RequestBody PcReviewDTO request) {
+        pcReviewService.updatePcReview(request.getPcreviewId(), request.getPcreviewTitle(), request.getPcreviewContent());
+        return ResponseEntity.ok("리뷰가 성공적으로 수정되었습니다.");
+    }
+
+    @PostMapping("commentWrite")
+    public ResponseEntity<?> commentWrite(@RequestBody PcReviewCommentDTO replyDTO,
+                                                 @AuthenticationPrincipal MemberUserDetails user) {
+        replyDTO.setUserId(user.getUsername());
+        pcReviewService.pcReviewCommentWrite(replyDTO);
+
+        return ResponseEntity.ok().build();
+    }
+
+    // 댓글 목록 반환 메서드
+    @GetMapping("/commentList")
+    public ResponseEntity<List<PcReviewCommentDTO>> getPcReviewComments(@RequestParam("pcreviewId") int pcreviewId) {
+        List<PcReviewCommentDTO> comments = pcReviewService.getCommentsByPcReviewId(pcreviewId);
+        return ResponseEntity.ok(comments);
+    }
+
+    @PostMapping("/commentDelete")
+    public ResponseEntity<?> deleteComment(@RequestBody PcReviewCommentDTO commentDTO,
+                                           @AuthenticationPrincipal MemberUserDetails userDetails) {
+        if (!userDetails.getUsername().equals(commentDTO.getUserId())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("권한이 없습니다.");
+        }
+
+        pcReviewService.deleteComment(commentDTO.getPcreviewCommentId());
+        return ResponseEntity.ok().body("댓글 삭제 성공");
+    }
+
+    @PostMapping("/delete")
+    public String deletePcReview(@RequestParam("pcreviewId") int pcreviewId,
+                                 Principal principal) {
+        // 현재 로그인한 사용자의 ID
+        String currentUserId = principal.getName();
+
+        // 리뷰 삭제 수행
+        pcReviewService.deletePcReview(pcreviewId);
+
+        // 삭제 후 리뷰 목록 페이지로 리다이렉트
+        return "redirect:/pcreview/list";
+    }
 }

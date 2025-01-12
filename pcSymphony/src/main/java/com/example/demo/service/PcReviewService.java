@@ -1,18 +1,27 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.dto.PcReviewCommentDTO;
 import com.example.demo.domain.dto.PcReviewDTO;
+import com.example.demo.domain.entity.MemberEntity;
+import com.example.demo.domain.entity.PcReviewCommentEntity;
 import com.example.demo.domain.entity.PcReviewEntity;
 import com.example.demo.repository.MemberRepository;
+import com.example.demo.repository.PcReviewCommentRepository;
 import com.example.demo.repository.PcReviewRepository;
 import com.example.demo.repository.part.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -20,6 +29,9 @@ public class PcReviewService {
 
     private final PcReviewRepository pcReviewRepository;
     private final PartsReviewRepository partsReviewRepository;
+    private final MemberRepository memberRepository;
+    @Autowired
+    private final PcReviewCommentRepository pcReviewCommentRepository;
     /**
      * Save PcReviewEntity from PcReviewDTO
      *
@@ -117,5 +129,59 @@ public class PcReviewService {
                 .powersupplyReviewId(pcReviewEntity.getPowersupplyReview().getPartsReviewId())
                 .coverReviewId(pcReviewEntity.getCoverReview().getPartsReviewId())
                 .build();
+    }
+
+    public void updatePcReview(int reviewId, String reviewTitle, String reviewContent) {
+        PcReviewEntity pcReview = pcReviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다. ID: " + reviewId));
+
+        pcReview.setPcreviewTitle(reviewTitle);
+        pcReview.setPcreviewContent(reviewContent);
+
+        pcReviewRepository.save(pcReview); // 변경 사항 저장
+    }
+
+    public void pcReviewCommentWrite(PcReviewCommentDTO commentDTO) {
+        // 리뷰를 찾아서 설정
+        PcReviewEntity pcReview = pcReviewRepository.findById(commentDTO.getPcreviewId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다. ID: " + commentDTO.getPcreviewId()));
+
+        // 사용자 정보를 찾아서 설정
+        MemberEntity user = memberRepository.findById(commentDTO.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다. ID: " + commentDTO.getUserId()));
+
+        // 댓글 엔티티 생성
+        PcReviewCommentEntity commentEntity = PcReviewCommentEntity.builder()
+                .pcreviewCommentContent(commentDTO.getPcreviewCommentContent())
+                .pcreviewCommentDate(LocalDateTime.now())
+                .pcReview(pcReview)
+                .user(user)
+                .build();
+
+        // 댓글 저장
+        pcReviewCommentRepository.save(commentEntity);
+    }
+    public List<PcReviewCommentDTO> getCommentsByPcReviewId(int pcreviewId) {
+        return pcReviewCommentRepository.findByPcReview_PcreviewId(pcreviewId).stream()
+                .map(comment -> PcReviewCommentDTO.builder()
+                        .pcreviewCommentId(comment.getPcreviewCommentId())
+                        .pcreviewCommentContent(comment.getPcreviewCommentContent())
+                        .pcreviewCommentDate(comment.getPcreviewCommentDate())
+                        .pcreviewId(comment.getPcReview().getPcreviewId())
+                        .userId(comment.getUser() != null ? comment.getUser().getMemberId() : null)
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    public void deleteComment(int commentId) {
+        PcReviewCommentEntity comment = pcReviewCommentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다. ID: " + commentId));
+        pcReviewCommentRepository.delete(comment);
+    }
+
+    public void deletePcReview(int reviewId) {
+        PcReviewEntity review = pcReviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다. ID: " + reviewId));
+        pcReviewRepository.delete(review);
     }
 }

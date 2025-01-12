@@ -1,13 +1,1085 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>PC 리뷰 상세</title>
+    <style>
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 1px solid #000;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        caption {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .form-row {
+            display: none;
+        }
+
+
+    </style>
 </head>
 <body>
+    <table>
+        <caption>PC 리뷰 상세 정보</caption>
+        <!-- view -->
+        <tr id="pcReviewRow" th:data-id="${pcReview.pcreviewId}">
+            <th>리뷰 ID</th>
+            <td id="pcReviewId" th:text="${pcReview.pcreviewId}">리뷰 ID</td>
+            <th>리뷰 제목</th>
+            <td id="pcReviewTitle" th:text="${pcReview.pcreviewTitle}">리뷰 제목</td>
+            <th>리뷰 내용</th>
+            <td id="pcReviewContent" th:text="${pcReview.pcreviewContent}">리뷰 내용</td>
+            <th>작성 날짜</th>
+            <td id="pcReviewDate" th:text="${pcReview.pcreviewDate}">작성 날짜</td>
+            <th>작성자 ID</th>
+            <td id="pcReviewUserId" th:text="${pcReview.userId}">작성자 ID</td>
+            <td><button id="editPcReviewButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
+        </tr>
 
+        <!-- update -->
+        <tr id="editPcReviewRow" class="form-row">
+            <th>리뷰 ID</th>
+            <td th:text="${pcReview.pcreviewId}">리뷰 ID</td>
+            <th>리뷰 제목</th>
+            <td><input type="text" id="editPcReviewTitle" value=""></td>
+            <th>리뷰 내용</th>
+            <td><input type="text" id="editPcReviewContent" value=""></td>
+            <th>작성 날짜</th>
+            <td th:text="${pcReview.pcreviewDate}">작성 날짜</td>
+            <th>작성자 ID</th>
+            <td th:text="${pcReview.userId}">작성자 ID</td>
+            <td><button id="savePcReviewButton">완료</button></td>
+            <td><button id="cancelPcReviewButton">취소</button></td>
+        </tr>
+
+        <tr style="height: 20px;"></tr>
+
+        <!-- CPU -->
+        <!-- 기본코드 시작 -->
+        <tr id="cpuRow" th:data-id="${pcReview.cpuReview.partsReviewId}">
+            <th>CPU 리뷰 제목</th>
+            <td id="cpuTitle" th:text="${pcReview.cpuReview.partsReviewTitle}">CPU 리뷰 제목</td>
+            <th>CPU 리뷰 내용</th>
+            <td id="cpuContent" th:text="${pcReview.cpuReview.partsReviewContent}">CPU 리뷰 내용</td>
+            <th>CPU 리뷰 평점</th>
+            <td id="cpuRating" th:text="${pcReview.cpuReview.partsReviewRating}">CPU 리뷰 평점</td>
+            <td><button id="editCpuButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
+            <th>작성날짜</th>
+            <td id="cpuDate" th:text="${pcReview.cpuReview.partsReviewDate}">CPU 리뷰 평점</td>
+        </tr>
+        <!-- 기본코드 끝 -->
+
+        <!-- 수정코드 시작 -->
+        <tr class ="form-row" id="editCpuRow">
+            <th>CPU 리뷰 제목</th>
+            <td><input type="text" id="editCpuTitle" value=""></td>
+            <th>CPU 리뷰 내용</th>
+            <td><input type="text" id="editCpuContent" value=""></td>
+            <th>CPU 리뷰 평점</th>
+            <td>
+                <select id="editCpuRating">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </td>
+            <td>
+                <button id="saveCpuButton">완료</button>
+                <button id="cancelCpuButton">취소</button>
+            </td>
+        </tr>
+        <!-- 수정코드 끝 -->
+
+        <!-- cpucooler -->
+        <tr id="cpucoolerRow" th:data-id="${pcReview.cpucoolerReview.partsReviewId}">
+            <th>cpucooler 리뷰 제목</th>
+            <td id="cpucoolerTitle" th:text="${pcReview.cpucoolerReview.partsReviewTitle}">cpucooler 리뷰 제목</td>
+            <th>cpucooler 리뷰 내용</th>
+            <td id="cpucoolerContent" th:text="${pcReview.cpucoolerReview.partsReviewContent}">cpucooler 리뷰 내용</td>
+            <th>cpucooler 리뷰 평점</th>
+            <td id="cpucoolerRating" th:text="${pcReview.cpucoolerReview.partsReviewRating}">cpucooler 리뷰 평점</td>
+            <td><button id="editCpucoolerButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
+            <th>작성날짜</th>
+            <td id="cpucoolerDate" th:text="${pcReview.cpucoolerReview.partsReviewDate}">CPU 리뷰 평점</td>
+        </tr>
+        <tr class="form-row" id="editCpucoolerRow">
+            <th>cpucooler 리뷰 제목</th>
+            <td><input type="text" id="editCpucoolerTitle" value=""></td>
+            <th>cpucooler 리뷰 내용</th>
+            <td><input type="text" id="editCpucoolerContent" value=""></td>
+            <th>cpucooler 리뷰 평점</th>
+            <td>
+                <select id="editCpucoolerRating">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </td>
+            <td>
+                <button id="saveCpucoolerButton">완료</button>
+                <button id="cancelCpucoolerButton">취소</button>
+            </td>
+        </tr>
+
+        <!-- motherboard -->
+        <tr id="motherboardRow" th:data-id="${pcReview.motherboardReview.partsReviewId}">
+            <th>motherboard 리뷰 제목</th>
+            <td id="motherboardTitle" th:text="${pcReview.motherboardReview.partsReviewTitle}">motherboard 리뷰 제목</td>
+            <th>motherboard 리뷰 내용</th>
+            <td id="motherboardContent" th:text="${pcReview.motherboardReview.partsReviewContent}">motherboard 리뷰 내용</td>
+            <th>motherboard 리뷰 평점</th>
+            <td id="motherboardRating" th:text="${pcReview.motherboardReview.partsReviewRating}">motherboard 리뷰 평점</td>
+            <td><button id="editMotherboardButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
+            <th>작성날짜</th>
+            <td id="motherboardDate" th:text="${pcReview.motherboardReview.partsReviewDate}">CPU 리뷰 평점</td>
+        </tr>
+        <tr class="form-row" id="editMotherboardRow">
+            <th>motherboard 리뷰 제목</th>
+            <td><input type="text" id="editMotherboardTitle" value=""></td>
+            <th>motherboard 리뷰 내용</th>
+            <td><input type="text" id="editMotherboardContent" value=""></td>
+            <th>motherboard 리뷰 평점</th>
+            <td>
+                <select id="editMotherboardRating">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </td>
+            <td>
+                <button id="saveMotherboardButton">완료</button>
+                <button id="cancelMotherboardButton">취소</button>
+            </td>
+        </tr>
+
+        <!-- Memory -->
+        <tr id="memoryRow" th:data-id="${pcReview.memoryReview.partsReviewId}">
+            <th>Memory 리뷰 제목</th>
+            <td id="memoryTitle" th:text="${pcReview.memoryReview.partsReviewTitle}">Memory 리뷰 제목</td>
+            <th>Memory 리뷰 내용</th>
+            <td id="memoryContent" th:text="${pcReview.memoryReview.partsReviewContent}">Memory 리뷰 내용</td>
+            <th>Memory 리뷰 평점</th>
+            <td id="memoryRating" th:text="${pcReview.memoryReview.partsReviewRating}">Memory 리뷰 평점</td>
+            <td><button id="editMemoryButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
+            <th>작성날짜</th>
+            <td id="memoryDate" th:text="${pcReview.memoryReview.partsReviewDate}">CPU 리뷰 평점</td>
+
+        </tr>
+        <tr class="form-row" id="editMemoryRow">
+            <th>Memory 리뷰 제목</th>
+            <td><input type="text" id="editMemoryTitle" value=""></td>
+            <th>Memory 리뷰 내용</th>
+            <td><input type="text" id="editMemoryContent" value=""></td>
+            <th>Memory 리뷰 평점</th>
+            <td>
+                <select id="editMemoryRating">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </td>
+            <td>
+                <button id="saveMemoryButton">완료</button>
+                <button id="cancelMemoryButton">취소</button>
+            </td>
+        </tr>
+        <!-- Storage -->
+        <tr id="storageRow" th:data-id="${pcReview.storageReview.partsReviewId}">
+            <th>Storage 리뷰 제목</th>
+            <td id="storageTitle" th:text="${pcReview.storageReview.partsReviewTitle}">Storage 리뷰 제목</td>
+            <th>Storage 리뷰 내용</th>
+            <td id="storageContent" th:text="${pcReview.storageReview.partsReviewContent}">Storage 리뷰 내용</td>
+            <th>Storage 리뷰 평점</th>
+            <td id="storageRating" th:text="${pcReview.storageReview.partsReviewRating}">Storage 리뷰 평점</td>
+            <td><button id="editStorageButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
+            <th>작성날짜</th>
+            <td id="storageDate" th:text="${pcReview.storageReview.partsReviewDate}">CPU 리뷰 평점</td>
+        </tr>
+        <tr class="form-row" id="editStorageRow">
+            <th>Storage 리뷰 제목</th>
+            <td><input type="text" id="editStorageTitle" value=""></td>
+            <th>Storage 리뷰 내용</th>
+            <td><input type="text" id="editStorageContent" value=""></td>
+            <th>Storage 리뷰 평점</th>
+            <td>
+                <select id="editStorageRating">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </td>
+            <td>
+                <button id="saveStorageButton">완료</button>
+                <button id="cancelStorageButton">취소</button>
+            </td>
+        </tr>
+
+        <!-- Video Card -->
+        <tr id="videocardRow" th:data-id="${pcReview.videocardReview.partsReviewId}">
+            <th>Video Card 리뷰 제목</th>
+            <td id="videocardTitle" th:text="${pcReview.videocardReview.partsReviewTitle}">Video Card 리뷰 제목</td>
+            <th>Video Card 리뷰 내용</th>
+            <td id="videocardContent" th:text="${pcReview.videocardReview.partsReviewContent}">Video Card 리뷰 내용</td>
+            <th>Video Card 리뷰 평점</th>
+            <td id="videocardRating" th:text="${pcReview.videocardReview.partsReviewRating}">Video Card 리뷰 평점</td>
+            <td><button id="editVideocardButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
+            <th>작성날짜</th>
+            <td id="videocardDate" th:text="${pcReview.videocardReview.partsReviewDate}">CPU 리뷰 평점</td>
+        </tr>
+        <tr class="form-row" id="editVideocardRow">
+            <th>Video Card 리뷰 제목</th>
+            <td><input type="text" id="editVideocardTitle" value=""></td>
+            <th>Video Card 리뷰 내용</th>
+            <td><input type="text" id="editVideocardContent" value=""></td>
+            <th>Video Card 리뷰 평점</th>
+            <td>
+                <select id="editVideocardRating">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </td>
+            <td>
+                <button id="saveVideocardButton">완료</button>
+                <button id="cancelVideocardButton">취소</button>
+            </td>
+        </tr>
+
+        <!-- Power Supply -->
+        <tr id="powersupplyRow" th:data-id="${pcReview.powersupplyReview.partsReviewId}">
+            <th>Power Supply 리뷰 제목</th>
+            <td id="powersupplyTitle" th:text="${pcReview.powersupplyReview.partsReviewTitle}">Power Supply 리뷰 제목</td>
+            <th>Power Supply 리뷰 내용</th>
+            <td id="powersupplyContent" th:text="${pcReview.powersupplyReview.partsReviewContent}">Power Supply 리뷰 내용</td>
+            <th>Power Supply 리뷰 평점</th>
+            <td id="powersupplyRating" th:text="${pcReview.powersupplyReview.partsReviewRating}">Power Supply 리뷰 평점</td>
+            <td><button id="editPowersupplyButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
+            <th>작성날짜</th>
+            <td id="powersupplyDate" th:text="${pcReview.powersupplyReview.partsReviewDate}">CPU 리뷰 평점</td>
+        </tr>
+        <tr class="form-row" id="editPowersupplyRow">
+            <th>Power Supply 리뷰 제목</th>
+            <td><input type="text" id="editPowersupplyTitle" value=""></td>
+            <th>Power Supply 리뷰 내용</th>
+            <td><input type="text" id="editPowersupplyContent" value=""></td>
+            <th>Power Supply 리뷰 평점</th>
+            <td>
+                <select id="editPowersupplyRating">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </td>
+            <td>
+                <button id="savePowersupplyButton">완료</button>
+                <button id="cancelPowersupplyButton">취소</button>
+            </td>
+        </tr>
+
+        <!-- Cover -->
+        <tr id="coverRow" th:data-id="${pcReview.coverReview.partsReviewId}">
+            <th>Cover 리뷰 제목</th>
+            <td id="coverTitle" th:text="${pcReview.coverReview.partsReviewTitle}">Cover 리뷰 제목</td>
+            <th>Cover 리뷰 내용</th>
+            <td id="coverContent" th:text="${pcReview.coverReview.partsReviewContent}">Cover 리뷰 내용</td>
+            <th>Cover 리뷰 평점</th>
+            <td id="coverRating" th:text="${pcReview.coverReview.partsReviewRating}">Cover 리뷰 평점</td>
+            <td><button id="editCoverButton" th:if="${pcReview.userId == #authentication.name}">수정</button></td>
+            <th>작성날짜</th>
+            <td id="coverDate" th:text="${pcReview.coverReview.partsReviewDate}">CPU 리뷰 평점</td>
+        </tr>
+        <tr class="form-row" id="editCoverRow">
+            <th>Cover 리뷰 제목</th>
+            <td><input type="text" id="editCoverTitle" value=""></td>
+            <th>Cover 리뷰 내용</th>
+            <td><input type="text" id="editCoverContent" value=""></td>
+            <th>Cover 리뷰 평점</th>
+            <td>
+                <select id="editCoverRating">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </td>
+            <td>
+                <button id="saveCoverButton">완료</button>
+                <button id="cancelCoverButton">취소</button>
+            </td>
+        </tr>
+    </table>
+
+    <div class="content">
+        <!-- 기존 PC 리뷰 상세 테이블 여기에 위치 -->
+
+        <!-- 댓글 입력 폼 -->
+        <form id="commentForm" class="comment-form">
+            <label for="pcReviewCommentContent">리플 입력</label>
+            <input id="pcReviewCommentContent" name="commentContent" placeholder="댓글을 입력하세요" style="width:500px" />
+            <button id="commentWriteButton" type="button">저장</button>
+        </form>
+
+        <!-- 댓글 목록 출력 -->
+        <table class="comment" id="commentTable">
+            <thead>
+            <tr>
+                <th>작성자</th>
+                <th>내용</th>
+                <th>삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- 댓글 목록은 여기에서 동적으로 추가됩니다. -->
+            </tbody>
+        </table>
+    </div>
+
+    <form method="POST" th:action="@{/pcreview/delete}"
+          th:if="${pcReview.userId == #authentication.name}">
+        <input name="pcreviewId" th:value="${pcReview.pcreviewId}" type="hidden"/>
+        <button class="delete-button" type="submit">삭제</button>
+    </form>
+    <form th:action="@{/pcreview/list}">
+        <button class="delete-button" type="submit">리스트</button>
+    </form>
+
+    <!-- pcReviewId -->
+    <input type="text" id="userId" th:value="${#authentication.name}" disabled style="display: none;">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha384-UG8ao2jwOWB7/oDdObZc6ItJmwUkR/PfMyt9Qs5AwX7PsnYn1CRKCTWyncPTWvaS" crossorigin="anonymous"></script>
+
+<script>
+
+    // pcReviewId 값 가져오기
+    const pcReviewId = document.getElementById('pcReviewId').textContent.trim();
+
+    // userName 값 가져오기
+    const userId = document.getElementById('userId').value;
+
+    function getMySQLFormattedTimestamp() {
+        const now = new Date();
+
+        // 로컬 시간 계산
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        // MySQL 형식 (로컬 시간)
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+    }
+
+
+
+    console.log("pcReviewId 값:", pcReviewId);
+    console.log("userId 값:", userId);
+    function loadComments() {
+        $.ajax({
+            url: '/pcreview/commentList?pcreviewId=' + pcReviewId, // GET 방식으로 파라미터 전달
+            type: 'GET',
+            success: function (data) {
+                const commentTableBody = $('#commentTable tbody');
+                commentTableBody.empty(); // 기존 댓글 목록을 비웁니다.
+
+                // 서버에서 받은 댓글 데이터를 HTML로 출력
+                data.forEach(function (comment) {
+                    let deleteButton = '';
+                    if (comment.userId === userId) {
+                        // 현재 로그인한 사용자의 댓글일 때만 삭제 버튼 표시
+                        deleteButton = `<button onclick="deleteComment(${comment.pcreviewCommentId})">삭제</button>`;
+                    }
+
+                    const commentHtml = `
+                        <tr id="comment-${comment.pcreviewCommentId}">
+                            <td>${comment.userId}</td>
+                            <td>${comment.pcreviewCommentContent}</td>
+                            <td>${deleteButton}</td>
+                        </tr>
+                    `;
+                    commentTableBody.append(commentHtml);
+                });
+            },
+            error: function (xhr, status, error) {
+                alert('댓글 목록 불러오기 실패');
+            }
+        });
+    }
+
+    // 댓글을 삭제하는 함수
+    function deleteComment(commentId) {
+        const deleteData = {
+            pcreviewId: pcReviewId, // 리뷰 ID
+            pcreviewCommentId: commentId, // 삭제할 댓글 ID
+            userId: userId // 사용자 ID
+        };
+
+        $.ajax({
+            url: '/pcreview/commentDelete', // 적절한 URL로 변경
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(deleteData),
+            success: function () {
+                loadComments(); // 댓글 목록 새로고침
+            },
+            error: function () {
+                alert('댓글 삭제 실패!');
+            }
+        });
+    }
+
+    // 댓글을 저장하는 함수
+     $('#commentWriteButton').click(function () {
+         const commentContent = $('#pcReviewCommentContent').val();
+         if (!commentContent) {
+             alert('댓글을 입력하세요.');
+             return;
+         }
+
+         const commentData = {
+             pcreviewId: pcReviewId,
+             userId: userId,
+             pcreviewCommentContent: commentContent
+         };
+
+         $.ajax({
+             url: '/pcreview/commentWrite',
+             type: 'POST',
+             contentType: 'application/json',
+             data: JSON.stringify(commentData),
+             success: function () {
+                 $('#pcReviewCommentContent').val(''); // 댓글 입력란 초기화
+                 loadComments(); // 댓글 목록 새로고침
+             },
+             error: function () {
+                 alert('댓글 저장 실패!');
+             }
+         });
+     });
+
+    // 페이지 로드 시 댓글 목록 불러오기
+    $(document).ready(function () {
+        loadComments();
+    });
+
+    // PcReviewHandling
+    document.addEventListener("DOMContentLoaded", function () {
+        const pcReviewRow = document.getElementById("pcReviewRow");
+        const editPcReviewRow = document.getElementById("editPcReviewRow");
+
+        const editButton = document.getElementById("editPcReviewButton");
+        const saveButton = document.getElementById("savePcReviewButton");
+        const cancelButton = document.getElementById("cancelPcReviewButton");
+
+        editPcReviewRow.style.display = "none";
+
+        editButton.addEventListener("click", function () {
+            console.log("도달")
+            pcReviewRow.style.display = "none";
+            editPcReviewRow.style.display = "table-row";
+
+            document.getElementById("editPcReviewTitle").value = document.getElementById("pcReviewTitle").textContent;
+            document.getElementById("editPcReviewContent").value = document.getElementById("pcReviewContent").textContent;
+        });
+
+        // Handle save button click
+        saveButton.addEventListener("click", async function () {
+
+            const updatedTitle = document.getElementById("editPcReviewTitle").value;
+            const updatedContent = document.getElementById("editPcReviewContent").value;
+
+            document.getElementById("pcReviewTitle").textContent = updatedTitle;
+            document.getElementById("pcReviewContent").textContent = updatedContent;
+            const currentTime = getMySQLFormattedTimestamp();
+            document.getElementById("pcReviewDate").textContent = currentTime;
+
+
+            pcReviewRow.style.display = "table-row";
+            editPcReviewRow.style.display = "none";
+            try {
+                const response = await fetch('/pcreview/updatePcReview', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        pcreviewId: pcReviewRow.dataset.id, // HTML에 `data-id` 속성으로 ID를 포함
+                        pcreviewTitle: updatedTitle,
+                        pcreviewContent: updatedContent,
+                    }),
+                });
+
+                if (!response.ok) {
+                    console.error('Failed to update the database');
+                    alert('데이터베이스 업데이트에 실패했습니다.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('서버와의 통신 중 문제가 발생했습니다.');
+            }
+        });
+
+        // Handle cancel button click
+        cancelButton.addEventListener("click", function () {
+            // Switch back to display mode without saving changes
+            pcReviewRow.style.display = "table-row";
+            editPcReviewRow.style.display = "none";
+        });
+    });
+
+    // CPU event handling
+    const editCpuButton = document.getElementById('editCpuButton');
+    const cancelCpuButton = document.getElementById('cancelCpuButton');
+    const saveCpuButton = document.getElementById('saveCpuButton');
+    const cpuRow = document.getElementById('cpuRow');
+    const editCpuRow = document.getElementById('editCpuRow');
+    const cpuTitle = document.getElementById('cpuTitle');
+    const cpuContent = document.getElementById('cpuContent');
+    const cpuRating = document.getElementById('cpuRating');
+    const editCpuTitle = document.getElementById('editCpuTitle');
+    const editCpuContent = document.getElementById('editCpuContent');
+    const editCpuRating = document.getElementById('editCpuRating');
+
+    editCpuButton.addEventListener('click', () => {
+        cpuRow.style.display = 'none';
+        editCpuRow.style.display = 'table-row';
+        editCpuTitle.value = cpuTitle.textContent;
+        editCpuContent.value = cpuContent.textContent;
+        editCpuRating.value = cpuRating.textContent.trim(); // 현재 평점을 선택 박스에 반영
+    });
+
+    cancelCpuButton.addEventListener('click', () => {
+        editCpuRow.style.display = 'none';
+        cpuRow.style.display = 'table-row';
+    });
+
+    saveCpuButton.addEventListener('click', async () => {
+        const updatedTitle = editCpuTitle.value;
+        const updatedContent = editCpuContent.value;
+        const updatedRating = editCpuRating.value; // 선택된 평점 값 가져오기
+
+        // Update the UI
+        cpuTitle.textContent = updatedTitle;
+        cpuContent.textContent = updatedContent;
+        cpuRating.textContent = updatedRating; // 평점 업데이트
+        const currentTime = getMySQLFormattedTimestamp();
+        document.getElementById("cpuDate").textContent = currentTime;
+        editCpuRow.style.display = 'none';
+        cpuRow.style.display = 'table-row';
+
+        // Send the updated data to the server
+        try {
+            const response = await fetch('/pcreview/updateParts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    partsReviewId: cpuRow.dataset.id, // HTML에 `data-id` 속성으로 ID를 포함
+                    partsReviewTitle: updatedTitle,
+                    partsReviewContent: updatedContent,
+                    partsReviewRating: updatedRating, // 서버로 평점 값 전달
+                }),
+            });
+
+            if (!response.ok) {
+                console.error('Failed to update the database');
+                alert('데이터베이스 업데이트에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('서버와의 통신 중 문제가 발생했습니다.');
+        }
+    });
+
+
+    // cpucooler event handling
+    const editCpucoolerButton = document.getElementById('editCpucoolerButton');
+    const cancelCpucoolerButton = document.getElementById('cancelCpucoolerButton');
+    const saveCpucoolerButton = document.getElementById('saveCpucoolerButton');
+    const cpucoolerRow = document.getElementById('cpucoolerRow');
+    const editCpucoolerRow = document.getElementById('editCpucoolerRow');
+    const cpucoolerTitle = document.getElementById('cpucoolerTitle');
+    const cpucoolerContent = document.getElementById('cpucoolerContent');
+    const cpucoolerRating = document.getElementById('cpucoolerRating');
+    const editCpucoolerTitle = document.getElementById('editCpucoolerTitle');
+    const editCpucoolerContent = document.getElementById('editCpucoolerContent');
+    const editCpucoolerRating = document.getElementById('editCpucoolerRating');
+
+    editCpucoolerButton.addEventListener('click', () => {
+        cpucoolerRow.style.display = 'none';
+        editCpucoolerRow.style.display = 'table-row';
+        editCpucoolerTitle.value = cpucoolerTitle.textContent;
+        editCpucoolerContent.value = cpucoolerContent.textContent;
+        editCpucoolerRating.value = cpucoolerRating.textContent.trim();
+    });
+
+    cancelCpucoolerButton.addEventListener('click', () => {
+        editCpucoolerRow.style.display = 'none';
+        cpucoolerRow.style.display = 'table-row';
+    });
+
+    saveCpucoolerButton.addEventListener('click', async () => {
+        const updatedTitle = editCpucoolerTitle.value;
+        const updatedContent = editCpucoolerContent.value;
+        const updatedRating = editCpucoolerRating.value;
+
+        // Update the UI
+        cpucoolerTitle.textContent = updatedTitle;
+        cpucoolerContent.textContent = updatedContent;
+        cpucoolerRating.textContent = updatedRating;
+        const currentTime = getMySQLFormattedTimestamp();
+        document.getElementById("cpucoolerDate").textContent = currentTime;
+        editCpucoolerRow.style.display = 'none';
+        cpucoolerRow.style.display = 'table-row';
+
+        // Send the updated data to the server
+        try {
+            const response = await fetch('/pcreview/updateParts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    partsReviewId: cpucoolerRow.dataset.id, // HTML에 `data-id` 속성으로 ID를 포함
+                    partsReviewTitle: updatedTitle,
+                    partsReviewContent: updatedContent,
+                    partsReviewRating: updatedRating
+                }),
+            });
+
+            if (!response.ok) {
+                console.error('Failed to update the database');
+                alert('데이터베이스 업데이트에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('서버와의 통신 중 문제가 발생했습니다.');
+        }
+    });
+
+    // motherboard event handling
+    const editMotherboardButton = document.getElementById('editMotherboardButton');
+    const cancelMotherboardButton = document.getElementById('cancelMotherboardButton');
+    const saveMotherboardButton = document.getElementById('saveMotherboardButton');
+    const motherboardRow = document.getElementById('motherboardRow');
+    const editMotherboardRow = document.getElementById('editMotherboardRow');
+    const motherboardTitle = document.getElementById('motherboardTitle');
+    const motherboardContent = document.getElementById('motherboardContent');
+    const motherboardRating = document.getElementById('motherboardRating');
+    const editMotherboardTitle = document.getElementById('editMotherboardTitle');
+    const editMotherboardContent = document.getElementById('editMotherboardContent');
+    const editMotherboardRating = document.getElementById('editMotherboardRating');
+
+    editMotherboardButton.addEventListener('click', () => {
+        motherboardRow.style.display = 'none';
+        editMotherboardRow.style.display = 'table-row';
+        editMotherboardTitle.value = motherboardTitle.textContent;
+        editMotherboardContent.value = motherboardContent.textContent;
+        editMotherboardRating.value = motherboardRating.textContent.trim();
+    });
+
+    cancelMotherboardButton.addEventListener('click', () => {
+        editMotherboardRow.style.display = 'none';
+        motherboardRow.style.display = 'table-row';
+    });
+
+    saveMotherboardButton.addEventListener('click', async () => {
+        const updatedTitle = editMotherboardTitle.value;
+        const updatedContent = editMotherboardContent.value;
+        const updatedRating = editMotherboardRating.value;
+
+        // Update the UI
+        motherboardTitle.textContent = updatedTitle;
+        motherboardContent.textContent = updatedContent;
+        motherboardRating.textContent = updatedRating;
+        const currentTime = getMySQLFormattedTimestamp();
+        document.getElementById("motherboardDate").textContent = currentTime;
+        editMotherboardRow.style.display = 'none';
+        motherboardRow.style.display = 'table-row';
+
+        // Send the updated data to the server
+        try {
+            const response = await fetch('/pcreview/updateParts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    partsReviewId: motherboardRow.dataset.id, // HTML에 `data-id` 속성으로 ID를 포함
+                    partsReviewTitle: updatedTitle,
+                    partsReviewContent: updatedContent,
+                    partsReviewRating: updatedRating // 서버로 평점 값 전달
+                }),
+            });
+
+            if (!response.ok) {
+                console.error('Failed to update the database');
+                alert('데이터베이스 업데이트에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('서버와의 통신 중 문제가 발생했습니다.');
+        }
+    });
+
+
+    // Memory event handling
+    const editMemoryButton = document.getElementById('editMemoryButton');
+    const cancelMemoryButton = document.getElementById('cancelMemoryButton');
+    const saveMemoryButton = document.getElementById('saveMemoryButton');
+    const memoryRow = document.getElementById('memoryRow');
+    const editMemoryRow = document.getElementById('editMemoryRow');
+    const memoryTitle = document.getElementById('memoryTitle');
+    const memoryContent = document.getElementById('memoryContent');
+    const memoryRating = document.getElementById('memoryRating');
+    const editMemoryTitle = document.getElementById('editMemoryTitle');
+    const editMemoryContent = document.getElementById('editMemoryContent');
+    const editMemoryRating = document.getElementById('editMemoryRating');
+
+    editMemoryButton.addEventListener('click', () => {
+        memoryRow.style.display = 'none';
+        editMemoryRow.style.display = 'table-row';
+        editMemoryTitle.value = memoryTitle.textContent;
+        editMemoryContent.value = memoryContent.textContent;
+        editMemoryRating.value = memoryRating.textContent.trim();
+    });
+
+    cancelMemoryButton.addEventListener('click', () => {
+        editMemoryRow.style.display = 'none';
+        memoryRow.style.display = 'table-row';
+    });
+
+    saveMemoryButton.addEventListener('click', async () => {
+        const updatedTitle = editMemoryTitle.value;
+        const updatedContent = editMemoryContent.value;
+        const updatedRating = editMemoryRating.value;
+
+        // Update the UI
+        memoryTitle.textContent = updatedTitle;
+        memoryContent.textContent = updatedContent;
+        memoryRating.textContent = updatedRating;
+        const currentTime = getMySQLFormattedTimestamp();
+        document.getElementById("memoryDate").textContent = currentTime;
+        editMemoryRow.style.display = 'none';
+        memoryRow.style.display = 'table-row';
+
+        // Send the updated data to the server
+        try {
+            const response = await fetch('/pcreview/updateParts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    partsReviewId: memoryRow.dataset.id, // HTML에 `data-id` 속성으로 ID를 포함
+                    partsReviewTitle: updatedTitle,
+                    partsReviewContent: updatedContent,
+                    partsReviewRating: updatedRating // 서버로 평점 값 전달
+                }),
+            });
+
+            if (!response.ok) {
+                console.error('Failed to update the database');
+                alert('데이터베이스 업데이트에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('서버와의 통신 중 문제가 발생했습니다.');
+        }
+    });
+
+    // Storage event handling
+    const editStorageButton = document.getElementById('editStorageButton');
+    const cancelStorageButton = document.getElementById('cancelStorageButton');
+    const saveStorageButton = document.getElementById('saveStorageButton');
+    const storageRow = document.getElementById('storageRow');
+    const editStorageRow = document.getElementById('editStorageRow');
+    const storageTitle = document.getElementById('storageTitle');
+    const storageContent = document.getElementById('storageContent');
+    const storageRating = document.getElementById('storageRating');
+    const editStorageTitle = document.getElementById('editStorageTitle');
+    const editStorageContent = document.getElementById('editStorageContent');
+    const editStorageRating = document.getElementById('editStorageRating');
+
+    editStorageButton.addEventListener('click', () => {
+        storageRow.style.display = 'none';
+        editStorageRow.style.display = 'table-row';
+        editStorageTitle.value = storageTitle.textContent;
+        editStorageContent.value = storageContent.textContent;
+        editStorageRating.value = storageRating.textContent.trim();
+    });
+
+    cancelStorageButton.addEventListener('click', () => {
+        editStorageRow.style.display = 'none';
+        storageRow.style.display = 'table-row';
+    });
+
+    saveStorageButton.addEventListener('click', async () => {
+        const updatedTitle = editStorageTitle.value;
+        const updatedContent = editStorageContent.value;
+        const updatedRating = editStorageRating.value;
+
+        // Update the UI
+        storageTitle.textContent = updatedTitle;
+        storageContent.textContent = updatedContent;
+        storageRating.textContent = updatedRating;
+        const currentTime = getMySQLFormattedTimestamp();
+        document.getElementById("storageDate").textContent = currentTime;
+        editStorageRow.style.display = 'none';
+        storageRow.style.display = 'table-row';
+
+        // Send the updated data to the server
+        try {
+            const response = await fetch('/pcreview/updateParts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    partsReviewId: storageRow.dataset.id, // HTML에 `data-id` 속성으로 ID를 포함
+                    partsReviewTitle: updatedTitle,
+                    partsReviewContent: updatedContent,
+                    partsReviewRating: updatedRating // 서버로 평점 값 전달
+                }),
+            });
+
+            if (!response.ok) {
+                console.error('Failed to update the database');
+                alert('데이터베이스 업데이트에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('서버와의 통신 중 문제가 발생했습니다.');
+        }
+    });
+
+
+    // Video Card event handling
+    const editVideocardButton = document.getElementById('editVideocardButton');
+    const cancelVideocardButton = document.getElementById('cancelVideocardButton');
+    const saveVideocardButton = document.getElementById('saveVideocardButton');
+    const videocardRow = document.getElementById('videocardRow');
+    const editVideocardRow = document.getElementById('editVideocardRow');
+    const videocardTitle = document.getElementById('videocardTitle');
+    const videocardContent = document.getElementById('videocardContent');
+    const videocardRating = document.getElementById('videocardRating');
+    const editVideocardTitle = document.getElementById('editVideocardTitle');
+    const editVideocardContent = document.getElementById('editVideocardContent');
+    const editVideocardRating = document.getElementById('editVideocardRating');
+
+    editVideocardButton.addEventListener('click', () => {
+        videocardRow.style.display = 'none';
+        editVideocardRow.style.display = 'table-row';
+        editVideocardTitle.value = videocardTitle.textContent;
+        editVideocardContent.value = videocardContent.textContent;
+        editVideocardRating.value = videocardRating.textContent.trim();
+    });
+
+    cancelVideocardButton.addEventListener('click', () => {
+        editVideocardRow.style.display = 'none';
+        videocardRow.style.display = 'table-row';
+    });
+
+    saveVideocardButton.addEventListener('click', async () => {
+        const updatedTitle = editVideocardTitle.value;
+        const updatedContent = editVideocardContent.value;
+        const updatedRating = editVideocardRating.value;
+
+        // Update the UI
+        videocardTitle.textContent = updatedTitle;
+        videocardContent.textContent = updatedContent;
+        videocardRating.textContent = updatedRating;
+        const currentTime = getMySQLFormattedTimestamp();
+        document.getElementById("videocardDate").textContent = currentTime;
+        editVideocardRow.style.display = 'none';
+        videocardRow.style.display = 'table-row';
+
+        // Send the updated data to the server
+        try {
+            const response = await fetch('/pcreview/updateParts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    partsReviewId: videocardRow.dataset.id, // HTML에 `data-id` 속성으로 ID를 포함
+                    partsReviewTitle: updatedTitle,
+                    partsReviewContent: updatedContent,
+                    partsReviewRating: updatedRating // 서버로 평점 값 전달
+                }),
+            });
+
+            if (!response.ok) {
+                console.error('Failed to update the database');
+                alert('데이터베이스 업데이트에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('서버와의 통신 중 문제가 발생했습니다.');
+        }
+    });
+
+
+    // Power Supply event handling
+    const editPowersupplyButton = document.getElementById('editPowersupplyButton');
+    const cancelPowersupplyButton = document.getElementById('cancelPowersupplyButton');
+    const savePowersupplyButton = document.getElementById('savePowersupplyButton');
+    const powersupplyRow = document.getElementById('powersupplyRow');
+    const editPowersupplyRow = document.getElementById('editPowersupplyRow');
+    const powersupplyTitle = document.getElementById('powersupplyTitle');
+    const powersupplyContent = document.getElementById('powersupplyContent');
+    const powersupplyRating = document.getElementById('powersupplyRating');
+    const editPowersupplyTitle = document.getElementById('editPowersupplyTitle');
+    const editPowersupplyContent = document.getElementById('editPowersupplyContent');
+    const editPowersupplyRating = document.getElementById('editPowersupplyRating');
+
+    editPowersupplyButton.addEventListener('click', () => {
+        powersupplyRow.style.display = 'none';
+        editPowersupplyRow.style.display = 'table-row';
+        editPowersupplyTitle.value = powersupplyTitle.textContent;
+        editPowersupplyContent.value = powersupplyContent.textContent;
+        editPowersupplyRating.value = powersupplyRating.textContent.trim();
+    });
+
+    cancelPowersupplyButton.addEventListener('click', () => {
+        editPowersupplyRow.style.display = 'none';
+        powersupplyRow.style.display = 'table-row';
+    });
+
+    savePowersupplyButton.addEventListener('click', async () => {
+        const updatedTitle = editPowersupplyTitle.value;
+        const updatedContent = editPowersupplyContent.value;
+        const updatedRating = editPowersupplyRating.value;
+
+        // Update the UI
+        powersupplyTitle.textContent = updatedTitle;
+        powersupplyContent.textContent = updatedContent;
+        powersupplyRating.textContent = updatedRating;
+        const currentTime = getMySQLFormattedTimestamp();
+        document.getElementById("powersupplyDate").textContent = currentTime;
+        editPowersupplyRow.style.display = 'none';
+        powersupplyRow.style.display = 'table-row';
+
+        // Send the updated data to the server
+        try {
+            const response = await fetch('/pcreview/updateParts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    partsReviewId: powersupplyRow.dataset.id, // HTML에 `data-id` 속성으로 ID를 포함
+                    partsReviewTitle: updatedTitle,
+                    partsReviewContent: updatedContent,
+                    partsReviewRating: updatedRating // 서버로 평점 값 전달
+                }),
+            });
+
+            if (!response.ok) {
+                console.error('Failed to update the database');
+                alert('데이터베이스 업데이트에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('서버와의 통신 중 문제가 발생했습니다.');
+        }
+    });
+
+
+    // Cover event handling
+    const editCoverButton = document.getElementById('editCoverButton');
+    const cancelCoverButton = document.getElementById('cancelCoverButton');
+    const saveCoverButton = document.getElementById('saveCoverButton');
+    const coverRow = document.getElementById('coverRow');
+    const editCoverRow = document.getElementById('editCoverRow');
+    const coverTitle = document.getElementById('coverTitle');
+    const coverContent = document.getElementById('coverContent');
+    const coverRating = document.getElementById('coverRating');
+    const editCoverTitle = document.getElementById('editCoverTitle');
+    const editCoverContent = document.getElementById('editCoverContent');
+    const editCoverRating = document.getElementById('editCoverRating');
+
+    editCoverButton.addEventListener('click', () => {
+        coverRow.style.display = 'none';
+        editCoverRow.style.display = 'table-row';
+        editCoverTitle.value = coverTitle.textContent;
+        editCoverContent.value = coverContent.textContent;
+        editCoverRating.value = coverRating.textContent.trim();
+    });
+
+    cancelCoverButton.addEventListener('click', () => {
+        editCoverRow.style.display = 'none';
+        coverRow.style.display = 'table-row';
+    });
+
+    saveCoverButton.addEventListener('click', async () => {
+        const updatedTitle = editCoverTitle.value;
+        const updatedContent = editCoverContent.value;
+        const updatedRating = editCoverRating.value;
+
+        // Update the UI
+        coverTitle.textContent = updatedTitle;
+        coverContent.textContent = updatedContent;
+        coverRating.textContent = updatedRating;
+        const currentTime = getMySQLFormattedTimestamp();
+        document.getElementById("coverDate").textContent = currentTime;
+        editCoverRow.style.display = 'none';
+        coverRow.style.display = 'table-row';
+
+        // Send the updated data to the server
+        try {
+            const response = await fetch('/pcreview/updateParts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    partsReviewId: coverRow.dataset.id, // HTML에 `data-id` 속성으로 ID를 포함
+                    partsReviewTitle: updatedTitle,
+                    partsReviewContent: updatedContent,
+                    partsReviewRating: updatedRating // 서버로 평점 값 전달
+                }),
+            });
+
+            if (!response.ok) {
+                console.error('Failed to update the database');
+                alert('데이터베이스 업데이트에 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('서버와의 통신 중 문제가 발생했습니다.');
+        }
+    });
+
+
+</script>
 </body>
 </html>

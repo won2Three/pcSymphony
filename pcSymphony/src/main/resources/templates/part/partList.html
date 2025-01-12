@@ -28,13 +28,17 @@
                     <tr th:each="part : ${parts}">
                         <td th:text="${part.id}">1</td>
                         <td>
+                            <img th:src="${part.imageUrl != null ? part.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
+                                 alt="Part Image"
+                                 style="width: 50px; height: 50px;"/>
+                        </td>
+                        <td>
                             <!-- 제목을 클릭하면 partDetail.html로 이동 -->
                             <a id="partList-Atag" th:href="@{/part/{tableName}/{id}(tableName=${tableName}, id=${part.id})}"
                                th:text="${part.name}">Part Name</a>
                         </td>
                         <td th:text="${part.manufacturer}">Brand Name</td>
                         <td th:text="${part.price}">Price</td>
-                        <td th:text="${part.part}">Part</td>
                     </tr>
                 </tbody>
             </table>

@@ -6,6 +6,7 @@ import com.example.demo.domain.entity.part.PartsReviewEntity;
 import com.example.demo.domain.entity.part.*;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.part.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -19,8 +20,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class PartsReviewService {
+public class    PartsReviewService {
 
+    @Autowired
+    private final PartsReviewRepository partsReviewRepository;
 
     public static PartsReviewDTO toDTO(PartsReviewEntity entity) {
         PartsReviewDTO dto = new PartsReviewDTO();
@@ -101,5 +104,20 @@ public class PartsReviewService {
             entity.setCover(coverRepository.findById(dto.getCoverId()).orElse(null));
         }
         return entity;
+    }
+
+    public PartsReviewEntity updatePartsReview(Integer id, String title, String content, int rating) {
+        // 엔티티 조회
+        PartsReviewEntity review = partsReviewRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰가 존재하지 않습니다: ID " + id));
+
+        // 엔티티 수정
+        review.setPartsReviewTitle(title);
+        review.setPartsReviewContent(content);
+        review.setPartsReviewRating(rating);
+//        review.setPartsReviewDate();
+
+        // 저장 및 반환
+        return partsReviewRepository.save(review);
     }
 }

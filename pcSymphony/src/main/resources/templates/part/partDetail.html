@@ -17,6 +17,9 @@
 <div class="body-wrap">
     <main class="site-content">
         <div class="container">
+            <img th:src="${part.imageUrl != null ? part.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
+                 alt="Part Image"
+                 style="width: 100px; height: 100px;"/>
             <h1 th:text="${tableName} + ' : ' + ${part.name}">Part Detail</h1>
             <table>
                 <!-- 공통 속성들 -->

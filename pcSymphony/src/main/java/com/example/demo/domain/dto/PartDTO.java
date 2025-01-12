@@ -15,6 +15,7 @@ public class PartDTO {
     private String name;
     private String manufacturer;
     private Double price;
+    private String imageUrl;
 
     private String coverPowerSupply;
     private String coverMotherboardFormFactor;

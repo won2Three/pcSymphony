@@ -1,31 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title th:text="pcReview List">Parts List</title>
+    <title text="pcReview List">Parts List</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<h1 th:text="pcReview List">Parts List</h1>
+<h1 text = "pcReview List">Parts List</h1>
 <table border="1">
     <thead>
     <tr>
         <th>ID</th>
         <th>Title</th>
-        <th>Rating</th>
+        <th>Date</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="pcReview : ${pcReviews}">
-        <td th:text="${pcReview.id}">1</td>
+        <td th:text="${pcReview.pcreviewId}">id</td>
         <td>
             <!-- 제목을 클릭하면 partDetail.html로 이동 -->
-            <a th:href="@{/
-            /{tableName}/{id}(tableName=${tableName}, id=${pcReview.id})}" th:text="${part.name}">Part Name</a>
+            <a th:href="@{/pcreview/read/{id}(id=${pcReview.pcreviewId})}" th:text="${pcReview.pcreviewTitle}">Part Name</a>
         </td>
-        <td th:text="${part.manufacturer}">Brand Name</td>
-        <td th:text="${part.price}">Price</td>
-        <td th:text="${part.part}">Part</td>
+<!--        <td th:text="${pcReview.pcreviewTitle}">Title</td>-->
+        <td th:text="${pcReview.pcreviewDate}">Date</td>
     </tr>
     </tbody>
 </table>

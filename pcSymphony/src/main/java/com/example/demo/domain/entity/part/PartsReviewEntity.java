@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -39,6 +40,10 @@ public class PartsReviewEntity {
     @CreatedDate
     @Column(name = "partsreview_date",
     columnDefinition = "timestamp default current_timestamp")
+    LocalDateTime partsReviewMadeDate;
+
+    @LastModifiedDate
+    @Column(name = "last_modified_date", insertable = false, updatable = false)
     LocalDateTime partsReviewDate;
 
     //사용자 정보 (외래키)
@@ -78,7 +83,5 @@ public class PartsReviewEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cover_id", referencedColumnName = "cover_id")
     CoverEntity cover;
-
-
 
 }

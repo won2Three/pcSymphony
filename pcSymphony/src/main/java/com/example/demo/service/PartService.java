@@ -77,6 +77,7 @@ public class PartService {
             partDTO.setCoverPowerSupply(coverEntity.getCoverPowerSupply());
             partDTO.setCoverMotherboardFormFactor(coverEntity.getCoverMotherboardFormFactor());
             partDTO.setCoverMaxVideoCardLength(coverEntity.getCoverMaxVideoCardLength());
+            partDTO.setImageUrl(coverEntity.getImageUrl());
 
         } else if (entity instanceof CpuCoolerEntity) {
             CpuCoolerEntity cpuCoolerEntity = (CpuCoolerEntity) entity;
@@ -87,6 +88,7 @@ public class PartService {
             partDTO.setPrice(cpuCoolerEntity.getPrice());
             partDTO.setCpuCoolerMotherboardSockets(cpuCoolerEntity.getCpucoolerMotherboardSockets());
             partDTO.setCpuCoolerHeight(cpuCoolerEntity.getCpuCoolerHeight());
+            partDTO.setImageUrl(cpuCoolerEntity.getImageUrl());
 
         } else if (entity instanceof CpuEntity) {
             CpuEntity cpuEntity = (CpuEntity) entity;
@@ -101,6 +103,7 @@ public class PartService {
             partDTO.setCpuThreadCount(cpuEntity.getCpuThreadCount());
             partDTO.setCpuPerformanceCoreClock(cpuEntity.getCpuPerformanceCoreClock());
             partDTO.setCpuPerformanceCoreBoostClock(cpuEntity.getCpuPerformanceCoreBoostClock());
+            partDTO.setImageUrl(cpuEntity.getImageUrl());
 
         } else if (entity instanceof MemoryEntity) {
             MemoryEntity memoryEntity = (MemoryEntity) entity;
@@ -112,6 +115,7 @@ public class PartService {
             partDTO.setMemoryFormFactor(memoryEntity.getMemoryFormFactor());
             partDTO.setMemorySize(memoryEntity.getMemorySize());
             partDTO.setMemorySpeed(memoryEntity.getMemorySpeed());
+            partDTO.setImageUrl(memoryEntity.getImageUrl());
 
         } else if (entity instanceof StorageEntity) {
             StorageEntity storageEntity = (StorageEntity) entity;
@@ -123,6 +127,7 @@ public class PartService {
             partDTO.setStorageType(storageEntity.getStorageType());
             partDTO.setStorageFormFactor(storageEntity.getStorageFormFactor());
             partDTO.setStorageCapacity(storageEntity.getStorageCapacity());
+            partDTO.setImageUrl(storageEntity.getImageUrl());
 
         } else if (entity instanceof MotherboardEntity) {
             MotherboardEntity motherboardEntity = (MotherboardEntity) entity;
@@ -138,6 +143,7 @@ public class PartService {
             partDTO.setMotherboardMemorySlotCount(motherboardEntity.getMotherboardMemorySlotCount());
             partDTO.setMotherboardMdot2SlotCount(motherboardEntity.getMotherboardMdot2SlotCount());
             partDTO.setMotherboardMemoryMax(motherboardEntity.getMotherboardMemoryMax());
+            partDTO.setImageUrl(motherboardEntity.getImageUrl());
 
         } else if (entity instanceof PowerSupplyEntity) {
             PowerSupplyEntity powerSupplyEntity = (PowerSupplyEntity) entity;
@@ -148,6 +154,7 @@ public class PartService {
             partDTO.setPrice(powerSupplyEntity.getPrice());
             partDTO.setPowerSupplyType(powerSupplyEntity.getPowerSupplyType());
             partDTO.setPowerSupplyWattage(powerSupplyEntity.getPowerSupplyWattage());
+            partDTO.setImageUrl(powerSupplyEntity.getImageUrl());
 
         } else if (entity instanceof VideoCardEntity) {
             VideoCardEntity videoCardEntity = (VideoCardEntity) entity;
@@ -162,6 +169,7 @@ public class PartService {
             partDTO.setVideoCardChipset(videoCardEntity.getVideoCardChipset());
             partDTO.setVideoCardCoreClock(videoCardEntity.getVideoCardCoreClock());
             partDTO.setVideoCardBoostClock(videoCardEntity.getVideoCardBoostClock());
+            partDTO.setImageUrl(videoCardEntity.getImageUrl());
         }
 
         return partDTO;
