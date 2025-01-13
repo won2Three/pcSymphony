@@ -31,15 +31,15 @@ h5 {
 
 .partsName-price {
     font-size: 12px;
-
 }
+
 
 .image-name {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
     border-bottom: #95A4B4 1px solid;
     word-wrap: break-word; /* 긴 단어도 줄바꿈 */
     word-break: break-word; /* 적절히 줄바꿈 */
@@ -49,6 +49,17 @@ h5 {
     font-size: 12px;
     display: flex;
     justify-content: space-between;
+}
+.partsListContainer{
+    line-height: 20px;
+}
+.partsListContainer h5{
+    margin: 10px 0;
+    padding-bottom: 8px;
+    border-bottom: #95A4B4 1px solid;
+}
+.partsListContainer p{
+    line-height: 20px;
 }
 .community-title {
     font-size: 32px;
