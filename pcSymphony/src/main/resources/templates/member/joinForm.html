@@ -7,7 +7,7 @@
     <meta content="width=device-width,initial-scale=1" name="viewport">
     <title>PcSymphony_Join</title>
     <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
-    <!--    <link href="../../static/css/login-join.css" th:href="@{/css/login-join.css}" rel="stylesheet">-->
+        <link href="../../static/css/login-join.css" th:href="@{/css/login-join.css}" rel="stylesheet">
     <script src="../../static/js/main.min.js" th:src="@{/js/main.min.js}"></script>
 </head>
 <body>
@@ -15,10 +15,10 @@
     <header class="site-header">
         <div class="container">
             <div class="site-header-inner">
-                <div class="brand"><h1 class="m-0"><a href="home.html"><img alt="PcSymphony" height="32"
-                                                                            src="../../static/images/logo.svg"
-                                                                            th:src="@{/images/logo.svg}"
-                                                                            width="32"></a></h1></div>
+                <div class="brand"><h1 class="m-0"><a href="/"><img alt="PcSymphony" height="60"
+                                                                            src="../../static/images/pc-Icon.png"
+                                                                            th:src="@{/images/pc-Icon.png}"
+                                                                            width="60"></a></h1></div>
             </div>
         </div>
     </header>
@@ -46,36 +46,36 @@
                                         </div>
                                         <!--이름-->
                                         <div class="mb-12">
-                                            <label class="form-label screen-reader" for="memberName">이름</label>
-                                            <input class="form-input" type="text" name="memberName" id="memberName"  placeholder="이름" required>
+                                            <label class="form-label screen-reader" for="memberName">Name</label>
+                                            <input class="form-input" type="text" name="memberName" id="memberName"  placeholder="Name" required>
                                         </div>
                                         <!--이메일-->
                                         <div class="mb-12">
-                                            <label class="form-label screen-reader" for="email">이메일</label>
+                                            <label class="form-label screen-reader" for="email">E-mail</label>
                                             <input class="form-input" type="text" name="email" id="email"  placeholder="email" required>
                                         </div>
                                         <!--주소-->
                                         <div class="mb-12">
-                                            <label class="form-label screen-reader" for="address">주소</label>
-                                            <input class="form-input" type="text" name="address" id="address"  placeholder="주소" required>
+                                            <label class="form-label screen-reader" for="address">Address</label>
+                                            <input class="form-input" type="text" name="address" id="address"  placeholder="Address" required>
                                         </div>
                                         <!--성별-->
                                         <td>
                                             <label class="form-label" for="male">
-                                                <input type="radio" name="gender" id="male" value="남성" required> 남성
+                                                <input type="radio" name="gender" id="male" value="Male" required> Male
                                             </label>
                                             <label class="form-label" for="female">
-                                                <input type="radio" name="gender" id="female" value="여성" required> 여성
+                                                <input type="radio" name="gender" id="female" value="Female" required> Female
                                             </label>
                                         </td>
                                         <!--회원 가입 버튼-->
                                         <div class="mt-24 mb-32">
-                                            <button class="button button-primary button-block" type="submit">   가입</button>
+                                            <button id="joinButton" class="button button-primary button-block" type="submit">Join</button>
                                         </div>
                                     </fieldset>
                                 </form>
                                 <div class="signin-bottom has-top-divider">
-                                    <div class="pt-32 text-xs center-content text-color-low">이미 계정이 있으신가요?
+                                    <div class="pt-32 text-xs center-content text-color-low">Do you have an account?
                                         <a class="func-link" href="/member/login">Login</a></div>
                                 </div>
                             </div>

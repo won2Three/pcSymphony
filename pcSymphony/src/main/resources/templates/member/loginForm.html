@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta content="IE=edge" http-equiv="X-UA-Compatible">
   <meta content="width=device-width,initial-scale=1" name="viewport">
-  <title>Tidy Template</title>
+  <title>PcSymphony_Login</title>
   <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
-  <!--    <link href="../../static/css/login-join.css" th:href="@{/css/login-join.css}" rel="stylesheet">-->
+      <link href="../../static/css/login-join.css" th:href="@{/css/login-join.css}" rel="stylesheet">
   <script src="../../static/js/main.min.js" th:src="@{/js/main.min.js}"></script>
 </head>
 <body>
@@ -14,10 +14,10 @@
   <header class="site-header">
     <div class="container">
       <div class="site-header-inner">
-        <div class="brand"><h1 class="m-0"><a href="home.html"><img alt="PcSymphony" height="32"
-                                                                    src="../../static/images/logo.svg"
-                                                                    th:src="@{/images/logo.svg}"
-                                                                    width="32"></a></h1></div>
+        <div class="brand"><h1 class="m-0"><a href="/"><img alt="PcSymphony" height="60"
+                                                                    src="../../static/images/pc-Icon.png"
+                                                                    th:src="@{/images/pc-Icon.png}"
+                                                                    width="60"></a></h1></div>
       </div>
     </div>
   </header>
@@ -46,7 +46,7 @@
                     </div>
                     <!--로그인 버튼-->
                     <div class="mt-24 mb-32">
-                      <button class="button button-primary button-block" type="submit">로그인</button>
+                      <button id="loginButton" class="button button-primary button-block" type="submit">Login</button>
                     </div>
                     <!--로그인 유지하기-->
                     <!--                                        <div class="signin-footer mb-32"><label class="form-checkbox">-->
@@ -57,7 +57,7 @@
                 </form>
                 <div class="signin-bottom has-top-divider">
                   <div class="pt-32 text-xs center-content text-color-low">Don't you have an account?
-                    <a class="func-link" th:href="@{/member/join}">회원가입</a></div>
+                    <a class="func-link" th:href="@{/member/join}">Join Us</a></div>
                 </div>
               </div>
             </div>

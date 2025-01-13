@@ -55,6 +55,7 @@ a {
     border-top: #0c1622 solid 3px;
     border-bottom: #0c1622 solid 3px;
     gap: 10px; /* 필드 간 간격 */
+    border-radius: 5px; /* 둥근 모서리 */
 }
 .inputWrapper {
     display: flex; /* 라벨과 입력란을 같은 라인에 배치 */
@@ -75,6 +76,7 @@ a {
     word-break: break-word; /* 적절히 줄바꿈 */
     overflow-wrap: break-word; /* 최신 브라우저 호환 */
     resize: none; /* 크기 조절 비활성화 */
+     border-radius: 5px; /* 둥근 모서리 */
 }
 .replyLabel {
     font-size: 14px;
