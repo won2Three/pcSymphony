@@ -151,13 +151,12 @@ background-color: #007bff; /* 기본 배경색 */
 }
 
 .reply thead {
-    display: none; /* 테이블 헤더 숨기기 */
+font-size: 23px
 }
 
 /* 각 리플에 대한 스타일 */
 .reply td {
     padding: 10px;
-    border-bottom: 1px solid #ddd;
     vertical-align: top;
 }
 
@@ -210,3 +209,38 @@ background-color: #007bff; /* 기본 배경색 */
     width: 80px; /* 라벨의 최소 너비 설정 */
     text-align: center;
 }
+
+/* 댓글 헤더: 작성자와 날짜 */
+#reply-header {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+    border-bottom: none;
+}
+
+/* 댓글 작성자 */
+.reply-author {
+    color: #000;
+    margin-right: 10px;
+    font-size: 16px;
+
+}
+
+/* 댓글 날짜 */
+.reply-date {
+    font-size: 12px;
+    color: #666;
+}
+
+/* 댓글 내용 */
+.reply-content {
+    font-size: 16px;
+    font-style: italic;
+    word-wrap: break-word;
+    word-break: break-word;
+    border-bottom: 1px solid #ddd;
+    min-height: 50px; /* 최소 높이 */
+}
+

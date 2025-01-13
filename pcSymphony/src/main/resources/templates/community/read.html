@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>Post Detail</title>
     <script src="../../static/js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <link href="../../static/css/read.css" rel="stylesheet" th:href="@{/css/read.css}">
     <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
-    <link href="../../static/css/read.css" rel="stylesheet" th:href="@{/css/read.css}">
     <script src="../../static/js/main.min.js" th:src="@{/js/main.min.js}"></script>
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
     <script src="../../static/js/read.js" th:src="@{/js/read.js}"></script>
@@ -63,9 +63,7 @@
                 <table class="reply" id="replyTable">
                     <thead>
                     <tr>
-                        <th>Author</th>
-                        <th>Content</th>
-                        <th>Posted Date</th> <!-- 등록일 칼럼 추가 -->
+                        <th>Reply</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -136,17 +134,20 @@
                 data.forEach(function (comment) {
 const formattedDate = formatDate(comment.communityReplyDate);
 
-                    const commentHtml = `
-                        <tr id="comment-${comment.communityReplyId}">
-                            <td class="replyWriteId">${comment.memberId}</td>
-                            <td class="replyWriteContent">${comment.replyContent}</td>
-<!--                            <td class="replyWriteDate">${comment.communityReplyDate}</td>-->
-<td class="replyWriteDate">${formattedDate}</td>
-                            <td style="text-align: right">
-                                <button class="cancel-button" onclick="deleteComment(${comment.communityReplyId})">Delete</button>
-                            </td>
-                        </tr>
-                    `;
+                   const commentHtml = `
+        <tr id="comment-${comment.communityReplyId}" style="border-bottom: none;">
+            <td id="reply-header" style="border-bottom: none;">
+                <span class="reply-author">${comment.memberId}</span>
+                <span class="reply-date">${formattedDate}</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="reply-content">${comment.replyContent}</td>
+            <td style="text-align: right">
+                <button class="cancel-button" onclick="deleteComment(${comment.communityReplyId})">X</button>
+            </td>
+        </tr>
+    `;
                     replyTableBody.append(commentHtml);
                 });
             },
