@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Data
 @NoArgsConstructor
@@ -22,4 +24,6 @@ public class CommunityReplyDTO {
 
     //댓글 내용
     String replyContent;
+
+    LocalDateTime communityReplyDate;
 }

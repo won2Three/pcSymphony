@@ -152,6 +152,7 @@ public class CommunityService {
                     .communityId(replyEntity.getCommunity().getCommunityId())
                     .memberId(replyEntity.getMember().getMemberId())
                     .replyContent(replyEntity.getCommunityReplyContent())
+                    .communityReplyDate(replyEntity.getCommunityReplyDate())
                     .build();
             replyDTOList.add(replyDTO);
         }

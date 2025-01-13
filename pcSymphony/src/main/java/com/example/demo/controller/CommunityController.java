@@ -62,13 +62,6 @@ public class CommunityController {
         return "redirect:list";
     }
 
-//    @GetMapping("update/{id}")
-//    public String update(@PathVariable("id") Integer id, Model model) {
-//        CommunityDTO communityDto = communityService.getCommunity(id); // DTO 객체 가져오기
-//        model.addAttribute("community", communityDto); // 모델에 community 추가
-//        return "community/update"; // 업데이트 페이지로 리턴
-//    }
-
     @GetMapping("update/{id}")
     public String update(@PathVariable("id") Integer id, Model model,
                          @AuthenticationPrincipal MemberUserDetails userDetails,
@@ -87,47 +80,6 @@ public class CommunityController {
         // 수정 페이지로 이동
         return "community/update"; // 수정 페이지로 이동
     }
-
-
-
-    //기존 수정글
-//    @PostMapping("update/{id}")
-//    public String update(@PathVariable("id") Integer id, CommunityEntity entity, String username) {
-//        //기존에 담겨져 있던 글
-//        CommunityDTO communityDto = communityService.getCommunity(id);
-////        CommunityDTO communityDto = new CommunityDTO();
-//        //기존에 있던 내용에 덮어씌우기
-//        communityDto.setCommunityId(id);
-//        communityDto.setCommunityTitle(entity.getCommunityTitle());
-//        communityDto.setCommunityContent(entity.getCommunityContent());
-//
-//        communityService.update(id, communityDto, username);
-//        return "redirect:/community/list";
-//
-//    }
-
-//@PostMapping("update/{id}")
-//public String update(@PathVariable("id") Integer id,
-//                     @ModelAttribute CommunityDTO communityDto, // DTO로 받기
-//                     @AuthenticationPrincipal MemberUserDetails userDetails) { // 로그인한 사용자 정보
-//
-//    // 기존 게시글 가져오기
-//    CommunityDTO existingCommunity = communityService.getCommunity(id);
-//
-//    // 사용자 확인
-//    if (!userDetails.getUsername().equals(existingCommunity.getMemberId())) {
-//        throw new RuntimeException("수정 권한이 없습니다.");
-//    }
-//
-//    // 기존 게시글에 새로운 내용 덮어쓰기
-//    existingCommunity.setCommunityTitle(communityDto.getCommunityTitle());
-//    existingCommunity.setCommunityContent(communityDto.getCommunityContent());
-//
-//    // 게시글 수정 처리
-//    communityService.update(id, existingCommunity, userDetails.getUsername());
-//
-//    return "redirect:/community/list"; // 수정 후 목록으로 리다이렉트
-//}
 
     @PostMapping("update/{id}")
     public String update(@PathVariable("id") Integer id,

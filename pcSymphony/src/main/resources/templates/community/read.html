@@ -6,7 +6,7 @@
     <script src="../../static/js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
     <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
-        <link href="../../static/css/read.css" rel="stylesheet" th:href="@{/css/read.css}">
+    <link href="../../static/css/read.css" rel="stylesheet" th:href="@{/css/read.css}">
     <script src="../../static/js/main.min.js" th:src="@{/js/main.min.js}"></script>
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
     <script src="../../static/js/read.js" th:src="@{/js/read.js}"></script>
@@ -38,18 +38,18 @@
     </span>
                     </div>
                 </div>
-                    <!-- 업로드한 이미지를 표시 -->
-<!--                <div id="uploadedImages" style="margin-top: 10px; display: flex; align-items: center;">-->
-<!--                    <img th:class="big-image" th:src="@{/images/nav-case.png}" alt="Image"/>-->
-<!--                    <img th:class="big-image" th:src="@{/images/nav-case.png}" alt="Image"/>-->
+                <!-- 업로드한 이미지를 표시 -->
+                <!--                <div id="uploadedImages" style="margin-top: 10px; display: flex; align-items: center;">-->
+                <!--                    <img th:class="big-image" th:src="@{/images/nav-case.png}" alt="Image"/>-->
+                <!--                    <img th:class="big-image" th:src="@{/images/nav-case.png}" alt="Image"/>-->
                 <!-- 게시물 내용 -->
                 <div class="community-content" th:text="${community.communityContent}">Content</div>
                 <!-- 수정/삭제 버튼 -->
                 <div class="button-container">
                     <!-- 수정 버튼 (작성자와 로그인한 사용자가 같을 때만 표시) -->
                     <button class="basic-button"><a
-                               th:href="@{/community/update/{communityId}(communityId=${community.communityId})}"
-                               th:if="${community.memberId == #authentication.name}">Update</a></button>
+                            th:href="@{/community/update/{communityId}(communityId=${community.communityId})}"
+                            th:if="${community.memberId == #authentication.name}">Update</a></button>
 
                     <!-- 삭제 버튼 (작성자와 로그인한 사용자가 같을 때만 표시) -->
                     <form method="POST" th:action="@{/community/delete}"
@@ -64,7 +64,8 @@
                     <thead>
                     <tr>
                         <th>Author</th>
-                        <th colspan="3">Content</th>
+                        <th>Content</th>
+                        <th>Posted Date</th> <!-- 등록일 칼럼 추가 -->
                     </tr>
                     </thead>
                     <tbody>
@@ -82,10 +83,10 @@
                     <button class="basic-button" id="replyWriteButton" type="button">Save</button>
                 </form>
                 <div class="button-footerContainer">
-                <!-- 뒤로가기 버튼 -->
-                <button class="basic-button"><a href="/community/list">List</a></button>
-                <!--글쓰기 버튼-->
-                <button class="basic-button"><a href="write">Create Post</a></button>
+                    <!-- 뒤로가기 버튼 -->
+                    <button class="basic-button"><a href="/community/list">List</a></button>
+                    <!--글쓰기 버튼-->
+                    <button class="basic-button"><a href="write">Create Post</a></button>
                 </div>
             </div>
         </div>
@@ -121,10 +122,12 @@
 
                 // 서버에서 받은 댓글 데이터를 HTML로 출력
                 data.forEach(function (comment) {
+
                     const commentHtml = `
                         <tr  id="comment-${comment.communityReplyId}">
                             <td class="replyWriteId">${comment.memberId}</td>
                             <td class="replyWriteContent">${comment.replyContent}</td>
+                            <td class="replyWriteDate">${comment.communityReplyDate}</td>
                             <td style="text-align: right">
                                 <button class="cancel-button" onclick="deleteComment(${comment.communityReplyId})">Delete</button>
                             </td>

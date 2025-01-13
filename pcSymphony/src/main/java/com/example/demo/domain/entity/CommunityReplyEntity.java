@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,4 +36,10 @@ public class CommunityReplyEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     MemberEntity member;
+
+    //등록일
+    @CreatedDate
+    @Column(name = "community_reply_date",
+            columnDefinition = "timestamp default current_timestamp")
+    LocalDateTime communityReplyDate;
 }
