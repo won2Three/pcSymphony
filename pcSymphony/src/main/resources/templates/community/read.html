@@ -47,10 +47,10 @@
                 <!-- 수정/삭제 버튼 -->
                 <div class="button-container">
                     <!-- 수정 버튼 (작성자와 로그인한 사용자가 같을 때만 표시) -->
-                    <button class="basic-button"><a
-                            th:href="@{/community/update/{communityId}(communityId=${community.communityId})}"
-                            th:if="${community.memberId == #authentication.name}">Update</a></button>
-
+                    <form th:if="${community.memberId == #authentication.name}" method="GET"
+                          th:action="@{/community/update/{communityId}(communityId=${community.communityId})}">
+                        <button class="basic-button" type="submit">Update</button>
+                    </form>
                     <!-- 삭제 버튼 (작성자와 로그인한 사용자가 같을 때만 표시) -->
                     <form method="POST" th:action="@{/community/delete}"
                           th:if="${community.memberId == #authentication.name}">

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
@@ -34,46 +34,102 @@
                                 <!--회원가입 정보 받는 방식-->
                                 <form id="joinForm" method="post" th:action="@{/member/join}">
                                     <fieldset>
-                                        <!--ID-->
+                                        <!-- ID -->
                                         <div class="mb-12">
                                             <label class="form-label screen-reader" for="memberId">ID</label>
-                                            <input class="form-input" type="text" name="memberId" id="memberId"  placeholder="ID" required>
+                                            <input
+                                                    class="form-input"
+                                                    type="text"
+                                                    name="memberId"
+                                                    id="memberId"
+                                                    placeholder="ID"
+                                                    required
+                                                    oninvalid="this.setCustomValidity('Please enter your ID')"
+                                                    oninput="this.setCustomValidity('')">
                                         </div>
-                                        <!--Password-->
+                                        <!-- Password -->
                                         <div class="mb-12">
                                             <label class="form-label screen-reader" for="memberPw">Password</label>
-                                            <input class="form-input" type="password" name="memberPw" id="memberPw"  placeholder="Password" required>
+                                            <input
+                                                    class="form-input"
+                                                    type="password"
+                                                    name="memberPw"
+                                                    id="memberPw"
+                                                    placeholder="Password"
+                                                    required
+                                                    minlength="8"
+                                                    oninvalid="this.setCustomValidity('Password must be at least 8 characters long')"
+                                                    oninput="this.setCustomValidity('')">
                                         </div>
-                                        <!--이름-->
+                                        <!-- Name -->
                                         <div class="mb-12">
                                             <label class="form-label screen-reader" for="memberName">Name</label>
-                                            <input class="form-input" type="text" name="memberName" id="memberName"  placeholder="Name" required>
+                                            <input
+                                                    class="form-input"
+                                                    type="text"
+                                                    name="memberName"
+                                                    id="memberName"
+                                                    placeholder="Name"
+                                                    required
+                                                    oninvalid="this.setCustomValidity('Please enter your name')"
+                                                    oninput="this.setCustomValidity('')">
                                         </div>
-                                        <!--이메일-->
+                                        <!-- E-mail -->
                                         <div class="mb-12">
                                             <label class="form-label screen-reader" for="email">E-mail</label>
-                                            <input class="form-input" type="text" name="email" id="email"  placeholder="email" required>
+                                            <input
+                                                    class="form-input"
+                                                    type="email"
+                                                    name="email"
+                                                    id="email"
+                                                    placeholder="account@example.com"
+                                                    required
+                                                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                                                    oninvalid="this.setCustomValidity('Please check your email')"
+                                                    oninput="this.setCustomValidity('')">
                                         </div>
-                                        <!--주소-->
+                                        <!-- Address -->
                                         <div class="mb-12">
                                             <label class="form-label screen-reader" for="address">Address</label>
-                                            <input class="form-input" type="text" name="address" id="address"  placeholder="Address" required>
+                                            <input
+                                                    class="form-input"
+                                                    type="text"
+                                                    name="address"
+                                                    id="address"
+                                                    placeholder="Address"
+                                                    required
+                                                    oninvalid="this.setCustomValidity('Please check your address')"
+                                                    oninput="this.setCustomValidity('')">
                                         </div>
-                                        <!--성별-->
+                                        <!-- Gender -->
                                         <td>
                                             <label class="form-label" for="male">
-                                                <input type="radio" name="gender" id="male" value="Male" required> Male
+                                                <input
+                                                        type="radio"
+                                                        name="gender"
+                                                        id="male"
+                                                        value="Male"
+                                                        required
+                                                        > Male
                                             </label>
                                             <label class="form-label" for="female">
-                                                <input type="radio" name="gender" id="female" value="Female" required> Female
+                                                <input
+                                                        type="radio"
+                                                        name="gender"
+                                                        id="female"
+                                                        value="Female"
+                                                        required
+                                                        > Female
                                             </label>
                                         </td>
-                                        <!--회원 가입 버튼-->
+                                        <!-- Join Button -->
                                         <div class="mt-24 mb-32">
                                             <button id="joinButton" class="button button-primary button-block" type="submit">Join</button>
                                         </div>
                                     </fieldset>
                                 </form>
+
+
                                 <div class="signin-bottom has-top-divider">
                                     <div class="pt-32 text-xs center-content text-color-low">Do you have an account?
                                         <a class="func-link" href="/member/login">Login</a></div>

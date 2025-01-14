@@ -33,16 +33,32 @@
                 <!--로그인 정보 받아오는 방식-->
                 <form id="loginForm" th:action="@{/member/login}" method="post">
                   <fieldset>
-                    <!--ID-->
+                    <!-- ID -->
                     <div class="mb-12">
-                      <label class="form-label screen-reader"
-                             for="id">ID</label>
-                      <input class="form-input" type="text" name="id" id="id" placeholder="ID" required>
+                      <label class="form-label screen-reader" for="id">ID</label>
+                      <input
+                              class="form-input"
+                              type="text"
+                              name="id"
+                              id="id"
+                              placeholder="ID"
+                              required
+                              oninvalid="this.setCustomValidity('Please enter your ID')"
+                              oninput="this.setCustomValidity('')">
                     </div>
-                    <!--PASSWORD-->
+
+                    <!-- PASSWORD -->
                     <div class="mb-12">
-                      <label class="form-label screen-reader" for="password" >Password</label>
-                      <input class="form-input" type="password" name="password" id="password" placeholder="Password" required>
+                      <label class="form-label screen-reader" for="password">Password</label>
+                      <input
+                              class="form-input"
+                              type="password"
+                              name="password"
+                              id="password"
+                              placeholder="Password"
+                              required
+                              oninvalid="this.setCustomValidity('Please enter your password')"
+                              oninput="this.setCustomValidity('')">
                     </div>
                     <!--로그인 버튼-->
                     <div class="mt-24 mb-32">
