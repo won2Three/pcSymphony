@@ -152,7 +152,7 @@ const formattedDate = formatDate(comment.communityReplyDate);
                 });
             },
             error: function (xhr, status, error) {
-                alert('댓글 목록 불러오기 실패');
+                alert('Failed to load the reply list.');
             }
         });
     }
@@ -161,7 +161,7 @@ const formattedDate = formatDate(comment.communityReplyDate);
     $('#replyWriteButton').click(function () {
         const replyContent = $('#communityReplyContent').val();
         if (!replyContent) {
-            alert('댓글을 입력하세요.');
+            alert('Please enter your reply.');
             return;
         }
 
@@ -181,7 +181,7 @@ const formattedDate = formatDate(comment.communityReplyDate);
                 loadComments(); // 댓글 목록 새로고침
             },
             error: function () {
-                alert('댓글 저장 실패!');
+                alert('Failed to save the reply.');
             }
         });
     });
@@ -203,7 +203,7 @@ const formattedDate = formatDate(comment.communityReplyDate);
                 loadComments(); // 댓글 목록 새로고침
             },
             error: function () {
-                alert('댓글 삭제 실패!');
+                alert('Failed to delete the reply.');
             }
         });
     }

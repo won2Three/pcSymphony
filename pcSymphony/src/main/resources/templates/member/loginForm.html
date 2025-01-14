@@ -64,13 +64,12 @@
                     <div class="mt-24 mb-32">
                       <button id="loginButton" class="button button-primary button-block" type="submit">Login</button>
                     </div>
-                    <!--로그인 유지하기-->
-                    <!--                                        <div class="signin-footer mb-32"><label class="form-checkbox">-->
-                    <!--                                            <input id="remember" type="checkbox">Remember me</label>-->
-                    <!--패스워드 찾기-->
-                    <!--                                            <a class="func-link text-xs" href="#">Forgot password?</a></div>-->
                   </fieldset>
                 </form>
+                <!-- 로그인 실패 메시지 -->
+                <div th:if="${param.error}">
+                  <p style="color: red; font-size: 14px;">Incorrect username or password. Please try again.</p>
+                </div>
                 <div class="signin-bottom has-top-divider">
                   <div class="pt-32 text-xs center-content text-color-low">Don't you have an account?
                     <a class="func-link" th:href="@{/member/join}">Join Us</a></div>
