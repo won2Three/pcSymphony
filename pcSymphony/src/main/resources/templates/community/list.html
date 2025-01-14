@@ -46,12 +46,16 @@
 
                 <!-- 페이지네이션 -->
                 <div class="pagination">
-                    <button id="prevPage" th:disabled="${currentPage == 0}" onclick="changePage(${currentPage - 1})">Previous</button>
+                    <!-- 이전 페이지 버튼 -->
+                    <button id="prevPage" th:disabled="${currentPage == 0}" onclick="changePage(${currentPage - 1})">Prev</button>
 
-                    <span th:text="${currentPage + 1}">1</span> / <span th:text="${totalPages}">1</span>
+                    <!-- 페이지 번호를 동적으로 표시할 영역 -->
+                    <div id="pageNumbers"></div>
 
+                    <!-- 다음 페이지 버튼 -->
                     <button id="nextPage" th:disabled="${currentPage == totalPages - 1}" onclick="changePage(${currentPage + 1})">Next</button>
                 </div>
+
 
 
                 <div class="form-footer">

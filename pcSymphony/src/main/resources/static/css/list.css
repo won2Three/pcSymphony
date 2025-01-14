@@ -116,3 +116,30 @@
     color: #007bff; /* 선택된 페이지 색상 */
 }
 
+/* 페이지네이션 전체 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center; /* 가로 방향으로 가운데 정렬 */
+    align-items: center;     /* 세로 방향으로 가운데 정렬 */
+    gap: 10px;               /* 버튼들 사이에 간격 추가 */
+    margin-top: 20px;        /* 페이지네이션 상단 여백 */
+}
+
+/* 각 버튼 스타일 */
+.pagination button {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+    background-color: #0056b3;
+}
+

@@ -52,7 +52,7 @@ $(document).ready(function() {
                 });
 
                 // 페이지 네비게이션 업데이트
-                updatePagination(page, totalPages);
+                updatePagination(currentPage, totalPages);
             },
             error: function() {
                 alert("목록 조회 실패");
@@ -61,7 +61,7 @@ $(document).ready(function() {
     }
 
     // 페이지 전환 함수
-    window.changePage = function(newPage) {  // 전역으로 선언하여 onclick에서 접근할 수 있게 설정
+    window.changePage = function(newPage) {
         if (newPage < 0 || newPage >= totalPages) return;
         currentPage = newPage;
         getList(currentPage);
@@ -74,10 +74,22 @@ $(document).ready(function() {
         $('#pagination .currentPage').text(currentPage + 1);
         $('#pagination .totalPages').text(totalPages);
 
-        // 다음 버튼의 onclick 이벤트 수정
-        $('#nextPage').attr('onclick', `changePage(${currentPage + 1})`);
-        // 이전 버튼의 onclick 이벤트 수정
-        $('#prevPage').attr('onclick', `changePage(${currentPage - 1})`);
+        // 페이지 번호 버튼 생성
+        $('#pageNumbers').empty(); // 기존 페이지 번호 버튼 제거
+        for (let i = 0; i < totalPages; i++) {
+            let pageButton = $('<button>')
+                .addClass('pageButton')
+                .text(i + 1)
+                .click(function() {
+                    changePage(i); // 클릭 시 해당 페이지로 이동
+                });
+
+            if (i === currentPage) {
+                pageButton.prop('disabled', true); // 현재 페이지는 비활성화
+            }
+
+            $('#pageNumbers').append(pageButton); // 페이지 번호 추가
+        }
     }
 
     // 페이지 로드 시 목록 조회 (초기 페이지 0번)
