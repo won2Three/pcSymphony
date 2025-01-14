@@ -55,7 +55,7 @@
                     <form method="POST" th:action="@{/community/delete}"
                           th:if="${community.memberId == #authentication.name}">
                         <input name="communityId" th:value="${community.communityId}" type="hidden"/>
-                        <button class="cancel-button" type="submit">Cancel</button>
+                        <button class="cancel-button" type="submit">Delete</button>
                     </form>
                 </div>
 

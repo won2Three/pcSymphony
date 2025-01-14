@@ -5,6 +5,7 @@ import com.example.demo.domain.dto.CommunityReplyDTO;
 import com.example.demo.security.MemberUserDetails;
 import com.example.demo.service.CommunityService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +19,16 @@ public class CommunityRestController {
 
     private final CommunityService communityService;
 
-    // 게시글 목록
+//    // 게시글 목록
+//    @PostMapping("getList")
+//    public List<CommunityDTO> getList() {
+//        return communityService.getList();
+//    }
+
     @PostMapping("getList")
-    public List<CommunityDTO> getList() {
-        return communityService.getList();
+    public Page<CommunityDTO> getList(@RequestParam int page) {
+        int size = 10;  // 한 페이지에 표시할 게시글 수
+        return communityService.getList(page, size);
     }
 
     // 댓글 저장

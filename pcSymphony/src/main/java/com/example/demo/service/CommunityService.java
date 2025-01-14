@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.example.demo.repository.CommunityRepository;
@@ -32,28 +34,25 @@ public class CommunityService {
 
     private final CommunityReplyRepository replyRepository;
 
-    //커뮤니티 메인
-    public List<CommunityDTO> getList() {
-        //entity 기반 모든 게시글 조회
-        List<CommunityEntity> entities = communityRepository.findAll();
+    // 커뮤니티 목록 (페이지네이션 적용)
+    public Page<CommunityDTO> getList(int page, int size) {
+        // 페이지 처리 위한 Pageable 객체 생성
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Order.desc("communityId")));
 
-        //반환할 DTO 리스트
-        List<CommunityDTO> dtoList = new ArrayList<>();
+        // 커뮤니티 목록을 Page 객체로 반환
+        Page<CommunityEntity> communityPage = communityRepository.findAll(pageRequest);
 
-        for (CommunityEntity entity : entities) {
-            CommunityDTO dto = CommunityDTO.builder()
-                    .communityId(entity.getCommunityId())
-                    .communityContent(entity.getCommunityContent())
-                    .communityDate(entity.getCommunityDate())
-                    .communityTitle(entity.getCommunityTitle())
-                    .communityView(entity.getCommunityView())
-                    .memberId(entity.getMember().getMemberId())
-                    .build();
-
-            dtoList.add(dto);
-        }
-        return dtoList;
+        // Page<CommunityDTO> 형태로 변환
+        return communityPage.map(entity -> CommunityDTO.builder()
+                .communityId(entity.getCommunityId())
+                .communityContent(entity.getCommunityContent())
+                .communityDate(entity.getCommunityDate())
+                .communityTitle(entity.getCommunityTitle())
+                .communityView(entity.getCommunityView())
+                .memberId(entity.getMember().getMemberId())
+                .build());
     }
+
 
     //글쓰기
     public void write(CommunityDTO communityDto) {

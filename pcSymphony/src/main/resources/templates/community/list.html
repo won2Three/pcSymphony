@@ -44,6 +44,16 @@
                     </tbody>
                 </table>
 
+                <!-- 페이지네이션 -->
+                <div class="pagination">
+                    <button id="prevPage" th:disabled="${currentPage == 0}" onclick="changePage(${currentPage - 1})">Previous</button>
+
+                    <span th:text="${currentPage + 1}">1</span> / <span th:text="${totalPages}">1</span>
+
+                    <button id="nextPage" th:disabled="${currentPage == totalPages - 1}" onclick="changePage(${currentPage + 1})">Next</button>
+                </div>
+
+
                 <div class="form-footer">
                     <p>If you have any questions or feedback about the board, the administrator will assist you.</p>
                 </div>

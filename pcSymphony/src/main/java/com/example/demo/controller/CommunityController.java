@@ -5,6 +5,7 @@ import com.example.demo.domain.entity.CommunityEntity;
 import com.example.demo.security.MemberUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,24 @@ public class CommunityController {
 
     private final CommunityService communityService;
 
+//    @GetMapping("list")
+//    public String list() {
+//        return "community/list";
+//    }
+
     @GetMapping("list")
-    public String list() {
-        return "community/list";
+    public String list(@RequestParam(defaultValue = "0") int page, Model model) {
+        int size = 10;  // 한 페이지에 표시할 게시글 수 (원하는 숫자로 조정 가능)
+
+        // 게시글 목록과 페이지 정보 조회
+        Page<CommunityDTO> communityPage = communityService.getList(page, size);
+
+        // 모델에 페이지 정보와 게시글 목록 추가
+        model.addAttribute("communityPage", communityPage);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", communityPage.getTotalPages());
+
+        return "community/list";  // list.html 반환
     }
 
     @GetMapping("write")
