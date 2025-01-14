@@ -35,10 +35,12 @@
     position: relative;
 }
 
-.list-table thead {
-    background-color: #fff; /* 흰 바탕 */
-    color: #000; /* 검정 글자 */
-}
+  .list-table thead {
+     background-color: #e1f5fe; /* 아주 연한 파란색 배경 */
+      color: #2c3e50; /* 어두운 글씨 */
+
+  }
+
 
 .list-table th, .list-table td {
     padding: 15px;
