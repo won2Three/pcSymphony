@@ -54,15 +54,6 @@ public class CommunityController {
         return "community/write";
     }
 
-//    @PostMapping("write")
-//    public String write(
-//            CommunityDTO community,
-//            @AuthenticationPrincipal MemberUserDetails user) {
-//        community.setMemberId(user.getUsername());
-//        communityService.write(community);
-//        return "redirect:list";
-//    }
-
     @PostMapping("write")
     public String write(
             CommunityDTO community,
@@ -71,7 +62,7 @@ public class CommunityController {
 
         // 이미지가 존재하면 이미지 파일을 파일 시스템에 저장
         if (imageUpload != null && !imageUpload.isEmpty()) {
-            String imagePath = saveImageToFileSystem(imageUpload); // 이미지 저장 메서드
+            String imagePath = communityService.saveImageToFileSystem(imageUpload); // 이미지 저장 메서드
             community.setImagePath(imagePath);  // 이미지 경로 저장
         }
 
@@ -79,35 +70,6 @@ public class CommunityController {
         communityService.write(community);
         return "redirect:list";
     }
-
-    // 이미지 파일을 서버의 특정 경로에 저장하는 메서드
-    private String saveImageToFileSystem(MultipartFile imageUpload) {
-        try {
-            // 프로젝트 루트 기준으로 static/uploads 경로 설정
-            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/uploads/";
-
-            // 업로드 디렉토리가 없으면 생성
-            File dir = new File(uploadDir);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-
-            // 파일 이름 설정 (현재 시간을 이용한 고유 이름 생성)
-            String fileName = System.currentTimeMillis() + "-" + imageUpload.getOriginalFilename();
-            Path filePath = Paths.get(uploadDir + fileName);
-
-            // 파일을 지정된 경로에 저장
-            imageUpload.transferTo(filePath.toFile());
-
-            // 웹에서 접근할 수 있도록 경로 반환
-            return "/uploads/" + fileName;  // 저장된 파일 경로 반환 (static/uploads/내의 파일)
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-
 
 
     @GetMapping("read")
@@ -128,8 +90,6 @@ public class CommunityController {
             return "error"; // error 페이지로 리다이렉트
         }
     }
-
-
 
     @PostMapping("delete")
     public String delete(@RequestParam("communityId") Integer communityId,
@@ -160,28 +120,25 @@ public class CommunityController {
     @PostMapping("update/{id}")
     public String update(@PathVariable("id") Integer id,
                          @ModelAttribute CommunityDTO communityDto,
+                         @RequestParam(value = "imageUpload", required = false) MultipartFile imageUpload,
                          @AuthenticationPrincipal MemberUserDetails userDetails,
-                         RedirectAttributes redirectAttributes) { // RedirectAttributes 추가
+                         RedirectAttributes redirectAttributes) {
 
         // 기존 게시글 가져오기
         CommunityDTO existingCommunity = communityService.getCommunity(id);
 
-        // 사용자 확인
+        // 사용자 확인 (수정 권한 확인)
         if (!userDetails.getUsername().equals(existingCommunity.getMemberId())) {
-            // 권한이 없으면 에러 메시지 추가 후 read 페이지로 리다이렉트
             redirectAttributes.addFlashAttribute("errorMessage", "수정 권한이 없습니다.");
-            return "redirect:/community/read?communityId=" + id; // read 페이지로 리다이렉트
+            return "redirect:/community/read?communityId=" + id;
         }
 
-        // 기존 게시글에 새로운 내용 덮어쓰기
-        existingCommunity.setCommunityTitle(communityDto.getCommunityTitle());
-        existingCommunity.setCommunityContent(communityDto.getCommunityContent());
+        // 게시글 업데이트
+        communityService.update(id, communityDto, userDetails.getUsername(), imageUpload);
 
-        // 게시글 수정 처리
-        communityService.update(id, existingCommunity, userDetails.getUsername());
-
-        return "redirect:/community/list"; // 수정 후 목록으로 리다이렉트
+        return "redirect:/community/read?communityId=" + id; // 수정 후 상세 페이지로 리다이렉트
     }
+
 
 
 

@@ -18,7 +18,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.example.demo.repository.CommunityRepository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +94,7 @@ public class CommunityService {
     }
 
     //수정
-    public void update(int communityId, CommunityDTO communityDto, String username) {
+    public void update(int communityId, CommunityDTO communityDto, String username, MultipartFile imageUpload) {
         //사용자 확인
         MemberEntity memberEntity = memberRepository.findById(username)
                 .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
@@ -103,9 +108,20 @@ public class CommunityService {
             throw new RuntimeException("수정 권한이 없습니다.");
         }
 
+        // 이미지가 새로 업로드된 경우 처리
+        if (imageUpload != null && !imageUpload.isEmpty()) {
+            // 새로운 이미지 저장
+            String imagePath = saveImageToFileSystem(imageUpload);
+            communityDto.setImagePath(imagePath);  // 새로운 이미지 경로 설정
+        } else {
+            // 새 이미지를 업로드하지 않은 경우 기존 이미지 경로 유지
+            communityDto.setImagePath(communityEntity.getImagePath());
+        }
+
         // 게시글 수정
         communityEntity.setCommunityTitle(communityDto.getCommunityTitle());
         communityEntity.setCommunityContent(communityDto.getCommunityContent());
+        communityEntity.setImagePath(communityDto.getImagePath());
 
         communityRepository.save(communityEntity);
     }
@@ -183,4 +199,32 @@ public class CommunityService {
         community.setCommunityView(community.getCommunityView() + 1);
         communityRepository.save(community);
     }
+
+    // 이미지 파일을 서버의 특정 경로에 저장하는 메서드
+    public String saveImageToFileSystem(MultipartFile imageUpload) {
+        try {
+            // 프로젝트 루트 기준으로 static/uploads 경로 설정
+            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/uploads/";
+
+            // 업로드 디렉토리가 없으면 생성
+            File dir = new File(uploadDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            // 파일 이름 설정 (현재 시간을 이용한 고유 이름 생성)
+            String fileName = System.currentTimeMillis() + "-" + imageUpload.getOriginalFilename();
+            Path filePath = Paths.get(uploadDir + fileName);
+
+            // 파일을 지정된 경로에 저장
+            imageUpload.transferTo(filePath.toFile());
+
+            // 웹에서 접근할 수 있도록 경로 반환
+            return "/uploads/" + fileName;  // 저장된 파일 경로 반환 (static/uploads/내의 파일)
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

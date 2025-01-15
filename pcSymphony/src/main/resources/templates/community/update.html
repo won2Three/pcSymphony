@@ -39,10 +39,17 @@
                 <!-- 게시물 ID (수정 시 해당 게시물 ID를 전달) -->
                 <input name="communityId" th:value="${community.communityId}" type="hidden"/>
 
-                <!--아직 이미지 업로드 기능 연결 안됨-->
-                <label for="imageUpload">Upload Image :</label>
-                <input accept="image/*" id="imageUpload" name="imageUpload" type="file">
+                <!-- 기존 이미지 표시 (기존 이미지가 있을 경우) -->
+                <div>
+                    <label>Current Image:</label>
+                    <img th:src="@{${community.imagePath}}" alt="Current Image" width="200"/>
+                </div>
 
+                <!-- 이미지 업로드 필드 -->
+                <div>
+                    <label for="imageUpload">Upload New Image (Optional):</label>
+                    <input accept="image/*" id="imageUpload" name="imageUpload" type="file">
+                </div>
                 <div class="button-container">
                     <!-- 제출 버튼 -->
                     <button class="submit-button" type="submit">Submit</button>
