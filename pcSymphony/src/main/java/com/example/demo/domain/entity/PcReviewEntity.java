@@ -29,12 +29,17 @@ public class PcReviewEntity {
     @Column(name = "pcreview_content", nullable = false, length = 2000)
     private String pcreviewContent; // 리뷰 내용
 
-    @Column(name = "pcreview_date", nullable = false, updatable = false)
-    private LocalDateTime pcreviewMadeDate; // 작성 날짜
+//    @Column(name = "pcreview_date", nullable = false, updatable = false)
+//    private LocalDateTime pcreviewMadeDate; // 작성 날짜
+//    private LocalDateTime pcreviewMadeDate = LocalDateTime.now();
+
+//    @LastModifiedDate
+//    @Column(name = "last_modified_date", insertable = false, updatable = false)
+//    private LocalDateTime pcreviewDate;
 
     @LastModifiedDate
-    @Column(name = "last_modified_date", insertable = false, updatable = false)
-    private LocalDateTime pcreviewDate;
+    @Column(name = "pcreview_date", nullable = false)
+    private LocalDateTime pcreviewDate; // 마지막 수정 날짜
 
     @Column(name = "user_id", length = 20)
     private String userId; // 작성자 ID

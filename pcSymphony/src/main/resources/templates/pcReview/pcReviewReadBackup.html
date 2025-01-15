@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
@@ -10,41 +10,7 @@
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
     <!--    <script src="../../static/js/pcReviewWrite.js" th:src="@{/js/pcReviewWrite.js}"></script>-->
     <title>PC리뷰 read</title>
-    <style>
-        .guideImage {
-            border: #95A4B4 1px solid;
-            width: 100%;
-            padding: 5px;
-            object-fit: contain;
-        }
 
-        .leftSideBar {
-            width: 30%;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .content-section {
-            display: flex;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #0c1622;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .content-details {
-            width: 70%;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-    </style>
 </head>
 <body>
 <div th:replace="~{fragments/header :: headerFragment}"></div>
@@ -52,38 +18,27 @@
     <main class="site-content">
         <a href="/pcreview/list"><h1 class="container-like">PC 리뷰</h1></a>
         <div class="container">
-            <div>
-                <!-- 메인 컨테이너 -->
-                <main class="main-container">
-                    <div class="content-section" id="pcReviewRow" th:data-id="${pcReview.pcreviewId}">
-                        <aside class="leftSideBar">
-                            <!-- 업로드한 이미지를 표시 -->
-                            <div class="guideImage" id="uploadedImages">
-                                <img alt="Uploaded Image" th:src="@{/images/nav-case.png}">
-                            </div>
-                        </aside>
-                        <div class="content-details">
-                            <div class="title-header">
-                                <!-- 전체 리뷰의 제목 -->
-                                <div class="community-title" id="pcReviewTitle" th:text="${pcReview.pcreviewTitle}">제목
-                                </div>
-                                <!-- 게시물 정보 -->
-                                <div id="pcReviewInfo">
-                                    글 번호: <span id="pcReviewId" th:text="${pcReview.pcreviewId}"></span>
-                                    작성자: <span id="pcReviewUserId" th:text="${pcReview.userId}"></span>
-                                    작성일: <span id="pcReviewDate" th:text="${pcReview.pcreviewDate}"></span>
-                                </div>
-                            </div>
-                            <!-- 게시물 내용 -->
-                            <div class="community-content" id="pcReviewContent" th:text="${pcReview.pcreviewContent}">
-                                내용
-                            </div>
-                            <div class="button-container">
-                                <button class="blue-button" id="editpcReviewButton">수정</button>
-                            </div>
-                        </div>
+            <div id="pcReviewRow" th:data-id="${pcReview.pcreviewId}">
+                <div class="title-header">
+                    <!--전체 리뷰의 제목이 들어감-->
+                    <div class="community-title" id="pcReviewTitle" th:text="${pcReview.pcreviewTitle}">제목</div>
+                    <!-- 게시물 정보 -->
+                    <div id="pcReviewInfo">
+                        <!--리뷰ID-->
+                        글 번호 : <span id="pcReviewId" th:text="${pcReview.pcreviewId}"></span>
+                        작성자: <span id="pcReviewUserId" th:text="${pcReview.userId}"></span>
+                        작성일: <span id="pcReviewDate" th:text="${pcReview.pcreviewDate}"></span>
                     </div>
-                </main>
+                </div>
+                <!-- 업로드한 이미지를 표시 -->
+                <div class="big-image" id="uploadedImages">
+                    <img alt="Uploaded Image" th:src="@{/images/nav-case.png}">
+                </div>
+                <!-- 게시물 내용 -->
+                <div class="community-content" id="pcReviewContent" th:text="${pcReview.pcreviewContent}">내용</div>
+                <div class="button-container">
+                    <button class="blue-button" id="editpcReviewButton">수정</button>
+                </div>
             </div>
 
             <!-- update -->
@@ -106,6 +61,7 @@
                 <button class="blue-button" id="savePcReviewButton">완료</button>
                 <button class="gray-button" id="cancelPcReviewButton">취소</button>
             </div>
+
             <!--파츠 리뷰-->
             <div class="community-title">PartsReview</div>
             <!-- CPU리뷰 -->
@@ -117,10 +73,9 @@
                     <span th:text="${pcReview.cpuReview.cpu.name}">[CPU 이름]</span>
                 </label></legend>
                 <div>제목</div>
-                <div class="readPartsTitles" id="cpuTitle" th:text="${pcReview.cpuReview.partsReviewTitle}">CPU 리뷰 제목
-                </div>
+                <div class="readPartsTitles" id="cpuTitle" th:text="${pcReview.cpuReview.partsReviewTitle}">CPU 리뷰 제목</div>
                 <div>내용</div>
-                <div class="readPartsContent" id="cpuContent"
+                <div id="cpuContent" class="readPartsContent"
                      th:text="${pcReview.cpuReview.partsReviewContent}">CPU 리뷰 내용
                 </div>
                 <div>평점</div>
@@ -152,20 +107,15 @@
             </div>
 
             <!-- cpucooler리뷰 -->
-            <fieldset class="readPartsContainer" id="cpucoolerRow"
-                      th:data-id="${pcReview.cpucoolerReview.partsReviewId}">
+            <fieldset class="readPartsContainer" id="cpucoolerRow" th:data-id="${pcReview.cpucoolerReview.partsReviewId}">
                 <legend><label class="partsTitle">
                     <img alt="cpucooler Image" class="small-image" th:src="@{/images/nav-cpucooler.png}">
                     <span th:text="${pcReview.cpucoolerReview.cpucooler.name}">[cpucooler 이름]</span>
                 </label></legend>
                 <div>제목</div>
-                <div class="readPartsTitles" id="cpucoolerTitle" th:text="${pcReview.cpucoolerReview.partsReviewTitle}">
-                    cpucooler 리뷰 제목
-                </div>
+                <div class="readPartsTitles" id="cpucoolerTitle" th:text="${pcReview.cpucoolerReview.partsReviewTitle}">cpucooler 리뷰 제목</div>
                 <div>내용</div>
-                <div class="readPartsContent" id="cpucoolerContent"
-                     th:text="${pcReview.cpucoolerReview.partsReviewContent}">cpucooler 리뷰 내용
-                </div>
+                <div class="readPartsContent" id="cpucoolerContent" th:text="${pcReview.cpucoolerReview.partsReviewContent}">cpucooler 리뷰 내용</div>
                 <div>평점</div>
                 <div id="cpucoolerRating" th:text="${pcReview.cpucoolerReview.partsReviewRating}">cpucooler 리뷰 평점</div>
                 <div class="button-container">
@@ -194,24 +144,17 @@
             </div>
 
             <!-- Motherboard -->
-            <fieldset class="readPartsContainer" id="motherboardRow"
-                      th:data-id="${pcReview.motherboardReview.partsReviewId}">
+            <fieldset class="readPartsContainer" id="motherboardRow" th:data-id="${pcReview.motherboardReview.partsReviewId}">
                 <legend><label class="partsTitle">
                     <img alt="motherboard Image" class="small-image" th:src="@{/images/nav-motherboard.png}">
                     <span th:text="${pcReview.motherboardReview.motherboard.name}">[motherboard 이름]</span>
                 </label></legend>
                 <div>제목</div>
-                <div class="readPartsTitles" id="motherboardTitle"
-                     th:text="${pcReview.motherboardReview.partsReviewTitle}">motherboard 리뷰 제목
-                </div>
+                <div class="readPartsTitles" id="motherboardTitle" th:text="${pcReview.motherboardReview.partsReviewTitle}">motherboard 리뷰 제목</div>
                 <div>내용</div>
-                <div class="readPartsContent" id="motherboardContent"
-                     th:text="${pcReview.motherboardReview.partsReviewContent}">motherboard 리뷰 내용
-                </div>
+                <div class="readPartsContent" id="motherboardContent" th:text="${pcReview.motherboardReview.partsReviewContent}">motherboard 리뷰 내용</div>
                 <div>평점</div>
-                <div id="motherboardRating" th:text="${pcReview.motherboardReview.partsReviewRating}">motherboard 리뷰
-                    평점
-                </div>
+                <div id="motherboardRating" th:text="${pcReview.motherboardReview.partsReviewRating}">motherboard 리뷰 평점</div>
                 <div class="button-container">
                     <button class="blue-button" id="editMotherboardButton">수정</button>
                 </div>
@@ -244,13 +187,9 @@
                     <span th:text="${pcReview.memoryReview.memory.name}">[memory 이름]</span>
                 </label></legend>
                 <div>제목</div>
-                <div class="readPartsTitles" id="memoryTitle" th:text="${pcReview.memoryReview.partsReviewTitle}">memory
-                    리뷰 제목
-                </div>
+                <div class="readPartsTitles" id="memoryTitle" th:text="${pcReview.memoryReview.partsReviewTitle}">memory 리뷰 제목</div>
                 <div>내용</div>
-                <div class="readPartsContent" id="memoryContent" th:text="${pcReview.memoryReview.partsReviewContent}">
-                    memory 리뷰 내용
-                </div>
+                <div class="readPartsContent" id="memoryContent" th:text="${pcReview.memoryReview.partsReviewContent}">memory 리뷰 내용</div>
                 <div>평점</div>
                 <div id="memoryRating" th:text="${pcReview.memoryReview.partsReviewRating}">memory 리뷰 평점</div>
                 <div class="button-container">
@@ -285,13 +224,9 @@
                     <span th:text="${pcReview.storageReview.storage.name}">[storage 이름]</span>
                 </label></legend>
                 <div>제목</div>
-                <div class="readPartsTitles" id="storageTitle" th:text="${pcReview.storageReview.partsReviewTitle}">
-                    storage 리뷰 제목
-                </div>
+                <div class="readPartsTitles" id="storageTitle" th:text="${pcReview.storageReview.partsReviewTitle}">storage 리뷰 제목</div>
                 <div>내용</div>
-                <div class="readPartsContent" id="storageContent"
-                     th:text="${pcReview.storageReview.partsReviewContent}">storage 리뷰 내용
-                </div>
+                <div class="readPartsContent" id="storageContent" th:text="${pcReview.storageReview.partsReviewContent}">storage 리뷰 내용</div>
                 <div>평점</div>
                 <div id="storageRating" th:text="${pcReview.storageReview.partsReviewRating}">storage 리뷰 평점</div>
                 <div class="button-container">
@@ -319,20 +254,15 @@
                 </div>
             </div>
             <!-- Video Card -->
-            <fieldset class="readPartsContainer" id="videocardRow"
-                      th:data-id="${pcReview.videocardReview.partsReviewId}">
+            <fieldset class="readPartsContainer" id="videocardRow" th:data-id="${pcReview.videocardReview.partsReviewId}">
                 <legend><label class="partsTitle">
                     <img alt="videocard Image" class="small-image" th:src="@{/images/nav-videocard.png}">
                     <span th:text="${pcReview.videocardReview.videocard.name}">[videocard 이름]</span>
                 </label></legend>
                 <div>제목</div>
-                <div class="readPartsTitles" id="videocardTitle" th:text="${pcReview.videocardReview.partsReviewTitle}">
-                    videocard 리뷰 제목
-                </div>
+                <div class="readPartsTitles" id="videocardTitle" th:text="${pcReview.videocardReview.partsReviewTitle}">videocard 리뷰 제목</div>
                 <div>내용</div>
-                <div class="readPartsContent" id="videocardContent"
-                     th:text="${pcReview.videocardReview.partsReviewContent}">videocard 리뷰 내용
-                </div>
+                <div class="readPartsContent" id="videocardContent" th:text="${pcReview.videocardReview.partsReviewContent}">videocard 리뷰 내용</div>
                 <div>평점</div>
                 <div id="videocardRating" th:text="${pcReview.videocardReview.partsReviewRating}">videocard 리뷰 평점</div>
                 <div class="button-container">
@@ -361,24 +291,17 @@
             </div>
 
             <!-- Power Supply -->
-            <fieldset class="readPartsContainer" id="powersupplyRow"
-                      th:data-id="${pcReview.powersupplyReview.partsReviewId}">
+            <fieldset class="readPartsContainer" id="powersupplyRow" th:data-id="${pcReview.powersupplyReview.partsReviewId}">
                 <legend><label class="partsTitle">
                     <img alt="powersupply Image" class="small-image" th:src="@{/images/nav-powersupply.png}">
                     <span th:text="${pcReview.powersupplyReview.powersupply.name}">[powersupply 이름]</span>
                 </label></legend>
                 <div>제목</div>
-                <div class="readPartsTitles" id="powersupplyTitle"
-                     th:text="${pcReview.powersupplyReview.partsReviewTitle}">powersupply 리뷰 제목
-                </div>
+                <div class="readPartsTitles" id="powersupplyTitle" th:text="${pcReview.powersupplyReview.partsReviewTitle}">powersupply 리뷰 제목</div>
                 <div>내용</div>
-                <div class="readPartsContent" id="powersupplyContent"
-                     th:text="${pcReview.powersupplyReview.partsReviewContent}">powersupply 리뷰 내용
-                </div>
+                <div class="readPartsContent" id="powersupplyContent" th:text="${pcReview.powersupplyReview.partsReviewContent}">powersupply 리뷰 내용</div>
                 <div>평점</div>
-                <div id="powersupplyRating" th:text="${pcReview.powersupplyReview.partsReviewRating}">powersupply 리뷰
-                    평점
-                </div>
+                <div id="powersupplyRating" th:text="${pcReview.powersupplyReview.partsReviewRating}">powersupply 리뷰 평점</div>
                 <div class="button-container">
                     <button class="blue-button" id="editPowersupplyButton">수정</button>
                 </div>
@@ -411,13 +334,9 @@
                     <span th:text="${pcReview.coverReview.cover.name}">[cover 이름]</span>
                 </label></legend>
                 <div>제목</div>
-                <div class="readPartsTitles" id="coverTitle" th:text="${pcReview.coverReview.partsReviewTitle}">cover 리뷰
-                    제목
-                </div>
+                <div class="readPartsTitles" id="coverTitle" th:text="${pcReview.coverReview.partsReviewTitle}">cover 리뷰 제목</div>
                 <div>내용</div>
-                <div class="readPartsContent" id="coverContent" th:text="${pcReview.coverReview.partsReviewContent}">
-                    cover 리뷰 내용
-                </div>
+                <div class="readPartsContent" id="coverContent" th:text="${pcReview.coverReview.partsReviewContent}">cover 리뷰 내용</div>
                 <div>평점</div>
                 <div id="coverRating" th:text="${pcReview.coverReview.partsReviewRating}">cover 리뷰 평점</div>
                 <div class="button-container">
@@ -448,12 +367,14 @@
 
             <div class="content">
                 <!-- 기존 PC 리뷰 상세 테이블 여기에 위치 -->
+
             </div>
 
             <!-- 댓글 입력 폼 -->
-            <form class="replyForm comment-form" id="commentForm">
+            <form class="replyForm" id="commentForm">
                 <div class="inputWrapper">
-                    <label class="replyLabel" for="pcReviewCommentContent">리플 입력</label>
+
+                <label for="pcReviewCommentContent" class="replyLabel">리플 입력</label>
                     <textarea id="pcReviewCommentContent" name="commentContent" placeholder="댓글을 입력하세요"></textarea>
                     <!--댓글 입력 필드-->
                 </div>
@@ -461,12 +382,11 @@
             </form>
 
             <!-- 댓글 목록 출력 -->
-            <table class="reply comment" id="commentTable">
+            <table class="reply" id="commentTable">
                 <thead>
                 <tr>
                     <th style="width: 20%">작성자</th>
                     <th style="width: 60%">내용</th>
-                    <th style="width: 20%"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -475,151 +395,74 @@
             </table>
             <div class="button-footerContainer">
                 <!-- 뒤로가기 버튼 -->
-                <form th:action="@{/pcreview/list}">
-                    <button class="white-button" type="submit">리스트</button>
-                </form>
-                <!--리뷰 삭제 버튼-->
-                <form method="POST" th:action="@{/pcreview/delete}"
-                      th:if="${pcReview.userId == #authentication.name}">
-                    <input name="pcreviewId" th:value="${pcReview.pcreviewId}" type="hidden"/>
-                    <button class="gray-button" type="submit">삭제</button>
-                </form>
+                <button class="white-button"><a href="/pcreview/list">목록</a></button>
+                <!--글쓰기 버튼-->
+                <button class="blue-button"><a href="pcReviewWrite.html">글쓰기</a></button>
             </div>
+<!--            스크립트 안에 들어간 댓글 출력 id의 스타일-->
+<!--            .replyWriteId {-->
+<!--            word-wrap: break-word; /* 긴 단어 줄바꿈 */-->
+<!--            word-break: break-word; /* 적절히 줄바꿈 */-->
+<!--            width: 15%;-->
+<!--            }-->
+<!--            스크립트 안에 들어간 댓글 출력 content의 스타일-->
+<!--            .replyWriteContent {-->
+<!--            word-wrap: break-word; /* 긴 단어 줄바꿈 */-->
+<!--            word-break: break-word; /* 적절히 줄바꿈 */-->
+<!--            width: 70%;-->
+<!--            }-->
         </div>
     </main>
 </div>
 <!-- pcReviewId -->
 <input disabled id="userId" th:value="${#authentication.name}" type="hidden">
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha384-UG8ao2jwOWB7/oDdObZc6ItJmwUkR/PfMyt9Qs5AwX7PsnYn1CRKCTWyncPTWvaS" crossorigin="anonymous"></script>
-
 <div th:replace="~{fragments/footer :: footerFragment}"></div>
 
 </body>
 <script>
 
-    // pcReviewId 값 가져오기
-    const pcReviewId = document.getElementById('pcReviewId').textContent.trim();
+    // communityId 값 가져오기
+    const pcReviewId = document.getElementById('pcReviewId').value;
 
     // userName 값 가져오기
     const userId = document.getElementById('userId').value;
 
-    function getMySQLFormattedTimestamp() {
-        const now = new Date();
-
-        // 로컬 시간 계산
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-
-        // MySQL 형식 (로컬 시간)
-        return `${year}-${month}-${day}${hours}:${minutes}:${seconds}`;
-    }
-
-
-
-    console.log("pcReviewId 값:", pcReviewId);
-    console.log("userId 값:", userId);
-    function loadComments() {
-        $.ajax({
-            url: '/pcreview/commentList?pcreviewId=' + pcReviewId, // GET 방식으로 파라미터 전달
-            type: 'GET',
-            success: function (data) {
-                const commentTableBody = $('#commentTable tbody');
-                commentTableBody.empty(); // 기존 댓글 목록을 비웁니다.
-
-                // 서버에서 받은 댓글 데이터를 HTML로 출력
-                data.forEach(function (comment) {
-                    let deleteButton = '';
-                    if (comment.userId === userId) {
-                        // 현재 로그인한 사용자의 댓글일 때만 삭제 버튼 표시
-                        deleteButton = `<button onclick="deleteComment(${comment.pcreviewCommentId})">삭제</button>`;
-                    }
-
-                    const commentHtml = `
-                        <tr id="comment-${comment.pcreviewCommentId}">
-                            <td>${comment.userId}</td>
-                            <td>${comment.pcreviewCommentContent}</td>
-                            <td>${deleteButton}</td>
-                        </tr>
-                    `;
-                    commentTableBody.append(commentHtml);
-                });
-            },
-            error: function (xhr, status, error) {
-                alert('댓글 목록 불러오기 실패');
-            }
-        });
-    }
-
-    // 댓글을 삭제하는 함수
-    function deleteComment(commentId) {
-        const deleteData = {
-            pcreviewId: pcReviewId, // 리뷰 ID
-            pcreviewCommentId: commentId, // 삭제할 댓글 ID
-            userId: userId // 사용자 ID
-        };
-
-        $.ajax({
-            url: '/pcreview/commentDelete', // 적절한 URL로 변경
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(deleteData),
-            success: function () {
-                loadComments(); // 댓글 목록 새로고침
-            },
-            error: function () {
-                alert('댓글 삭제 실패!');
-            }
-        });
-    }
-
     // 댓글을 저장하는 함수
-    $('#commentWriteButton').click(function () {
-        const commentContent = $('#pcReviewCommentContent').val();
-        if (!commentContent) {
-            alert('댓글을 입력하세요.');
-            return;
-        }
-        console.log("test start------")
-        console.log(pcReviewId)
-        console.log(userId)
-        console.log(commentContent)
-        console.log("----------------")
-        const commentData = {
-            pcreviewId: pcReviewId,
-            userId: userId,
-            pcreviewCommentContent: commentContent
-        };
+    //     $('#commentWriteButton').click(function () {
+    //         const commentContent = $('#communitycommentContent').val();
+    //         if (!commentContent) {
+    //             alert('댓글을 입력하세요.');
+    //             return;
+    //         }
+    //
+    //         const commentData = {
+    //             pcreviewId: pcReviewId,
+    //             memberId: userId,
+    //             commentContent: commentContent
+    //         };
+    //
+    // $.ajax({
+    //     url: '/pcreview/commentWrite',
+    //     type: 'POST',
+    //     contentType: 'application/json',
+    //     data: JSON.stringify(commentData),
+    //     success: function () {
+    //         $('#communityCommentContent').val(''); // 댓글 입력란 초기화
+    //         loadComments(); // 댓글 목록 새로고침
+    //     },
+    //     error: function () {
+    //         alert('댓글 저장 실패!');
+    //     }
+    // });
+    // });
 
-        $.ajax({
-            url: '/pcreview/commentWrite',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(commentData),
-            success: function () {
-                $('#pcReviewCommentContent').val(''); // 댓글 입력란 초기화
-                loadComments(); // 댓글 목록 새로고침
-            },
-            error: function () {
-                alert('댓글 저장 실패!');
-            }
-        });
-    });
-
-    // 페이지 로드 시 댓글 목록 불러오기
-    $(document).ready(function () {
-        loadComments();
-    });
 
     // PcReviewHandling
     document.addEventListener("DOMContentLoaded", function () {
         const pcReviewRow = document.getElementById("pcReviewRow");
         const editPcReviewRow = document.getElementById("editPcReviewRow");
 
-        const editButton = document.getElementById("editPcReviewButton");
+        const editButton = document.getElementById("editpcReviewButton");
         const saveButton = document.getElementById("savePcReviewButton");
         const cancelButton = document.getElementById("cancelPcReviewButton");
 
@@ -628,7 +471,7 @@
         editButton.addEventListener("click", function () {
             console.log("도달")
             pcReviewRow.style.display = "none";
-            editPcReviewRow.style.display = "table-row";
+            // editPcReviewRow.style.display = "table-row";
 
             document.getElementById("editPcReviewTitle").value = document.getElementById("pcReviewTitle").textContent;
             document.getElementById("editPcReviewContent").value = document.getElementById("pcReviewContent").textContent;
@@ -642,9 +485,6 @@
 
             document.getElementById("pcReviewTitle").textContent = updatedTitle;
             document.getElementById("pcReviewContent").textContent = updatedContent;
-            const currentTime = getMySQLFormattedTimestamp();
-            document.getElementById("pcReviewDate").textContent = currentTime;
-
 
             pcReviewRow.style.display = "table-row";
             editPcReviewRow.style.display = "none";
@@ -714,8 +554,6 @@
         cpuTitle.textContent = updatedTitle;
         cpuContent.textContent = updatedContent;
         cpuRating.textContent = updatedRating; // 평점 업데이트
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("cpuDate").textContent = currentTime;
         editCpuRow.style.display = 'none';
         cpuRow.style.display = 'table-row';
 
@@ -780,8 +618,6 @@
         cpucoolerTitle.textContent = updatedTitle;
         cpucoolerContent.textContent = updatedContent;
         cpucoolerRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("cpucoolerDate").textContent = currentTime;
         editCpucoolerRow.style.display = 'none';
         cpucoolerRow.style.display = 'table-row';
 
@@ -845,8 +681,6 @@
         motherboardTitle.textContent = updatedTitle;
         motherboardContent.textContent = updatedContent;
         motherboardRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("motherboardDate").textContent = currentTime;
         editMotherboardRow.style.display = 'none';
         motherboardRow.style.display = 'table-row';
 
@@ -911,8 +745,6 @@
         memoryTitle.textContent = updatedTitle;
         memoryContent.textContent = updatedContent;
         memoryRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("memoryDate").textContent = currentTime;
         editMemoryRow.style.display = 'none';
         memoryRow.style.display = 'table-row';
 
@@ -976,8 +808,6 @@
         storageTitle.textContent = updatedTitle;
         storageContent.textContent = updatedContent;
         storageRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("storageDate").textContent = currentTime;
         editStorageRow.style.display = 'none';
         storageRow.style.display = 'table-row';
 
@@ -1042,8 +872,6 @@
         videocardTitle.textContent = updatedTitle;
         videocardContent.textContent = updatedContent;
         videocardRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("videocardDate").textContent = currentTime;
         editVideocardRow.style.display = 'none';
         videocardRow.style.display = 'table-row';
 
@@ -1108,8 +936,6 @@
         powersupplyTitle.textContent = updatedTitle;
         powersupplyContent.textContent = updatedContent;
         powersupplyRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("powersupplyDate").textContent = currentTime;
         editPowersupplyRow.style.display = 'none';
         powersupplyRow.style.display = 'table-row';
 
@@ -1174,8 +1000,6 @@
         coverTitle.textContent = updatedTitle;
         coverContent.textContent = updatedContent;
         coverRating.textContent = updatedRating;
-        const currentTime = getMySQLFormattedTimestamp();
-        document.getElementById("coverDate").textContent = currentTime;
         editCoverRow.style.display = 'none';
         coverRow.style.display = 'table-row';
 

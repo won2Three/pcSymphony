@@ -24,11 +24,13 @@
                 </tr>
                 </thead>
                 <tbody>
+                <!-- pcReviewPage.content에서 데이터 반복 -->
                 <tr th:each="pcReview : ${pcReviewPage.content}">
-                    <td th:text="${pcReview.pcreviewId}">ID</td>
+                    <td th:text="${pcReview.pcreviewId}">id</td>
                     <td>
+                        <!-- 제목을 클릭하면 상세 페이지로 이동 -->
                         <a th:href="@{/pcreview/read/{id}(id=${pcReview.pcreviewId})}"
-                           th:text="${pcReview.pcreviewTitle}">Title</a>
+                           th:text="${pcReview.pcreviewTitle}">Part Name</a>
                     </td>
                     <td th:text="${pcReview.pcreviewDate}">Date</td>
                 </tr>
@@ -50,6 +52,11 @@
                     </li>
                 </ul>
             </div>
+
+            <div class="button-container">
+                <button class="blue-button"><a href="/cart/">Go to Cart</a></button>
+            </div>
+
         </div>
     </main>
 </div>
