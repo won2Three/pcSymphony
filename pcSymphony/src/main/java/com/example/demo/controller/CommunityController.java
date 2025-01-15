@@ -72,6 +72,7 @@ public class CommunityController {
     }
 
 
+
     @GetMapping("read")
     public String read(@RequestParam("communityId") int communityId, Model model) {
         try {

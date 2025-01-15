@@ -19,7 +19,7 @@ public class WebSecurityConfig {
             "/"                     //root
             , "/member/join"  //회원가입
             ,"/community/list" //커뮤니티 리스트
-            ,"/css/**", "/js/**", "/images/**" // 정적 리소스 허용
+            ,"/css/**", "/js/**", "/images/**", "/uploads/**" // 정적 리소스 허용
 //            , "/member/login" //로그인폼
             //메인?, 글 작성 이외는 가능
     };
@@ -31,7 +31,6 @@ public class WebSecurityConfig {
                         .requestMatchers(PUBLIC_URLS).permitAll() //인증 없이 접근 가능
 //                                .anyRequest().permitAll() //모든 요청을 인증없이 접근 가능
                         .requestMatchers(HttpMethod.PUT, "/part/partsReviewUpdate/**").authenticated() // PUT 요청에 대해 인증 요구
-                                .requestMatchers("/uploads/**").permitAll()
                                 .anyRequest().authenticated() //그 외 요청은 인증 요구, 로그인사용자만 접근 가능
                 )
                 .httpBasic(Customizer.withDefaults())

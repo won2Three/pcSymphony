@@ -200,11 +200,11 @@ public class CommunityService {
         communityRepository.save(community);
     }
 
-    // 이미지 파일을 서버의 특정 경로에 저장하는 메서드
+    // 이미지 파일을 서버의 외부 경로에 저장하는 메서드
     public String saveImageToFileSystem(MultipartFile imageUpload) {
         try {
-            // 프로젝트 루트 기준으로 static/uploads 경로 설정
-            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/uploads/";
+            // 외부 경로 설정 (예시: C:/uploads/)
+            String uploadDir = "C:/uploads/";
 
             // 업로드 디렉토리가 없으면 생성
             File dir = new File(uploadDir);
@@ -220,11 +220,12 @@ public class CommunityService {
             imageUpload.transferTo(filePath.toFile());
 
             // 웹에서 접근할 수 있도록 경로 반환
-            return "/uploads/" + fileName;  // 저장된 파일 경로 반환 (static/uploads/내의 파일)
+            return "/uploads/" + fileName;  // 저장된 파일 경로 반환
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
+
 
 }
