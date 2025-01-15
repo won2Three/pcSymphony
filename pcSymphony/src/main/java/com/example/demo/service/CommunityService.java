@@ -93,9 +93,9 @@ public class CommunityService {
         return communityDto;
     }
 
-    //수정
+    // 수정 코드
     public void update(int communityId, CommunityDTO communityDto, String username, MultipartFile imageUpload) {
-        //사용자 확인
+        // 사용자 확인
         MemberEntity memberEntity = memberRepository.findById(username)
                 .orElseThrow(() -> new EntityNotFoundException("사용자 정보가 없습니다."));
 
@@ -111,20 +111,24 @@ public class CommunityService {
         // 이미지가 새로 업로드된 경우 처리
         if (imageUpload != null && !imageUpload.isEmpty()) {
             // 새로운 이미지 저장
-            String imagePath = saveImageToFileSystem(imageUpload);
-            communityDto.setImagePath(imagePath);  // 새로운 이미지 경로 설정
+            String imagePath = saveImageToFileSystem(imageUpload); // 이미지 저장 메서드
+            communityDto.setImagePath(imagePath);  // 새 이미지 경로 설정
+            log.info("새 이미지 경로: " + imagePath);  // 로그로 확인
         } else {
             // 새 이미지를 업로드하지 않은 경우 기존 이미지 경로 유지
             communityDto.setImagePath(communityEntity.getImagePath());
+            log.info("기존 이미지 경로 사용: " + communityEntity.getImagePath());
         }
 
         // 게시글 수정
         communityEntity.setCommunityTitle(communityDto.getCommunityTitle());
         communityEntity.setCommunityContent(communityDto.getCommunityContent());
-        communityEntity.setImagePath(communityDto.getImagePath());
-
-        communityRepository.save(communityEntity);
+        communityEntity.setImagePath(communityDto.getImagePath());  // 이미지 경로 업데이트
+        communityRepository.save(communityEntity);  // DB에 저장
     }
+
+
+
 
     //삭제
     public void delete(int communityId, String username) {

@@ -21,7 +21,7 @@
             <h1>Update Post</h1>
 
             <!-- 게시물 수정 폼 -->
-            <form method="POST" onsubmit="return validateForm()"
+            <form method="POST" onsubmit="return validateForm()" enctype="multipart/form-data"
                   th:action="@{/community/update/{id}(id=${community.communityId})}">
 
                 <!-- 제목 입력 필드 (기존 제목이 자동으로 들어가도록 처리) -->

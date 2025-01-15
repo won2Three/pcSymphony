@@ -134,11 +134,19 @@ public class CommunityController {
             return "redirect:/community/read?communityId=" + id;
         }
 
+        // 업로드된 이미지 확인
+        if (imageUpload != null && !imageUpload.isEmpty()) {
+            log.info("새 이미지 업로드됨: " + imageUpload.getOriginalFilename());
+        } else {
+            log.info("새 이미지 없음, 기존 이미지 사용");
+        }
+
         // 게시글 업데이트
         communityService.update(id, communityDto, userDetails.getUsername(), imageUpload);
 
         return "redirect:/community/read?communityId=" + id; // 수정 후 상세 페이지로 리다이렉트
     }
+
 
 
 
