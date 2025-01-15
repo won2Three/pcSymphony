@@ -64,6 +64,7 @@ public class CommunityService {
                 .communityTitle(communityDto.getCommunityTitle())
                 .communityContent(communityDto.getCommunityContent())
                 .communityView(0) //조회수 초기화
+                .imagePath(communityDto.getImagePath())
                 .build();
 
         communityRepository.save(communityEntity);
@@ -81,6 +82,7 @@ public class CommunityService {
                 .communityView(communityEntity.getCommunityView())
                 .communityDate(communityEntity.getCommunityDate())
                 .memberId(communityEntity.getMember().getMemberId())
+                .imagePath(communityEntity.getImagePath())
                 .build();
 
         return communityDto;

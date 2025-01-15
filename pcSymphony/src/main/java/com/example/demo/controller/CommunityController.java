@@ -12,8 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.service.CommunityService;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 
 @Slf4j
@@ -49,26 +54,81 @@ public class CommunityController {
         return "community/write";
     }
 
+//    @PostMapping("write")
+//    public String write(
+//            CommunityDTO community,
+//            @AuthenticationPrincipal MemberUserDetails user) {
+//        community.setMemberId(user.getUsername());
+//        communityService.write(community);
+//        return "redirect:list";
+//    }
+
     @PostMapping("write")
     public String write(
             CommunityDTO community,
+            @RequestParam(value = "imageUpload", required = false) MultipartFile imageUpload,
             @AuthenticationPrincipal MemberUserDetails user) {
+
+        // 이미지가 존재하면 이미지 파일을 파일 시스템에 저장
+        if (imageUpload != null && !imageUpload.isEmpty()) {
+            String imagePath = saveImageToFileSystem(imageUpload); // 이미지 저장 메서드
+            community.setImagePath(imagePath);  // 이미지 경로 저장
+        }
+
         community.setMemberId(user.getUsername());
         communityService.write(community);
         return "redirect:list";
     }
 
-    @GetMapping("read")
-    public String read(@RequestParam("communityId") int communityId,
-                       Model model) {
+    // 이미지 파일을 서버의 특정 경로에 저장하는 메서드
+    private String saveImageToFileSystem(MultipartFile imageUpload) {
+        try {
+            // 프로젝트 루트 기준으로 static/uploads 경로 설정
+            String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/uploads/";
 
-        //조회수 증가
-        communityService.incrementViewCount(communityId);
+            // 업로드 디렉토리가 없으면 생성
+            File dir = new File(uploadDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
 
-        CommunityDTO communityDto = communityService.getCommunity(communityId);
-        model.addAttribute("community", communityDto);
-        return "community/read";
+            // 파일 이름 설정 (현재 시간을 이용한 고유 이름 생성)
+            String fileName = System.currentTimeMillis() + "-" + imageUpload.getOriginalFilename();
+            Path filePath = Paths.get(uploadDir + fileName);
+
+            // 파일을 지정된 경로에 저장
+            imageUpload.transferTo(filePath.toFile());
+
+            // 웹에서 접근할 수 있도록 경로 반환
+            return "/uploads/" + fileName;  // 저장된 파일 경로 반환 (static/uploads/내의 파일)
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
+
+
+
+
+    @GetMapping("read")
+    public String read(@RequestParam("communityId") int communityId, Model model) {
+        try {
+            // 조회수 증가
+            communityService.incrementViewCount(communityId);
+
+            CommunityDTO communityDto = communityService.getCommunity(communityId);
+
+            // 커뮤니티 DTO에 이미지 경로가 잘 포함되어 있는지 확인
+            log.info("Community Image Path: {}", communityDto.getImagePath());
+
+            model.addAttribute("community", communityDto);
+            return "community/read";
+        } catch (Exception e) {
+            log.error("Error fetching community details: ", e);
+            return "error"; // error 페이지로 리다이렉트
+        }
+    }
+
 
 
     @PostMapping("delete")

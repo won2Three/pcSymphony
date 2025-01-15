@@ -39,9 +39,7 @@
                     </div>
                 </div>
                 <!-- 업로드한 이미지를 표시 -->
-                <!--                <div id="uploadedImages" style="margin-top: 10px; display: flex; align-items: center;">-->
-                <!--                    <img th:class="big-image" th:src="@{/images/nav-case.png}" alt="Image"/>-->
-                <!--                    <img th:class="big-image" th:src="@{/images/nav-case.png}" alt="Image"/>-->
+                <img th:src="@{${community.imagePath}}" alt="Post Image" />
                 <!-- 게시물 내용 -->
                 <div class="community-content" th:text="${community.communityContent}">Content</div>
                 <!-- 수정/삭제 버튼 -->

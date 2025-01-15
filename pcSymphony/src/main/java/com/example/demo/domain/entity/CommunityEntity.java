@@ -48,5 +48,8 @@ public class CommunityEntity {
     @LastModifiedDate
     @Column(name = "last_modified_date", insertable = false, updatable = false)
     private LocalDateTime communityDate;
+
+    @Column(name = "image_path")
+    private String imagePath;
 }
 
