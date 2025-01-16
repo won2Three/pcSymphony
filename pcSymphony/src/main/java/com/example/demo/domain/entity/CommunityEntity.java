@@ -48,5 +48,28 @@ public class CommunityEntity {
     @LastModifiedDate
     @Column(name = "last_modified_date", insertable = false, updatable = false)
     private LocalDateTime communityDate;
+
+    @Column(name = "image_path")
+    private String imagePath;
+
+    @Transient
+    private LocalDateTime previousCommunityDate;
+
+    @Transient
+    private int previousCommunityView;
+
+    @PostLoad
+    private void initializePreviousState() {
+        this.previousCommunityView = this.communityView;
+        this.previousCommunityDate = this.communityDate;
+    }
+
+    @PreUpdate
+    private void preventLastModifiedUpdateOnViewChange() {
+        if (this.previousCommunityView != this.communityView) {
+            // communityView만 변경된 경우 lastModifiedDate 갱신 방지
+            this.communityDate = previousCommunityDate;
+        }
+    }
 }
 

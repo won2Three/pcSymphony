@@ -5,12 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "community_reply")
 public class CommunityReplyEntity {
 
@@ -33,4 +38,10 @@ public class CommunityReplyEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     MemberEntity member;
+
+    //등록일
+    @CreatedDate
+    @Column(name = "community_reply_date",
+            columnDefinition = "timestamp default current_timestamp")
+    LocalDateTime communityReplyDate;
 }

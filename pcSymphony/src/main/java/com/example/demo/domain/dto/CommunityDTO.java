@@ -21,5 +21,6 @@ public class CommunityDTO {
     String communityContent;
     int communityView;
     LocalDateTime communityDate;
+    String imagePath;
 
 }

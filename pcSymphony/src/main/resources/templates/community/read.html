@@ -2,16 +2,14 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>게시물 상세보기</title>
+    <title>Post Detail</title>
     <script src="../../static/js/jquery-3.7.1.min.js" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <link href="../../static/css/read.css" rel="stylesheet" th:href="@{/css/read.css}">
     <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
-        <link href="../../static/css/read.css" rel="stylesheet" th:href="@{/css/read.css}">
     <script src="../../static/js/main.min.js" th:src="@{/js/main.min.js}"></script>
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
     <script src="../../static/js/read.js" th:src="@{/js/read.js}"></script>
-
-
 </head>
 <body>
 <!-- Header Fragment 포함 -->
@@ -27,78 +25,64 @@
                 </div>
                 <div class="title-header">
                     <!-- 게시물 제목 -->
-                    <div id="community-title" th:text="${community.communityTitle}">제목</div>
+                    <div id="community-title" th:text="${community.communityTitle}">Title</div>
                     <!-- 게시물 정보 -->
                     <div id="community-info">
-                        작성자: <span th:text="${community.memberId}"></span>
-                        조회수: <span th:text="${community.communityView}"></span>
-                        작성일: <span th:text="${#temporals.format(community.communityDate, 'yyyy-MM-dd HH:mm')}"></span>
+   <span class="info-left">
+    Author : <span th:text="${community.memberId}"></span> &nbsp; <!-- 공백 추가 -->
+    Date : <span th:text="${#temporals.format(community.communityDate, 'yyyy-MM-dd HH:mm')}"></span>
+</span>
+
+                        <span class="info-right">
+        Views : <span th:text="${community.communityView}"></span>
+    </span>
                     </div>
                 </div>
-                    <!-- 업로드한 이미지를 표시 -->
-<!--                <div id="uploadedImages" style="margin-top: 10px; display: flex; align-items: center;">-->
-                    <img th:class="big-image" th:src="@{/images/nav-case.png}" alt="Image"/>
-                    <img th:class="big-image" th:src="@{/images/nav-case.png}" alt="Image"/>
+                <!-- 업로드한 이미지를 표시 -->
+                <img th:src="@{${community.imagePath}}" alt="Post Image" />
                 <!-- 게시물 내용 -->
-                <div class="community-content" th:text="${community.communityContent}">내용</div>
-
-
-                <!--    &lt;!&ndash; 수정/삭제 버튼 &ndash;&gt;-->
-                <!--    <div class="edit-delete-buttons">-->
-                <!--        &lt;!&ndash; 수정 버튼 &ndash;&gt;-->
-                <!--        <a th:href="@{/community/update/{communityId}(communityId=${community.communityId})}" class="edit-button">수정</a>-->
-
-                <!--        &lt;!&ndash; 삭제 버튼 &ndash;&gt;-->
-                <!--        <form th:action="@{/community/delete}" method="POST">-->
-                <!--            <input type="hidden" name="communityId" th:value="${community.communityId}" />-->
-                <!--            <button type="submit" class="delete-button">삭제</button>-->
-                <!--        </form>-->
-                <!--    </div>-->
-
+                <div class="community-content" th:text="${community.communityContent}">Content</div>
                 <!-- 수정/삭제 버튼 -->
                 <div class="button-container">
                     <!-- 수정 버튼 (작성자와 로그인한 사용자가 같을 때만 표시) -->
-                    <button class="blue-button"><a
-                               th:href="@{/community/update/{communityId}(communityId=${community.communityId})}"
-                               th:if="${community.memberId == #authentication.name}">수정</a></button>
-
+                    <form th:if="${community.memberId == #authentication.name}" method="GET"
+                          th:action="@{/community/update/{communityId}(communityId=${community.communityId})}">
+                        <button class="basic-button" type="submit">Update</button>
+                    </form>
                     <!-- 삭제 버튼 (작성자와 로그인한 사용자가 같을 때만 표시) -->
                     <form method="POST" th:action="@{/community/delete}"
                           th:if="${community.memberId == #authentication.name}">
                         <input name="communityId" th:value="${community.communityId}" type="hidden"/>
-                        <button class="gray-button" type="submit">삭제</button>
+                        <button class="cancel-button" type="submit">Delete</button>
                     </form>
                 </div>
-
-
-
-                <!-- 리플 작성 폼 시작 -->
-                <form class="replyForm">
-                    <div class="inputWrapper">
-                    <label for="communityReplyContent" class="replyLabel">리플입력</label>
-                    <textarea  id="communityReplyContent" name="replyContent" placeholder="댓글을 입력하세요."></textarea>
-                    <!-- 댓글 입력 필드 -->
-                    </div>
-                    <button class="blue-button" id="replyWriteButton" type="button">저장</button>
-                </form>
 
                 <!-- 리플 목록 출력 시작 -->
                 <table class="reply" id="replyTable">
                     <thead>
                     <tr>
-                        <th>작성자</th>
-                        <th colspan="3">내용</th>
+                        <th>Reply</th>
                     </tr>
                     </thead>
                     <tbody>
                     <!-- 댓글 목록은 여기에 동적으로 추가됩니다. -->
                     </tbody>
                 </table>
+
+                <!-- 리플 작성 폼 시작 -->
+                <form class="replyForm">
+                    <div class="inputWrapper">
+                        <label for="communityReplyContent" class="replyLabel">Enter Reply</label>
+                        <textarea  id="communityReplyContent" name="replyContent" placeholder="Please Enter a comment."></textarea>
+                        <!-- 댓글 입력 필드 -->
+                    </div>
+                    <button class="basic-button" id="replyWriteButton" type="button">Save</button>
+                </form>
                 <div class="button-footerContainer">
-                <!-- 뒤로가기 버튼 -->
-                <button class="white-button"><a href="/community/list">목록</a></button>
-                <!--글쓰기 버튼-->
-                <button class="blue-button"><a href="write">글쓰기</a></button>
+                    <!-- 뒤로가기 버튼 -->
+                    <button class="basic-button"><a href="/community/list">List</a></button>
+                    <!--글쓰기 버튼-->
+                    <button class="basic-button"><a href="write">Create Post</a></button>
                 </div>
             </div>
         </div>
@@ -109,14 +93,6 @@
 
 <input type="hidden"  id="communityId" th:value="${community.communityId}" disabled>
 <input type="hidden" id="userId" th:value="${#authentication.name}" disabled>
-<!--    // 현재 커뮤니티 ID와 사용자 ID를 얻어옵니다.-->
-<!--    // communityId 값 가져오기-->
-<!--    const communityId = document.getElementById('communityId').value;-->
-<!--    console.log('Community ID:', communityId);-->
-
-<!--    // userName 값 가져오기-->
-<!--    const userId = document.getElementById('userName').value;-->
-<!--    console.log('User Name:', userId);-->
 <div th:replace="~{fragments/footer :: footerFragment}"></div>
 
 </body>
@@ -131,6 +107,18 @@
     // 현재 커뮤니티 ID와 사용자 ID를 얻어옵니다.
     console.log('Community ID:', communityId);
     console.log('User Id:', userId);
+
+     function formatDate(dateString) {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    }
+
     // 댓글 목록을 로드하는 함수
     function loadComments() {
         $.ajax({
@@ -142,20 +130,27 @@
 
                 // 서버에서 받은 댓글 데이터를 HTML로 출력
                 data.forEach(function (comment) {
-                    const commentHtml = `
-                        <tr  id="comment-${comment.communityReplyId}">
-                            <td class="replyWriteId">${comment.memberId}</td>
-                            <td class="replyWriteContent">${comment.replyContent}</td>
-                            <td style="text-align: right">
-                                <button class="gray-button" onclick="deleteComment(${comment.communityReplyId})">삭제</button>
-                            </td>
-                        </tr>
-                    `;
+const formattedDate = formatDate(comment.communityReplyDate);
+
+                   const commentHtml = `
+        <tr id="comment-${comment.communityReplyId}" style="border-bottom: none;">
+            <td id="reply-header" style="border-bottom: none;">
+                <span class="reply-author">${comment.memberId}</span>
+                <span class="reply-date">${formattedDate}</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="reply-content">${comment.replyContent}</td>
+            <td style="text-align: right">
+                <button class="cancel-button" onclick="deleteComment(${comment.communityReplyId})">X</button>
+            </td>
+        </tr>
+    `;
                     replyTableBody.append(commentHtml);
                 });
             },
             error: function (xhr, status, error) {
-                alert('댓글 목록 불러오기 실패');
+                alert('Failed to load the reply list.');
             }
         });
     }
@@ -164,7 +159,7 @@
     $('#replyWriteButton').click(function () {
         const replyContent = $('#communityReplyContent').val();
         if (!replyContent) {
-            alert('댓글을 입력하세요.');
+            alert('Please enter your reply.');
             return;
         }
 
@@ -184,7 +179,7 @@
                 loadComments(); // 댓글 목록 새로고침
             },
             error: function () {
-                alert('댓글 저장 실패!');
+                alert('Failed to save the reply.');
             }
         });
     });
@@ -206,7 +201,7 @@
                 loadComments(); // 댓글 목록 새로고침
             },
             error: function () {
-                alert('댓글 삭제 실패!');
+                alert('Failed to delete the reply.');
             }
         });
     }

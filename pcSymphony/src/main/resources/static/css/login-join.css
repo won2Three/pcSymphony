@@ -1,83 +1,40 @@
-    /* 배경 색상 */
-body {
-    background-color: #333; /* 진회색 배경 */
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+#loginButton{
+  color: white; /* 글자 색 */
+      border: none; /* 테두리 제거 */
+      padding: 10px 20px; /* 패딩 */
+      font-size: 14px; /* 폰트 크기 */
+      cursor: pointer; /* 손가락 모양의 커서 */
+      transition: background-color 0.3s ease, transform 0.3s ease; /* 효과 */
+      border-radius: 10px; /* 둥근 모서리 */
+      width: auto; /* 버튼 크기는 내용에 맞게 */
+       display: inline-block; /* 인라인 블록으로 설정 */
+          text-align: center; /* 텍스트 중앙 정렬 */
+          margin-left: 126px;
+               font-weight: bold;
+                transition: 0.3s;
+                background-color: #1976D2;
+}
+#loginButton:hover {
+                  opacity: .7;
+              }
+
+#joinButton{
+background-color: #1976D2;
+color: white; /* 글자 색 */
+      border: none; /* 테두리 제거 */
+      padding: 10px 20px; /* 패딩 */
+      font-size: 14px; /* 폰트 크기 */
+      cursor: pointer; /* 손가락 모양의 커서 */
+      transition: background-color 0.3s ease, transform 0.3s ease; /* 효과 */
+      border-radius: 10px; /* 둥근 모서리 */
+      width: auto; /* 버튼 크기는 내용에 맞게 */
+       display: inline-block; /* 인라인 블록으로 설정 */
+          text-align: center; /* 텍스트 중앙 정렬 */
+          margin-left: 126px;
+                font-weight: bold;
+                transition: 0.3s;
 }
 
-/* 로그인 폼 스타일 */
-.login-container {
-    background-color: #f0f0f0; /* 약간 회색이 섞인 흰색 */
-    border-radius: 8px;
-    padding: 40px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    text-align: center;
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-/* 폼 요소 스타일 */
-table {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-th {
-    text-align: left;
-    padding: 8px 0;
-    font-size: 16px;
-    color: #333;
-}
-
-td {
-    padding: 8px 0;
-}
-
-input[type="text"], input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-    margin-top: 5px;
-}
-
-input[type="text"]:focus, input[type="password"]:focus {
-    border-color: #4c9aff; /* 입력 시 파란색 테두리 */
-    outline: none;
-}
-
-button[type="submit"] {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    background-color: #4c9aff; /* 하늘색 */
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button[type="submit"]:hover {
-    background-color: #3577d6; /* 버튼 hover 시 색상 변경 */
-}
-
-/* 추가적인 스타일 */
-.form-footer {
-    text-align: center;
-    font-size: 14px;
-    margin-top: 20px;
-    color: #888;
-}
+#joinButton:hover {
+                 opacity: .7;
+              }

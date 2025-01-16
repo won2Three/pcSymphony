@@ -1,17 +1,151 @@
+/* 카드 스타일 게시판 CSS */
+
+/* 글쓰기 버튼 스타일 */
 .write-button {
-    float: right;
-    color: #000;
+    display: inline-block;
+    background-color: #1976D2;
+    color: #fffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* 타이틀 아래로 일정 간격 */
+    margin-left: auto; /* 왼쪽 여백을 자동으로 채워 오른쪽에 배치 */
+    margin-right: 0; /* 오른쪽 여백을 0으로 설정 */
+    font-weight: bold;
+    transition: 0.3s;
 }
-#list-title {
-    text-align: left;   /*제목은 왼쪽 정렬*/
+
+.write-button a {
+    color: #fff;
+    text-decoration: none;
 }
+
+.write-button:hover {
+    opacity: .7;
+}
+
+/* 테이블 스타일 */
 .list-table {
-    width: 100%; /* 테이블의 전체 너비를 100%로 고정 */
-    table-layout: fixed; /* 각 열의 너비를 고정 */
-    border-collapse: collapse; /* 테이블 경계 병합 */
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: separate;
+    margin-top: 20px;
+    position: relative;
 }
+
+  .list-table thead {
+     background-color: #e1f5fe; /* 아주 연한 파란색 배경 */
+      color: #2c3e50; /* 어두운 글씨 */
+
+  }
+
+
 .list-table th, .list-table td {
-    white-space: nowrap;       /* 텍스트를 한 줄로 유지 */
-    overflow: hidden;          /* 넘친 텍스트 숨기기 */
-    text-overflow: ellipsis;   /* 말줄임(...) 표시 */
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
+.list-table tbody tr {
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+}
+
+.list-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.list-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+#list-title {
+    text-align: center;
+    position: relative;
+}
+
+/* 카드 스타일을 위한 테이블 컨테이너 */
+.community-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative; /* 글쓰기 버튼 위치 조정을 위해 설정 */
+}
+
+/* 메시지 스타일 */
+.form-footer {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .list-table th, .list-table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .write-button {
+        padding: 10px 20px; /* 모바일에서도 적절한 크기 유지 */
+        font-size: 14px;
+    }
+
+    .form-footer {
+        font-size: 12px;
+    }
+}
+
+/* 타이틀 가운데 정렬 */
+.community-container h1 {
+    text-align: center; /* 타이틀 가운데 정렬 */
+    margin-bottom: 20px; /* 타이틀 아래 간격 */
+}
+
+.pagination a.active {
+    font-weight: bold;
+    color: #007bff; /* 선택된 페이지 색상 */
+}
+
+/* 페이지네이션 전체 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center; /* 가로 방향으로 가운데 정렬 */
+    align-items: center;     /* 세로 방향으로 가운데 정렬 */
+    gap: 10px;               /* 버튼들 사이에 간격 추가 */
+    margin-top: 20px;        /* 페이지네이션 상단 여백 */
+}
+
+/* 각 버튼 스타일 */
+.pagination button {
+    display: inline-block;
+    background-color: #1976D2;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+.pagination button:hover {
+    opacity: .7;
+}
+
