@@ -3,11 +3,11 @@
 /* 글쓰기 버튼 스타일 */
 .write-button {
     display: inline-block;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #1976D2;
+    color: #fffff;
     border: none;
     padding: 12px 24px;
-    border-radius: 5px;
+    border-radius: 10px;
     text-decoration: none;
     font-size: 16px;
     cursor: pointer;
@@ -15,6 +15,8 @@
     margin-top: 20px; /* 타이틀 아래로 일정 간격 */
     margin-left: auto; /* 왼쪽 여백을 자동으로 채워 오른쪽에 배치 */
     margin-right: 0; /* 오른쪽 여백을 0으로 설정 */
+    font-weight: bold;
+    transition: 0.3s;
 }
 
 .write-button a {
@@ -23,7 +25,7 @@
 }
 
 .write-button:hover {
-    background-color: #0056b3;
+    opacity: .7;
 }
 
 /* 테이블 스타일 */
@@ -130,18 +132,20 @@
 /* 각 버튼 스타일 */
 .pagination button {
     display: inline-block;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #1976D2;
+    color: #ffffff;
     border: none;
     padding: 12px 24px;
-    border-radius: 5px;
+    border-radius: 10px;
     text-decoration: none;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    transition: 0.3s;
+    font-weight: bold;
 }
 
 .pagination button:hover {
-    background-color: #0056b3;
+    opacity: .7;
 }
 
