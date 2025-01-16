@@ -58,12 +58,14 @@ public class PcReviewController {
     private final PartsReviewService partsReviewService;
 
     @GetMapping("write")
-    public String write(Model model) {
+    public String write(Model model, @AuthenticationPrincipal MemberUserDetails user) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String loggedInUserName = authentication.getName(); // 로그인한 사용자 이름 가져오기 (보통 username이 저장됨)
         System.out.println(loggedInUserName);
         CartEntity cart = cartRepository.findByUser_MemberId(loggedInUserName);
         model.addAttribute("cart", cart);
+        CartEntity cartEntity = cartRepository.findByUser_MemberId(user.getId());
+        model.addAttribute("cart", cartEntity);
         return "pcReview/pcReviewWrite";
     }
 
@@ -75,6 +77,7 @@ public class PcReviewController {
         String userName = user.getUsername();
         pcReviewDTO.setUserId(userName);
         CartEntity cartEntity = cartRepository.findByUser_MemberId(userName);
+
 
         pcReviewDTO.getPartReviews().forEach((partName, review) -> {
             PartsReviewEntity partsReviewEntity = new PartsReviewEntity();
@@ -184,10 +187,6 @@ public class PcReviewController {
         return "redirect:/pcreview/list";
     }
 
-    //pcReviewList 게시글 페이징
-    public Page<PcReviewEntity> pcReviewList(Pageable pageable) {
-        return pcReviewRepository.findAll(pageable);
-    }
     @GetMapping("list")
     public String getPcReviewList(Model model, @PageableDefault(page = 0, size = 10, sort = "pcreviewId", direction = Sort.Direction.DESC) Pageable pageable) {
 
@@ -203,9 +202,10 @@ public class PcReviewController {
     }
 
     @GetMapping("/read/{id}")
-    public String read(@PathVariable int id, Model model) {
+    public String read(@PathVariable int id, Model model, @AuthenticationPrincipal MemberUserDetails user) {
         PcReviewEntity pcReviewEntity = pcReviewRepository.getReferenceById(id);
-        System.out.println(pcReviewEntity);
+        CartEntity cartEntity = cartRepository.findByUser_MemberId(user.getId());
+        model.addAttribute("cart", cartEntity);
         model.addAttribute("pcReview", pcReviewEntity);
         return "pcReview/pcReviewRead";
     }

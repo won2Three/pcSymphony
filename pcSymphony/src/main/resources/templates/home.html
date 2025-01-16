@@ -10,33 +10,12 @@
     <link href="../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
     <link href="../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
     <link href="../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
+    <link href="../static/css/home.css" rel="stylesheet" th:href="@{/css/home.css}">
     <script src="../static/js/header.js" th:src="@{/js/header.js}"></script>
     <script src="../static/js/main.min.js" th:src="@{/js/main.min.js}"></script>
     <title>pcSymphony_Home</title>
     <style>
-        .partsTiles-wrap {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4열로 설정 */
-            grid-template-rows: repeat(2, auto); /* 2행으로 설정 */
-            gap: 12px; /* 요소 간 간격 */
-            justify-content: center;
-            margin: 12px;
-        }
 
-        .partsTiles-item {
-            box-sizing: border-box;
-            padding: 12px;
-            background-color: #f9f9f9; /* 임의 배경색 */
-            border: 1px solid #ddd; /* 임의 테두리 */
-        }
-
-        .partsTiles-item-inner {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            padding: 32px 24px;
-            box-shadow: 0 4px 16px rgba(16, 29, 45, 0.08);
-        }
     </style>
 </head>
 
@@ -53,7 +32,7 @@
                         <!--메인 문구-->
                         <div class="container-xs">
                             <h2 class="mt-0 mb-16">Pick Parts. Build Your PC. Compare and Share.</h2>
-                            <button class="button blue-button button-wide-mobile grid-item"><a
+                            <button class=" main-button"><a
                                th:href="@{/cart}">Cart</a></button>
                         </div>
                         <!--파츠 디테일 이동 버튼-->

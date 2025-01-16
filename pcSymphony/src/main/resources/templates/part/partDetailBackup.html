@@ -21,21 +21,8 @@
             text-align: center;
             font-size: 14px;
         }
-        .stars {
-            display: inline-block;
-            cursor: pointer;
-        }
+        th, td {
 
-        .stars span {
-            font-size: 2rem;
-            color: lightgray;
-            transition: color 0.2s;
-        }
-
-        .stars span.selected,
-        .stars span:hover,
-        .stars span:hover ~ span {
-            color: gold;
         }
     </style>
 </head>
@@ -234,7 +221,7 @@
                 </tbody>
             </table>
             <div class="button-container">
-                <button class="main-button" onclick="addToCart(this)" th:data-id="${part.id}"
+                <button class="blue-button" onclick="addToCart(this)" th:data-id="${part.id}"
                         th:data-table-name="${tableName}">
                     Add to cart
                 </button>
@@ -271,126 +258,98 @@
                 <input id="coverId" name="coverId" type="hidden" value="">
 
                 <div class="starAndSave">
-                    <div class="stars" id="ratingStars">
-                        <span data-value="1">&#9733;</span>
-                        <span data-value="2">&#9733;</span>
-                        <span data-value="3">&#9733;</span>
-                        <span data-value="4">&#9733;</span>
-                        <span data-value="5">&#9733;</span>
-                    </div>
-                    <input type="hidden" id="partsReviewRating" name="partsReviewRating" required>
-                    <button class="main-button" type="submit">Save</button>
+                    <label for="partsReviewRating">Rating :</label>
+                    <select id="partsReviewRating" name="partsReviewRating" required>
+                        <option value="1">1점</option>
+                        <option value="2">2점</option>
+                        <option value="3">3점</option>
+                        <option value="4">4점</option>
+                        <option value="5">5점</option>
+                    </select>
+                    <button class="blue-button" type="submit">Save</button>
                 </div>
             </form>
 
             <script>
+                // URL에서 부품 정보 추출
                 document.addEventListener('DOMContentLoaded', function () {
-                    // URL에서 부품 정보 추출
                     const urlParts = window.location.pathname.split('/');
                     const partType = urlParts[1]; // 예: 'part'
                     const partCategory = urlParts[2]; // 예: 'cpu', 'motherboard', ...
                     const partDetailId = urlParts[3]; // 예: 부품 ID (예: 1)
 
                     // 각 부품에 해당하는 'hidden' input 필드를 자동으로 설정
-                    const partMapping = {
-                        cpu: 'cpuId',
-                        cpucooler: 'cpucoolerId',
-                        motherboard: 'motherboardId',
-                        memory: 'memoryId',
-                        storage: 'storageId',
-                        videocard: 'videocardId',
-                        powersupply: 'powersupplyId',
-                        cover: 'coverId',
-                    };
-
-                    if (partMapping[partCategory]) {
-                        const inputElement = document.getElementById(partMapping[partCategory]);
-                        if (inputElement) inputElement.value = partDetailId;
+                    if (partCategory === 'cpu') {
+                        document.getElementById('cpuId').value = partDetailId;
+                    } else if (partCategory === 'cpucooler') {
+                        document.getElementById('cpucoolerId').value = partDetailId;
+                    } else if (partCategory === 'motherboard') {
+                        document.getElementById('motherboardId').value = partDetailId;
+                    } else if (partCategory === 'memory') {
+                        document.getElementById('memoryId').value = partDetailId;
+                    } else if (partCategory === 'storage') {
+                        document.getElementById('storageId').value = partDetailId;
+                    } else if (partCategory === 'videocard') {
+                        document.getElementById('videocardId').value = partDetailId;
+                    } else if (partCategory === 'powersupply') {
+                        document.getElementById('powersupplyId').value = partDetailId;
+                    } else if (partCategory === 'cover') {
+                        document.getElementById('coverId').value = partDetailId;
                     }
-
-                    // 별점 기능 구현
-                    const stars = document.querySelectorAll('#ratingStars span');
-                    const ratingInput = document.getElementById('partsReviewRating');
-
-                    stars.forEach((star, index) => {
-                        star.addEventListener('mouseover', () => {
-                            // Hover 효과 적용
-                            stars.forEach((s, i) => {
-                                s.classList.toggle('selected', i <= index);
-                            });
-                        });
-
-                        star.addEventListener('mouseout', () => {
-                            // 선택된 별만 유지
-                            stars.forEach((s, i) => {
-                                s.classList.toggle('selected', i < ratingInput.value);
-                            });
-                        });
-
-                        star.addEventListener('click', () => {
-                            // 선택된 별 저장
-                            ratingInput.value = index + 1; // 1부터 시작하도록 값 설정
-                            stars.forEach((s, i) => {
-                                s.classList.toggle('selected', i <= index);
-                            });
-                        });
-                    });
-
-
-                    // 리뷰 작성 폼의 submit 이벤트 처리
-                    document.getElementById('reviewForm').addEventListener('submit', function (event) {
-                        event.preventDefault(); // 폼 제출 기본 동작 방지
-
-                        // 폼 데이터를 객체로 변환
-                        const formData = {
-                            partsReviewTitle: document.getElementById('partsReviewTitle').value,
-                            partsReviewRating: document.getElementById('partsReviewRating').value,
-                            partsReviewContent: document.getElementById('partsReviewContent').value,
-                            cpuId: document.getElementById('cpuId')?.value || null,
-                            cpucoolerId: document.getElementById('cpucoolerId')?.value || null,
-                            motherboardId: document.getElementById('motherboardId')?.value || null,
-                            memoryId: document.getElementById('memoryId')?.value || null,
-                            storageId: document.getElementById('storageId')?.value || null,
-                            videocardId: document.getElementById('videocardId')?.value || null,
-                            powersupplyId: document.getElementById('powersupplyId')?.value || null,
-                            coverId: document.getElementById('coverId')?.value || null,
-                        };
-
-                        console.log(formData); // 디버깅용: 폼 데이터가 제대로 들어오는지 확인
-
-                        // POST 요청 보내기 (서버 API로)
-                        fetch('/part/partsReviewWrite', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(formData),
-                        })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Failed to save the review.');
-                                }
-                                return response.json(); // 응답을 JSON으로 처리
-                            })
-                            .then(data => {
-                                // alert('The review was saved successfully.');
-                                document.getElementById('reviewForm').reset(); // 폼 초기화
-
-                                // 리뷰 목록을 새로 갱신
-                                const pathParts = window.location.pathname.split('/');
-                                const partType = pathParts[2]; // 예: 'cpu', 'memory' 등
-                                const partId = parseInt(pathParts[3]); // 1, 2, 3 등
-
-                                // 리뷰 목록을 다시 가져와서 갱신
-                                fetchReviews(partType, partId);
-                            })
-                            .catch(error => {
-                                console.error('Error:', error); // 오류를 로그로 출력
-                                alert('Failed to save the review.');
-                            });
-                    });
                 });
 
+                // 리뷰 작성 폼의 submit 이벤트 처리
+                document.getElementById('reviewForm').addEventListener('submit', function (event) {
+                    event.preventDefault(); // 폼 제출 기본 동작 방지
+
+                    // 폼 데이터를 객체로 변환
+                    const formData = {
+                        partsReviewTitle: document.getElementById('partsReviewTitle').value,
+                        partsReviewRating: document.getElementById('partsReviewRating').value,
+                        partsReviewContent: document.getElementById('partsReviewContent').value,
+                        cpuId: document.getElementById('cpuId').value || null,
+                        cpucoolerId: document.getElementById('cpucoolerId').value || null,
+                        motherboardId: document.getElementById('motherboardId').value || null,
+                        memoryId: document.getElementById('memoryId').value || null,
+                        storageId: document.getElementById('storageId').value || null,
+                        videocardId: document.getElementById('videocardId').value || null,
+                        powersupplyId: document.getElementById('powersupplyId').value || null,
+                        coverId: document.getElementById('coverId').value || null
+                    };
+
+                    console.log(formData);  // 디버깅용: 폼 데이터가 제대로 들어오는지 확인
+
+                    // POST 요청 보내기 (서버 API로)
+                    fetch('/part/partsReviewWrite', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Failed to save the review.');
+                            }
+                            return response.json(); // 응답을 JSON으로 처리
+                        })
+                        .then(data => {
+                            // alert('The review was saved successfully.');
+                            document.getElementById('reviewForm').reset(); // 폼 초기화
+
+                            // 리뷰 목록을 새로 갱신
+                            const pathParts = window.location.pathname.split('/');
+                            const partType = pathParts[2];  // 예: 'cpu', 'memory' 등
+                            const partId = parseInt(pathParts[3]);  // 1, 2, 3 등
+
+                            // 리뷰 목록을 다시 가져와서 갱신
+                            fetchReviews(partType, partId);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);  // 오류를 로그로 출력
+                            alert('Failed to save the review.');
+                        });
+                });
 
             </script>
 
@@ -406,8 +365,8 @@
                         <th style="width: 35%; text-align: center; padding: 8px 0">Review Content</th>
                         <th style="width: 10%; text-align: center; padding: 8px 0">Rating</th>
                         <th style="width: 15%; text-align: center; padding: 8px 0">Date Created</th>
-                        <th style="width: 8%; text-align: center; padding: 8px 0"></th>
-                        <th style="width: 10%; text-align: center; padding: 8px 0"></th>
+                        <th style="width: 8%; text-align: center; padding: 8px 0">Edit</th>
+                        <th style="width: 10%; text-align: center; padding: 8px 0">Delete</th>
                     </tr>
                     </thead>
                     <tbody id="review-list-body">
@@ -502,7 +461,7 @@
                                 editButton.textContent = 'Edit';
                                 // 클래스 추가
                                 editCell.classList.add('table-cell');
-                                editButton.classList.add('main-small-button');
+                                editButton.classList.add('blue-button');
 
                                 checkPermissionAndShowButton(review.partsReviewId, 'edit', editButton);  // 권한 확인 후 버튼 보이기
                                 editCell.appendChild(editButton);
@@ -514,7 +473,7 @@
                                 deleteButton.textContent = 'Delete';
                                 // 클래스 추가
                                 deleteCell.classList.add('table-cell');
-                                deleteButton.classList.add('delete-small-button');
+                                deleteButton.classList.add('gray-button');
                                 checkPermissionAndShowButton(review.partsReviewId, 'delete', deleteButton);  // 권한 확인 후 버튼 보이기
                                 deleteCell.appendChild(deleteButton);
                                 row.appendChild(deleteCell);
@@ -657,8 +616,6 @@
                     }
                 }
             </script>
-
-
         </div>
     </main>
 </div>

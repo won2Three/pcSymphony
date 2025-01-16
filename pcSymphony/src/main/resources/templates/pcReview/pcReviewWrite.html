@@ -60,7 +60,8 @@
                             <!-- CPU 제목 텍스트 -->
                             <span class="partsName">CPU</span>
                             <!-- 썸네일 이미지 -->
-                            <img th:src="@{/images/nav-cpu.png}" alt="CPU Image" class="partsImage">
+                            <img th:src="${cart.cpu.imageUrl != null ? cart.cpu.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
+                                 alt="CPU Image" class="partsImage">
                             <!-- CPU Name -->
                             <span th:text="${cart.cpu.name}">[CPU Name]</span>
                         </label>
@@ -88,7 +89,8 @@
                             <!-- CPUCooler 제목 텍스트 -->
                             <span class="partsName">CPUCooler</span>
                             <!-- 썸네일 이미지 -->
-                            <img th:src="@{/images/nav-cpucooler.png}" alt="CPUCooler Image" class="partsImage">
+                            <img th:src="${cart.cpucooler.imageUrl != null ? cart.cpucooler.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
+                                 alt="CPUCooler Image" class="partsImage">
                             <!-- CPUCooler Name -->
                             <span th:text="${cart.cpucooler.name}">[CPUCooler Name]</span>
                         </label>
@@ -116,7 +118,8 @@
                             <!-- Motherboard 제목 텍스트 -->
                             <span class="partsName">Motherboard</span>
                             <!-- 썸네일 이미지 -->
-                            <img th:src="@{/images/nav-motherboard.png}" alt="Motherboard Image" class="partsImage">
+                            <img th:src="${cart.motherboard.imageUrl != null ? cart.motherboard.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
+                                 alt="Motherboard Image" class="partsImage">
                             <!-- Motherboard Name -->
                             <span th:text="${cart.motherboard.name}">[Motherboard Name]</span>
                         </label>
@@ -144,7 +147,8 @@
                             <!-- Memory 제목 텍스트 -->
                             <span class="partsName">Memory</span>
                             <!-- 썸네일 이미지 -->
-                            <img th:src="@{/images/nav-memory.png}" alt="Memory Image" class="partsImage">
+                            <img th:src="${cart.memory.imageUrl != null ? cart.memory.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
+                                 alt="Memory Image" class="partsImage">
                             <!-- Memory Name -->
                             <span th:text="${cart.memory.name}">[Memory Name]</span>
                         </label>
@@ -172,7 +176,7 @@
                             <!-- Storage 제목 텍스트 -->
                             <span class="partsName">Storage</span>
                             <!-- 썸네일 이미지 -->
-                            <img th:src="@{/images/nav-ssd.png}" alt="Storage Image" class="partsImage">
+                            <img th:src="${cart.storage.imageUrl != null ? cart.storage.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}" alt="Storage Image" class="partsImage">
                             <!-- Storage Name -->
                             <span th:text="${cart.storage.name}">[Storage Name]</span>
                         </label>
@@ -200,7 +204,8 @@
                             <!-- VideoCard 제목 텍스트 -->
                             <span class="partsName">VideoCard</span>
                             <!-- 썸네일 이미지 -->
-                            <img th:src="@{/images/nav-videocard.png}" alt="VideoCard Image" class="partsImage">
+                            <img th:src="${cart.videocard.imageUrl != null ? cart.videocard.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
+                                 alt="VideoCard Image" class="partsImage">
                             <!-- VideoCard Name -->
                             <span th:text="${cart.videocard.name}">[VideoCard Name]</span>
                         </label>
@@ -228,7 +233,8 @@
                             <!-- PowerSupply 제목 텍스트 -->
                             <span class="partsName">PowerSupply</span>
                             <!-- 썸네일 이미지 -->
-                            <img th:src="@{/images/nav-powersupply.png}" alt="PowerSupply Image" class="partsImage">
+                            <img th:src="${cart.powersupply.imageUrl != null ? cart.powersupply.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
+                                 alt="PowerSupply Image" class="partsImage">
                             <!-- PowerSupply Name -->
                             <span th:text="${cart.powersupply.name}">[PowerSupply Name]</span>
                         </label>
@@ -256,7 +262,8 @@
                             <!-- Cover 제목 텍스트 -->
                             <span class="partsName">Cover</span>
                             <!-- 썸네일 이미지 -->
-                            <img th:src="@{/images/nav-case.png}" alt="Cover Image" class="partsImage">
+                            <img th:src="${cart.cover.imageUrl != null ? cart.cover.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
+                                 alt="Cover Image" class="partsImage">
                             <!-- Cover Name -->
                             <span th:text="${cart.cover.name}">[Cover Name]</span>
                         </label>
@@ -279,8 +286,8 @@
                     </fieldset>
                 </fieldset>
                 <div class="button-container">
-                    <button class="gray-button" th:href="@{pcReview/pcReviewList}" type="button">Cancel</button>
-                    <button class="blue-button" type="submit" th:onclick="|location.href='@{/pcreview/write}'|"
+                    <button class="delete-small-button" th:href="@{pcReview/pcReviewList}" type="button">Cancel</button>
+                    <button class="main-small-button" type="submit" th:onclick="|location.href='@{/pcreview/write}'|"
                             th:disabled="${cart.cpu == null or cart.cpucooler == null or cart.motherboard == null or cart.memory == null or
                                 cart.storage == null or cart.videocard == null or cart.powersupply == null or cart.cover == null}">Submit</button>
                 </div>

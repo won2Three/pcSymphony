@@ -62,10 +62,26 @@
 }
 .starAndSave {
     display: flex; /* 플렉스 컨테이너 설정 */
-    justify-content: space-between; /* 버튼 사이를 양 끝으로 배치 */
     align-items: center; /* 세로 방향 정렬 */
-    gap: 10px; /* 버튼 간 간격 */        }
-/*html, .body-wrap {*/
-/*    background-color: #f4f4f3;*/
-/*    position: relative;*/
+    gap: 10px; /* 버튼 간 간격 */
+}
+#ratingStars {
+    display: flex; /* 별을 수평으로 배치 */
+    gap: 5px; /* 별 사이의 간격 설정 */
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+/*#ratingStars span {*/
+/*    font-size: 2rem;*/
+/*    cursor: pointer;*/
+/*    transition: color 0.2s ease-in-out;*/
+/*    color: lightgray; !* 기본 별 색상 *!*/
+/*}*/
+
+/*#ratingStars span:hover {*/
+/*    color: gold; !* 마우스 오버 시 금색 *!*/
+/*}*/
+/*.review-rating {*/
+/*    !*font-size: 1.2rem; !* 별 크기 설정 *!*!*/
+/*    color: gold; !* 별 색상 설정 *!*/
 /*}*/
