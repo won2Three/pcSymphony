@@ -13,6 +13,67 @@
             align-items: center; /* 이미지와 텍스트를 수직 중앙 정렬 */
             gap: 10px; /* 이미지와 텍스트 사이 간격 */
         }
+        /* 검색창 및 버튼 스타일 */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .search-input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            background-color: #1976D2;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .search-button:hover {
+            opacity: .7;
+        }
+
+        /* 페이지네이션 스타일 */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .pagination-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .pagination-button:disabled {
+            background-color: #B0BEC5;
+            cursor: not-allowed;
+        }
+
+        .pagination-button:not(:disabled):hover {
+            opacity: .7;
+        }
+
+        .pagination-info {
+            font-weight: bold;
+            color: #333;
+        }
     </style>
 </head>
 <body id="partList-body">
@@ -22,37 +83,102 @@
     <main class="site-content">
         <div class="container">
             <h1 id="partList-id" th:text="${tableName} + ' List'">Parts List</h1>
+
+            <!-- 검색창 -->
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search for parts...">
+                <button id="searchButton" class="search-button">Search</button>
+            </div>
+
+            <!-- 테이블 -->
             <table>
                 <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Name</th>
-                        <th>Manufacturer</th>
-                        <th>Price</th>
-                    </tr>
+                <tr>
+                    <th>No.</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Manufacturer</th>
+                    <th>Price</th>
+                </tr>
                 </thead>
-                <tbody>
-                    <tr th:each="part : ${parts}">
-                        <td th:text="${part.id}">1</td>
-                        <td>
-                            <img th:src="${part.imageUrl != null ? part.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
-                                 alt="Part Image"
-                                 style="width: 50px; height: 50px;"/>
-                        </td>
-                        <td>
-                            <!-- 제목을 클릭하면 partDetail.html로 이동 -->
-                            <a id="partList-Atag" th:href="@{/part/{tableName}/{id}(tableName=${tableName}, id=${part.id})}"
-                               th:text="${part.name}">Part Name</a>
-                        </td>
-                        <td th:text="${part.manufacturer}">Brand Name</td>
-                        <td th:text="${part.price}">Price</td>
-                    </tr>
+                <tbody id="partsTable">
+                <!-- JavaScript에서 데이터 로드 -->
                 </tbody>
             </table>
+
+            <!-- 페이지네이션 -->
+            <div class="pagination-container" id="pagination">
+                <button id="prevPage" class="pagination-button" disabled>Prev</button>
+                <span id="pageInfo" class="pagination-info"></span>
+                <button id="nextPage" class="pagination-button">Next</button>
+            </div>
         </div>
     </main>
 </div>
-<!--푸터-->
 <div th:replace="~{fragments/footer :: footerFragment}"></div>
+<input type="hidden" id="tableName" th:value="${tableName}" disabled>
+<script>
+    let currentPage = 0;
+    const pageSize = 10;
+
+    // DOM에서 tableName 값을 가져오기
+    const tableName = document.getElementById('tableName')?.value || "defaultTableName";
+    let currentQuery = ""; // 검색어를 저장하는 변수
+
+    async function loadParts(page) {
+        try {
+            const url = currentQuery
+                ? `/part/${tableName}/search?query=${currentQuery}&page=${page}&size=${pageSize}`
+                : `/part/${tableName}/list?page=${page}&size=${pageSize}`;
+            const response = await fetch(url);
+            const data = await response.json();
+
+            // 테이블 갱신
+            const tbody = document.getElementById("partsTable");
+            tbody.innerHTML = "";
+            data.parts.forEach((part, index) => {
+                const row = `
+                    <tr>
+                        <td>${part.id}</td>
+                        <td><img src="${part.imageUrl || 'https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE='}" alt="Part Image" style="width:50px;height:50px;"></td>
+                        <td><a href="/part/${tableName}/${part.id}">${part.name}</a></td>
+                        <td>${part.manufacturer}</td>
+                        <td>$ ${part.price}</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+
+            // 페이지네이션 업데이트
+            const pageInfo = document.getElementById("pageInfo");
+            pageInfo.textContent = `Page ${data.currentPage + 1} of ${data.totalPages}`;
+            document.getElementById("prevPage").disabled = data.currentPage === 0;
+            document.getElementById("nextPage").disabled = data.currentPage + 1 === data.totalPages;
+
+            currentPage = data.currentPage;
+        } catch (error) {
+            console.error("Failed to load parts:", error);
+        }
+    }
+
+    // 검색 버튼 이벤트 핸들러
+    document.getElementById("searchButton").addEventListener("click", () => {
+        const query = document.getElementById("searchInput").value.trim();
+        currentQuery = query; // 현재 검색어를 저장
+        loadParts(0); // 검색 결과의 첫 번째 페이지 로드
+    });
+
+    // 페이지 변경 이벤트 핸들러
+    document.getElementById("prevPage").addEventListener("click", () => {
+        if (currentPage > 0) loadParts(currentPage - 1);
+    });
+
+    document.getElementById("nextPage").addEventListener("click", () => {
+        loadParts(currentPage + 1);
+    });
+
+    // 초기 로드
+    loadParts(currentPage);
+</script>
 </body>
 </html>
