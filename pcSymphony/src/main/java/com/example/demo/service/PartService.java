@@ -7,6 +7,9 @@ import com.example.demo.domain.entity.part.*;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.part.*;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -329,6 +332,35 @@ public class PartService {
 
         partsReviewRepository.save(reviewEntity);
 
+    }
+    public Page<?> getPartListByPage(String tableName, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return switch (tableName.toLowerCase()) {
+            case "cpu" -> cpuRepository.findAll(pageable);
+            case "cpucooler" -> cpuCoolerRepository.findAll(pageable);
+            case "memory" -> memoryRepository.findAll(pageable);
+            case "storage" -> storageRepository.findAll(pageable);
+            case "motherboard" -> motherboardRepository.findAll(pageable);
+            case "powersupply" -> powerSupplyRepository.findAll(pageable);
+            case "videocard" -> videoCardRepository.findAll(pageable);
+            case "cover" -> coverRepository.findAll(pageable);
+            default -> throw new IllegalArgumentException("Invalid table name: " + tableName);
+        };
+    }
+
+    public Page<?> searchParts(String tableName, String query, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return switch (tableName.toLowerCase()) {
+            case "cpu" -> cpuRepository.findByNameContainingOrManufacturerContaining(query, query, pageable);
+            case "cpucooler" -> cpuCoolerRepository.findByNameContainingOrManufacturerContaining(query, query, pageable);
+            case "memory" -> memoryRepository.findByNameContainingOrManufacturerContaining(query, query, pageable);
+            case "storage" -> storageRepository.findByNameContainingOrManufacturerContaining(query, query, pageable);
+            case "motherboard" -> motherboardRepository.findByNameContainingOrManufacturerContaining(query, query, pageable);
+            case "powersupply" -> powerSupplyRepository.findByNameContainingOrManufacturerContaining(query, query, pageable);
+            case "videocard" -> videoCardRepository.findByNameContainingOrManufacturerContaining(query, query, pageable);
+            case "cover" -> coverRepository.findByNameContainingOrManufacturerContaining(query, query, pageable);
+            default -> throw new IllegalArgumentException("Invalid table name: " + tableName);
+        };
     }
 
 }

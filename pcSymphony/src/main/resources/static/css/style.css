@@ -1673,7 +1673,7 @@ textarea.form-input {
 }
 
 .carousel-item:not(.is-active) {
-    display: none !important
+    // display: none !important
 }
 
 .carousel-bullets {

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="../../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
+    <link href="../../static/css/guideLineRead.css" rel="stylesheet" th:href="@{/css/guideLineRead.css}">
+    <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
+    <!--    <script src="../../static/js/pcReviewWrite.js" th:src="@{/js/pcReviewWrite.js}"></script>-->
+    <title>GuideLine</title>
+
+</head>
+<body>
+<div th:replace="~{fragments/header :: headerFragment}"></div>
+<div class="body-wrap" id="change-overflow-visible">
+    <div class="guideBody">
+        <a class="titleName" href=""><h1 class="container-like">GuideLine</h1></a>
+        <div class="container">
+            <!--    레프트 사이드 바-->
+            <aside class="leftSideBar" >
+                <div class="carousel" id="customCarousel">
+                    <!-- Carousel Items -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active display-block">
+                            <img th:src="${image1}" alt="Image 1">
+                        </div>
+                        <div class="carousel-item display-block">
+                            <img th:src="${image2}" alt="Image 2">
+                        </div>
+                        <div class="carousel-item display-block">
+                            <img th:src="${image3}" alt="Image 3">
+                        </div>
+                    </div>
+
+                    <!-- Indicators -->
+                    <div class="carousel-indicators">
+                        <button data-index="0" class="active"></button>
+                        <button data-index="1"></button>
+                        <button data-index="2"></button>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <button class="carousel-control-prev" aria-label="Prev">&lt;</button>
+                    <button class="carousel-control-next" aria-label="Next">&gt;</button>
+                </div>
+
+                <!--            <img alt="Guide Image" class="guideImage" th:src="@{/images/nav-case.png}">-->
+
+
+                <section class="partsListContainer">
+                    <h5 class="partsTitle">part List</h5>
+                    <div>
+                        <!-- CPU -->
+                        <div class = "partsDiv" id="cpuDiv">
+                                <div class="category-name">CPU</div>
+                                <label class="image-name">
+                                    <img alt="CPU Image" class="xsmall-image" th:src="${details.cpu.imageUrl != null ? details.cpu.imageUrl : 'https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE='}">
+                                    <div class="partsName-price">
+                                        <a class = "partsName" th:href="'/part/cpu/' + ${details.cpu.id}" th:text="${details.cpu.name}">CPU 이름</a>
+                                        <div th:text="${details.cpu.price} + ' $'">CPU 가격</div>
+                                    </div>
+                                </label>
+                        </div>
+                        <!-- CPU Cooler -->
+                        <div class = "partsDiv" id="cpucoolerDiv">
+                                <div class="category-name">CPUCooler</div>
+                                <label class="image-name">
+                                    <img alt="CPUCooler Image" class="xsmall-image" th:src="${details.cpuCooler.imageUrl != null ? details.cpuCooler.imageUrl : 'https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE='}">
+                                    <div class="partsName-price">
+                                        <a class = "partsName" th:href="'/part/cpucooler/' + ${details.cpuCooler.id}" th:text="${details.cpuCooler.name}">CPUCooler 이름</a>
+                                        <div th:text="${details.cpuCooler.price} + ' $'">CPUCooler 가격</div>
+                                    </div>
+                                </label>
+                        </div>
+                        <!-- Motherboard -->
+                        <div class = "partsDiv" id="motherboardDiv">
+                                <div class="category-name">Motherboard</div>
+                                <label class="image-name">
+                                    <img alt="Motherboard Image" class="xsmall-image" th:src="${details.motherboard.imageUrl != null ? details.motherboard.imageUrl : 'https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE='}">
+                                    <div class="partsName-price">
+                                        <a class = "partsName"  th:href="'/part/motherboard/' + ${details.motherboard.id}" th:text="${details.motherboard.name}">Motherboard 이름</a>
+                                        <div th:text="${details.motherboard.price} + ' $'">Motherboard 가격</div>
+                                    </div>
+                                </label>
+                        </div>
+                        <!-- Memory -->
+                        <div class = "partsDiv" id="memoryDiv">
+                            <div class="category-name">Memory</div>
+                            <label class="image-name">
+                                <img alt="Memory Image" class="xsmall-image" th:src="${details.memory.imageUrl != null ? details.memory.imageUrl : 'https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE='}">
+
+                                <div class="partsName-price">
+                                    <a class = "partsName" th:href="'/part/memory/' + ${details.memory.id}" th:text="${details.memory.name}">Memory 이름</a>
+                                    <div th:text="${details.memory.price} + ' $'">Memory 가격</div>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Storage -->
+                        <div class = "partsDiv" id="storageDiv">
+                            <div class="category-name">Storage</div>
+                            <label class="image-name">
+                                <img alt="Storage Image" class="xsmall-image" th:src="${details.storage.imageUrl != null ? details.storage.imageUrl : 'https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE='}">
+                                <div class="partsName-price">
+                                    <a class = "partsName" th:href="'/part/storage/' + ${details.storage.id}" th:text="${details.storage.name}">Storage 이름</a>
+                                    <div th:text="${details.storage.price} + ' $'">Storage 가격</div>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Videocard -->
+                        <div class = "partsDiv" id="videocardDiv">
+                            <div class="category-name">Videocard</div>
+                            <label class="image-name">
+                                <img alt="Videocard Image" class="xsmall-image" th:src="${details.videoCard.imageUrl != null ? details.videoCard.imageUrl : 'https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE='}">
+                                <div class="partsName-price">
+                                    <a class = "partsName" th:href="'/part/videocard/' + ${details.videoCard.id}" th:text="${details.videoCard.name}">Videocard 이름</a>
+                                    <div th:text="${details.videoCard.price} + ' $'">Videocard 가격</div>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- PowerSupply -->
+                        <div class = "partsDiv" id="powersupplyDiv">
+                            <div class="category-name">PowerSupply</div>
+                            <label class="image-name">
+                                <img alt="PowerSupply Image" class="xsmall-image" th:src="${details.powerSupply.imageUrl != null ? details.powerSupply.imageUrl : 'https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE='}">
+                                <div class="partsName-price">
+                                    <a class = "partsName" th:href="'/part/powersupply/' + ${details.powerSupply.id}" th:text="${details.powerSupply.name}">PowerSupply 이름</a>
+                                    <div th:text="${details.powerSupply.price} + ' $'">PowerSupply 가격</div>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Cover -->
+                        <div class = "partsDiv" id="coverDiv">
+                            <div class="category-name">Case</div>
+                            <label class="image-name">
+                                <img alt="Case Image" class="xsmall-image" th:src="${details.cover.imageUrl != null ? details.cover.imageUrl : 'https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE='}">
+                                <div class="partsName-price">
+                                    <a class = "partsName" th:href="'/part/cover/' + ${details.cover.id}" th:text="${details.cover.name}">Case 이름</a>
+                                    <div th:text="${details.cover.price} + ' $'">Case 가격</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <label class="partsPrice">
+                            <span>Total Price : </span>
+                            <span th:text="${#numbers.formatDecimal(totalPrice, 2, 2)} + ' $'">전체 가격</span>
+                        </label>
+                    </div>
+                    <div id="aTagsDiv">
+                        <a class="main-aTag" href="/">
+                            MainMenu
+                        </a>
+                        <a class="blue-aTag" th:href="'/guide/' + ${details.id} + '/addToCart'">
+                            addToCart
+                        </a>
+                    </div>
+                </section>
+            </aside>
+            <!--    메인 컨테이너-->
+            <main class="main-container" >
+                <div class="title-header">
+                    <!--가이드라인의`guideline_title` 조회-->
+                    <div class="community-title" id="1" th:text="${details.title}">제목</div>
+                    <div class="guideline-Info">
+                        <!--`guideline_id`조회-->
+                        No. <span id="2" th:text="${details.id}"></span>
+                        <!--작성일?-->
+                    </div>
+                </div>
+                <!-- 게시물 내용, `guideline_content`조회 -->
+                <div class="community-content" id="3" th:text="${details.content}">Content</div>
+<!--  -->
+            </main>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/footer :: footerFragment}"></div>
+<script>
+    // JavaScript for Carousel
+    const carousel = document.getElementById('customCarousel');
+    const inner = carousel.querySelector('.carousel-inner');
+    const items = carousel.querySelectorAll('.carousel-item');
+    const indicators = carousel.querySelectorAll('.carousel-indicators button');
+    let currentIndex = 0;
+
+    function updateCarousel(index) {
+        // Update active index
+        currentIndex = index;
+        // Update transform
+        inner.style.transform = `translateX(-${index * 100}%)`;
+        // Update active indicator
+        indicators.forEach((btn, i) => {
+            btn.classList.toggle('active', i === index);
+        });
+    }
+
+    // Navigation Buttons
+    carousel.querySelector('.carousel-control-prev').addEventListener('click', () => {
+        const newIndex = (currentIndex - 1 + items.length) % items.length;
+        updateCarousel(newIndex);
+    });
+
+    carousel.querySelector('.carousel-control-next').addEventListener('click', () => {
+        const newIndex = (currentIndex + 1) % items.length;
+        updateCarousel(newIndex);
+    });
+
+    // Indicator Buttons
+    indicators.forEach((btn, index) => {
+        btn.addEventListener('click', () => updateCarousel(index));
+    });
+
+</script>
+</body>
+</html>

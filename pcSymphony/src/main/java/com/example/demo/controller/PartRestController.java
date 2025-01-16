@@ -8,6 +8,7 @@ import com.example.demo.security.MemberUserDetails;
 import com.example.demo.service.PartService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -108,5 +109,34 @@ public class PartRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효하지 않은 action");
         }
     }
+    @GetMapping("/{tableName}/list")
+    public ResponseEntity<?> getPartList(
+            @PathVariable String tableName,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
 
+        Page<?> partPage = partService.getPartListByPage(tableName, page, size);
+        Map<String, Object> response = new HashMap<>();
+        response.put("parts", partPage.getContent());
+        response.put("currentPage", partPage.getNumber());
+        response.put("totalPages", partPage.getTotalPages());
+        response.put("totalItems", partPage.getTotalElements());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{tableName}/search")
+    public ResponseEntity<?> searchParts(
+            @PathVariable String tableName,
+            @RequestParam String query,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Page<?> partPage = partService.searchParts(tableName, query, page, size);
+        Map<String, Object> response = new HashMap<>();
+        response.put("parts", partPage.getContent());
+        response.put("currentPage", partPage.getNumber());
+        response.put("totalPages", partPage.getTotalPages());
+        response.put("totalItems", partPage.getTotalElements());
+        return ResponseEntity.ok(response);
+    }
 }

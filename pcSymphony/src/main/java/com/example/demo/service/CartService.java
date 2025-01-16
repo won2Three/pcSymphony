@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.entity.CartEntity;
+import com.example.demo.domain.entity.GuidelineEntity;
 import com.example.demo.domain.entity.part.*;
 import com.example.demo.repository.*;
 import com.example.demo.repository.part.*;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ public class CartService {
     private final VideoCardRepository videoCardRepository;
     private final PowerSupplyRepository powerSupplyRepository;
     private final CoverRepository coverRepository;
+    private final GuidelineRepository guidelineRepository;
 
     // CartEntity의 가격 합계를 계산하는 메서드
     public double calculateTotalPrice(CartEntity cart) {
@@ -325,7 +328,31 @@ public class CartService {
         return false;
     }
 
+    @Transactional
+    public void updateCartFromGuideline(int guidelineId, String userId) {
+        // 1. GuidelineEntity 가져오기
+        GuidelineEntity guidelineEntity = guidelineRepository.findById(guidelineId)
+                .orElseThrow(() -> new EntityNotFoundException("Guideline not found with ID: " + guidelineId));
 
+        // 2. CartEntity 가져오기
+        CartEntity cartEntity = cartRepository.findByUser_MemberId(userId);
+        if (cartEntity == null) {
+            throw new EntityNotFoundException("Cart not found for user ID: " + userId);
+        }
+
+        // 3. Guideline 정보를 기반으로 Cart 부품 업데이트
+        cartEntity.setCpu(CpuEntity.builder().id(guidelineEntity.getCpuId()).build());
+        cartEntity.setCpucooler(CpuCoolerEntity.builder().id(guidelineEntity.getCpuCoolerId()).build());
+        cartEntity.setMotherboard(MotherboardEntity.builder().id(guidelineEntity.getMotherboardId()).build());
+        cartEntity.setMemory(MemoryEntity.builder().id(guidelineEntity.getMemoryId()).build());
+        cartEntity.setStorage(StorageEntity.builder().id(guidelineEntity.getStorageId()).build());
+        cartEntity.setVideocard(VideoCardEntity.builder().id(guidelineEntity.getVideoCardId()).build());
+        cartEntity.setPowersupply(PowerSupplyEntity.builder().id(guidelineEntity.getPowerSupplyId()).build());
+        cartEntity.setCover(CoverEntity.builder().id(guidelineEntity.getCoverId()).build());
+
+        // 4. CartEntity 저장
+        cartRepository.save(cartEntity);
+    }
 
 }
 
