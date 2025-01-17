@@ -188,15 +188,9 @@ public class PcReviewController {
     }
 
     @GetMapping("list")
-    public String getPcReviewList(Model model, @PageableDefault(page = 0, size = 10, sort = "pcreviewId", direction = Sort.Direction.DESC) Pageable pageable) {
-
-        // 서비스에서 페이징 처리된 데이터를 가져옴
-        Page<PcReviewEntity> pcReviewPage = pcReviewService.pcReviewList(pageable);
-
-        // 모델에 페이징 데이터를 추가
-        model.addAttribute("pcReviewPage", pcReviewPage);
-        model.addAttribute("currentPage", pageable.getPageNumber());
-        model.addAttribute("totalPages", pcReviewPage.getTotalPages());
+    public String getPcReviewList(Model model) {
+        List<PcReviewEntity> pcReviewList = pcReviewRepository.findAll();
+        model.addAttribute("pcReviews", pcReviewList);
 
         return "pcReview/pcReviewList"; // Thymeleaf에서 렌더링할 HTML 파일 이름
     }

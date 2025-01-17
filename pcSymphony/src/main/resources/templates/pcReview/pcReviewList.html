@@ -24,32 +24,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="pcReview : ${pcReviewPage.content}">
+                <tr th:each="pcReview : ${pcReviews}">
                     <td th:text="${pcReview.pcreviewId}">ID</td>
                     <td>
                         <a th:href="@{/pcreview/read/{id}(id=${pcReview.pcreviewId})}"
                            th:text="${pcReview.pcreviewTitle}">Title</a>
                     </td>
-                    <td th:text="${pcReview.pcreviewDate}">Date</td>
+                    <td th:text="${#temporals.format(pcReview.pcreviewDate, 'yyyy-MM-dd HH:mm')}">Date</td>
                 </tr>
                 </tbody>
             </table>
-
-            <!-- 페이지네이션 -->
-            <div class="pagination">
-                <ul>
-                    <li th:if="${pcReviewPage.hasPrevious()}">
-                        <a th:href="@{/list(page=${pcReviewPage.number - 1})}">Previous</a>
-                    </li>
-                    <li th:each="pageNum : ${#numbers.sequence(0, pcReviewPage.totalPages - 1)}"
-                        th:classappend="${pageNum == pcReviewPage.number} ? 'active'">
-                        <a th:href="@{/list(page=${pageNum})}" th:text="${pageNum + 1}">1</a>
-                    </li>
-                    <li th:if="${pcReviewPage.hasNext()}">
-                        <a th:href="@{/list(page=${pcReviewPage.number + 1})}">Next</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </main>
 </div>
