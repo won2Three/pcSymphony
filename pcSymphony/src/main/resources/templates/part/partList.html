@@ -151,7 +151,7 @@
 
             // 페이지네이션 업데이트
             const pageInfo = document.getElementById("pageInfo");
-            pageInfo.textContent = `Page ${data.currentPage + 1} of ${data.totalPages}`;
+            pageInfo.textContent = `${data.currentPage + 1} / ${data.totalPages}`;
             document.getElementById("prevPage").disabled = data.currentPage === 0;
             document.getElementById("nextPage").disabled = data.currentPage + 1 === data.totalPages;
 

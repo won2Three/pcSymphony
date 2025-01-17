@@ -190,4 +190,14 @@ public class PcReviewService {
     public Page<PcReviewEntity> pcReviewList(Pageable pageable) {
         return pcReviewRepository.findAll(pageable);
     }
+
+    public Page<PcReviewDTO> getAllPcReviews(Pageable pageable) {
+        return pcReviewRepository.findAll(pageable).map(this::toDto);
+    }
+
+    public Page<PcReviewDTO> searchPcReviews(String keyword, Pageable pageable) {
+        return pcReviewRepository
+                .findByPcreviewTitleContainingIgnoreCase(keyword, pageable)
+                .map(this::toDto);
+    }
 }

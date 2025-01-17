@@ -186,14 +186,14 @@ public class PcReviewController {
 
         return "redirect:/pcreview/list";
     }
-
-    @GetMapping("list")
-    public String getPcReviewList(Model model) {
-        List<PcReviewEntity> pcReviewList = pcReviewRepository.findAll();
-        model.addAttribute("pcReviews", pcReviewList);
-
-        return "pcReview/pcReviewList"; // Thymeleaf에서 렌더링할 HTML 파일 이름
-    }
+//
+//    @GetMapping("list")
+//    public String getPcReviewList(Model model) {
+//        List<PcReviewEntity> pcReviewList = pcReviewRepository.findAll();
+//        model.addAttribute("pcReviews", pcReviewList);
+//
+//        return "pcReview/pcReviewList"; // Thymeleaf에서 렌더링할 HTML 파일 이름
+//    }
 
     @GetMapping("/read/{id}")
     public String read(@PathVariable int id, Model model, @AuthenticationPrincipal MemberUserDetails user) {
@@ -254,5 +254,24 @@ public class PcReviewController {
 
         // 삭제 후 리뷰 목록 페이지로 리다이렉트
         return "redirect:/pcreview/list";
+    }
+
+    // HTML 렌더링을 위한 메서드
+    @GetMapping("/list")
+    public String listPage(Model model) {
+        return "pcReview/pcReviewList"; // Thymeleaf 템플릿 파일
+    }
+
+    // JSON API를 위한 메서드
+    @GetMapping("/api/list")
+    @ResponseBody
+    public ResponseEntity<Page<PcReviewDTO>> getPcReviewList(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @PageableDefault(size = 10, sort = "pcreviewId", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<PcReviewDTO> pcReviews = (keyword == null || keyword.isEmpty())
+                ? pcReviewService.getAllPcReviews(pageable)
+                : pcReviewService.searchPcReviews(keyword, pageable);
+
+        return ResponseEntity.ok(pcReviews);
     }
 }
