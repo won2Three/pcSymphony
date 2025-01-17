@@ -60,38 +60,52 @@ $(document).ready(function() {
         });
     }
 
-    // 페이지 전환 함수
-    window.changePage = function(newPage) {
-        if (newPage < 0 || newPage >= totalPages) return;
-        currentPage = newPage;
-        getList(currentPage);
-    }
-
     // 페이지 네비게이션 업데이트
     function updatePagination(currentPage, totalPages) {
         $('#prevPage').prop('disabled', currentPage == 0);
         $('#nextPage').prop('disabled', currentPage == totalPages - 1);
-        $('#pagination .currentPage').text(currentPage + 1);
-        $('#pagination .totalPages').text(totalPages);
+        $('#pageNumbers').empty();
 
         // 페이지 번호 버튼 생성
-        $('#pageNumbers').empty(); // 기존 페이지 번호 버튼 제거
         for (let i = 0; i < totalPages; i++) {
-            let pageButton = $('<button>')
-                .addClass('pageButton')
-                .text(i + 1)
-                .click(function() {
-                    changePage(i); // 클릭 시 해당 페이지로 이동
-                });
+                    let pageButton = $('<button>')
+                        .addClass('pageButton')
+                        .text(i + 1)
+                        .click(function() {
+                            changePage(i);  // 클릭 시 해당 페이지로 이동
+                        });
 
-            if (i === currentPage) {
-                pageButton.prop('disabled', true); // 현재 페이지는 비활성화
+                    if (i === currentPage) {
+                        pageButton.prop('disabled', true);  // 현재 페이지는 비활성화
+                    }
+
+                    $('#pageNumbers').append(pageButton);
+                }
             }
 
-            $('#pageNumbers').append(pageButton); // 페이지 번호 추가
-        }
-    }
+            // 페이지 전환 함수
+                window.changePage = function(newPage) {
+                    if (newPage < 0 || newPage >= totalPages) return;  // 유효한 페이지 번호인지 확인
+                    currentPage = newPage;  // 현재 페이지 업데이트
+                    getList(currentPage);  // 목록 갱신
+                };
 
     // 페이지 로드 시 목록 조회 (초기 페이지 0번)
     getList(currentPage);
+
+    // Prev 버튼 클릭 이벤트
+        $('#prevPage').click(function() {
+            if (currentPage > 0) {
+                currentPage--; // 현재 페이지 감소
+                getList(currentPage);
+            }
+        });
+
+        // Next 버튼 클릭 이벤트
+        $('#nextPage').click(function() {
+            if (currentPage < totalPages - 1) {
+                currentPage++; // 현재 페이지 증가
+                getList(currentPage);
+            }
+        });
 });
