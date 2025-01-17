@@ -19,16 +19,11 @@ public class CommunityRestController {
 
     private final CommunityService communityService;
 
-//    // 게시글 목록
-//    @PostMapping("getList")
-//    public List<CommunityDTO> getList() {
-//        return communityService.getList();
-//    }
-
     @PostMapping("getList")
-    public Page<CommunityDTO> getList(@RequestParam int page) {
+    public Page<CommunityDTO> getList(@RequestParam int page,
+                                      @RequestParam(required = false) String title) {
         int size = 10;  // 한 페이지에 표시할 게시글 수
-        return communityService.getList(page, size);
+        return communityService.getList(page, size, title);
     }
 
     // 댓글 저장

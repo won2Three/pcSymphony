@@ -40,14 +40,19 @@ public class CommunityService {
     private final CommunityReplyRepository replyRepository;
 
     // 커뮤니티 목록 (페이지네이션 적용)
-    public Page<CommunityDTO> getList(int page, int size) {
-        // 페이지 처리 위한 Pageable 객체 생성
+    public Page<CommunityDTO> getList(int page, int size, String title) {
+        // Pageable 객체 생성 (페이지와 사이즈)
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Order.desc("communityId")));
 
-        // 커뮤니티 목록을 Page 객체로 반환
-        Page<CommunityEntity> communityPage = communityRepository.findAll(pageRequest);
+        // 제목을 기준으로 검색 (대소문자 구분 없이 포함된 게시글 검색)
+        Page<CommunityEntity> communityPage;
+        if (title != null && !title.isEmpty()) {
+            communityPage = communityRepository.findByCommunityTitleContainingIgnoreCase(title, pageRequest);  // 제목 검색
+        } else {
+            communityPage = communityRepository.findAll(pageRequest);  // 제목 없이 모든 게시글 조회
+        }
 
-        // Page<CommunityDTO> 형태로 변환
+        // Page<CommunityDTO> 형태로 변환하여 반환
         return communityPage.map(entity -> CommunityDTO.builder()
                 .communityId(entity.getCommunityId())
                 .communityContent(entity.getCommunityContent())
@@ -57,6 +62,7 @@ public class CommunityService {
                 .memberId(entity.getMember().getMemberId())
                 .build());
     }
+
 
 
     //글쓰기

@@ -35,16 +35,19 @@ public class CommunityController {
 //    }
 
     @GetMapping("list")
-    public String list(@RequestParam(defaultValue = "0") int page, Model model) {
+    public String list(@RequestParam(defaultValue = "0") int page,
+                       @RequestParam(defaultValue = "") String title,
+                       Model model) {
         int size = 10;  // 한 페이지에 표시할 게시글 수 (원하는 숫자로 조정 가능)
 
         // 게시글 목록과 페이지 정보 조회
-        Page<CommunityDTO> communityPage = communityService.getList(page, size);
+        Page<CommunityDTO> communityPage = communityService.getList(page, size, title);
 
         // 모델에 페이지 정보와 게시글 목록 추가
         model.addAttribute("communityPage", communityPage);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", communityPage.getTotalPages());
+        model.addAttribute("searchTitle", title);
 
         return "community/list";  // list.html 반환
     }
