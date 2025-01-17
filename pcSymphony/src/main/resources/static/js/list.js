@@ -64,23 +64,9 @@ $(document).ready(function() {
     function updatePagination(currentPage, totalPages) {
         $('#prevPage').prop('disabled', currentPage == 0);
         $('#nextPage').prop('disabled', currentPage == totalPages - 1);
-        $('#pageNumbers').empty();
 
-        // 페이지 번호 버튼 생성
-        for (let i = 0; i < totalPages; i++) {
-                    let pageButton = $('<button>')
-                        .addClass('pageButton')
-                        .text(i + 1)
-                        .click(function() {
-                            changePage(i);  // 클릭 시 해당 페이지로 이동
-                        });
+        $('#pageInfo').text(`${currentPage + 1} / ${totalPages}`);
 
-                    if (i === currentPage) {
-                        pageButton.prop('disabled', true);  // 현재 페이지는 비활성화
-                    }
-
-                    $('#pageNumbers').append(pageButton);
-                }
             }
 
             // 페이지 전환 함수
