@@ -32,7 +32,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     const priceElement = row.querySelector(".price");
                     const itemPrice = parseFloat(priceElement.innerText.replace(',', '')) || 0;
 
-                    row.querySelector(".name").innerText = '제품 없음';
+                    // 부품 상태를 "Choose a Part"로 변경
+                    const nameElement = row.querySelector(".name");
+                    const link = nameElement.querySelector("a");
+                    nameElement.innerHTML = `<a href="/part/${cartItem}" class="no-product-button">Choose a ${category}</a>`;
                     row.querySelector("th:nth-child(4)").innerText = '0';
                     button.setAttribute("disabled", true);
 

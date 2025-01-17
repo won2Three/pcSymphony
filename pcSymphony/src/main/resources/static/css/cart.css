@@ -403,3 +403,9 @@ button:hover {
     background-color: #0056b3; /* hover 시 배경 색상 */
     transform: scale(1.05); /* 살짝 확대되는 효과 */
 }
+
+ thead {
+     background: linear-gradient(to right, #e1f5fe 95%, transparent 95%);
+ }
+
+
