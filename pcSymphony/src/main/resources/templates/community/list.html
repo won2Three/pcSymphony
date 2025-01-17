@@ -10,7 +10,7 @@
     <script src="../../static/js/main.min.js" th:src="@{/js/main.min.js}"></script>
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
     <script src="../../static/js/list.js" th:src="@{/js/list.js}"></script>
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 </head>
 <body>
@@ -22,15 +22,8 @@
             <div class="community-container">
                 <h1>Community Board</h1>
 
-                <!-- 검색 폼 추가 -->
-                <div class="search-bar">
-                    <input type="text" id="searchTitle" placeholder="Search by title" />
-                    <button id="searchButton">Search</button>
-                </div>
-
                 <!-- 글쓰기 버튼 (링크로 변환) -->
                 <button class="write-button"><a  id="writeButton" href="write" >Write Post</a></button>
-
                 <!-- 테이블 -->
                 <table class="list-table">
                     <thead>
@@ -61,6 +54,13 @@
                     <!-- 다음 페이지 버튼 -->
                     <button id="nextPage" disabled>Next</button>
                 </div>
+
+                <!-- 검색 폼 추가 -->
+                <div class="search-container">
+                    <div class="search-bar">
+                        <input type="text" id="searchTitle" placeholder="Search by title" />
+                        <button id="searchButton"><i class="fas fa-search"></i></button>
+                    </div></div>
 
                 <div class="form-footer">
                     <p>If you have any questions or feedback about the board, the administrator will assist you.</p>
