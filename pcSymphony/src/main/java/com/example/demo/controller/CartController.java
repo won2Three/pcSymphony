@@ -53,7 +53,7 @@ public class CartController {
         double totalPrice = cartService.calculateTotalPrice(cart);
 
         // DecimalFormat을 사용하여 가격 포맷팅 (천 단위 쉼표 추가)
-        DecimalFormat df = new DecimalFormat("#,###");
+        DecimalFormat df = new DecimalFormat("#,###.##");
         String formattedPrice = df.format(totalPrice);  // 쉼표가 포함된 가격으로 포맷
 
         // 포맷된 가격을 모델에 추가

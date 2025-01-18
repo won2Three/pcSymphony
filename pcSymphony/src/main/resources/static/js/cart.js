@@ -28,22 +28,29 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(response => response.json())
             .then(data => {
+            console.log('서버 응답:', data);
                 if (data.success) {
                     const priceElement = row.querySelector(".price");
-                    const itemPrice = parseFloat(priceElement.innerText.replace(',', '')) || 0;
+                    const itemPrice = parseFloat(priceElement.innerText.replace('$', '').replace(',', '')) || 0;
 
                     // 부품 상태를 "Choose a Part"로 변경
                     const nameElement = row.querySelector(".name");
                     const link = nameElement.querySelector("a");
                     nameElement.innerHTML = `<a href="/part/${cartItem}" class="no-product-button">Choose a ${category}</a>`;
-                    row.querySelector("th:nth-child(4)").innerText = '0';
+                    row.querySelector("th:nth-child(4)").innerText = '$0';
                     button.setAttribute("disabled", true);
 
                     const totalPriceElement = document.querySelector(".totalPrice");
-                    const currentTotalPrice = parseFloat(totalPriceElement.innerText.replace(',', '').replace('달러', '')) || 0;
+                    if (totalPriceElement) {
+                                console.log('totalPriceElement 값:', totalPriceElement.innerText);  // 현재 값 확인
+                            } else {
+                                console.log('totalPriceElement가 선택되지 않았습니다.');
+                            }
+                    const currentTotalPrice = parseFloat(totalPriceElement.innerText.replace(',', '').replace('Total Price : $', '')) || 0;
                     const newTotalPrice = currentTotalPrice - itemPrice;
-
-                    totalPriceElement.innerText = newTotalPrice.toLocaleString() + '달러';
+                    console.log("after : " + newTotalPrice)
+                    console.log(newTotalPrice.toLocaleString())
+                    totalPriceElement.innerText ='Total Price : $' + newTotalPrice.toLocaleString();
                 } else {
                     alert('삭제 실패');
                 }
