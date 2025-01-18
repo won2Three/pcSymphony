@@ -7,74 +7,7 @@
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
     <link href="../../static/css/partList.css" rel="stylesheet" th:href="@{/css/partList.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
-    <style>
-        .part-item {
-            display: flex;
-            align-items: center; /* 이미지와 텍스트를 수직 중앙 정렬 */
-            gap: 10px; /* 이미지와 텍스트 사이 간격 */
-        }
-        /* 검색창 및 버튼 스타일 */
-        .search-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            gap: 10px;
-        }
 
-        .search-input {
-            width: 70%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-        }
-
-        .search-button {
-            padding: 10px 20px;
-            background-color: #1976D2;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .search-button:hover {
-            opacity: .7;
-        }
-
-        /* 페이지네이션 스타일 */
-        .pagination-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-            gap: 10px;
-        }
-
-        .pagination-button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .pagination-button:disabled {
-            background-color: #B0BEC5;
-            cursor: not-allowed;
-        }
-
-        .pagination-button:not(:disabled):hover {
-            opacity: .7;
-        }
-
-        .pagination-info {
-            font-weight: bold;
-            color: #333;
-        }
-    </style>
 </head>
 <body id="partList-body">
 <!-- Header Fragment 포함 -->
@@ -140,7 +73,7 @@
                 const row = `
                     <tr>
                         <td>${part.id}</td>
-                        <td><img src="${part.imageUrl || 'https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE='}" alt="Part Image" style="width:50px;height:50px;"></td>
+                        <td><img src="${part.imageUrl || '/images/nav-' + tableName + '.png'}" alt="Part Image" style="width:50px;height:50px;"></td>
                         <td><a href="/part/${tableName}/${part.id}">${part.name}</a></td>
                         <td>${part.manufacturer}</td>
                         <td>$ ${part.price}</td>

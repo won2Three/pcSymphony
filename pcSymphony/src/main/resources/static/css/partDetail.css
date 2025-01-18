@@ -72,6 +72,20 @@
     font-size: 14px;
 }
 
+/*cart, list 버튼 스타일*/
+.partsButton-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.left-buttons {
+    display: flex;
+}
+
+.right-buttons {
+    display: flex;
+    gap: 10px;
+}
 /*별점 관련 스타일*/
 .starAndSave {
     display: flex; /* 플렉스 컨테이너 설정 */

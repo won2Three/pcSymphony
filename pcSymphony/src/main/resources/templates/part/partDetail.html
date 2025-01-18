@@ -8,10 +8,7 @@
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
     <link href="../../static/css/partDetail.css" rel="stylesheet" th:href="@{/css/partDetail.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
-    <style>
 
-
-    </style>
 </head>
 <body id="partDetail-body">
 <!-- Header Fragment 포함 -->
@@ -21,10 +18,44 @@
         <a class="titleName" th:href="@{'/part/' + ${tableName}}"><h1 class="container-like">PartDetail</h1></a>
 
         <div class="container">
+            <!--null값 이미지 처리-->
             <label class="partsTitle">
                 <img alt="Part Image"
                      class="normal-image"
-                     th:src="${part.imageUrl != null ? part.imageUrl : '/images/nav-' + tableName + '.png'}" />
+                     th:if="${part.imageUrl != null}"
+                     th:src="${part.imageUrl}" />
+                <img alt="Part Image"
+                     class="normal-image"
+                     th:if="${part.imageUrl == null && tableName == 'cpu'}"
+                     th:src="@{/images/nav-cpu.png}" />
+                <img alt="Part Image"
+                     class="normal-image"
+                     th:if="${part.imageUrl == null && tableName == 'cpucooler'}"
+                     th:src="@{/images/nav-cpucooler.png}" />
+                <img alt="Part Image"
+                     class="normal-image"
+                     th:if="${part.imageUrl == null && tableName == 'motherboard'}"
+                     th:src="@{/images/nav-motherboard.png}" />
+                <img alt="Part Image"
+                     class="normal-image"
+                     th:if="${part.imageUrl == null && tableName == 'memory'}"
+                     th:src="@{/images/nav-memory.png}" />
+                <img alt="Part Image"
+                     class="normal-image"
+                     th:if="${part.imageUrl == null && tableName == 'storage'}"
+                     th:src="@{/images/nav-storage.png}" />
+                <img alt="Part Image"
+                     class="normal-image"
+                     th:if="${part.imageUrl == null && tableName == 'videocard'}"
+                     th:src="@{/images/nav-videocard.png}" />
+                <img alt="Part Image"
+                     class="normal-image"
+                     th:if="${part.imageUrl == null && tableName == 'powersupply'}"
+                     th:src="@{/images/nav-powersupply.png}" />
+                <img alt="Part Image"
+                     class="normal-image"
+                     th:if="${part.imageUrl == null && tableName == 'cover'}"
+                     th:src="@{/images/nav-cover.png}" />
 
                 <h2 style="margin: 32px 0 48px 0"
                     th:text="${tableName} + ' : ' + ${part.name}">Part Detail</h2>
@@ -65,7 +96,7 @@
                 <tbody>
                 <tr>
                     <td th:text="${part.cpuSocket}">Socket</td>
-                    <td th:text="${part.cpuTdp + 'W'}">TDP</td>
+                    <td th:text="${part.cpuTdp + ' W'}">TDP</td>
                     <td th:text="${part.cpuCoreCount}">Core Count</td>
                     <td th:text="${part.cpuThreadCount}">Thread Count</td>
                     <td th:text="${part.cpuPerformanceCoreClock}">Performance Core Clock</td>
@@ -86,7 +117,7 @@
                 <tbody>
                 <tr>
                     <td th:text="${part.cpuCoolerMotherboardSockets}" style="width: 60%">CPU Motherboard Socket</td>
-                    <td th:text="${part.cpuCoolerHeight + 'mm'}">CpuCooler Height</td>
+                    <td th:text="${part.cpuCoolerHeight + ' mm'}">CpuCooler Height</td>
                 </tr>
                 </tbody>
             </table>
@@ -105,9 +136,9 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td th:text="${part.videoCardLength + 'mm'}">Video Card Length</td>
-                    <td th:text="${part.videoCardTdp + 'W'}">Video Card TDP</td>
-                    <td th:text="${part.videoCardMemory + 'GB'}">Video Card Memory</td>
+                    <td th:text="${part.videoCardLength + ' mm'}">Video Card Length</td>
+                    <td th:text="${part.videoCardTdp + ' W'}">Video Card TDP</td>
+                    <td th:text="${part.videoCardMemory + ' GB'}">Video Card Memory</td>
                     <td th:text="${part.videoCardChipset}">Video Card Chipset</td>
                     <td th:text="${part.videoCardCoreClock}">Core Clock</td>
                     <td th:text="${part.videoCardBoostClock}">Boost Clock</td>
@@ -127,7 +158,7 @@
                 <tbody>
                 <tr>
                     <td th:text="${part.memoryFormFactor}">Memory Form Factor</td>
-                    <td th:text="${part.memorySize + 'GB'}">Memory Module</td>
+                    <td th:text="${part.memorySize + ' GB'}">Memory Module</td>
                     <td th:text="${part.memorySpeed}">Memory Speed</td>
                 </tr>
                 </tbody>
@@ -173,7 +204,7 @@
                     <td th:text="${part.motherboardChipset}">Motherboard Chipset</td>
                     <td th:text="${part.motherboardMemorySlotCount}">Motherboard Memory Slot Count</td>
                     <td th:text="${part.motherboardMdot2SlotCount}">Motherboard M.2 Slot Count</td>
-                    <td th:text="${part.motherboardMemoryMax + 'GB'}">Motherboard Memory Max</td>
+                    <td th:text="${part.motherboardMemoryMax + ' GB'}">Motherboard Memory Max</td>
                 </tr>
                 </tbody>
             </table>
@@ -189,7 +220,7 @@
                 <tbody>
                 <tr>
                     <td th:text="${part.powerSupplyType}">Power Supply Type</td>
-                    <td th:text="${part.powerSupplyWattage + 'W'}">Power Supply Wattage</td>
+                    <td th:text="${part.powerSupplyWattage + ' W'}">Power Supply Wattage</td>
                 </tr>
                 </tbody>
             </table>
@@ -205,15 +236,22 @@
                 <tbody>
                 <tr>
                     <td th:text="${part.coverMotherboardFormFactor}">Cover Motherboard Form Factor</td>
-                    <td th:text="${part.coverMaxVideoCardLength + 'mm'}">Cover Max Video Card Length</td>
+                    <td th:text="${part.coverMaxVideoCardLength + ' mm'}">Cover Max Video Card Length</td>
                 </tr>
                 </tbody>
             </table>
-            <div class="button-container">
-                <button class="main-button" onclick="addToCart(this)" th:data-id="${part.id}"
-                        th:data-table-name="${tableName}">
-                    Add to cart
-                </button>
+            <!--파츠 디테일 아래 버튼-->
+            <div class="partsButton-container">
+                <div class="left-buttons">
+                    <a class="a-button lightblue-button" th:href="@{'/part/' + ${tableName}}">Back to List</a>
+                </div>
+                <div class="right-buttons">
+                    <a class="a-button lightblue-button" th:href="@{'/cart'}">Cart</a>
+                    <button class="main-button" onclick="addToCart(this)" th:data-id="${part.id}"
+                            th:data-table-name="${tableName}">
+                        Add to cart
+                    </button>
+                </div>
             </div>
             <!-- 담기버튼을 누르면 tableName알맞는 장바구니의 id값에 담긴다. -->
 
@@ -276,7 +314,6 @@
                     </tbody>
                 </table>
             </div>
-            <a class="a-button main-button" th:href="@{'/part/' + ${tableName}}">Cart</a>
         </div>
     </main>
 </div>

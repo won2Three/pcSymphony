@@ -14,3 +14,69 @@
 #partList-Atag:hover {
     color: blue;
 }
+.part-item {
+    display: flex;
+    align-items: center; /* 이미지와 텍스트를 수직 중앙 정렬 */
+    gap: 10px; /* 이미지와 텍스트 사이 간격 */
+}
+/* 검색창 및 버튼 스타일 */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.search-input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.search-button {
+    padding: 10px 20px;
+    background-color: #1976D2;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.search-button:hover {
+    opacity: .7;
+}
+
+/* 페이지네이션 스타일 */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.pagination-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.pagination-button:disabled {
+    background-color: #B0BEC5;
+    cursor: not-allowed;
+}
+
+.pagination-button:not(:disabled):hover {
+    opacity: .7;
+}
+
+.pagination-info {
+    font-weight: bold;
+    color: #333;
+}
