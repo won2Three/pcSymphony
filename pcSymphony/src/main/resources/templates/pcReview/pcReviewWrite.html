@@ -286,7 +286,7 @@
                     </fieldset>
                 </fieldset>
                 <div class="button-container">
-                    <button class="delete-small-button" th:href="@{pcReview/pcReviewList}" type="button">Cancel</button>
+                    <button class="delete-small-button" onclick="location.href='/cart'">Cancel</button>
                     <button class="main-small-button" type="submit" th:onclick="|location.href='@{/pcreview/write}'|"
                             th:disabled="${cart.cpu == null or cart.cpucooler == null or cart.motherboard == null or cart.memory == null or
                                 cart.storage == null or cart.videocard == null or cart.powersupply == null or cart.cover == null}">Submit</button>
@@ -298,4 +298,6 @@
 </div>
 <div th:replace="~{fragments/footer :: footerFragment}"></div>
 </body>
+<script src="../../static/js/pcReviewWrite.js" th:src="@{/js/pcReviewWrite.js}"></script>
+
 </html>

@@ -8,7 +8,7 @@
 
     <link href="../../static/css/pcReviewRead.css" rel="stylesheet" th:href="@{/css/pcReviewRead.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
-    <title>PC리뷰 read</title>
+    <title>PcSymphony</title>
 
 </head>
 <body>
@@ -24,7 +24,7 @@
                         <aside class="leftSideBar">
                             <!-- 업로드한 이미지를 표시 -->
                             <div class="guideImage" id="uploadedImages">
-                                <img alt="Uploaded Image" th:src="@{/images/nav-case.png}">
+                                <img alt="Uploaded Image" th:src="@{/images/nav-cover.png}">
                             </div>
                         </aside>
                         <div class="content-details" id="pcReviewRow" th:data-id="${pcReview.pcreviewId}">
@@ -33,9 +33,10 @@
                                 <div class="community-title" id="pcReviewTitle" th:text="${pcReview.pcreviewTitle}">Title</div>
                                 <!-- 게시물 정보 -->
                                 <div class="pcReviewInfo" id="pcReviewInfo">
-                                    Number: <span id="pcReviewId" th:text="${pcReview.pcreviewId}"></span>
+                                    No. <span id="pcReviewId" th:text="${pcReview.pcreviewId}"></span>
                                     Author: <span id="pcReviewUserId" th:text="${pcReview.userId}"></span>
-                                    Date of Creation: <span id="pcReviewDate" th:text="${pcReview.pcreviewDate}"></span>
+                                    Date of Creation: <span id="pcReviewDate" th:text="${formattedDate}"></span>
+
                                 </div>
                             </div>
                             <!-- 게시물 내용 -->
@@ -54,7 +55,7 @@
                                 <div class="pcReviewInfo">
                                     <!-- 게시물 정보 -->
                                     <!--리뷰ID-->
-                                    Number : <span th:text="${pcReview.pcreviewId}"></span>
+                                    No.<span th:text="${pcReview.pcreviewId}"></span>
                                     Author: <span th:text="${pcReview.userId}"></span>
                                     Date of Creation: <span th:text="${pcReview.pcreviewDate}"></span>
                                 </div>
@@ -444,7 +445,7 @@
             <!-- 댓글 입력 폼 -->
             <form class="replyForm comment-form" id="commentForm">
                 <div class="inputWrapper">
-                    <label class="replyLabel" for="pcReviewCommentContent">리플 입력</label>
+                    <label class="replyLabel" for="pcReviewCommentContent">Enter Reply</label>
                     <textarea id="pcReviewCommentContent" name="commentContent" placeholder="댓글을 입력하세요"></textarea>
                     <!--댓글 입력 필드-->
                 </div>
@@ -455,8 +456,8 @@
             <table class="reply comment" id="commentTable">
                 <thead>
                 <tr>
-                    <th style="width: 20%">작성자</th>
-                    <th style="width: 60%">내용</th>
+                    <th style="width: 20%">Author</th>
+                    <th style="width: 60%">Content</th>
                     <th style="width: 20%"></th>
                 </tr>
                 </thead>
@@ -467,7 +468,7 @@
             <div class="button-footerContainer">
                 <!-- 뒤로가기 버튼 -->
                 <form th:action="@{/pcreview/list}">
-                    <button class="sub-button" type="submit">List</button>
+                    <button class="main-button" type="submit">List</button>
                 </form>
                 <!--리뷰 삭제 버튼-->
                 <form method="POST" th:action="@{/pcreview/delete}"

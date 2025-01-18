@@ -9,7 +9,7 @@
     display: flex; /* 플렉스 컨테이너 */
     flex-direction: column; /* 세로 정렬 */
     align-items: flex-end; /* 우측 정렬 */
-    padding: 12px;
+    padding: 12px 0;
     border-top: #0c1622 solid 3px;
     border-bottom: #0c1622 solid 3px;
     gap: 10px; /* 필드 간 간격 */
@@ -60,6 +60,19 @@
 .blue-button {
     align-self: flex-end; /* 버튼도 우측 정렬 */
 }
+.partsTitle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+.table-cell {
+    padding: 8px 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+/*별점 관련 스타일*/
 .starAndSave {
     display: flex; /* 플렉스 컨테이너 설정 */
     align-items: center; /* 세로 방향 정렬 */
@@ -67,21 +80,60 @@
 }
 #ratingStars {
     display: flex; /* 별을 수평으로 배치 */
-    gap: 5px; /* 별 사이의 간격 설정 */
     justify-content: flex-start; /* 왼쪽 정렬 */
     align-items: center; /* 수직 가운데 정렬 */
 }
-/*#ratingStars span {*/
-/*    font-size: 2rem;*/
-/*    cursor: pointer;*/
-/*    transition: color 0.2s ease-in-out;*/
-/*    color: lightgray; !* 기본 별 색상 *!*/
+.star {
+    font-size: 1.5rem;
+    color: lightgray;
+    transition: color 0.2s;
+}
+.star:hover {
+    color: gold;
+}
+.stars {
+    display: inline-block;
+    cursor: pointer;
+    color: gold; /* 채워진 별 색상 */
+    font-size: 18px;
+}
+.stars span {
+    font-size: 2rem;
+    color: lightgray;
+    transition: color 0.2s;
+}
+.stars .filled {
+    color: gold; /* 채워진 별 색상 */
+}
+.stars .empty {
+    color: lightgray; /* 빈 별 색상 */
+}
+/**/
+.editable-stars {
+    display: flex;
+    cursor: pointer;
+}
+.editable-stars .star {
+    font-size: 1.5rem;
+    color: lightgray;
+    transition: color 0.2s;
+}
+.editable-stars .star:hover {
+    color: gold;
+}
+/*.stars {*/
+/*    display: flex;*/
+/*    gap: 5px;*/
 /*}*/
-
-/*#ratingStars span:hover {*/
-/*    color: gold; !* 마우스 오버 시 금색 *!*/
-/*}*/
-/*.review-rating {*/
-/*    !*font-size: 1.2rem; !* 별 크기 설정 *!*!*/
-/*    color: gold; !* 별 색상 설정 *!*/
-/*}*/
+.stars .star {
+    font-size: 18px;
+    color: lightgray;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.stars .star.filled {
+    color: gold;
+}
+.stars .star.empty {
+    color: lightgray;
+}

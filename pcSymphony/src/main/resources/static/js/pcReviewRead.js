@@ -5,22 +5,6 @@
     // userName 값 가져오기
     const userId = document.getElementById('userId').value;
 
-    function getMySQLFormattedTimestamp() {
-    const now = new Date();
-
-    // 로컬 시간 계산
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-
-    // MySQL 형식 (로컬 시간)
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
-}
-
-
     console.log("pcReviewId 값:", pcReviewId);
     console.log("userId 값:", userId);
 
@@ -37,7 +21,7 @@
                 let deleteButton = '';
                 if (comment.userId === userId) {
                     // 현재 로그인한 사용자의 댓글일 때만 삭제 버튼 표시
-                    deleteButton = `<button class="gray-button" onclick="deleteComment(${comment.pcreviewCommentId})">Delete</button>`;
+                    deleteButton = `<button class="delete-small-button" onclick="deleteComment(${comment.pcreviewCommentId})">Delete</button>`;
                 }
 
                 const commentHtml = `
@@ -51,7 +35,7 @@
             });
         },
         error: function (xhr, status, error) {
-            alert('댓글 목록 불러오기 실패');
+            alert('Failed to load comment list.');
         }
     });
 }
@@ -73,7 +57,7 @@
     loadComments(); // 댓글 목록 새로고침
 },
     error: function () {
-    alert('댓글 삭제 실패!');
+    alert('Failed to delete comment!');
 }
 });
 }
@@ -82,7 +66,7 @@
     $('#commentWriteButton').click(function () {
     const commentContent = $('#pcReviewCommentContent').val();
     if (!commentContent) {
-    alert('댓글을 입력하세요.');
+    alert('Please enter a comment.');
     return;
 }
 
@@ -102,7 +86,7 @@
     loadComments(); // 댓글 목록 새로고침
 },
     error: function () {
-    alert('댓글 저장 실패!');
+    alert('Failed to save comment!');
 }
 });
 });
@@ -124,7 +108,7 @@
     editPcReviewRow.style.display = "none";
 
     editButton.addEventListener("click", function () {
-    console.log("도달")
+    console.log("Reached.")
     pcReviewRow.style.display = "none";
     editPcReviewRow.style.display = "block";
 
@@ -161,11 +145,11 @@
 
     if (!response.ok) {
     console.error('Failed to update the database');
-    alert('데이터베이스 업데이트에 실패했습니다.');
+    alert('Failed to update the database.');
 }
 } catch (error) {
     console.error('Error:', error);
-    alert('서버와의 통신 중 문제가 발생했습니다.');
+    alert('An issue occurred while communicating with the server.');
 }
 });
 
@@ -238,11 +222,11 @@
 
     if (!response.ok) {
     console.error('Failed to update the database');
-    alert('데이터베이스 업데이트에 실패했습니다.');
+    alert('Failed to update the database.');
 }
 } catch (error) {
     console.error('Error:', error);
-    alert('서버와의 통신 중 문제가 발생했습니다.');
+    alert('An issue occurred while communicating with the server.');
 }
 });
 });
@@ -305,11 +289,11 @@
 
     if (!response.ok) {
     console.error('Failed to update the database');
-    alert('데이터베이스 업데이트에 실패했습니다.');
+    alert('Failed to update the database.');
 }
 } catch (error) {
     console.error('Error:', error);
-    alert('서버와의 통신 중 문제가 발생했습니다.');
+    alert('An issue occurred while communicating with the server.');
 }
 });
 
@@ -370,11 +354,11 @@
 
     if (!response.ok) {
     console.error('Failed to update the database');
-    alert('데이터베이스 업데이트에 실패했습니다.');
+    alert('Failed to update the database.');
 }
 } catch (error) {
     console.error('Error:', error);
-    alert('서버와의 통신 중 문제가 발생했습니다.');
+    alert('An issue occurred while communicating with the server.');
 }
 });
 
@@ -436,11 +420,11 @@
 
     if (!response.ok) {
     console.error('Failed to update the database');
-    alert('데이터베이스 업데이트에 실패했습니다.');
+    alert('Failed to update the database.');
 }
 } catch (error) {
     console.error('Error:', error);
-    alert('서버와의 통신 중 문제가 발생했습니다.');
+    alert('An issue occurred while communicating with the server.');
 }
 });
 
@@ -501,11 +485,11 @@
 
     if (!response.ok) {
     console.error('Failed to update the database');
-    alert('데이터베이스 업데이트에 실패했습니다.');
+    alert('Failed to update the database.');
 }
 } catch (error) {
     console.error('Error:', error);
-    alert('서버와의 통신 중 문제가 발생했습니다.');
+    alert('An issue occurred while communicating with the server.');
 }
 });
 
@@ -567,11 +551,11 @@
 
     if (!response.ok) {
     console.error('Failed to update the database');
-    alert('데이터베이스 업데이트에 실패했습니다.');
+    alert('Failed to update the database.');
 }
 } catch (error) {
     console.error('Error:', error);
-    alert('서버와의 통신 중 문제가 발생했습니다.');
+    alert('An issue occurred while communicating with the server.');
 }
 });
 
@@ -633,11 +617,11 @@
 
     if (!response.ok) {
     console.error('Failed to update the database');
-    alert('데이터베이스 업데이트에 실패했습니다.');
+    alert('Failed to update the database.');
 }
 } catch (error) {
     console.error('Error:', error);
-    alert('서버와의 통신 중 문제가 발생했습니다.');
+    alert('An issue occurred while communicating with the server.');
 }
 });
 
@@ -699,10 +683,10 @@
 
     if (!response.ok) {
     console.error('Failed to update the database');
-    alert('데이터베이스 업데이트에 실패했습니다.');
+    alert('Failed to update the database.');
 }
 } catch (error) {
     console.error('Error:', error);
-    alert('서버와의 통신 중 문제가 발생했습니다.');
+    alert('An issue occurred while communicating with the server.');
 }
 });

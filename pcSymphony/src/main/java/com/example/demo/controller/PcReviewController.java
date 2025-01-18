@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -203,12 +204,22 @@ public class PcReviewController {
 
     @GetMapping("/read/{id}")
     public String read(@PathVariable int id, Model model, @AuthenticationPrincipal MemberUserDetails user) {
+        // 데이터 가져오기
         PcReviewEntity pcReviewEntity = pcReviewRepository.getReferenceById(id);
         CartEntity cartEntity = cartRepository.findByUser_MemberId(user.getId());
+
+        // 날짜 포맷 적용
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
+        String formattedDate = pcReviewEntity.getPcreviewDate().format(formatter);
+
+        // 모델에 추가
         model.addAttribute("cart", cartEntity);
         model.addAttribute("pcReview", pcReviewEntity);
-        return "pcReview/pcReviewRead";
+        model.addAttribute("formattedDate", formattedDate); // 포맷된 날짜 전달
+
+        return "pcReview/pcReviewRead"; // 템플릿 이름
     }
+
 
     @PostMapping("/updateParts")
     public ResponseEntity<String> updatePartsReview(@RequestBody PartsReviewDTO request) {
