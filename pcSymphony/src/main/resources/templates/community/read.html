@@ -30,7 +30,7 @@
                     <div id="community-info">
    <span class="info-left">
     Author : <span th:text="${community.memberId}"></span> &nbsp; <!-- 공백 추가 -->
-    Date : <span th:text="${#temporals.format(community.communityDate, 'yyyy-MM-dd HH:mm')}"></span>
+    Date : <span th:text="${#temporals.format(community.communityDate, 'yyyy.MM.dd HH:mm')}"></span>
 </span>
 
                         <span class="info-right">
@@ -116,7 +116,7 @@
         const hours = String(date.getHours()).padStart(2, '0');
         const minutes = String(date.getMinutes()).padStart(2, '0');
 
-        return `${year}-${month}-${day} ${hours}:${minutes}`;
+        return `${year}.${month}.${day} ${hours}:${minutes}`;
     }
 
     // 댓글 목록을 로드하는 함수
@@ -142,7 +142,7 @@ const formattedDate = formatDate(comment.communityReplyDate);
         <tr>
             <td class="reply-content">${comment.replyContent}</td>
             <td style="text-align: right">
-                <button class="cancel-button" onclick="deleteComment(${comment.communityReplyId})">X</button>
+                <button class="cancel-button" id="x-button" onclick="deleteComment(${comment.communityReplyId})">X</button>
             </td>
         </tr>
     `;
