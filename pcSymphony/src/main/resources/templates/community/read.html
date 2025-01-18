@@ -39,7 +39,9 @@
                     </div>
                 </div>
                 <!-- 업로드한 이미지를 표시 -->
-                <img th:src="@{${community.imagePath}}" alt="Post Image" />
+                <div th:if="${community.imagePath}">
+                    <img th:src="@{${community.imagePath}}" alt="Post Image" />
+                </div>
                 <!-- 게시물 내용 -->
                 <div class="community-content" th:text="${community.communityContent}">Content</div>
                 <!-- 수정/삭제 버튼 -->
