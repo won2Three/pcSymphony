@@ -132,7 +132,7 @@
             <tr>
                 <th></th>
                 <th class="totalPrice">Total Price</th>
-                <th class="totalPrice" th:text="' : $' + ${#numbers.formatDecimal(totalPrice, 0, 0)}">Total Price</th>
+                <th class="totalPrice" th:text="'$' + ${formattedPrice}">Total Price</th>
                 <div class="table-buttons">
                     <button id="Compatibility Check">Compatibility Check</button>
                     <button id="save as image">Save As Image</button>

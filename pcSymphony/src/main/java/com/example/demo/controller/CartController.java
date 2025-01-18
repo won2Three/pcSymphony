@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +51,13 @@ public class CartController {
         model.addAttribute("cart", cart);   //조회한  Entity를 모델에 추가
 
         double totalPrice = cartService.calculateTotalPrice(cart);
-        model.addAttribute("totalPrice", totalPrice);
+
+        // DecimalFormat을 사용하여 가격 포맷팅 (천 단위 쉼표 추가)
+        DecimalFormat df = new DecimalFormat("#,###");
+        String formattedPrice = df.format(totalPrice);  // 쉼표가 포함된 가격으로 포맷
+
+        // 포맷된 가격을 모델에 추가
+        model.addAttribute("formattedPrice", formattedPrice);
 
         return "cart/cart";
     }
