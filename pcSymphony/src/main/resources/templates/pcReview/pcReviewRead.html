@@ -8,7 +8,7 @@
 
     <link href="../../static/css/pcReviewRead.css" rel="stylesheet" th:href="@{/css/pcReviewRead.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
-    <title>PC리뷰 read</title>
+    <title>PcSymphony</title>
 
 </head>
 <body>
@@ -159,41 +159,57 @@
             <!-- CPU리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="CPU Image" class="small-image" th:src="${pcReview.cpuReview.cpu.imageUrl != null ? pcReview.cpuReview.cpu.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="CPU Image" class="small-image" th:src="${pcReview.cpuReview.cpu.imageUrl != null ? pcReview.cpuReview.cpu.imageUrl : '/images/nav-cpu.png'}">
                     <span th:text="${pcReview.cpuReview.cpu.name}">[CPU Name]</span>
                 </label></legend>
                 <div id="cpuRow" th:data-id="${pcReview.cpuReview.partsReviewId}">
                     <div class="parts-header">
-                        <div class="readPartsTitles" id="cpuTitle" th:text="${pcReview.cpuReview.partsReviewTitle}">CPU Review Title</div>
+                        <div class="readPartsTitles" id="cpuTitle" th:text="${pcReview.cpuReview.partsReviewTitle}">CPU
+                            Review Title
+                        </div>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="cpuDate" th:text="${#temporals.format(pcReview.cpuReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <div class="readPartsContent" id="cpuContent" th:text="${pcReview.cpuReview.partsReviewContent}">CPU Review Content</div>
-                    <div>Rating</div>
-                    <div id="cpuRating" th:text="${pcReview.cpuReview.partsReviewRating}">CPU Review Rating</div>
+                    <div class="readPartsContent" id="cpuContent" th:text="${pcReview.cpuReview.partsReviewContent}">CPU
+                        Review Content
+                    </div>
+
+                    <!-- 읽기 전용 별점 -->
+                    <div class="hidden-rating" id="cpuRating" th:text="${pcReview.cpuReview.partsReviewRating}" >CPU Review Rating</div>
+                    <div class="stars read-only" id="starsReadOnlyCpu">
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                    </div>
                     <div class="button-container">
-                        <button class="main-small-button" id="editCpuButton" th:if="${pcReview.userId == #authentication.name}">Edit</button>
+                        <button class="main-small-button" id="editCpuButton"
+                                th:if="${pcReview.userId == #authentication.name}">Edit
+                        </button>
                     </div>
                 </div>
-                <div class="form-row" id="editCpuRow">
+                <div class="form-row" id="editCpuRow" style="display: none;">
                     <div class="parts-header">
-                        <textarea class="readPartsTitles" id="editCpuTitle" type="text"></textarea>
+                        <textarea class="readPartsTitles" id="editCpuTitle"
+                                  th:text="${pcReview.cpuReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="cpuDate2" th:text="${#temporals.format(pcReview.cpuReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <textarea class="readPartsContent" id="editCpuContent" type="text"></textarea>
-                    <div>CPU Review Rating</div>
-                    <div>
-                        <select id="editCpuRating">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                    <textarea class="readPartsContent" id="editCpuContent"
+                              th:text="${pcReview.cpuReview.partsReviewContent}"></textarea>
+                    <!-- 수정 가능한 별점 -->
+                    <div class="stars editable" id="starsEditableCpu">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                        <input id="editableRatingCpu" th:value="${pcReview.cpuReview.partsReviewRating}" type="hidden">
                     </div>
+
                     <div class="button-container">
                         <button class="delete-small-button" id="cancelCpuButton">Cancel</button>
                         <button class="main-small-button" id="saveCpuButton">Submit</button>
@@ -201,43 +217,58 @@
                 </div>
             </fieldset>
 
-            <!-- cpucooler리뷰 -->
+            <!-- CPU쿨러 리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="cpucooler Image" class="small-image" th:src="${pcReview.cpucoolerReview.cpucooler.imageUrl != null ? pcReview.cpucoolerReview.cpucooler.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="cpucooler Image" class="small-image" th:src="${pcReview.cpucoolerReview.cpucooler.imageUrl != null ? pcReview.cpucoolerReview.cpucooler.imageUrl : '/images/nav-cpucooler.png'}">
                     <span th:text="${pcReview.cpucoolerReview.cpucooler.name}">[cpucooler Name]</span>
                 </label></legend>
                 <div id="cpucoolerRow" th:data-id="${pcReview.cpucoolerReview.partsReviewId}">
                     <div class="parts-header">
-                        <div class="readPartsTitles" id="cpucoolerTitle" th:text="${pcReview.cpucoolerReview.partsReviewTitle}">cpucooler Review Title</div>
+                        <div class="readPartsTitles" id="cpucoolerTitle"
+                             th:text="${pcReview.cpucoolerReview.partsReviewTitle}">CPU쿨러 Review Title
+                        </div>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="cpucoolerDate" th:text="${#temporals.format(pcReview.cpucoolerReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <div class="readPartsContent" id="cpucoolerContent" th:text="${pcReview.cpucoolerReview.partsReviewContent}">cpucooler Review Content</div>
-                    <div>Rating</div>
-                    <div id="cpucoolerRating" th:text="${pcReview.cpucoolerReview.partsReviewRating}">cpucooler Review Rating</div>
+                    <div class="readPartsContent" id="cpucoolerContent"
+                         th:text="${pcReview.cpucoolerReview.partsReviewContent}">CPU쿨러 Review Content
+                    </div>
+                    <div class="hidden-rating" id="cpucoolerRating" th:text="${pcReview.cpucoolerReview.partsReviewRating}">CPU쿨러 Review
+                        Rating
+                    </div>
+                    <div class="stars read-only" id="starsReadOnlyCpucooler">
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                    </div>
                     <div class="button-container">
-                        <button class="main-small-button" id="editCpucoolerButton" th:if="${pcReview.userId == #authentication.name}">Edit</button>
+                        <button class="main-small-button" id="editCpucoolerButton"
+                                th:if="${pcReview.userId == #authentication.name}">Edit
+                        </button>
                     </div>
                 </div>
-                <div class="form-row" id="editCpucoolerRow">
+                <div class="form-row" id="editCpucoolerRow" style="display: none;">
                     <div class="parts-header">
-                        <textarea class="readPartsTitles" id="editCpucoolerTitle" type="text"></textarea>
+                        <textarea class="readPartsTitles" id="editCpucoolerTitle"
+                                  th:text="${pcReview.cpucoolerReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="cpucoolerDate2" th:text="${#temporals.format(pcReview.cpucoolerReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <textarea class="readPartsContent" id="editCpucoolerContent" type="text"></textarea>
-                    <div>cpucooler Review Rating</div>
-                    <div>
-                        <select id="editCpucoolerRating">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                    <textarea class="readPartsContent" id="editCpucoolerContent"
+                              th:text="${pcReview.cpucoolerReview.partsReviewContent}"></textarea>
+                    <div class="stars editable" id="starsEditableCpucooler">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                        <input id="editableRatingCpucooler" th:value="${pcReview.cpucoolerReview.partsReviewRating}"
+                               type="hidden">
                     </div>
                     <div class="button-container">
                         <button class="delete-small-button" id="cancelCpucoolerButton">Cancel</button>
@@ -249,40 +280,55 @@
             <!-- Motherboard 리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="Motherboard Image" class="small-image" th:src="${pcReview.motherboardReview.motherboard.imageUrl != null ? pcReview.motherboardReview.motherboard.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="Motherboard Image" class="small-image" th:src="${pcReview.motherboardReview.motherboard.imageUrl != null ? pcReview.motherboardReview.motherboard.imageUrl : '/images/nav-motherboard.png'}">
                     <span th:text="${pcReview.motherboardReview.motherboard.name}">[Motherboard Name]</span>
                 </label></legend>
                 <div id="motherboardRow" th:data-id="${pcReview.motherboardReview.partsReviewId}">
                     <div class="parts-header">
-                        <div class="readPartsTitles" id="motherboardTitle" th:text="${pcReview.motherboardReview.partsReviewTitle}">Motherboard Review Title</div>
+                        <div class="readPartsTitles" id="motherboardTitle"
+                             th:text="${pcReview.motherboardReview.partsReviewTitle}">Motherboard Review Title
+                        </div>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="motherboardDate" th:text="${#temporals.format(pcReview.motherboardReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <div class="readPartsContent" id="motherboardContent" th:text="${pcReview.motherboardReview.partsReviewContent}">Motherboard Review Content</div>
-                    <div>Rating</div>
-                    <div id="motherboardRating" th:text="${pcReview.motherboardReview.partsReviewRating}">Motherboard Review Rating</div>
+                    <div class="readPartsContent" id="motherboardContent"
+                         th:text="${pcReview.motherboardReview.partsReviewContent}">Motherboard Review Content
+                    </div>
+                    <div class="hidden-rating" id="motherboardRating" th:text="${pcReview.motherboardReview.partsReviewRating}">Motherboard
+                        Review Rating
+                    </div>
+                    <div class="stars read-only" id="starsReadOnlyMotherboard">
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                    </div>
                     <div class="button-container">
-                        <button class="main-small-button" id="editMotherboardButton" th:if="${pcReview.userId == #authentication.name}">Edit</button>
+                        <button class="main-small-button" id="editMotherboardButton"
+                                th:if="${pcReview.userId == #authentication.name}">Edit
+                        </button>
                     </div>
                 </div>
-                <div class="form-row" id="editMotherboardRow">
+                <div class="form-row" id="editMotherboardRow" style="display: none;">
                     <div class="parts-header">
-                        <textarea class="readPartsTitles" id="editMotherboardTitle" type="text"></textarea>
+                        <textarea class="readPartsTitles" id="editMotherboardTitle"
+                                  th:text="${pcReview.motherboardReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="motherboardDate2" th:text="${#temporals.format(pcReview.motherboardReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <textarea class="readPartsContent" id="editMotherboardContent" type="text"></textarea>
-                    <div>Motherboard Review Rating</div>
-                    <div>
-                        <select id="editMotherboardRating">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                    <textarea class="readPartsContent" id="editMotherboardContent"
+                              th:text="${pcReview.motherboardReview.partsReviewContent}"></textarea>
+                    <div class="stars editable" id="starsEditableMotherboard">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                        <input id="editableRatingMotherboard" th:value="${pcReview.motherboardReview.partsReviewRating}"
+                               type="hidden">
                     </div>
                     <div class="button-container">
                         <button class="delete-small-button" id="cancelMotherboardButton">Cancel</button>
@@ -294,40 +340,53 @@
             <!-- Memory 리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="Memory Image" class="small-image" th:src="${pcReview.memoryReview.memory.imageUrl != null ? pcReview.memoryReview.memory.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="Memory Image" class="small-image" th:src="${pcReview.memoryReview.memory.imageUrl != null ? pcReview.memoryReview.memory.imageUrl : '/images/nav-memory.png'}">
                     <span th:text="${pcReview.memoryReview.memory.name}">[Memory Name]</span>
                 </label></legend>
                 <div id="memoryRow" th:data-id="${pcReview.memoryReview.partsReviewId}">
                     <div class="parts-header">
-                        <div class="readPartsTitles" id="memoryTitle" th:text="${pcReview.memoryReview.partsReviewTitle}">Memory Review Title</div>
+                        <div class="readPartsTitles" id="memoryTitle"
+                             th:text="${pcReview.memoryReview.partsReviewTitle}">Memory Review Title
+                        </div>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="memoryDate" th:text="${#temporals.format(pcReview.memoryReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <div class="readPartsContent" id="memoryContent" th:text="${pcReview.memoryReview.partsReviewContent}">Memory Review Content</div>
-                    <div>Rating</div>
-                    <div id="memoryRating" th:text="${pcReview.memoryReview.partsReviewRating}">Memory Review Rating</div>
+                    <div class="readPartsContent" id="memoryContent"
+                         th:text="${pcReview.memoryReview.partsReviewContent}">Memory Review Content
+                    </div>
+                    <div class="hidden-rating" id="memoryRating" th:text="${pcReview.memoryReview.partsReviewRating}">Memory Review Rating
+                    </div>
+                    <div class="stars read-only" id="starsReadOnlyMemory">
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                    </div>
                     <div class="button-container">
-                        <button class="main-small-button" id="editMemoryButton" th:if="${pcReview.userId == #authentication.name}">Edit</button>
+                        <button class="main-small-button" id="editMemoryButton"
+                                th:if="${pcReview.userId == #authentication.name}">Edit
+                        </button>
                     </div>
                 </div>
-                <div class="form-row" id="editMemoryRow">
+                <div class="form-row" id="editMemoryRow" style="display: none;">
                     <div class="parts-header">
-                        <textarea class="readPartsTitles" id="editMemoryTitle" type="text"></textarea>
+                        <textarea class="readPartsTitles" id="editMemoryTitle"
+                                  th:text="${pcReview.memoryReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="memoryDate2" th:text="${#temporals.format(pcReview.memoryReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <textarea class="readPartsContent" id="editMemoryContent" type="text"></textarea>
-                    <div>Memory Review Rating</div>
-                    <div>
-                        <select id="editMemoryRating">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                    <textarea class="readPartsContent" id="editMemoryContent"
+                              th:text="${pcReview.memoryReview.partsReviewContent}"></textarea>
+                    <div class="stars editable" id="starsEditableMemory">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                        <input id="editableRatingMemory" th:value="${pcReview.memoryReview.partsReviewRating}" type="hidden">
                     </div>
                     <div class="button-container">
                         <button class="delete-small-button" id="cancelMemoryButton">Cancel</button>
@@ -336,43 +395,58 @@
                 </div>
             </fieldset>
 
+
             <!-- Storage 리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="Storage Image" class="small-image" th:src="${pcReview.storageReview.storage.imageUrl != null ? pcReview.storageReview.storage.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="Storage Image" class="small-image" th:src="${pcReview.storageReview.storage.imageUrl != null ? pcReview.storageReview.storage.imageUrl : '/images/nav-memory.png'}">
                     <span th:text="${pcReview.storageReview.storage.name}">[Storage Name]</span>
                 </label></legend>
                 <div id="storageRow" th:data-id="${pcReview.storageReview.partsReviewId}">
                     <div class="parts-header">
-                        <div class="readPartsTitles" id="storageTitle" th:text="${pcReview.storageReview.partsReviewTitle}">Storage Review Title</div>
+                        <div class="readPartsTitles" id="storageTitle"
+                             th:text="${pcReview.storageReview.partsReviewTitle}">Storage Review Title
+                        </div>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="storageDate" th:text="${#temporals.format(pcReview.storageReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <div class="readPartsContent" id="storageContent" th:text="${pcReview.storageReview.partsReviewContent}">Storage Review Content</div>
-                    <div>Rating</div>
-                    <div id="storageRating" th:text="${pcReview.storageReview.partsReviewRating}">Storage Review Rating</div>
+                    <div class="readPartsContent" id="storageContent"
+                         th:text="${pcReview.storageReview.partsReviewContent}">Storage Review Content
+                    </div>
+                    <div class="hidden-rating" id="storageRating" th:text="${pcReview.storageReview.partsReviewRating}">Storage Review
+                        Rating
+                    </div>
+                    <div class="stars read-only" id="starsReadOnlyStorage">
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                    </div>
                     <div class="button-container">
-                        <button class="main-small-button" id="editStorageButton" th:if="${pcReview.userId == #authentication.name}">Edit</button>
+                        <button class="main-small-button" id="editStorageButton"
+                                th:if="${pcReview.userId == #authentication.name}">Edit
+                        </button>
                     </div>
                 </div>
-                <div class="form-row" id="editStorageRow">
+                <div class="form-row" id="editStorageRow" style="display: none;">
                     <div class="parts-header">
-                        <textarea class="readPartsTitles" id="editStorageTitle" type="text"></textarea>
+                        <textarea class="readPartsTitles" id="editStorageTitle"
+                                  th:text="${pcReview.storageReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="storageDate2" th:text="${#temporals.format(pcReview.storageReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <textarea class="readPartsContent" id="editStorageContent" type="text"></textarea>
-                    <div>Storage Review Rating</div>
-                    <div>
-                        <select id="editStorageRating">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                    <textarea class="readPartsContent" id="editStorageContent"
+                              th:text="${pcReview.storageReview.partsReviewContent}"></textarea>
+                    <div class="stars editable" id="starsEditableStorage">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                        <input id="editableRatingStorage" th:value="${pcReview.storageReview.partsReviewRating}" type="hidden">
                     </div>
                     <div class="button-container">
                         <button class="delete-small-button" id="cancelStorageButton">Cancel</button>
@@ -384,40 +458,55 @@
             <!-- Video Card 리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="Video Card Image" class="small-image" th:src="${pcReview.videocardReview.videocard.imageUrl != null ? pcReview.videocardReview.videocard.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="Video Card Image" class="small-image" th:src="${pcReview.videocardReview.videocard.imageUrl != null ? pcReview.videocardReview.videocard.imageUrl : '/images/nav-videocard.png'}">
                     <span th:text="${pcReview.videocardReview.videocard.name}">[Video Card Name]</span>
                 </label></legend>
                 <div id="videocardRow" th:data-id="${pcReview.videocardReview.partsReviewId}">
                     <div class="parts-header">
-                        <div class="readPartsTitles" id="videocardTitle" th:text="${pcReview.videocardReview.partsReviewTitle}">Video Card Review Title</div>
+                        <div class="readPartsTitles" id="videocardTitle"
+                             th:text="${pcReview.videocardReview.partsReviewTitle}">Video Card Review Title
+                        </div>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="videocardDate" th:text="${#temporals.format(pcReview.videocardReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <div class="readPartsContent" id="videocardContent" th:text="${pcReview.videocardReview.partsReviewContent}">Video Card Review Content</div>
-                    <div>Rating</div>
-                    <div id="videocardRating" th:text="${pcReview.videocardReview.partsReviewRating}">Video Card Review Rating</div>
+                    <div class="readPartsContent" id="videocardContent"
+                         th:text="${pcReview.videocardReview.partsReviewContent}">Video Card Review Content
+                    </div>
+                    <div class="hidden-rating" id="videocardRating" th:text="${pcReview.videocardReview.partsReviewRating}">Video Card Review
+                        Rating
+                    </div>
+                    <div class="stars read-only" id="starsReadOnlyVideocard">
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                    </div>
                     <div class="button-container">
-                        <button class="main-small-button" id="editVideocardButton" th:if="${pcReview.userId == #authentication.name}">Edit</button>
+                        <button class="main-small-button" id="editVideocardButton"
+                                th:if="${pcReview.userId == #authentication.name}">Edit
+                        </button>
                     </div>
                 </div>
-                <div class="form-row" id="editVideocardRow">
+                <div class="form-row" id="editVideocardRow" style="display: none;">
                     <div class="parts-header">
-                        <textarea class="readPartsTitles" id="editVideocardTitle" type="text"></textarea>
+                        <textarea class="readPartsTitles" id="editVideocardTitle"
+                                  th:text="${pcReview.videocardReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="videocardDate2" th:text="${#temporals.format(pcReview.videocardReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <textarea class="readPartsContent" id="editVideocardContent" type="text"></textarea>
-                    <div>Video Card Review Rating</div>
-                    <div>
-                        <select id="editVideocardRating">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                    <textarea class="readPartsContent" id="editVideocardContent"
+                              th:text="${pcReview.videocardReview.partsReviewContent}"></textarea>
+                    <div class="stars editable" id="starsEditableVideocard">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                        <input id="editableRatingVideocard" th:value="${pcReview.videocardReview.partsReviewRating}"
+                               type="hidden">
                     </div>
                     <div class="button-container">
                         <button class="delete-small-button" id="cancelVideocardButton">Cancel</button>
@@ -425,43 +514,59 @@
                     </div>
                 </div>
             </fieldset>
+
             <!-- Power Supply 리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="Power Supply Image" class="small-image" th:src="${pcReview.powersupplyReview.powersupply.imageUrl != null ? pcReview.powersupplyReview.powersupply.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="Power Supply Image" class="small-image" th:src="${pcReview.powersupplyReview.powersupply.imageUrl != null ? pcReview.powersupplyReview.powersupply.imageUrl : '/images/nav-powersupply.png'}">
                     <span th:text="${pcReview.powersupplyReview.powersupply.name}">[Power Supply Name]</span>
                 </label></legend>
                 <div id="powersupplyRow" th:data-id="${pcReview.powersupplyReview.partsReviewId}">
                     <div class="parts-header">
-                        <div class="readPartsTitles" id="powersupplyTitle" th:text="${pcReview.powersupplyReview.partsReviewTitle}">Power Supply Review Title</div>
+                        <div class="readPartsTitles" id="powersupplyTitle"
+                             th:text="${pcReview.powersupplyReview.partsReviewTitle}">Power Supply Review Title
+                        </div>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="powersupplyDate" th:text="${#temporals.format(pcReview.powersupplyReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <div class="readPartsContent" id="powersupplyContent" th:text="${pcReview.powersupplyReview.partsReviewContent}">Power Supply Review Content</div>
-                    <div>Rating</div>
-                    <div id="powersupplyRating" th:text="${pcReview.powersupplyReview.partsReviewRating}">Power Supply Review Rating</div>
+                    <div class="readPartsContent" id="powersupplyContent"
+                         th:text="${pcReview.powersupplyReview.partsReviewContent}">Power Supply Review Content
+                    </div>
+                    <div class="hidden-rating" id="powersupplyRating" th:text="${pcReview.powersupplyReview.partsReviewRating}">Power Supply
+                        Review Rating
+                    </div>
+                    <div class="stars read-only" id="starsReadOnlyPowersupply">
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                    </div>
                     <div class="button-container">
-                        <button class="main-small-button" id="editPowersupplyButton" th:if="${pcReview.userId == #authentication.name}">Edit</button>
+                        <button class="main-small-button" id="editPowersupplyButton"
+                                th:if="${pcReview.userId == #authentication.name}">Edit
+                        </button>
                     </div>
                 </div>
-                <div class="form-row" id="editPowersupplyRow">
+                <div class="form-row" id="editPowersupplyRow" style="display: none;">
                     <div class="parts-header">
-                        <textarea class="readPartsTitles" id="editPowersupplyTitle" type="text"></textarea>
+                        <textarea class="readPartsTitles" id="editPowersupplyTitle"
+                                  th:text="${pcReview.powersupplyReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="powersupplyDate2" th:text="${#temporals.format(pcReview.powersupplyReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <textarea class="readPartsContent" id="editPowersupplyContent" type="text"></textarea>
-                    <div>Power Supply Review Rating</div>
-                    <div>
-                        <select id="editPowersupplyRating">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                    <textarea class="readPartsContent" id="editPowersupplyContent"
+                              th:text="${pcReview.powersupplyReview.partsReviewContent}"></textarea>
+                    <div class="stars editable" id="starsEditablePowersupply">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                        <input id="editableRatingPowersupply" th:value="${pcReview.powersupplyReview.partsReviewRating}"
+                               type="hidden">
                     </div>
                     <div class="button-container">
                         <button class="delete-small-button" id="cancelPowersupplyButton">Cancel</button>
@@ -473,40 +578,52 @@
             <!-- Cover 리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="Cover Image" class="small-image" th:src="${pcReview.coverReview.cover.imageUrl != null ? pcReview.coverReview.cover.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="Cover Image" class="small-image" th:src="${pcReview.coverReview.cover.imageUrl != null ? pcReview.coverReview.cover.imageUrl : '/images/nav-cover.png'}">
                     <span th:text="${pcReview.coverReview.cover.name}">[Cover Name]</span>
                 </label></legend>
                 <div id="coverRow" th:data-id="${pcReview.coverReview.partsReviewId}">
                     <div class="parts-header">
-                        <div class="readPartsTitles" id="coverTitle" th:text="${pcReview.coverReview.partsReviewTitle}">Cover Review Title</div>
+                        <div class="readPartsTitles" id="coverTitle" th:text="${pcReview.coverReview.partsReviewTitle}">
+                            Cover Review Title
+                        </div>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="coverDate" th:text="${#temporals.format(pcReview.coverReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <div class="readPartsContent" id="coverContent" th:text="${pcReview.coverReview.partsReviewContent}">Cover Review Content</div>
-                    <div>Rating</div>
-                    <div id="coverRating" th:text="${pcReview.coverReview.partsReviewRating}">Cover Review Rating</div>
+                    <div class="readPartsContent" id="coverContent"
+                         th:text="${pcReview.coverReview.partsReviewContent}">Cover Review Content
+                    </div>
+                    <div class="hidden-rating" id="coverRating" th:text="${pcReview.coverReview.partsReviewRating}">Cover Review Rating</div>
+                    <div class="stars read-only" id="starsReadOnlyCover">
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                    </div>
                     <div class="button-container">
-                        <button class="main-small-button" id="editCoverButton" th:if="${pcReview.userId == #authentication.name}">Edit</button>
+                        <button class="main-small-button" id="editCoverButton"
+                                th:if="${pcReview.userId == #authentication.name}">Edit
+                        </button>
                     </div>
                 </div>
-                <div class="form-row" id="editCoverRow">
+                <div class="form-row" id="editCoverRow" style="display: none;">
                     <div class="parts-header">
-                        <textarea class="readPartsTitles" id="editCoverTitle" type="text"></textarea>
+                        <textarea class="readPartsTitles" id="editCoverTitle"
+                                  th:text="${pcReview.coverReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
                             Date of Creation : <span id="coverDate2" th:text="${#temporals.format(pcReview.coverReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
-                    <textarea class="readPartsContent" id="editCoverContent" type="text"></textarea>
-                    <div>Cover Review Rating</div>
-                    <div>
-                        <select id="editCoverRating">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                    <textarea class="readPartsContent" id="editCoverContent"
+                              th:text="${pcReview.coverReview.partsReviewContent}"></textarea>
+                    <div class="stars editable" id="starsEditableCover">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
+                        <input id="editableRatingCover" th:value="${pcReview.coverReview.partsReviewRating}" type="hidden">
                     </div>
                     <div class="button-container">
                         <button class="delete-small-button" id="cancelCoverButton">Cancel</button>
@@ -516,7 +633,6 @@
             </fieldset>
 
 
-
             <div class="content">
                 <!-- 기존 PC 리뷰 상세 테이블 여기에 위치 -->
             </div>
@@ -524,8 +640,10 @@
             <!-- 댓글 입력 폼 -->
             <form class="replyForm comment-form" id="commentForm">
                 <div class="inputWrapper">
-                    <label class="replyLabel" for="pcReviewCommentContent">리플 입력</label>
-                    <textarea id="pcReviewCommentContent" name="commentContent" placeholder="댓글을 입력하세요"></textarea>
+                    <label class="replyLabel" for="pcReviewCommentContent">Enter Reply</label>
+                    <textarea id="pcReviewCommentContent" name="commentContent" placeholder="Enter a comment.
+
+"></textarea>
                     <!--댓글 입력 필드-->
                 </div>
                 <button class="main-small-button" id="commentWriteButton" type="button">Submit</button>
@@ -535,8 +653,8 @@
             <table class="reply comment" id="commentTable">
                 <thead>
                 <tr>
-                    <th style="width: 20%">작성자</th>
-                    <th style="width: 60%">내용</th>
+                    <th style="width: 20%">Author</th>
+                    <th style="width: 60%">Content</th>
                     <th style="width: 20%"></th>
                 </tr>
                 </thead>
@@ -547,7 +665,7 @@
             <div class="button-footerContainer">
                 <!-- 뒤로가기 버튼 -->
                 <form th:action="@{/pcreview/list}">
-                    <button class="sub-button" type="submit">List</button>
+                    <button class="main-button" type="submit">List</button>
                 </form>
                 <!--리뷰 삭제 버튼-->
                 <form method="POST" th:action="@{/pcreview/delete}"
@@ -561,7 +679,6 @@
 </div>
 <!-- pcReviewId -->
 <input disabled id="userId" th:value="${#authentication.name}" type="hidden">
-<input disabled id="pcReviewId" th:value="${pcReview.pcreviewId}" type="hidden">
 <script crossorigin="anonymous"
         integrity="sha384-UG8ao2jwOWB7/oDdObZc6ItJmwUkR/PfMyt9Qs5AwX7PsnYn1CRKCTWyncPTWvaS"
         src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

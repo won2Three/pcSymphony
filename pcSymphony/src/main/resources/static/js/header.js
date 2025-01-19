@@ -8,10 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
         { img: "/images/nav-cpucooler.png", name: "CPU Cooler", href: "/part/cpucooler" },
         { img: "/images/nav-videocard.png", name: "VideoCard", href: "/part/videocard" },
         { img: "/images/nav-memory.png", name: "Memory", href: "/part/memory" },
-        { img: "/images/nav-ssd.png", name: "Storage", href: "/part/storage" },
+        { img: "/images/nav-storage.png", name: "Storage", href: "/part/storage" },
         { img: "/images/nav-motherboard.png", name: "Motherboard", href: "/part/motherboard" },
         { img: "/images/nav-powersupply.png", name: "PowerSupply", href: "/part/powersupply" },
-        { img: "/images/nav-case.png", name: "Case", href: "/part/cover" },
+        { img: "/images/nav-cover.png", name: "Case", href: "/part/cover" },
     ];
 
 

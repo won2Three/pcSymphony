@@ -35,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -211,12 +212,41 @@ public class PcReviewController {
 
     @GetMapping("/read/{id}")
     public String read(@PathVariable int id, Model model, @AuthenticationPrincipal MemberUserDetails user) {
+        // 데이터 가져오기
         PcReviewEntity pcReviewEntity = pcReviewRepository.getReferenceById(id);
         CartEntity cartEntity = cartRepository.findByUser_MemberId(user.getId());
+
+        // 날짜 포맷터
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
+
+        // 날짜 포맷 적용
+        String formattedDate = pcReviewEntity.getPcreviewDate().format(formatter);
+            //파츠별 날짜 포맷
+        String formattedCpuDate = pcReviewEntity.getCpuReview().getPartsReviewDate().format(formatter);
+        String formattedCpucoolerDate = pcReviewEntity.getCpucoolerReview().getPartsReviewDate().format(formatter);
+        String formattedMotherboardDate = pcReviewEntity.getMotherboardReview().getPartsReviewDate().format(formatter);
+        String formattedMemoryDate = pcReviewEntity.getMemoryReview().getPartsReviewDate().format(formatter);
+        String formattedStorageDate = pcReviewEntity.getStorageReview().getPartsReviewDate().format(formatter);
+        String formattedVideocardDate = pcReviewEntity.getVideocardReview().getPartsReviewDate().format(formatter);
+        String formattedPowersupplyDate = pcReviewEntity.getPowersupplyReview().getPartsReviewDate().format(formatter);
+        String formattedCoverDate = pcReviewEntity.getCoverReview().getPartsReviewDate().format(formatter);
+
+        // 모델에 추가
         model.addAttribute("cart", cartEntity);
         model.addAttribute("pcReview", pcReviewEntity);
-        return "pcReview/pcReviewRead";
+        model.addAttribute("formattedDate", formattedDate); // 포맷된 날짜 전달
+            //파츠별 날짜 포맷 모델에 추가
+        model.addAttribute("formattedCpuDate", formattedCpuDate);
+        model.addAttribute("formattedCpucoolerDate", formattedCpucoolerDate);
+        model.addAttribute("formattedMotherboardDate", formattedMotherboardDate);
+        model.addAttribute("formattedMemoryDate", formattedMemoryDate);
+        model.addAttribute("formattedStorageDate", formattedStorageDate);
+        model.addAttribute("formattedVideocardDate", formattedVideocardDate);
+        model.addAttribute("formattedPowersupplyDate", formattedPowersupplyDate);
+        model.addAttribute("formattedCoverDate", formattedCoverDate);
+        return "pcReview/pcReviewRead"; // 템플릿 이름
     }
+
 
     @PostMapping("/updateParts")
     public ResponseEntity<String> updatePartsReview(@RequestBody PartsReviewDTO request) {

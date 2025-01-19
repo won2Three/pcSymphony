@@ -41,6 +41,7 @@ pre {
 a {
     background-color: transparent;
     -webkit-text-decoration-skip: objects
+
 }
 
 abbr[title] {
@@ -3916,6 +3917,21 @@ button {
     border-radius: 2px;
     cursor: pointer;
 }
+.a-button {
+    /* Flexbox를 이용한 중앙 정렬 */
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center;    /* 세로 중앙 정렬 */
+    width: 160px !important;
+    height: 20px !important;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
 
 .gray-button {
     background-color: #777;
@@ -4087,6 +4103,26 @@ a {
      transition: 0.3s;
      background-color: #1976d2;
  }
+.lightblue-button {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 18px;
+    border-radius: 10px;
+    width: 200px;
+    height: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    background-color: #64B5F6;
+}
+.lightblue-small-button {
+     text-decoration: none;
+     color: #ffffff;
+     font-size: 18px;
+     border-radius: 10px;
+     font-weight: bold;
+     transition: 0.3s;
+     background-color: #64B5F6;
+}
 
 
 .sub-button {
@@ -4111,7 +4147,8 @@ a {
 }
 .main-button:hover,.main-small-button:hover,
 .sub-button:hover , .sub-small-button:hover,
-.delete-button:hover, .delete-small-button:hover {
+.delete-button:hover, .delete-small-button:hover,
+.lightblue-button:hover{
     opacity: .7;
 }
 

@@ -166,3 +166,52 @@
     padding-bottom: 8px;
     border-bottom: #95A4B4 1px solid;
 }
+
+/*별점 스타일*/
+.stars {
+    display: inline-flex;
+    cursor: pointer;
+    gap: 5px;
+}
+
+/*.star {*/
+/*    font-size: 1.8rem;*/
+/*    color: lightgray;*/
+/*    transition: color 0.2s;*/
+/*    cursor: pointer;*/
+/*}*/
+.star {
+    font-size: 24px;
+    color: lightgray;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.star.filled {
+    color: gold; /* 금색 별 */
+}
+.read-only .star {
+    pointer-events: none; /* 읽기 전용 별은 클릭 불가 */
+}
+.star.empty {
+    color: lightgray; /* 빈 별 */
+}
+.star.empty:hover,
+.star.empty:hover ~ .star {
+    color: gold;
+}
+.rating-container {
+    display: inline-flex;
+    direction: ltr;
+    font-size: 24px; /* 별 크기 */
+    color: #d3d3d3; /* 기본 별 색 (회색) */
+}
+/*.star {*/
+/*    cursor: default;*/
+/*    color: gold; !* 채워진 별 색상 *!*/
+/*    transition: color 0.3s ease;*/
+/*}*/
+
+.hidden-rating {
+    display: none;
+}
