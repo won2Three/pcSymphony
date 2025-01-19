@@ -85,7 +85,7 @@
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
                     <img alt="CPU Image" class="small-image"
-                         th:src="${cart.cpu.imageUrl != null ? cart.cpu.imageUrl : '/images/nav-cpu.png'}">
+                         th:src="${pcReview.cpuReview.cpu.imageUrl != null ? pcReview.cpuReview.cpu.imageUrl : '/images/nav-cpu.png'}">
                     <span th:text="${pcReview.cpuReview.cpu.name}">[CPU Name]</span>
                 </label></legend>
                 <div id="cpuRow" th:data-id="${pcReview.cpuReview.partsReviewId}">
@@ -147,7 +147,7 @@
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
                     <img alt="CPU쿨러 Image" class="small-image"
-                         th:src="${cart.cpucooler.imageUrl != null ? cart.cpucooler.imageUrl : '/images/nav-cpucooler.png'}">
+                         th:src="${pcReview.cpucoolerReview.cpucooler.imageUrl != null ? pcReview.cpucoolerReview.cpucooler.imageUrl : '/images/nav-cpucooler.png'}">
                     <span th:text="${pcReview.cpucoolerReview.cpucooler.name}">[CPU쿨러 Name]</span>
                 </label></legend>
                 <div id="cpucoolerRow" th:data-id="${pcReview.cpucoolerReview.partsReviewId}">
@@ -208,7 +208,7 @@
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
                     <img alt="Motherboard Image" class="small-image"
-                         th:src="${cart.motherboard.imageUrl != null ? cart.motherboard.imageUrl : '/images/nav-motherboard.png'}">
+                         th:src="${pcReview.motherboardReview.motherboard.imageUrl != null ? pcReview.motherboardReview.motherboard.imageUrl : '/images/nav-motherboard.png'}">
                     <span th:text="${pcReview.motherboardReview.motherboard.name}">[Motherboard Name]</span>
                 </label></legend>
                 <div id="motherboardRow" th:data-id="${pcReview.motherboardReview.partsReviewId}">
@@ -269,7 +269,7 @@
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
                     <img alt="Memory Image" class="small-image"
-                         th:src="${cart.memory.imageUrl != null ? cart.memory.imageUrl : '/images/nav-memory.png'}">
+                         th:src="${pcReview.memoryReview.memory.imageUrl != null ? pcReview.memoryReview.memory.imageUrl : '/images/nav-memory.png'}">
                     <span th:text="${pcReview.memoryReview.memory.name}">[Memory Name]</span>
                 </label></legend>
                 <div id="memoryRow" th:data-id="${pcReview.memoryReview.partsReviewId}">
@@ -329,7 +329,7 @@
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
                     <img alt="Storage Image" class="small-image"
-                         th:src="${cart.storage.imageUrl != null ? cart.storage.imageUrl : '/images/nav-storage.png'}">
+                         th:src="${pcReview.storageReview.storage.imageUrl != null ? pcReview.storageReview.storage.imageUrl : '/images/nav-storage.png'}">
                     <span th:text="${pcReview.storageReview.storage.name}">[Storage Name]</span>
                 </label></legend>
                 <div id="storageRow" th:data-id="${pcReview.storageReview.partsReviewId}">
@@ -389,7 +389,7 @@
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
                     <img alt="Video Card Image" class="small-image"
-                         th:src="${cart.videocard.imageUrl != null ? cart.videocard.imageUrl : '/images/nav-videocard.png'}">
+                         th:src="${pcReview.videocardReview.videocard.imageUrl != null ? pcReview.videocardReview.videocard.imageUrl : '/images/nav-videocard.png'}">
                     <span th:text="${pcReview.videocardReview.videocard.name}">[Video Card Name]</span>
                 </label></legend>
                 <div id="videocardRow" th:data-id="${pcReview.videocardReview.partsReviewId}">
@@ -450,7 +450,7 @@
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
                     <img alt="Power Supply Image" class="small-image"
-                         th:src="${cart.powersupply.imageUrl != null ? cart.powersupply.imageUrl : '/images/nav-powersupply.png'}">
+                         th:src="${pcReview.powersupplyReview.powersupply.imageUrl != null ? pcReview.powersupplyReview.powersupply.imageUrl : '/images/nav-powersupply.png'}">
                     <span th:text="${pcReview.powersupplyReview.powersupply.name}">[Power Supply Name]</span>
                 </label></legend>
                 <div id="powersupplyRow" th:data-id="${pcReview.powersupplyReview.partsReviewId}">
@@ -511,7 +511,7 @@
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
                     <img alt="Cover Image" class="small-image"
-                         th:src="${cart.cover.imageUrl != null ? cart.cover.imageUrl : '/images/nav-cover.png'}">
+                         th:src="${pcReview.coverReview.cover.imageUrl != null ? pcReview.coverReview.cover.imageUrl : '/images/nav-cover.png'}">
                     <span th:text="${pcReview.coverReview.cover.name}">[Cover Name]</span>
                 </label></legend>
                 <div id="coverRow" th:data-id="${pcReview.coverReview.partsReviewId}">
