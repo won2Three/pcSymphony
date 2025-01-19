@@ -36,8 +36,8 @@
                                 <!-- 게시물 정보 -->
                                 <div class="pcReviewInfo" id="pcReviewInfo">
                                     No. <span id="pcReviewId" th:text="${pcReview.pcreviewId}"></span>
-                                    Author: <span id="pcReviewUserId" th:text="${pcReview.userId}"></span>
-                                    Date of Creation: <span id="pcReviewDate" th:text="${formattedDate}"></span>
+                                    &nbsp; &nbsp; &nbsp; Author: <span id="pcReviewUserId" th:text="${pcReview.userId}"></span>
+                                    &nbsp; &nbsp; &nbsp; Date of Creation: <span id="pcReviewDate" th:text="${formattedDate}"></span>
 
                                 </div>
                             </div>
@@ -60,8 +60,8 @@
                                     <!-- 게시물 정보 -->
                                     <!--리뷰ID-->
                                     No.<span th:text="${pcReview.pcreviewId}"></span>
-                                    Author: <span th:text="${pcReview.userId}"></span>
-                                    Date of Creation: <span th:text="${formattedDate}"></span>
+                                    &nbsp; &nbsp; &nbsp; Author.<span th:text="${pcReview.userId}"></span>
+                                    &nbsp; &nbsp; &nbsp; <span th:text="${formattedDate}"></span>
                                 </div>
                             </div>
                             <!-- 게시물 내용 -->
@@ -94,7 +94,7 @@
                             Review Title
                         </div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="cpuDate" th:text="${formattedCpuDate}"></span>
+                            <span id="cpuDate" th:text="${formattedCpuDate}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="cpuContent" th:text="${pcReview.cpuReview.partsReviewContent}">CPU
@@ -121,7 +121,7 @@
                         <textarea class="readPartsTitles" id="editCpuTitle"
                                   th:text="${pcReview.cpuReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${formattedCpuDate}"></span>
+                            <span th:text="${formattedCpuDate}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editCpuContent"
@@ -156,7 +156,7 @@
                              th:text="${pcReview.cpucoolerReview.partsReviewTitle}">CPU쿨러 Review Title
                         </div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="cpucoolerDate" th:text="${formattedCpucoolerDate}"></span>
+                            <span id="cpucoolerDate" th:text="${formattedCpucoolerDate}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="cpucoolerContent"
@@ -183,7 +183,7 @@
                         <textarea class="readPartsTitles" id="editCpucoolerTitle"
                                   th:text="${pcReview.cpucoolerReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${formattedCpucoolerDate}"></span>
+                            <span th:text="${formattedCpucoolerDate}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editCpucoolerContent"
@@ -217,7 +217,7 @@
                              th:text="${pcReview.motherboardReview.partsReviewTitle}">Motherboard Review Title
                         </div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="motherboardDate" th:text="${formattedMotherboardDate}"></span>
+                            <span id="motherboardDate" th:text="${formattedMotherboardDate}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="motherboardContent"
@@ -244,7 +244,7 @@
                         <textarea class="readPartsTitles" id="editMotherboardTitle"
                                   th:text="${pcReview.motherboardReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${formattedMotherboardDate}"></span>
+                            <span th:text="${formattedMotherboardDate}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editMotherboardContent"
@@ -278,7 +278,7 @@
                              th:text="${pcReview.memoryReview.partsReviewTitle}">Memory Review Title
                         </div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="memoryDate" th:text="${formattedMemoryDate}"></span>
+                            <span id="memoryDate" th:text="${formattedMemoryDate}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="memoryContent"
@@ -304,7 +304,7 @@
                         <textarea class="readPartsTitles" id="editMemoryTitle"
                                   th:text="${pcReview.memoryReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${formattedMemoryDate}"></span>
+                            <span th:text="${formattedMemoryDate}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editMemoryContent"
@@ -338,7 +338,7 @@
                              th:text="${pcReview.storageReview.partsReviewTitle}">Storage Review Title
                         </div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="storageDate" th:text="${formattedStorageDate}"></span>
+                            <span id="storageDate" th:text="${formattedStorageDate}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="storageContent"
@@ -365,7 +365,7 @@
                         <textarea class="readPartsTitles" id="editStorageTitle"
                                   th:text="${pcReview.storageReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${formattedStorageDate}"></span>
+                            <span th:text="${formattedStorageDate}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editStorageContent"
@@ -398,7 +398,7 @@
                              th:text="${pcReview.videocardReview.partsReviewTitle}">Video Card Review Title
                         </div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="videocardDate" th:text="${formattedVideocardDate}"></span>
+                            <span id="videocardDate" th:text="${formattedVideocardDate}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="videocardContent"
@@ -425,7 +425,7 @@
                         <textarea class="readPartsTitles" id="editVideocardTitle"
                                   th:text="${pcReview.videocardReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${formattedVideocardDate}"></span>
+                            <span th:text="${formattedVideocardDate}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editVideocardContent"
@@ -459,7 +459,7 @@
                              th:text="${pcReview.powersupplyReview.partsReviewTitle}">Power Supply Review Title
                         </div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="powersupplyDate" th:text="${formattedPowersupplyDate}"></span>
+                            <span id="powersupplyDate" th:text="${formattedPowersupplyDate}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="powersupplyContent"
@@ -486,7 +486,7 @@
                         <textarea class="readPartsTitles" id="editPowersupplyTitle"
                                   th:text="${pcReview.powersupplyReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${formattedPowersupplyDate}"></span>
+                            <span th:text="${formattedPowersupplyDate}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editPowersupplyContent"
@@ -520,7 +520,7 @@
                             Cover Review Title
                         </div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="coverDate" th:text="${formattedCoverDate}"></span>
+                            <span id="coverDate" th:text="${formattedCoverDate}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="coverContent"
@@ -545,7 +545,7 @@
                         <textarea class="readPartsTitles" id="editCoverTitle"
                                   th:text="${pcReview.coverReview.partsReviewTitle}"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${formattedCoverDate}"></span>
+                            <span th:text="${formattedCoverDate}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editCoverContent"

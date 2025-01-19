@@ -106,11 +106,13 @@ document.addEventListener("DOMContentLoaded", function () {
         editPcReviewRow.style.display = "block";
         document.getElementById("editPcReviewTitle").value = document.getElementById("pcReviewTitle").textContent;
         document.getElementById("editPcReviewContent").value = document.getElementById("pcReviewContent").textContent;
+
     });
 
     saveButton.addEventListener("click", async function () {
         const updatedTitle = document.getElementById("editPcReviewTitle").value;
         const updatedContent = document.getElementById("editPcReviewContent").value;
+
 
         document.getElementById("pcReviewTitle").textContent = updatedTitle;
         document.getElementById("pcReviewContent").textContent = updatedContent;
