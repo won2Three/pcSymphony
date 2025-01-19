@@ -31,6 +31,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -72,12 +73,22 @@ public class PcReviewController {
     @PostMapping("write")
     public String write(
             @ModelAttribute PcReviewDTO pcReviewDTO,
+            @RequestParam(value = "imageUpload", required = false) MultipartFile imageUpload,
             @AuthenticationPrincipal MemberUserDetails user) {
 
         String userName = user.getUsername();
         pcReviewDTO.setUserId(userName);
         CartEntity cartEntity = cartRepository.findByUser_MemberId(userName);
 
+        // 이미지가 존재하면 이미지 파일을 파일 시스템에 저장
+        System.out.println("테스트입니다테스트입니다테스트입니다테스트입니다테스트입니다");
+        System.out.println(imageUpload);
+        System.out.println("테스트입니다테스트입니다테스트입니다테스트입니다테스트입니다");
+        if (imageUpload != null && !imageUpload.isEmpty()) {
+            System.out.println("helllloa;lsdkfj;lsakdjf;lksadjf;lsadjf;lksdjfa");
+            String imagePath = pcReviewService.saveImageToFileSystem(imageUpload); // 이미지 저장 메서드
+            pcReviewDTO.setImagePath(imagePath);  // 이미지 경로 저장
+        }
 
         pcReviewDTO.getPartReviews().forEach((partName, review) -> {
             PartsReviewEntity partsReviewEntity = new PartsReviewEntity();
@@ -107,6 +118,7 @@ public class PcReviewController {
                 partsReviewEntity.setPartsReviewContent(review.getContent());
                 partsReviewEntity.setPartsReviewDate(LocalDateTime.now());
                 partsReviewEntity.setPartsReviewRating(review.getRating());
+
 
                 partsReviewEntity.setMember(memberRepository.findById(userName).orElse(null));
                 // partId를 적절한 필드에 설정
@@ -180,7 +192,9 @@ public class PcReviewController {
 
 
         });
-
+        System.out.println("-------------------------------------");
+        System.out.println(pcReviewDTO.getImagePath());
+        System.out.println("-------------------------------------");
         pcReviewService.savePcReview(pcReviewDTO);
 
 

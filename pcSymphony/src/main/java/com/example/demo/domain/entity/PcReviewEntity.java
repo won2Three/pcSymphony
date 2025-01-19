@@ -41,8 +41,6 @@ public class PcReviewEntity {
     @Column(name = "last_modified_date", nullable = false, updatable = false)
     private LocalDateTime pcreviewDate; // 마지막 수정
 
-
-
     @Column(name = "user_id", length = 20)
     private String userId; // 작성자 ID
 
@@ -77,4 +75,7 @@ public class PcReviewEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cover_review_id", referencedColumnName = "partsreview_id")
     private PartsReviewEntity coverReview; // 케이스 리뷰 ID
+
+    @Column(name = "image_path")
+    private String imagePath;
 }

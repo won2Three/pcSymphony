@@ -21,34 +21,29 @@
         <a class="titleName" href="/pcreview/list"><h1 class="container-like">PC Reveiw</h1></a>
         <div class="container">
 
-            <form action="/pcreview/write" method="post">
+            <form action="/pcreview/write" method="post" enctype="multipart/form-data" >
                 <!-- 전체 리뷰 제목 및 내용 -->
-                <fieldset class="pcReviewContent" style="margin-top: 0px">
-                <label for="imageUpload">Image Uproad:</label>
-                <input accept="image/*" id="imageUpload" name="imageUpload" type="file">
-                <br>
-                <div id="uploadedImages" style="margin-top: 10px; display: flex; align-items: center;">
-                    <!-- 업로드한 이미지를 작은 썸네일로 표시 -->
-                </div>
-                    <legend><h5>Overall Review</h5></legend>
-                    <label for="pcReviewTitle">Overall Review Title:</label>
-                    <br>
-                    <input class="pcReviewTitle" id="pcReviewTitle" name="pcreviewTitle" placeholder="Enter Title"
-                           required
-                           type="text">
-                    <br>
-                    <textarea class="pcReviewTextarea" id="pcReviewContent" name="pcreviewContent"
-                              placeholder="Enter Content" required
-                              rows="5"></textarea>
-                    <br>
-                    <label for="pcReviewRating">Rating:</label>
-                    <select id="pcReviewRating" name="pcReviewRating" required>
-                        <option value="1">1점</option>
-                        <option value="2">2점</option>
-                        <option value="3">3점</option>
-                        <option value="4">4점</option>
-                        <option value="5">5점</option>
-                    </select>
+                <fieldset class="pcReviewContent" style="margin-top: 0px; display: flex; align-items: flex-start; gap: 20px;">
+                    <legend><h5 id="partsReviewTitle">Parts Review</h5></legend>
+                    <!-- 이미지 업로드 영역 -->
+                    <div style="flex: 1;">
+                        <div id="uploadedImages" style="margin-top: 10px; width: 300px; height: 300px; border: 1px solid #ccc; display: flex; justify-content: center; align-items: center;">
+                            <img id="preview" src="https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE=" alt="Preview" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                        </div>
+                        <div style="margin-top: 5px;">
+                            <label for="imageUpload">Image Upload:</label>
+                            <br>
+                            <input accept="image/*" id="imageUpload" name="imageUpload" type="file" onchange="previewImage(event)">
+                            <br>
+                        </div>
+                    </div>
+
+                    <!-- 제목 및 내용 입력 영역 -->
+                    <div style="flex: 2;">
+                        <label for="pcReviewTitle">Overall Review Title:</label>
+                        <input class="pcReviewTitle" id="pcReviewTitle" name="pcreviewTitle" placeholder="Enter Title" required type="text" style="width: 100%;">
+                        <textarea class="pcReviewTextarea" id="pcReviewContent" name="pcreviewContent" placeholder="Enter Content" required rows="5" style="width: 100%;"></textarea>
+                    </div>
                 </fieldset>
 
                 <!--partsReview-->
@@ -295,7 +290,24 @@
         </div>
     </main>
 </div>
-</div>
 <div th:replace="~{fragments/footer :: footerFragment}"></div>
+
+<script>
+    function previewImage(event) {
+        const preview = document.getElementById('preview');
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // 파일이 없을 경우 기본 이미지 표시
+            preview.src = "https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE=";
+        }
+    }
+</script>
 </body>
 </html>
