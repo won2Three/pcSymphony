@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.entity.GuidelineEntity;
 import com.example.demo.domain.entity.PcReviewEntity;
+import com.example.demo.service.GuidelineService;
 import com.example.demo.service.PcReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,11 +22,16 @@ public class HomeController {
     //-------------------------pcReview--------------------------
     @Autowired
     private PcReviewService pcReviewService;
+    @Autowired
+    private GuidelineService guidelineService;
+
 
     @GetMapping({"","/"})
     public String home(Model model) {
         List<PcReviewEntity> latestPcReviews = pcReviewService.getLatestPcReviews();
         model.addAttribute("latestPcReviews", latestPcReviews);
+        List<GuidelineEntity> latestGuileLines = guidelineService.getLatestGuideLines();
+        model.addAttribute("latestGuideLines", latestGuileLines);
         return "home";
     }
     // -------------------------pcReview--------------------------

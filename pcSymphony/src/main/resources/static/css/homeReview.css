@@ -6,3 +6,12 @@
     white-space: normal;                /* 텍스트가 여러 줄로 유지되도록 설정 */
     -webkit-line-clamp: 6;              /* 최대 3줄로 텍스트를 제한 (필요에 따라 줄 수를 조정) */
 }
+
+#guideline-content {
+    display: -webkit-box;               /* Flexbox처럼 자식 요소를 세로로 쌓을 수 있게 설정 */
+    -webkit-box-orient: vertical;       /* 세로로 정렬되게 함 */
+    overflow: hidden;                   /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis;            /* 텍스트가 넘칠 경우 '...'으로 표시 */
+    white-space: normal;                /* 텍스트가 여러 줄로 유지되도록 설정 */
+    -webkit-line-clamp: 6;              /* 최대 3줄로 텍스트를 제한 (필요에 따라 줄 수를 조정) */
+}

@@ -172,62 +172,38 @@
         </section>
 
         <!--pcGuide-->
-        <section class="news section illustration-section-01">
+        <section class="news section illustration-section-01 has-top-divider">
             <div class="container">
                 <div class="news-inner section-inner">
                     <div class="section-header center-content">
-                        <div class="container-xs"><h2 class="mt-0 mb-16">pcGuide</h2>
-                            <p class="mb-0">PcGuide에 대한 내용입니다.</p></div>
+                        <div class="container-xs"><h2 class="mt-0 mb-16">GuideLine</h2>
+                            <p class="mb-0">PcSymphony에서 제공하는 Pc조립 가이드라인</p></div>
                     </div>
                     <div class="tiles-wrap">
-                        <article class="tiles-item">
-                            <div class="tiles-item-inner has-shadow">
-                                <figure class="news-item-image m-0">
-                                    <img alt="News 01" height="194"
-                                         src="../images/news-image-01.jpg" width="344"></figure>
-                                <div class="news-item-content">
-                                    <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
-                                        to build anything</a></h3>
-                                        <p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                            elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                                            ex.</p></div>
-                                    <div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
+                        <!-- 최신 3개의 리뷰를 출력 -->
+                        <div th:each="guideline : ${latestGuideLines}">
+                            <article class="tiles-item">
+                                <div class="tiles-item-inner has-shadow">
+<!--                                    <figure class="news-item-image m-0">-->
+<!--                                        &lt;!&ndash; 이미지 동적으로 출력 &ndash;&gt;-->
+<!--                                        <img alt="PcReview Image" height="194"-->
+<!--                                             th:src="@{${pcReview.imagePath}}" width="344">-->
+<!--                                    </figure>-->
+                                    <div class="news-item-content">
+                                        <div class="news-item-body">
+                                            <!-- 리뷰 제목 출력 -->
+                                            <h3 class="news-item-title h4 mt-0 mb-8" th:text="${guideline.guidelineTitle}"></h3>
+                                            <!-- 리뷰 내용 출력 -->
+                                            <p class="mb-16 text-sm" id="guideline-content" th:text="${guideline.guidelineContent}"></p>
+                                        </div>
+                                        <div class="news-item-more text-xs mb-8">
+                                            <!-- Read more 링크 -->
+                                            <a th:href="@{/guide/{id}(id=${guideline.guidelineId})}">Read more</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
-                        <article class="tiles-item">
-                            <div class="tiles-item-inner has-shadow">
-                                <figure class="news-item-image m-0">
-                                    <img alt="News 02" height="194"
-                                         src="/images/news-image-02.jpg" width="344"></figure>
-                                <div class="news-item-content">
-                                    <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
-                                        to build anything</a></h3>
-                                        <p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                            elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                                            ex.</p></div>
-                                    <div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="tiles-item">
-                            <div class="tiles-item-inner has-shadow">
-                                <figure class="news-item-image m-0"><img alt="News 03" height="194"
-                                                                         src="/images/news-image-03.jpg" width="344">
-                                </figure>
-                                <div class="news-item-content">
-                                    <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
-                                        to build anything</a></h3>
-                                        <p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                            elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                                            ex.</p></div>
-                                    <div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
-                                </div>
-                            </div>
-                        </article>
+                            </article>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -239,7 +215,7 @@
                     <div class="section-header center-content">
                         <div class="container-xs">
                             <h2 class="mt-0 mb-16">PcReview</h2>
-                            <p class="mb-0">PcReview에 대한 내용입니다.</p>
+                            <p class="mb-0">다른 유저들의 조립pcReview</p>
                         </div>
                     </div>
                     <div class="tiles-wrap">
@@ -254,7 +230,6 @@
                                     </figure>
                                     <div class="news-item-content">
                                         <div class="news-item-body">
-<!--                                            <p class="text-sm" id="pc-author" th:text="${pcReview.userId}"></p>-->
                                             <!-- 리뷰 제목 출력 -->
                                             <h3 class="news-item-title h4 mt-0 mb-8" th:text="${pcReview.pcreviewTitle}"></h3>
                                             <!-- 리뷰 내용 출력 -->

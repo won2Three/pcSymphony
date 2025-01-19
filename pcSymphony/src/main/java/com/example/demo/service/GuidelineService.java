@@ -174,4 +174,8 @@ public class GuidelineService {
 
         return details;
     }
+
+    public List<GuidelineEntity> getLatestGuideLines() {
+        return guidelineRepository.findTop3ByOrderByGuidelineIdDesc();
+    }
 }
