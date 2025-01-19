@@ -184,11 +184,11 @@
                         <div th:each="guideline : ${latestGuideLines}">
                             <article class="tiles-item">
                                 <div class="tiles-item-inner has-shadow">
-<!--                                    <figure class="news-item-image m-0">-->
-<!--                                        &lt;!&ndash; 이미지 동적으로 출력 &ndash;&gt;-->
-<!--                                        <img alt="PcReview Image" height="194"-->
-<!--                                             th:src="@{${pcReview.imagePath}}" width="344">-->
-<!--                                    </figure>-->
+                                    <figure class="news-item-image m-0">
+                                        <!-- 이미지 동적으로 출력 -->
+                                        <img alt="guideline Image" height="194"
+                                             th:src="@{${guideline.imagePath}}" width="344">
+                                    </figure>
                                     <div class="news-item-content">
                                         <div class="news-item-body">
                                             <!-- 리뷰 제목 출력 -->
