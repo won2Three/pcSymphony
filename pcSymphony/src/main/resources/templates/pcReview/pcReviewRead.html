@@ -21,52 +21,132 @@
                 <!-- 메인 컨테이너 -->
                 <main class="main-container">
                     <div class="content-section">
-                        <aside class="leftSideBar">
-                            <!-- 업로드한 이미지를 표시 -->
-                            <div class="guideImage" id="uploadedImages">
-                                <img alt="Uploaded Image" th:src="@{/images/nav-case.png}">
-                            </div>
-                        </aside>
-                        <div class="content-details" id="pcReviewRow" th:data-id="${pcReview.pcreviewId}">
-                            <div class="title-header">
-                                <!-- 전체 리뷰의 제목 -->
-                                <div class="community-title" id="pcReviewTitle" th:text="${pcReview.pcreviewTitle}">Title</div>
-                                <!-- 게시물 정보 -->
-                                <div class="pcReviewInfo" id="pcReviewInfo">
-                                    Number: <span id="pcReviewId" th:text="${pcReview.pcreviewId}"></span>
-                                    Author: <span id="pcReviewUserId" th:text="${pcReview.userId}"></span>
-                                    Date of Creation: <span id="pcReviewDate" th:text="${pcReview.pcreviewDate}"></span>
+                        <div class="content-details" id="pcReviewRow" th:data-id="${pcReview.pcreviewId}"
+                             style="display: flex; align-items: flex-start; width: 100%; margin: 0; padding: 0;">
+                            <!-- 이미지 영역 -->
+                            <div style="flex: 0 0 350px; text-align: center; margin: 0; padding: 0;">
+                                <div id="uploadedImages" style="
+                                    width: 350px;
+                                    height: 350px;
+                                    border-radius: 10px;
+                                    overflow: hidden;
+                                    margin: 25px;
+                                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+                                    transition: box-shadow 0.3s ease-in-out;
+                                ">
+                                    <img id="preview"
+                                         th:src="${pcReview.imagePath != null ? pcReview.imagePath : 'https://via.placeholder.com/350'}"
+                                         alt="Preview"
+                                         style="
+                                    width: 100%;
+                                    height: 100%;
+                                    object-fit: cover;
+                                    border-radius: 10px;
+                                    ">
                                 </div>
                             </div>
-                            <!-- 게시물 내용 -->
-                            <div class="community-content" id="pcReviewContent" th:text="${pcReview.pcreviewContent}">Content</div>
-                            <div class="button-container">
-                                <button class="main-small-button" id="editPcReviewButton">Edit</button>
+
+                            <!-- 텍스트 영역 -->
+                            <div style="flex: 1; margin: 0; padding: 0;">
+                                <!-- 제목 -->
+                                <h2 class="community-title" id="pcReviewTitle"
+                                    th:text="${pcReview.pcreviewTitle}"
+                                    style="font-size: 2rem; font-weight: bold; margin: 10px 0; padding: 0 10px; color: #333;">Title</h2>
+
+                                <!-- 게시물 정보 -->
+                                <div class="pcReviewInfo" id="pcReviewInfo"
+                                     style="margin: 10px 0; padding: 0 10px; font-size: 1rem; color: #555;">
+                                    Author: <span id="pcReviewUserId" th:text="${pcReview.userId}" style="font-weight: bold;"></span>
+                                    &nbsp;|&nbsp;
+                                    <span id="pcReviewDate" th:text="${#temporals.format(pcReview.pcreviewDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                </div>
+
+                                <!-- 내용 -->
+                                <div class="community-content" id="pcReviewContent"
+                                     th:text="${pcReview.pcreviewContent}"
+                                     style="min-height: 260px; margin: 10px 0; padding: 10px; font-size: 1.2rem; line-height: 1.8; border-top: solid #ddd;">
+                                    Content
+                                </div>
+
+                                <!-- 버튼 -->
+                                <div style="text-align: right; padding: 10px;">
+                                    <button class="main-small-button" id="editPcReviewButton"
+                                            style="padding: 10px 20px; font-size: 1rem; border: none; border-radius: 5px; background-color: #007BFF; color: white; cursor: pointer;">
+                                        Edit
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- update -->
-                        <div class="form-row content-details" id="editPcReviewRow">
-                            <!--전체 리뷰의 제목이 들어감-->
-                            <div class="title-header">
-                                <textarea class="community-title" id="editPcReviewTitle" placeholder="title" type="text"
-                                          value=""></textarea>
-                                <div class="pcReviewInfo">
-                                    <!-- 게시물 정보 -->
-                                    <!--리뷰ID-->
-                                    Number : <span th:text="${pcReview.pcreviewId}"></span>
-                                    Author: <span th:text="${pcReview.userId}"></span>
-                                    Date of Creation: <span th:text="${pcReview.pcreviewDate}"></span>
+
+
+
+
+
+                        <div class="content-details" id="editPcReviewRow" th:data-id="${pcReview.pcreviewId}"
+                             style="display: flex; align-items: flex-start; width: 100%; margin: 0; padding: 0;">
+                            <!-- 이미지 영역 -->
+                            <div style="flex: 0 0 350px; text-align: center; margin: 0; padding: 0;">
+                                <div id="uploadedImages" style="
+            width: 350px;
+            height: 350px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 25px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        ">
+                                    <img id="preview"
+                                         th:src="${pcReview.imagePath != null ? pcReview.imagePath : 'https://via.placeholder.com/350'}"
+                                         alt="Preview"
+                                         style="
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 10px;
+                 ">
                                 </div>
                             </div>
-                            <!-- 게시물 내용 -->
-                            <textarea class="community-content commnunity-content-update" id="editPcReviewContent"
-                                      placeholder="내용"></textarea>
-                            <div class="button-container">
-                                <button class="delete-small-button" id="cancelPcReviewButton">Cancel</button>
-                                <button class="main-small-button" id="savePcReviewButton">Submit</button>
+
+                            <!-- 텍스트 영역 -->
+                            <div style="flex: 1; margin: 0; padding: 0;">
+                                <!-- 제목 -->
+                                <div class="title-header" style="margin-bottom: 20px;">
+                                    <textarea class="community-title" id="editPcReviewTitle" placeholder="Enter title here"
+                                              style="font-size: 1.8rem; font-weight: bold; width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"
+                                              th:text="${pcReview.pcreviewTitle}"></textarea>
+                                </div>
+
+                                <!-- 게시물 정보 -->
+                                <div class="pcReviewInfo" id="pcReviewInfo2"
+                                     style="margin-bottom: 20px; font-size: 1rem; color: #555;">
+                                    Number: <span th:text="${pcReview.pcreviewId}" style="font-weight: bold;"></span>
+                                    &nbsp;|&nbsp;
+                                    Author: <span th:text="${pcReview.userId}" style="font-weight: bold;"></span>
+                                    &nbsp;|&nbsp;
+                                    Date: <span th:text="${#temporals.format(pcReview.pcreviewDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                </div>
+
+                                <!-- 내용 -->
+                                <textarea class="community-content commnunity-content-update" id="editPcReviewContent"
+                                          placeholder="Enter content here"
+                                          style="min-height: 260px; width: 100%; padding: 10px; font-size: 1.2rem; line-height: 1.8; border: 1px solid #ddd; border-radius: 5px;"
+                                          th:text="${pcReview.pcreviewContent}"></textarea>
+
+                                <!-- 버튼 -->
+                                <div class="button-container" style="text-align: right; margin-top: 20px;">
+                                    <button class="delete-small-button" id="cancelPcReviewButton"
+                                            style="padding: 10px 20px; font-size: 1rem; border: none; border-radius: 5px; background-color: #ff4d4d; color: white; cursor: pointer;">
+                                        Cancel
+                                    </button>
+                                    <button class="main-small-button" id="savePcReviewButton"
+                                            style="padding: 10px 20px; font-size: 1rem; border: none; border-radius: 5px; background-color: #007BFF; color: white; cursor: pointer;">
+                                        Submit
+                                    </button>
+                                </div>
                             </div>
                         </div>
+
 
                     </div>
                 </main>
@@ -79,14 +159,14 @@
             <!-- CPU리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="CPU Image" class="small-image" th:src="${cart.cpu.imageUrl != null ? cart.cpu.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="CPU Image" class="small-image" th:src="${pcReview.cpuReview.cpu.imageUrl != null ? pcReview.cpuReview.cpu.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
                     <span th:text="${pcReview.cpuReview.cpu.name}">[CPU Name]</span>
                 </label></legend>
                 <div id="cpuRow" th:data-id="${pcReview.cpuReview.partsReviewId}">
                     <div class="parts-header">
                         <div class="readPartsTitles" id="cpuTitle" th:text="${pcReview.cpuReview.partsReviewTitle}">CPU Review Title</div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="cpuDate" th:text="${pcReview.cpuReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="cpuDate" th:text="${#temporals.format(pcReview.cpuReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="cpuContent" th:text="${pcReview.cpuReview.partsReviewContent}">CPU Review Content</div>
@@ -100,7 +180,7 @@
                     <div class="parts-header">
                         <textarea class="readPartsTitles" id="editCpuTitle" type="text"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${pcReview.cpuReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="cpuDate2" th:text="${#temporals.format(pcReview.cpuReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editCpuContent" type="text"></textarea>
@@ -124,14 +204,14 @@
             <!-- cpucooler리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="cpucooler Image" class="small-image" th:src="${cart.cpucooler.imageUrl != null ? cart.cpucooler.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="cpucooler Image" class="small-image" th:src="${pcReview.cpucoolerReview.cpucooler.imageUrl != null ? pcReview.cpucoolerReview.cpucooler.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
                     <span th:text="${pcReview.cpucoolerReview.cpucooler.name}">[cpucooler Name]</span>
                 </label></legend>
                 <div id="cpucoolerRow" th:data-id="${pcReview.cpucoolerReview.partsReviewId}">
                     <div class="parts-header">
                         <div class="readPartsTitles" id="cpucoolerTitle" th:text="${pcReview.cpucoolerReview.partsReviewTitle}">cpucooler Review Title</div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="cpucoolerDate" th:text="${pcReview.cpucoolerReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="cpucoolerDate" th:text="${#temporals.format(pcReview.cpucoolerReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="cpucoolerContent" th:text="${pcReview.cpucoolerReview.partsReviewContent}">cpucooler Review Content</div>
@@ -145,7 +225,7 @@
                     <div class="parts-header">
                         <textarea class="readPartsTitles" id="editCpucoolerTitle" type="text"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${pcReview.cpucoolerReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="cpucoolerDate2" th:text="${#temporals.format(pcReview.cpucoolerReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editCpucoolerContent" type="text"></textarea>
@@ -169,14 +249,14 @@
             <!-- Motherboard 리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="Motherboard Image" class="small-image" th:src="${cart.motherboard.imageUrl != null ? cart.motherboard.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="Motherboard Image" class="small-image" th:src="${pcReview.motherboardReview.motherboard.imageUrl != null ? pcReview.motherboardReview.motherboard.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
                     <span th:text="${pcReview.motherboardReview.motherboard.name}">[Motherboard Name]</span>
                 </label></legend>
                 <div id="motherboardRow" th:data-id="${pcReview.motherboardReview.partsReviewId}">
                     <div class="parts-header">
                         <div class="readPartsTitles" id="motherboardTitle" th:text="${pcReview.motherboardReview.partsReviewTitle}">Motherboard Review Title</div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="motherboardDate" th:text="${pcReview.motherboardReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="motherboardDate" th:text="${#temporals.format(pcReview.motherboardReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="motherboardContent" th:text="${pcReview.motherboardReview.partsReviewContent}">Motherboard Review Content</div>
@@ -190,7 +270,7 @@
                     <div class="parts-header">
                         <textarea class="readPartsTitles" id="editMotherboardTitle" type="text"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${pcReview.motherboardReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="motherboardDate2" th:text="${#temporals.format(pcReview.motherboardReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editMotherboardContent" type="text"></textarea>
@@ -214,14 +294,14 @@
             <!-- Memory 리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="Memory Image" class="small-image" th:src="${cart.memory.imageUrl != null ? cart.memory.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="Memory Image" class="small-image" th:src="${pcReview.memoryReview.memory.imageUrl != null ? pcReview.memoryReview.memory.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
                     <span th:text="${pcReview.memoryReview.memory.name}">[Memory Name]</span>
                 </label></legend>
                 <div id="memoryRow" th:data-id="${pcReview.memoryReview.partsReviewId}">
                     <div class="parts-header">
                         <div class="readPartsTitles" id="memoryTitle" th:text="${pcReview.memoryReview.partsReviewTitle}">Memory Review Title</div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="memoryDate" th:text="${pcReview.memoryReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="memoryDate" th:text="${#temporals.format(pcReview.memoryReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="memoryContent" th:text="${pcReview.memoryReview.partsReviewContent}">Memory Review Content</div>
@@ -235,7 +315,7 @@
                     <div class="parts-header">
                         <textarea class="readPartsTitles" id="editMemoryTitle" type="text"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${pcReview.memoryReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="memoryDate2" th:text="${#temporals.format(pcReview.memoryReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editMemoryContent" type="text"></textarea>
@@ -259,14 +339,14 @@
             <!-- Storage 리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="Storage Image" class="small-image" th:src="${cart.storage.imageUrl != null ? cart.storage.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="Storage Image" class="small-image" th:src="${pcReview.storageReview.storage.imageUrl != null ? pcReview.storageReview.storage.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
                     <span th:text="${pcReview.storageReview.storage.name}">[Storage Name]</span>
                 </label></legend>
                 <div id="storageRow" th:data-id="${pcReview.storageReview.partsReviewId}">
                     <div class="parts-header">
                         <div class="readPartsTitles" id="storageTitle" th:text="${pcReview.storageReview.partsReviewTitle}">Storage Review Title</div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="storageDate" th:text="${pcReview.storageReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="storageDate" th:text="${#temporals.format(pcReview.storageReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="storageContent" th:text="${pcReview.storageReview.partsReviewContent}">Storage Review Content</div>
@@ -280,7 +360,7 @@
                     <div class="parts-header">
                         <textarea class="readPartsTitles" id="editStorageTitle" type="text"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${pcReview.storageReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="storageDate2" th:text="${#temporals.format(pcReview.storageReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editStorageContent" type="text"></textarea>
@@ -304,14 +384,14 @@
             <!-- Video Card 리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="Video Card Image" class="small-image" th:src="${cart.videocard.imageUrl != null ? cart.videocard.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="Video Card Image" class="small-image" th:src="${pcReview.videocardReview.videocard.imageUrl != null ? pcReview.videocardReview.videocard.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
                     <span th:text="${pcReview.videocardReview.videocard.name}">[Video Card Name]</span>
                 </label></legend>
                 <div id="videocardRow" th:data-id="${pcReview.videocardReview.partsReviewId}">
                     <div class="parts-header">
                         <div class="readPartsTitles" id="videocardTitle" th:text="${pcReview.videocardReview.partsReviewTitle}">Video Card Review Title</div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="videocardDate" th:text="${pcReview.videocardReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="videocardDate" th:text="${#temporals.format(pcReview.videocardReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="videocardContent" th:text="${pcReview.videocardReview.partsReviewContent}">Video Card Review Content</div>
@@ -325,7 +405,7 @@
                     <div class="parts-header">
                         <textarea class="readPartsTitles" id="editVideocardTitle" type="text"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${pcReview.videocardReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="videocardDate2" th:text="${#temporals.format(pcReview.videocardReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editVideocardContent" type="text"></textarea>
@@ -348,14 +428,14 @@
             <!-- Power Supply 리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="Power Supply Image" class="small-image" th:src="${cart.powersupply.imageUrl != null ? cart.powersupply.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="Power Supply Image" class="small-image" th:src="${pcReview.powersupplyReview.powersupply.imageUrl != null ? pcReview.powersupplyReview.powersupply.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
                     <span th:text="${pcReview.powersupplyReview.powersupply.name}">[Power Supply Name]</span>
                 </label></legend>
                 <div id="powersupplyRow" th:data-id="${pcReview.powersupplyReview.partsReviewId}">
                     <div class="parts-header">
                         <div class="readPartsTitles" id="powersupplyTitle" th:text="${pcReview.powersupplyReview.partsReviewTitle}">Power Supply Review Title</div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="powersupplyDate" th:text="${pcReview.powersupplyReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="powersupplyDate" th:text="${#temporals.format(pcReview.powersupplyReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="powersupplyContent" th:text="${pcReview.powersupplyReview.partsReviewContent}">Power Supply Review Content</div>
@@ -369,7 +449,7 @@
                     <div class="parts-header">
                         <textarea class="readPartsTitles" id="editPowersupplyTitle" type="text"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${pcReview.powersupplyReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="powersupplyDate2" th:text="${#temporals.format(pcReview.powersupplyReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editPowersupplyContent" type="text"></textarea>
@@ -393,14 +473,14 @@
             <!-- Cover 리뷰 -->
             <fieldset class="readPartsContainer">
                 <legend><label class="partsTitle">
-                    <img alt="Cover Image" class="small-image" th:src="${cart.cover.imageUrl != null ? cart.cover.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
+                    <img alt="Cover Image" class="small-image" th:src="${pcReview.coverReview.cover.imageUrl != null ? pcReview.coverReview.cover.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}">
                     <span th:text="${pcReview.coverReview.cover.name}">[Cover Name]</span>
                 </label></legend>
                 <div id="coverRow" th:data-id="${pcReview.coverReview.partsReviewId}">
                     <div class="parts-header">
                         <div class="readPartsTitles" id="coverTitle" th:text="${pcReview.coverReview.partsReviewTitle}">Cover Review Title</div>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span id="coverDate" th:text="${pcReview.coverReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="coverDate" th:text="${#temporals.format(pcReview.coverReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <div class="readPartsContent" id="coverContent" th:text="${pcReview.coverReview.partsReviewContent}">Cover Review Content</div>
@@ -414,7 +494,7 @@
                     <div class="parts-header">
                         <textarea class="readPartsTitles" id="editCoverTitle" type="text"></textarea>
                         <div class="pcReviewInfo">
-                            Date of Creation : <span th:text="${pcReview.coverReview.partsReviewDate}"></span>
+                            Date of Creation : <span id="coverDate2" th:text="${#temporals.format(pcReview.coverReview.partsReviewDate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <textarea class="readPartsContent" id="editCoverContent" type="text"></textarea>
@@ -481,6 +561,7 @@
 </div>
 <!-- pcReviewId -->
 <input disabled id="userId" th:value="${#authentication.name}" type="hidden">
+<input disabled id="pcReviewId" th:value="${pcReview.pcreviewId}" type="hidden">
 <script crossorigin="anonymous"
         integrity="sha384-UG8ao2jwOWB7/oDdObZc6ItJmwUkR/PfMyt9Qs5AwX7PsnYn1CRKCTWyncPTWvaS"
         src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

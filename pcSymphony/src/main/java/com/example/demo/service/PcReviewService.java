@@ -17,7 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -73,6 +78,7 @@ public class PcReviewService {
                 .pcreviewTitle(pcReviewDTO.getPcreviewTitle())
                 .pcreviewContent(pcReviewDTO.getPcreviewContent())
                 .pcreviewDate(pcReviewDTO.getPcreviewDate())
+                .imagePath(pcReviewDTO.getImagePath())
                 .userId(pcReviewDTO.getUserId())
                 .cpuReview(
                         partsReviewRepository.findById(pcReviewDTO.getCpuReviewId())
@@ -116,12 +122,14 @@ public class PcReviewService {
      * @return Converted PcReviewDTO
      */
     public PcReviewDTO toDto(PcReviewEntity pcReviewEntity) {
+
         return PcReviewDTO.builder()
                 .pcreviewId(pcReviewEntity.getPcreviewId())
                 .pcreviewTitle(pcReviewEntity.getPcreviewTitle())
                 .pcreviewContent(pcReviewEntity.getPcreviewContent())
                 .pcreviewDate(pcReviewEntity.getPcreviewDate())
                 .userId(pcReviewEntity.getUserId())
+                .imagePath(pcReviewEntity.getImagePath())
                 .cpuReviewId(pcReviewEntity.getCpuReview().getPartsReviewId())
                 .cpucoolerReviewId(pcReviewEntity.getCpucoolerReview().getPartsReviewId())
                 .motherboardReviewId(pcReviewEntity.getMotherboardReview().getPartsReviewId())
@@ -189,5 +197,42 @@ public class PcReviewService {
     //pcReviewList 게시글 페이징
     public Page<PcReviewEntity> pcReviewList(Pageable pageable) {
         return pcReviewRepository.findAll(pageable);
+    }
+
+    public Page<PcReviewDTO> getAllPcReviews(Pageable pageable) {
+        return pcReviewRepository.findAll(pageable).map(this::toDto);
+    }
+
+    public Page<PcReviewDTO> searchPcReviews(String keyword, Pageable pageable) {
+        return pcReviewRepository
+                .findByPcreviewTitleContainingIgnoreCase(keyword, pageable)
+                .map(this::toDto);
+    }
+
+    // 이미지 파일을 서버의 외부 경로에 저장하는 메서드
+    public String saveImageToFileSystem(MultipartFile imageUpload) {
+        try {
+            // 외부 경로 설정 (예시: C:/uploads/)
+            String uploadDir = "C:/uploads/";
+
+            // 업로드 디렉토리가 없으면 생성
+            File dir = new File(uploadDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            // 파일 이름 설정 (현재 시간을 이용한 고유 이름 생성)
+            String fileName = System.currentTimeMillis() + "-" + imageUpload.getOriginalFilename();
+            Path filePath = Paths.get(uploadDir + fileName);
+
+            // 파일을 지정된 경로에 저장
+            imageUpload.transferTo(filePath.toFile());
+
+            // 웹에서 접근할 수 있도록 경로 반환
+            return "/uploads/" + fileName;  // 저장된 파일 경로 반환
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

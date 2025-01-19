@@ -29,4 +29,6 @@ public class PcReviewDTO {
     private Integer videocardReviewId; // 그래픽카드 리뷰 ID
     private Integer powersupplyReviewId; // 파워서플라이 리뷰 ID
     private Integer coverReviewId;    // 케이스 리뷰 ID
+
+    private String imagePath;
 }

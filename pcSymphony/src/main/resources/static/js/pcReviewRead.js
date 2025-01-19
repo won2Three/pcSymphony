@@ -1,6 +1,6 @@
 
     // pcReviewId 값 가져오기
-    const pcReviewId = document.getElementById('pcReviewId').textContent.trim();
+    const pcReviewId = document.getElementById('pcReviewId').value;
 
     // userName 값 가져오기
     const userId = document.getElementById('userId').value;
@@ -17,12 +17,14 @@
     const seconds = String(now.getSeconds()).padStart(2, '0');
 
     // MySQL 형식 (로컬 시간)
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
 
 
     console.log("pcReviewId 값:", pcReviewId);
     console.log("userId 값:", userId);
+
+
 
     function loadComments() {
     $.ajax({
@@ -138,10 +140,17 @@
     const updatedTitle = document.getElementById("editPcReviewTitle").value;
     const updatedContent = document.getElementById("editPcReviewContent").value;
 
+    const currentTime = getMySQLFormattedTimestamp();
+    if (
+        document.getElementById("pcReviewTitle").textContent.trim() !== updatedTitle ||
+        document.getElementById("pcReviewContent").textContent.trim() !== updatedContent
+    ) {
+        document.getElementById("pcReviewDate").textContent = currentTime;
+        document.getElementById("pcReviewDate2").textContent = currentTime;
+    }
+
     document.getElementById("pcReviewTitle").textContent = updatedTitle;
     document.getElementById("pcReviewContent").textContent = updatedContent;
-    const currentTime = getMySQLFormattedTimestamp();
-    document.getElementById("pcReviewDate").textContent = currentTime;
 
 
     pcReviewRow.style.display = "block";
@@ -213,11 +222,19 @@
     const updatedRating = editCpuRating.value; // 선택된 평점 값 가져오기
 
     // Update the UI
+    const currentTime = getMySQLFormattedTimestamp();
+    if (
+                document.getElementById("cpuTitle").textContent.trim() !== updatedTitle ||
+                document.getElementById("cpuContent").textContent.trim() !== updatedContent ||
+                document.getElementById("cpuRating").textContent.trim() !== updatedRating
+            ) {
+                document.getElementById("cpuDate").textContent = currentTime;
+                document.getElementById("cpuDate2").textContent = currentTime;
+            }
+
     cpuTitle.textContent = updatedTitle;
     cpuContent.textContent = updatedContent;
     cpuRating.textContent = updatedRating; // 평점 업데이트
-    const currentTime = getMySQLFormattedTimestamp();
-    document.getElementById("cpuDate").textContent = currentTime;
     editCpuRow.style.display = 'none';
     cpuRow.style.display = 'block';
 
@@ -280,11 +297,20 @@
     const updatedRating = editCpucoolerRating.value;
 
     // Update the UI
+    const currentTime = getMySQLFormattedTimestamp();
+    if (
+            document.getElementById("cpucoolerTitle").textContent.trim() !== updatedTitle ||
+            document.getElementById("cpucoolerContent").textContent.trim() !== updatedContent ||
+            document.getElementById("cpucoolerRating").textContent.trim() !== updatedRating
+        ) {
+            document.getElementById("cpucoolerDate").textContent = currentTime;
+            document.getElementById("cpucoolerDate2").textContent = currentTime;
+        }
+
+
     cpucoolerTitle.textContent = updatedTitle;
     cpucoolerContent.textContent = updatedContent;
     cpucoolerRating.textContent = updatedRating;
-    const currentTime = getMySQLFormattedTimestamp();
-    document.getElementById("cpucoolerDate").textContent = currentTime;
     editCpucoolerRow.style.display = 'none';
     cpucoolerRow.style.display = 'block';
 
@@ -345,11 +371,19 @@
     const updatedRating = editMotherboardRating.value;
 
     // Update the UI
+    const currentTime = getMySQLFormattedTimestamp();
+    if (
+            document.getElementById("motherboardTitle").textContent.trim() !== updatedTitle ||
+            document.getElementById("motherboardContent").textContent.trim() !== updatedContent ||
+            document.getElementById("motherboardRating").textContent.trim() !== updatedRating
+        ) {
+            document.getElementById("motherboardDate").textContent = currentTime;
+            document.getElementById("motherboardDate2").textContent = currentTime;
+        }
+
     motherboardTitle.textContent = updatedTitle;
     motherboardContent.textContent = updatedContent;
     motherboardRating.textContent = updatedRating;
-    const currentTime = getMySQLFormattedTimestamp();
-    document.getElementById("motherboardDate").textContent = currentTime;
     editMotherboardRow.style.display = 'none';
     motherboardRow.style.display = 'block';
 
@@ -411,11 +445,19 @@
     const updatedRating = editMemoryRating.value;
 
     // Update the UI
+    const currentTime = getMySQLFormattedTimestamp();
+    if (
+        document.getElementById("memoryTitle").textContent.trim() !== updatedTitle ||
+        document.getElementById("memoryContent").textContent.trim() !== updatedContent ||
+        document.getElementById("memoryRating").textContent.trim() !== updatedRating
+    ) {
+        document.getElementById("memoryDate").textContent = currentTime;
+        document.getElementById("memoryDate2").textContent = currentTime;
+    }
+
     memoryTitle.textContent = updatedTitle;
     memoryContent.textContent = updatedContent;
     memoryRating.textContent = updatedRating;
-    const currentTime = getMySQLFormattedTimestamp();
-    document.getElementById("memoryDate").textContent = currentTime;
     editMemoryRow.style.display = 'none';
     memoryRow.style.display = 'block';
 
@@ -476,11 +518,19 @@
     const updatedRating = editStorageRating.value;
 
     // Update the UI
+    const currentTime = getMySQLFormattedTimestamp();
+    if (
+        document.getElementById("storageTitle").textContent.trim() !== updatedTitle ||
+        document.getElementById("storageContent").textContent.trim() !== updatedContent ||
+        document.getElementById("storageRating").textContent.trim() !== updatedRating
+    ) {
+        document.getElementById("storageDate").textContent = currentTime;
+        document.getElementById("storageDate2").textContent = currentTime;
+    }
+
     storageTitle.textContent = updatedTitle;
     storageContent.textContent = updatedContent;
     storageRating.textContent = updatedRating;
-    const currentTime = getMySQLFormattedTimestamp();
-    document.getElementById("storageDate").textContent = currentTime;
     editStorageRow.style.display = 'none';
     storageRow.style.display = 'block';
 
@@ -542,11 +592,19 @@
     const updatedRating = editVideocardRating.value;
 
     // Update the UI
+    const currentTime = getMySQLFormattedTimestamp();
+    if (
+        document.getElementById("videocardTitle").textContent.trim() !== updatedTitle ||
+        document.getElementById("videocardContent").textContent.trim() !== updatedContent ||
+        document.getElementById("videocardRating").textContent.trim() !== updatedRating
+    ) {
+        document.getElementById("videocardDate").textContent = currentTime;
+        document.getElementById("videocardDate2").textContent = currentTime;
+    }
+
     videocardTitle.textContent = updatedTitle;
     videocardContent.textContent = updatedContent;
     videocardRating.textContent = updatedRating;
-    const currentTime = getMySQLFormattedTimestamp();
-    document.getElementById("videocardDate").textContent = currentTime;
     editVideocardRow.style.display = 'none';
     videocardRow.style.display = 'block';
 
@@ -608,11 +666,19 @@
     const updatedRating = editPowersupplyRating.value;
 
     // Update the UI
+    const currentTime = getMySQLFormattedTimestamp();
+    if (
+        document.getElementById("powersupplyTitle").textContent.trim() !== updatedTitle ||
+        document.getElementById("powersupplyContent").textContent.trim() !== updatedContent ||
+        document.getElementById("powersupplyRating").textContent.trim() !== updatedRating
+    ) {
+        document.getElementById("powersupplyDate").textContent = currentTime;
+        document.getElementById("powersupplyDate2").textContent = currentTime;
+    }
+
     powersupplyTitle.textContent = updatedTitle;
     powersupplyContent.textContent = updatedContent;
     powersupplyRating.textContent = updatedRating;
-    const currentTime = getMySQLFormattedTimestamp();
-    document.getElementById("powersupplyDate").textContent = currentTime;
     editPowersupplyRow.style.display = 'none';
     powersupplyRow.style.display = 'block';
 
@@ -674,11 +740,19 @@
     const updatedRating = editCoverRating.value;
 
     // Update the UI
+    const currentTime = getMySQLFormattedTimestamp();
+    if (
+        document.getElementById("coverTitle").textContent.trim() !== updatedTitle ||
+        document.getElementById("coverContent").textContent.trim() !== updatedContent ||
+        document.getElementById("coverRating").textContent.trim() !== updatedRating
+    ) {
+        document.getElementById("coverDate").textContent = currentTime;
+        document.getElementById("coverDate2").textContent = currentTime;
+    }
+
     coverTitle.textContent = updatedTitle;
     coverContent.textContent = updatedContent;
     coverRating.textContent = updatedRating;
-    const currentTime = getMySQLFormattedTimestamp();
-    document.getElementById("coverDate").textContent = currentTime;
     editCoverRow.style.display = 'none';
     coverRow.style.display = 'block';
 

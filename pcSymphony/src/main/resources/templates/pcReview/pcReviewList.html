@@ -2,12 +2,81 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PcReview List</title>
-    <link href="../../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
-    <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
-    <link href="../../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
-    <link href="../../static/css/partList.css" rel="stylesheet" th:href="@{/css/partList.css}">
-    <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
+    <link href="/css/style.css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
+    <link href="/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
+    <link href="/css/partList.css" rel="stylesheet" th:href="@{/css/partList.css}">
+    <script src="/js/header.js" th:src="@{/js/header.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .part-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 10px;
+        }
+
+        .search-input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            background-color: #1976D2;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .search-button:hover {
+            opacity: .7;
+        }
+
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .pagination-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .pagination-button:disabled {
+            background-color: #B0BEC5;
+            cursor: not-allowed;
+        }
+
+        .pagination-button:not(:disabled):hover {
+            opacity: .7;
+        }
+
+        .pagination-info {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{fragments/header :: headerFragment}"></div>
@@ -15,44 +84,96 @@
     <main class="site-content">
         <h1 class="container-like">PcReview</h1>
         <div class="container">
-            <table>
+            <div class="search-container">
+                <input type="text" id="search" class="search-input" placeholder="Search for parts...">
+                <button id="searchButton" class="search-button">Search</button>
+            </div>
+            <table class="review-table">
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>No.</th>
                     <th>Title</th>
                     <th>Date</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr th:each="pcReview : ${pcReviewPage.content}">
+                <tbody id="reviewList">
+                <tr th:each="pcReview : ${pcReviews}">
                     <td th:text="${pcReview.pcreviewId}">ID</td>
                     <td>
                         <a th:href="@{/pcreview/read/{id}(id=${pcReview.pcreviewId})}"
                            th:text="${pcReview.pcreviewTitle}">Title</a>
                     </td>
-                    <td th:text="${pcReview.pcreviewDate}">Date</td>
+                    <td th:text="${#temporals.format(pcReview.pcreviewDate, 'yyyy-MM-dd HH:mm')}">Date</td>
                 </tr>
                 </tbody>
             </table>
-
-            <!-- 페이지네이션 -->
-            <div class="pagination">
-                <ul>
-                    <li th:if="${pcReviewPage.hasPrevious()}">
-                        <a th:href="@{/list(page=${pcReviewPage.number - 1})}">Previous</a>
-                    </li>
-                    <li th:each="pageNum : ${#numbers.sequence(0, pcReviewPage.totalPages - 1)}"
-                        th:classappend="${pageNum == pcReviewPage.number} ? 'active'">
-                        <a th:href="@{/list(page=${pageNum})}" th:text="${pageNum + 1}">1</a>
-                    </li>
-                    <li th:if="${pcReviewPage.hasNext()}">
-                        <a th:href="@{/list(page=${pcReviewPage.number + 1})}">Next</a>
-                    </li>
-                </ul>
+            <div class="pagination-container" id="pagination">
+                <button id="prevPage" class="pagination-button" disabled>Prev</button>
+                <span id="pageInfo" class="pagination-info">1 / 1</span>
+                <button id="nextPage" class="pagination-button" disabled>Next</button>
             </div>
         </div>
     </main>
 </div>
 <div th:replace="~{fragments/footer :: footerFragment}"></div>
+<script>
+    let currentPage = 0;
+    let totalPages = 0;
+
+    const loadReviews = (page = 0, keyword = '') => {
+        $.ajax({
+            url: `/pcreview/api/list?page=${page}&keyword=${keyword}`,
+            method: 'GET',
+            success: function (data) {
+                const reviewList = $('#reviewList');
+                reviewList.empty();
+
+                data.content.forEach(review => {
+                    const date = new Date(review.pcreviewDate);
+
+                    // 원하는 형식으로 날짜를 포맷팅
+                    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+
+                    reviewList.append(`
+                        <tr>
+                            <td>${review.pcreviewId}</td>
+                            <td><a href="/pcreview/read/${review.pcreviewId}">${review.pcreviewTitle}</a></td>
+                            <td>${formattedDate}</td>
+                        </tr>
+                    `);
+                });
+
+
+                currentPage = data.number;
+                totalPages = data.totalPages;
+
+                $('#pageInfo').text(`${currentPage + 1} / ${totalPages}`);
+                $('#prevPage').prop('disabled', currentPage === 0);
+                $('#nextPage').prop('disabled', currentPage === totalPages - 1);
+            }
+        });
+    };
+
+    $('#searchButton').on('click', function () {
+        const keyword = $('#search').val();
+        loadReviews(0, keyword);
+    });
+
+    $('#prevPage').on('click', function () {
+        if (currentPage > 0) {
+            const keyword = $('#search').val();
+            loadReviews(currentPage - 1, keyword);
+        }
+    });
+
+    $('#nextPage').on('click', function () {
+        if (currentPage < totalPages - 1) {
+            const keyword = $('#search').val();
+            loadReviews(currentPage + 1, keyword);
+        }
+    });
+
+    loadReviews();
+</script>
 </body>
 </html>

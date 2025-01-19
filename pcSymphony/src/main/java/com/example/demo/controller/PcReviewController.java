@@ -31,6 +31,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -72,12 +73,22 @@ public class PcReviewController {
     @PostMapping("write")
     public String write(
             @ModelAttribute PcReviewDTO pcReviewDTO,
+            @RequestParam(value = "imageUpload", required = false) MultipartFile imageUpload,
             @AuthenticationPrincipal MemberUserDetails user) {
 
         String userName = user.getUsername();
         pcReviewDTO.setUserId(userName);
         CartEntity cartEntity = cartRepository.findByUser_MemberId(userName);
 
+        // 이미지가 존재하면 이미지 파일을 파일 시스템에 저장
+        System.out.println("테스트입니다테스트입니다테스트입니다테스트입니다테스트입니다");
+        System.out.println(imageUpload);
+        System.out.println("테스트입니다테스트입니다테스트입니다테스트입니다테스트입니다");
+        if (imageUpload != null && !imageUpload.isEmpty()) {
+            System.out.println("helllloa;lsdkfj;lsakdjf;lksadjf;lsadjf;lksdjfa");
+            String imagePath = pcReviewService.saveImageToFileSystem(imageUpload); // 이미지 저장 메서드
+            pcReviewDTO.setImagePath(imagePath);  // 이미지 경로 저장
+        }
 
         pcReviewDTO.getPartReviews().forEach((partName, review) -> {
             PartsReviewEntity partsReviewEntity = new PartsReviewEntity();
@@ -107,6 +118,7 @@ public class PcReviewController {
                 partsReviewEntity.setPartsReviewContent(review.getContent());
                 partsReviewEntity.setPartsReviewDate(LocalDateTime.now());
                 partsReviewEntity.setPartsReviewRating(review.getRating());
+
 
                 partsReviewEntity.setMember(memberRepository.findById(userName).orElse(null));
                 // partId를 적절한 필드에 설정
@@ -180,26 +192,22 @@ public class PcReviewController {
 
 
         });
-
+        System.out.println("-------------------------------------");
+        System.out.println(pcReviewDTO.getImagePath());
+        System.out.println("-------------------------------------");
         pcReviewService.savePcReview(pcReviewDTO);
 
 
         return "redirect:/pcreview/list";
     }
-
-    @GetMapping("list")
-    public String getPcReviewList(Model model, @PageableDefault(page = 0, size = 10, sort = "pcreviewId", direction = Sort.Direction.DESC) Pageable pageable) {
-
-        // 서비스에서 페이징 처리된 데이터를 가져옴
-        Page<PcReviewEntity> pcReviewPage = pcReviewService.pcReviewList(pageable);
-
-        // 모델에 페이징 데이터를 추가
-        model.addAttribute("pcReviewPage", pcReviewPage);
-        model.addAttribute("currentPage", pageable.getPageNumber());
-        model.addAttribute("totalPages", pcReviewPage.getTotalPages());
-
-        return "pcReview/pcReviewList"; // Thymeleaf에서 렌더링할 HTML 파일 이름
-    }
+//
+//    @GetMapping("list")
+//    public String getPcReviewList(Model model) {
+//        List<PcReviewEntity> pcReviewList = pcReviewRepository.findAll();
+//        model.addAttribute("pcReviews", pcReviewList);
+//
+//        return "pcReview/pcReviewList"; // Thymeleaf에서 렌더링할 HTML 파일 이름
+//    }
 
     @GetMapping("/read/{id}")
     public String read(@PathVariable int id, Model model, @AuthenticationPrincipal MemberUserDetails user) {
@@ -260,5 +268,24 @@ public class PcReviewController {
 
         // 삭제 후 리뷰 목록 페이지로 리다이렉트
         return "redirect:/pcreview/list";
+    }
+
+    // HTML 렌더링을 위한 메서드
+    @GetMapping("/list")
+    public String listPage(Model model) {
+        return "pcReview/pcReviewList"; // Thymeleaf 템플릿 파일
+    }
+
+    // JSON API를 위한 메서드
+    @GetMapping("/api/list")
+    @ResponseBody
+    public ResponseEntity<Page<PcReviewDTO>> getPcReviewList(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @PageableDefault(size = 10, sort = "pcreviewId", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<PcReviewDTO> pcReviews = (keyword == null || keyword.isEmpty())
+                ? pcReviewService.getAllPcReviews(pageable)
+                : pcReviewService.searchPcReviews(keyword, pageable);
+
+        return ResponseEntity.ok(pcReviews);
     }
 }
