@@ -4147,7 +4147,8 @@ a {
 }
 .main-button:hover,.main-small-button:hover,
 .sub-button:hover , .sub-small-button:hover,
-.delete-button:hover, .delete-small-button:hover {
+.delete-button:hover, .delete-small-button:hover,
+.lightblue-button:hover{
     opacity: .7;
 }
 

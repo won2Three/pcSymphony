@@ -8,11 +8,8 @@
 
     <link href="../../static/css/pcReviewWrite.css" rel="stylesheet" th:href="@{/css/pcReviewWrite.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
-    <!--    <script src="../../static/js/pcReviewWrite.js" th:src="@{/js/pcReviewWrite.js}"></script>-->
-    <title>PC Reveiw Write</title>
-    <style>
+    <title>PC Review Write</title>
 
-    </style>
 </head>
 <body>
 <div th:replace="~{fragments/header :: headerFragment}"></div>
@@ -20,7 +17,6 @@
     <main class="site-content">
         <a class="titleName" href="/pcreview/list"><h1 class="container-like">PC Reveiw</h1></a>
         <div class="container">
-
             <form action="/pcreview/write" method="post">
                 <!-- 전체 리뷰 제목 및 내용 -->
                 <fieldset class="pcReviewContent" style="margin-top: 0px">
@@ -41,14 +37,6 @@
                               placeholder="Enter Content" required
                               rows="5"></textarea>
                     <br>
-                    <label for="pcReviewRating">Rating:</label>
-                    <select id="pcReviewRating" name="pcReviewRating" required>
-                        <option value="1">1점</option>
-                        <option value="2">2점</option>
-                        <option value="3">3점</option>
-                        <option value="4">4점</option>
-                        <option value="5">5점</option>
-                    </select>
                 </fieldset>
 
                 <!--partsReview-->
@@ -60,7 +48,7 @@
                             <!-- CPU 제목 텍스트 -->
                             <span class="partsName">CPU</span>
                             <!-- 썸네일 이미지 -->
-                            <img th:src="${cart.cpu.imageUrl != null ? cart.cpu.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
+                            <img th:src="${cart.cpu.imageUrl != null ? cart.cpu.imageUrl : '/images/nav-cpu.png'}"
                                  alt="CPU Image" class="partsImage">
                             <!-- CPU Name -->
                             <span th:text="${cart.cpu.name}">[CPU Name]</span>
@@ -73,26 +61,33 @@
                         <textarea class="pcReviewPartsTextarea" id="cpuContent" name="partReviews[cpu].content" placeholder="Enter Content"
                                   required rows="3"></textarea>
                         <br>
-                        <label for="cpuRating">Rating:</label>
-                        <select id="cpuRating" name="partReviews[cpu].rating" required>
-                            <option value="1">1점</option>
-                            <option value="2">2점</option>
-                            <option value="3">3점</option>
-                            <option value="4">4점</option>
-                            <option value="5">5점</option>
-                        </select>
+<!--                        <label for="cpuRating">Rating:</label>-->
+<!--                        <select id="cpuRating" name="partReviews[cpu].rating" required>-->
+<!--                            <option value="1">1점</option>-->
+<!--                            <option value="2">2점</option>-->
+<!--                            <option value="3">3점</option>-->
+<!--                            <option value="4">4점</option>-->
+<!--                            <option value="5">5점</option>-->
+<!--                        </select>-->
+                        <!-- CPU -->
+                        <div class="star-container" id="cpuRatingStars">
+                            <span class="star" data-value="1">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="5">&#9733;</span>
+                        </div>
+                        <input id="cpuRatingInput" name="partReviews[cpu].rating" type="hidden" required>
                     </fieldset>
 
-                    <!-- CPU Cooler 리뷰 -->
+                    <!-- CPU Cooler -->
                     <fieldset class="partsContent">
                         <label for="cpuCoolerTitle" class="partsTitle">
-                            <!-- CPUCooler 제목 텍스트 -->
-                            <span class="partsName">CPUCooler</span>
-                            <!-- 썸네일 이미지 -->
-                            <img th:src="${cart.cpucooler.imageUrl != null ? cart.cpucooler.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
-                                 alt="CPUCooler Image" class="partsImage">
-                            <!-- CPUCooler Name -->
-                            <span th:text="${cart.cpucooler.name}">[CPUCooler Name]</span>
+                            <!-- CPU Cooler 제목 -->
+                            <span class="partsName">CPU Cooler</span>
+                            <img th:src="${cart.cpucooler.imageUrl != null ? cart.cpucooler.imageUrl : '/images/nav-cpucooler.png'}"
+                                 alt="CPU Cooler Image" class="partsImage">
+                            <span th:text="${cart.cpucooler.name}">[CPU Cooler Name]</span>
                         </label>
                         <br>
                         <input class="pcReviewTitle" id="cpuCoolerTitle" name="partReviews[cpucooler].title" placeholder="Enter Title."
@@ -102,188 +97,174 @@
                                   name="partReviews[cpucooler].content" placeholder="Enter Content"
                                   required rows="3"></textarea>
                         <br>
-                        <label for="cpuCoolerRating">Rating:</label>
-                        <select id="cpuCoolerRating" name="partReviews[cpucooler].rating" required>
-                            <option value="1">1점</option>
-                            <option value="2">2점</option>
-                            <option value="3">3점</option>
-                            <option value="4">4점</option>
-                            <option value="5">5점</option>
-                        </select>
+                        <!-- 별점 입력 -->
+                        <div class="star-container" id="cpucoolerRatingStars">
+                            <span class="star" data-value="1">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="5">&#9733;</span>
+                        </div>
+                        <input id="cpucoolerRatingInput" name="partReviews[cpucooler].rating" type="hidden" required>
                     </fieldset>
 
-                    <!-- Motherboard 리뷰 -->
+
+                    <!-- Motherboard -->
                     <fieldset class="partsContent">
                         <label for="motherboardTitle" class="partsTitle">
-                            <!-- Motherboard 제목 텍스트 -->
                             <span class="partsName">Motherboard</span>
-                            <!-- 썸네일 이미지 -->
-                            <img th:src="${cart.motherboard.imageUrl != null ? cart.motherboard.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
+                            <img th:src="${cart.motherboard.imageUrl != null ? cart.motherboard.imageUrl : '/images/nav-motherboard.png'}"
                                  alt="Motherboard Image" class="partsImage">
-                            <!-- Motherboard Name -->
                             <span th:text="${cart.motherboard.name}">[Motherboard Name]</span>
                         </label>
                         <br>
-                        <input class="pcReviewTitle" id="motherboardTitle" name="partReviews[motherboard].title"
-                               placeholder="Enter Title." required type="text">
+                        <input class="pcReviewTitle" id="motherboardTitle" name="partReviews[motherboard].title" placeholder="Enter Title."
+                               required type="text">
                         <br>
                         <textarea class="pcReviewPartsTextarea" id="motherboardContent"
                                   name="partReviews[motherboard].content" placeholder="Enter Content"
                                   required rows="3"></textarea>
                         <br>
-                        <label for="motherboardRating">Rating:</label>
-                        <select id="motherboardRating" name="partReviews[motherboard].rating" required>
-                            <option value="1">1점</option>
-                            <option value="2">2점</option>
-                            <option value="3">3점</option>
-                            <option value="4">4점</option>
-                            <option value="5">5점</option>
-                        </select>
+                        <div class="star-container" id="motherboardRatingStars">
+                            <span class="star" data-value="1">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="5">&#9733;</span>
+                        </div>
+                        <input id="motherboardRatingInput" name="partReviews[motherboard].rating" type="hidden" required>
                     </fieldset>
 
-                    <!-- Memory 리뷰 -->
+                    <!-- Memory -->
                     <fieldset class="partsContent">
                         <label for="memoryTitle" class="partsTitle">
-                            <!-- Memory 제목 텍스트 -->
                             <span class="partsName">Memory</span>
-                            <!-- 썸네일 이미지 -->
-                            <img th:src="${cart.memory.imageUrl != null ? cart.memory.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
+                            <img th:src="${cart.memory.imageUrl != null ? cart.memory.imageUrl : '/images/nav-memory.png'}"
                                  alt="Memory Image" class="partsImage">
-                            <!-- Memory Name -->
                             <span th:text="${cart.memory.name}">[Memory Name]</span>
                         </label>
                         <br>
                         <input class="pcReviewTitle" id="memoryTitle" name="partReviews[memory].title" placeholder="Enter Title."
                                required type="text">
                         <br>
-                        <textarea class="pcReviewPartsTextarea" id="memoryContent" name="partReviews[memory].content"
-                                  placeholder="Enter Content"
+                        <textarea class="pcReviewPartsTextarea" id="memoryContent"
+                                  name="partReviews[memory].content" placeholder="Enter Content"
                                   required rows="3"></textarea>
                         <br>
-                        <label for="memoryRating">Rating:</label>
-                        <select id="memoryRating" name="partReviews[memory].rating" required>
-                            <option value="1">1점</option>
-                            <option value="2">2점</option>
-                            <option value="3">3점</option>
-                            <option value="4">4점</option>
-                            <option value="5">5점</option>
-                        </select>
+                        <div class="star-container" id="memoryRatingStars">
+                            <span class="star" data-value="1">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="5">&#9733;</span>
+                        </div>
+                        <input id="memoryRatingInput" name="partReviews[memory].rating" type="hidden" required>
                     </fieldset>
 
-                    <!-- Storage 리뷰 -->
+                    <!-- Storage -->
                     <fieldset class="partsContent">
                         <label for="storageTitle" class="partsTitle">
-                            <!-- Storage 제목 텍스트 -->
                             <span class="partsName">Storage</span>
-                            <!-- 썸네일 이미지 -->
-                            <img th:src="${cart.storage.imageUrl != null ? cart.storage.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}" alt="Storage Image" class="partsImage">
-                            <!-- Storage Name -->
+                            <img th:src="${cart.storage.imageUrl != null ? cart.storage.imageUrl : '/images/nav-storage.png'}"
+                                 alt="Storage Image" class="partsImage">
                             <span th:text="${cart.storage.name}">[Storage Name]</span>
                         </label>
                         <br>
                         <input class="pcReviewTitle" id="storageTitle" name="partReviews[storage].title" placeholder="Enter Title."
                                required type="text">
                         <br>
-                        <textarea class="pcReviewPartsTextarea" id="storageContent" name="partReviews[storage].content"
-                                  placeholder="Enter Content"
+                        <textarea class="pcReviewPartsTextarea" id="storageContent"
+                                  name="partReviews[storage].content" placeholder="Enter Content"
                                   required rows="3"></textarea>
                         <br>
-                        <label for="storageRating">Rating:</label>
-                        <select id="storageRating" name="partReviews[storage].rating" required>
-                            <option value="1">1점</option>
-                            <option value="2">2점</option>
-                            <option value="3">3점</option>
-                            <option value="4">4점</option>
-                            <option value="5">5점</option>
-                        </select>
+                        <div class="star-container" id="storageRatingStars">
+                            <span class="star" data-value="1">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="5">&#9733;</span>
+                        </div>
+                        <input id="storageRatingInput" name="partReviews[storage].rating" type="hidden" required>
                     </fieldset>
 
-                    <!-- VideoCard 리뷰 -->
+                    <!-- Videocard -->
                     <fieldset class="partsContent">
-                        <label for="videoCardTitle" class="partsTitle">
-                            <!-- VideoCard 제목 텍스트 -->
-                            <span class="partsName">VideoCard</span>
-                            <!-- 썸네일 이미지 -->
-                            <img th:src="${cart.videocard.imageUrl != null ? cart.videocard.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
-                                 alt="VideoCard Image" class="partsImage">
-                            <!-- VideoCard Name -->
-                            <span th:text="${cart.videocard.name}">[VideoCard Name]</span>
+                        <label for="videocardTitle" class="partsTitle">
+                            <span class="partsName">Videocard</span>
+                            <img th:src="${cart.videocard.imageUrl != null ? cart.videocard.imageUrl : '/images/nav-videocard.png'}"
+                                 alt="Videocard Image" class="partsImage">
+                            <span th:text="${cart.videocard.name}">[Videocard Name]</span>
                         </label>
                         <br>
-                        <input class="pcReviewTitle" id="videoCardTitle" name="partReviews[videocard].title" placeholder="Enter Title."
+                        <input class="pcReviewTitle" id="videocardTitle" name="partReviews[videocard].title" placeholder="Enter Title."
                                required type="text">
                         <br>
-                        <textarea class="pcReviewPartsTextarea" id="videoCardContent"
+                        <textarea class="pcReviewPartsTextarea" id="videocardContent"
                                   name="partReviews[videocard].content" placeholder="Enter Content"
                                   required rows="3"></textarea>
                         <br>
-                        <label for="videoCardRating">Rating:</label>
-                        <select id="videoCardRating" name="partReviews[videocard].rating" required>
-                            <option value="1">1점</option>
-                            <option value="2">2점</option>
-                            <option value="3">3점</option>
-                            <option value="4">4점</option>
-                            <option value="5">5점</option>
-                        </select>
+                        <div class="star-container" id="videocardRatingStars">
+                            <span class="star" data-value="1">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="5">&#9733;</span>
+                        </div>
+                        <input id="videocardRatingInput" name="partReviews[videocard].rating" type="hidden" required>
                     </fieldset>
 
-                    <!-- PowerSupply 리뷰 -->
+                    <!-- Powersupply -->
                     <fieldset class="partsContent">
-                        <label for="powerSupplyTitle" class="partsTitle">
-                            <!-- PowerSupply 제목 텍스트 -->
-                            <span class="partsName">PowerSupply</span>
-                            <!-- 썸네일 이미지 -->
-                            <img th:src="${cart.powersupply.imageUrl != null ? cart.powersupply.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
-                                 alt="PowerSupply Image" class="partsImage">
-                            <!-- PowerSupply Name -->
-                            <span th:text="${cart.powersupply.name}">[PowerSupply Name]</span>
+                        <label for="powersupplyTitle" class="partsTitle">
+                            <span class="partsName">Powersupply</span>
+                            <img th:src="${cart.powersupply.imageUrl != null ? cart.powersupply.imageUrl : '/images/nav-powersupply.png'}"
+                                 alt="Powersupply Image" class="partsImage">
+                            <span th:text="${cart.powersupply.name}">[Powersupply Name]</span>
                         </label>
                         <br>
-                        <input class="pcReviewTitle" id="powerSupplyTitle" name="partReviews[powersupply].title"
-                               placeholder="Enter Title." required type="text">
+                        <input class="pcReviewTitle" id="powersupplyTitle" name="partReviews[powersupply].title" placeholder="Enter Title."
+                               required type="text">
                         <br>
-                        <textarea class="pcReviewPartsTextarea" id="powerSupplyContent"
+                        <textarea class="pcReviewPartsTextarea" id="powersupplyContent"
                                   name="partReviews[powersupply].content" placeholder="Enter Content"
                                   required rows="3"></textarea>
                         <br>
-                        <label for="powerSupplyRating">Rating:</label>
-                        <select id="powerSupplyRating" name="partReviews[powersupply].rating" required>
-                            <option value="1">1점</option>
-                            <option value="2">2점</option>
-                            <option value="3">3점</option>
-                            <option value="4">4점</option>
-                            <option value="5">5점</option>
-                        </select>
+                        <div class="star-container" id="powersupplyRatingStars">
+                            <span class="star" data-value="1">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="5">&#9733;</span>
+                        </div>
+                        <input id="powersupplyRatingInput" name="partReviews[powersupply].rating" type="hidden" required>
                     </fieldset>
 
-                    <!-- Cover 리뷰 -->
-                    <fieldset>
+                    <!-- Cover -->
+                    <fieldset class="partsContent">
                         <label for="coverTitle" class="partsTitle">
-                            <!-- Cover 제목 텍스트 -->
                             <span class="partsName">Cover</span>
-                            <!-- 썸네일 이미지 -->
-                            <img th:src="${cart.cover.imageUrl != null ? cart.cover.imageUrl : 'https://cdn-icons-png.flaticon.com/512/11327/11327239.png'}"
+                            <img th:src="${cart.cover.imageUrl != null ? cart.cover.imageUrl : '/images/nav-cover.png'}"
                                  alt="Cover Image" class="partsImage">
-                            <!-- Cover Name -->
                             <span th:text="${cart.cover.name}">[Cover Name]</span>
                         </label>
                         <br>
                         <input class="pcReviewTitle" id="coverTitle" name="partReviews[cover].title" placeholder="Enter Title."
                                required type="text">
                         <br>
-                        <textarea class="pcReviewPartsTextarea" id="coverContent" name="partReviews[cover].content"
-                                  placeholder="Enter Content"
+                        <textarea class="pcReviewPartsTextarea" id="coverContent"
+                                  name="partReviews[cover].content" placeholder="Enter Content"
                                   required rows="3"></textarea>
                         <br>
-                        <label for="coverRating">Rating:</label>
-                        <select id="coverRating" name="partReviews[cover].rating" required>
-                            <option value="1">1점</option>
-                            <option value="2">2점</option>
-                            <option value="3">3점</option>
-                            <option value="4">4점</option>
-                            <option value="5">5점</option>
-                        </select>
+                        <div class="star-container" id="coverRatingStars">
+                            <span class="star" data-value="1">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="5">&#9733;</span>
+                        </div>
+                        <input id="coverRatingInput" name="partReviews[cover].rating" type="hidden" required>
                     </fieldset>
+
                 </fieldset>
                 <div class="button-container">
                     <button class="delete-small-button" onclick="location.href='/cart'">Cancel</button>

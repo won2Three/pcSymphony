@@ -106,7 +106,7 @@
     color: gold;
 }
 .stars {
-    display: inline-block;
+    display: flex;
     cursor: pointer;
     color: gold; /* 채워진 별 색상 */
     font-size: 18px;

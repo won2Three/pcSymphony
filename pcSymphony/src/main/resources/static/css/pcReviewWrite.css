@@ -105,3 +105,90 @@
 /*    background-color: #f4f4f3;*/
 /*    position: relative;*/
 /*}*/
+
+/*별점 관련 스타일*/
+.star-container {
+    display: flex;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.star-container .star {
+    font-size: 1.8rem;
+    color: lightgray;
+    transition: color 0.2s;
+}
+
+.star-container .star:hover,
+.star-container .star.hovered {
+    color: gold;
+}
+
+.star-container .star.selected {
+    color: gold;
+}
+/*별점 관련 스타일*/
+.starAndSave {
+    display: flex; /* 플렉스 컨테이너 설정 */
+    align-items: center; /* 세로 방향 정렬 */
+    gap: 10px; /* 버튼 간 간격 */
+}
+#ratingStars {
+    display: flex; /* 별을 수평으로 배치 */
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+.star {
+    font-size: 1.5rem;
+    color: lightgray;
+    transition: color 0.2s;
+}
+.star:hover {
+    color: gold;
+}
+.stars {
+    display: inline-block;
+    cursor: pointer;
+    color: gold; /* 채워진 별 색상 */
+    font-size: 18px;
+}
+.stars span {
+    font-size: 2rem;
+    color: lightgray;
+    transition: color 0.2s;
+}
+.stars .filled {
+    color: gold; /* 채워진 별 색상 */
+}
+.stars .empty {
+    color: lightgray; /* 빈 별 색상 */
+}
+/**/
+.editable-stars {
+    display: flex;
+    cursor: pointer;
+}
+.editable-stars .star {
+    font-size: 1.5rem;
+    color: lightgray;
+    transition: color 0.2s;
+}
+.editable-stars .star:hover {
+    color: gold;
+}
+/*.stars {*/
+/*    display: flex;*/
+/*    gap: 5px;*/
+/*}*/
+.stars .star {
+    font-size: 18px;
+    color: lightgray;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.stars .star.filled {
+    color: gold;
+}
+.stars .star.empty {
+    color: lightgray;
+}
