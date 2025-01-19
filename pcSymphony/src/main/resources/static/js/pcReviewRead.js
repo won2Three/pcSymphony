@@ -1,6 +1,5 @@
-
-    // pcReviewId 값 가져오기
-    const pcReviewId = document.getElementById('pcReviewId').value;
+// pcReviewId 값 가져오기
+const pcReviewId = document.getElementById('pcReviewId').textContent.trim();
 
 // userName 값 가져오기
 const userId = document.getElementById('userId').value;
@@ -13,19 +12,11 @@ function getMySQLFormattedTimestamp() {
     const day = String(now.getDate()).padStart(2, '0');
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-
-    // MySQL 형식 (로컬 시간)
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
+    return `${year}.${month}.${day} ${hours}:${minutes}`;
 }
 
-
-    console.log("pcReviewId 값:", pcReviewId);
-    console.log("userId 값:", userId);
-
-
-
-    function loadComments() {
+// 댓글 목록 로드 함수
+function loadComments() {
     $.ajax({
         url: '/pcreview/commentList?pcreviewId=' + pcReviewId,
         type: 'GET',
@@ -121,18 +112,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const updatedTitle = document.getElementById("editPcReviewTitle").value;
         const updatedContent = document.getElementById("editPcReviewContent").value;
 
-    const currentTime = getMySQLFormattedTimestamp();
-    if (
-        document.getElementById("pcReviewTitle").textContent.trim() !== updatedTitle ||
-        document.getElementById("pcReviewContent").textContent.trim() !== updatedContent
-    ) {
-        document.getElementById("pcReviewDate").textContent = currentTime;
-        document.getElementById("pcReviewDate2").textContent = currentTime;
-    }
-
-    document.getElementById("pcReviewTitle").textContent = updatedTitle;
-    document.getElementById("pcReviewContent").textContent = updatedContent;
-
+        document.getElementById("pcReviewTitle").textContent = updatedTitle;
+        document.getElementById("pcReviewContent").textContent = updatedContent;
+        document.getElementById("pcReviewDate").textContent = getMySQLFormattedTimestamp();
 
         pcReviewRow.style.display = "block";
         editPcReviewRow.style.display = "none";
@@ -164,148 +146,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-    document.addEventListener("DOMContentLoaded", () => {
-    // CPU event handling
-    const editCpuButton = document.getElementById('editCpuButton');
-    const cancelCpuButton = document.getElementById('cancelCpuButton');
-    const saveCpuButton = document.getElementById('saveCpuButton');
-    const cpuRow = document.getElementById('cpuRow');
-    const editCpuRow = document.getElementById('editCpuRow');
-    const cpuTitle = document.getElementById('cpuTitle');
-    const cpuContent = document.getElementById('cpuContent');
-    const cpuRating = document.getElementById('cpuRating');
-    const editCpuTitle = document.getElementById('editCpuTitle');
-    const editCpuContent = document.getElementById('editCpuContent');
-    const editCpuRating = document.getElementById('editCpuRating');
-
-    // editCpuButton 클릭 시
-    editCpuButton.addEventListener('click', () => {
-    cpuRow.style.display = 'none';
-    editCpuRow.style.display = 'block';
-    editCpuTitle.value = cpuTitle.textContent;
-    editCpuContent.value = cpuContent.textContent;
-    editCpuRating.value = cpuRating.textContent.trim(); // 현재 평점을 선택 박스에 반영
-});
-
-    // cancelCpuButton 클릭 시
-    cancelCpuButton.addEventListener('click', () => {
-    editCpuRow.style.display = 'none';
-    cpuRow.style.display = 'block';
-});
-
-    // saveCpuButton 클릭 시
-    saveCpuButton.addEventListener('click', async () => {
-    const updatedTitle = editCpuTitle.value;
-    const updatedContent = editCpuContent.value;
-    const updatedRating = editCpuRating.value; // 선택된 평점 값 가져오기
-
-    // Update the UI
-    const currentTime = getMySQLFormattedTimestamp();
-    if (
-                document.getElementById("cpuTitle").textContent.trim() !== updatedTitle ||
-                document.getElementById("cpuContent").textContent.trim() !== updatedContent ||
-                document.getElementById("cpuRating").textContent.trim() !== updatedRating
-            ) {
-                document.getElementById("cpuDate").textContent = currentTime;
-                document.getElementById("cpuDate2").textContent = currentTime;
-            }
-
-    cpuTitle.textContent = updatedTitle;
-    cpuContent.textContent = updatedContent;
-    cpuRating.textContent = updatedRating; // 평점 업데이트
-    editCpuRow.style.display = 'none';
-    cpuRow.style.display = 'block';
-
-    // Send the updated data to the server
-    try {
-    const response = await fetch('/pcreview/updateParts', {
-    method: 'POST',
-    headers: {
-    'Content-Type': 'application/json',
-},
-    body: JSON.stringify({
-    partsReviewId: cpuRow.dataset.id, // HTML에 `data-id` 속성으로 ID를 포함
-    partsReviewTitle: updatedTitle,
-    partsReviewContent: updatedContent,
-    partsReviewRating: updatedRating, // 서버로 평점 값 전달
-}),
-});
-
-    if (!response.ok) {
-    console.error('Failed to update the database');
-    alert('데이터베이스 업데이트에 실패했습니다.');
-}
-} catch (error) {
-    console.error('Error:', error);
-    alert('서버와의 통신 중 문제가 발생했습니다.');
-}
-});
-});
-
-
-    // cpucooler event handling
-    const editCpucoolerButton = document.getElementById('editCpucoolerButton');
-    const cancelCpucoolerButton = document.getElementById('cancelCpucoolerButton');
-    const saveCpucoolerButton = document.getElementById('saveCpucoolerButton');
-    const cpucoolerRow = document.getElementById('cpucoolerRow');
-    const editCpucoolerRow = document.getElementById('editCpucoolerRow');
-    const cpucoolerTitle = document.getElementById('cpucoolerTitle');
-    const cpucoolerContent = document.getElementById('cpucoolerContent');
-    const cpucoolerRating = document.getElementById('cpucoolerRating');
-    const editCpucoolerTitle = document.getElementById('editCpucoolerTitle');
-    const editCpucoolerContent = document.getElementById('editCpucoolerContent');
-    const editCpucoolerRating = document.getElementById('editCpucoolerRating');
-
-    editCpucoolerButton.addEventListener('click', () => {
-    cpucoolerRow.style.display = 'none';
-    editCpucoolerRow.style.display = 'block';
-    editCpucoolerTitle.value = cpucoolerTitle.textContent;
-    editCpucoolerContent.value = cpucoolerContent.textContent;
-    editCpucoolerRating.value = cpucoolerRating.textContent.trim();
-});
-
-    cancelCpucoolerButton.addEventListener('click', () => {
-    editCpucoolerRow.style.display = 'none';
-    cpucoolerRow.style.display = 'block';
-});
-
-    saveCpucoolerButton.addEventListener('click', async () => {
-    const updatedTitle = editCpucoolerTitle.value;
-    const updatedContent = editCpucoolerContent.value;
-    const updatedRating = editCpucoolerRating.value;
-
-    // Update the UI
-    const currentTime = getMySQLFormattedTimestamp();
-    if (
-            document.getElementById("cpucoolerTitle").textContent.trim() !== updatedTitle ||
-            document.getElementById("cpucoolerContent").textContent.trim() !== updatedContent ||
-            document.getElementById("cpucoolerRating").textContent.trim() !== updatedRating
-        ) {
-            document.getElementById("cpucoolerDate").textContent = currentTime;
-            document.getElementById("cpucoolerDate2").textContent = currentTime;
-        }
-
-
-    cpucoolerTitle.textContent = updatedTitle;
-    cpucoolerContent.textContent = updatedContent;
-    cpucoolerRating.textContent = updatedRating;
-    editCpucoolerRow.style.display = 'none';
-    cpucoolerRow.style.display = 'block';
-
-    // Send the updated data to the server
-    try {
-    const response = await fetch('/pcreview/updateParts', {
-    method: 'POST',
-    headers: {
-    'Content-Type': 'application/json',
-},
-    body: JSON.stringify({
-    partsReviewId: cpucoolerRow.dataset.id, // HTML에 `data-id` 속성으로 ID를 포함
-    partsReviewTitle: updatedTitle,
-    partsReviewContent: updatedContent,
-    partsReviewRating: updatedRating
-}),
-});
 // 리뷰 수정, 별점 관리 함수
 function setupStarRating(partName) {
     const starsEditable = document.getElementById(`starsEditable${partName}`);
