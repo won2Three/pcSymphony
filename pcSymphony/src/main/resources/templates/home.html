@@ -11,6 +11,7 @@
     <link href="../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
     <link href="../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
     <link href="../static/css/home.css" rel="stylesheet" th:href="@{/css/home.css}">
+    <link href="../static/css/homeReview.css" rel="stylesheet" th:href="@{/css/homeReview.css}">
     <script src="../static/js/header.js" th:src="@{/js/header.js}"></script>
     <script src="../static/js/main.min.js" th:src="@{/js/main.min.js}"></script>
     <title>pcSymphony_Home</title>
@@ -236,58 +237,37 @@
             <div class="container">
                 <div class="roadmap-inner section-inner">
                     <div class="section-header center-content">
-                        <div class="container-xs"><h2 class="mt-0 mb-16">PcReview</h2>
-                            <p class="mb-0">PcReview에 대한 내용입니다.</p></div>
+                        <div class="container-xs">
+                            <h2 class="mt-0 mb-16">PcReview</h2>
+                            <p class="mb-0">PcReview에 대한 내용입니다.</p>
+                        </div>
                     </div>
                     <div class="tiles-wrap">
-                        <article class="tiles-item">
-                            <div class="tiles-item-inner has-shadow">
-                                <figure class="news-item-image m-0">
-                                    <img alt="News 01" height="194"
-                                         src="/images/news-image-01.jpg" width="344"></figure>
-                                <div class="news-item-content">
-                                    <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
-                                        to build anything</a></h3>
-                                        <p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                            elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                                            ex.</p></div>
-                                    <div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
+                        <!-- 최신 3개의 리뷰를 출력 -->
+                        <div th:each="pcReview : ${latestPcReviews}">
+                            <article class="tiles-item">
+                                <div class="tiles-item-inner has-shadow">
+                                    <figure class="news-item-image m-0">
+                                        <!-- 이미지 동적으로 출력 -->
+                                        <img alt="PcReview Image" height="194"
+                                             th:src="@{${pcReview.imagePath}}" width="344">
+                                    </figure>
+                                    <div class="news-item-content">
+                                        <div class="news-item-body">
+<!--                                            <p class="text-sm" id="pc-author" th:text="${pcReview.userId}"></p>-->
+                                            <!-- 리뷰 제목 출력 -->
+                                            <h3 class="news-item-title h4 mt-0 mb-8" th:text="${pcReview.pcreviewTitle}"></h3>
+                                            <!-- 리뷰 내용 출력 -->
+                                            <p class="mb-16 text-sm" id="pcreview-content" th:text="${pcReview.pcreviewContent}"></p>
+                                        </div>
+                                        <div class="news-item-more text-xs mb-8">
+                                            <!-- Read more 링크 -->
+                                            <a th:href="@{/pcreview/read/{id}(id=${pcReview.pcreviewId})}">Read more</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
-                        <article class="tiles-item">
-                            <div class="tiles-item-inner has-shadow">
-                                <figure class="news-item-image m-0">
-                                    <img alt="News 02" height="194"
-                                         src="/images/news-image-02.jpg" width="344"></figure>
-                                <div class="news-item-content">
-                                    <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
-                                        to build anything</a></h3>
-                                        <p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                            elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                                            ex.</p></div>
-                                    <div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="tiles-item">
-                            <div class="tiles-item-inner has-shadow">
-                                <figure class="news-item-image m-0"><img alt="News 03" height="194"
-                                                                         src="/images/news-image-03.jpg" width="344">
-                                </figure>
-                                <div class="news-item-content">
-                                    <div class="news-item-body"><h3 class="news-item-title h4 mt-0 mb-8"><a href="#">How
-                                        to build anything</a></h3>
-                                        <p class="mb-16 text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                            elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                                            ex.</p></div>
-                                    <div class="news-item-more text-xs mb-8"><a href="#">Read more</a></div>
-                                </div>
-                            </div>
-                        </article>
+                            </article>
+                        </div>
                     </div>
                 </div>
             </div>

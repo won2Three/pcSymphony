@@ -31,6 +31,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/community/getList").permitAll()
                                 .requestMatchers("/part/**").permitAll()
                                 .requestMatchers("/pcreview/**").permitAll()
+                                .requestMatchers("/").permitAll()
                                 .requestMatchers(PUBLIC_URLS).permitAll() //인증 없이 접근 가능
 //                                .anyRequest().permitAll() //모든 요청을 인증없이 접근 가능
                         .requestMatchers(HttpMethod.PUT, "/part/partsReviewUpdate/**").authenticated() // PUT 요청에 대해 인증 요구

@@ -235,4 +235,8 @@ public class PcReviewService {
             return null;
         }
     }
+
+    public List<PcReviewEntity> getLatestPcReviews() {
+        return pcReviewRepository.findTop3ByOrderByPcreviewIdDesc();
+    }
 }
