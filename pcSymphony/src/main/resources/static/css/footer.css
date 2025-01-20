@@ -5,3 +5,36 @@
     padding-right: 16px;
     max-width: 1128px;
 }
+/* footer.css 또는 스타일시트에 추가 */
+.footer-social ul {
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+ body footer .footer-social a {
+    text-decoration: none;  /* 아이콘 밑줄 제거 */
+    color: inherit; /* 기본 텍스트 색상을 그대로 유지 */
+}
+
+.social-icon i {
+    font-size: 24px; /* 아이콘 크기 키우기 */
+    transition: transform 0.3s ease; /* 애니메이션 효과 (hover 시 확대) */
+}
+
+.social-icon i:hover {
+    transform: scale(1.2); /* hover 시 아이콘 크기 확대 */
+}
+
+/* 추가 스타일: 기본 색상 설정 (필요시) */
+.social-icon i {
+    color: #627183; /* 기본 아이콘 색상 */
+}
+
+.social-icon i:hover {
+    color: #007bff; /* hover 시 색상 변경 */
+}
+
+.footer-copyright{
+color: #627183;
+}
