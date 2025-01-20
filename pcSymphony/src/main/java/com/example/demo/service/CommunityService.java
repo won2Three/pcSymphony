@@ -66,7 +66,7 @@ public class CommunityService {
 
 
     //글쓰기
-    public void write(CommunityDTO communityDto) {
+    public Integer write(CommunityDTO communityDto) {
         MemberEntity memberEntity = memberRepository.findById(communityDto.getMemberId())
                 .orElseThrow(()
                         -> new EntityNotFoundException("회원정보가 없습니다"));
@@ -79,6 +79,8 @@ public class CommunityService {
                 .build();
 
         communityRepository.save(communityEntity);
+
+        return communityEntity.getCommunityId();
     }
 
     //read

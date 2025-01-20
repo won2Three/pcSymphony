@@ -70,8 +70,11 @@ public class CommunityController {
         }
 
         community.setMemberId(user.getUsername());
-        communityService.write(community);
-        return "redirect:list";
+        // 글을 저장하고 생성된 ID를 받아옴
+        Integer communityId = communityService.write(community);
+
+        // 생성된 ID를 사용하여 상세 페이지로 리디렉션
+        return "redirect:/community/read?communityId=" + communityId;
     }
 
 
