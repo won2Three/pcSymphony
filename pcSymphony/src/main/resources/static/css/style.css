@@ -2870,7 +2870,6 @@ ul.pricing-item-features-list li {
 .news .news-item-content {
     display: -webkit-box;
     display: flex;
-    flex-wrap: wrap;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     flex-direction: column;

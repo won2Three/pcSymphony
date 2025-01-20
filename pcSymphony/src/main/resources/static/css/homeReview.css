@@ -15,3 +15,31 @@
     white-space: normal;                /* 텍스트가 여러 줄로 유지되도록 설정 */
     -webkit-line-clamp: 6;              /* 최대 3줄로 텍스트를 제한 (필요에 따라 줄 수를 조정) */
 }
+.guide-item {
+        display: block;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .guide-item:hover {
+        transform: scale(1.05); /* 마우스를 올리면 약간 커지도록 */
+    }
+
+    .tiles-item-inner {
+            display: block;
+            height: 100%;
+        }
+
+        .tiles-item a {
+            display: block;
+            height: 100%;
+            text-decoration: none; /* 링크의 기본 스타일 제거 */
+            color: inherit; /* 텍스트 색상 상속 */
+        }
+
+        .guide-container{
+        background-color: #0c1622; /* 카드의 기본 배경 색상 */
+        }
+
+        .guide-name{
+        color: white;
+        }

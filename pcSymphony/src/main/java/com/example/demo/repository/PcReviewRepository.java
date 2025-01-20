@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface PcReviewRepository extends JpaRepository<PcReviewEntity, Integer> {
     Page<PcReviewEntity> findByPcreviewTitleContainingIgnoreCase(String keyword, Pageable pageable);
-    List<PcReviewEntity> findTop3ByOrderByPcreviewIdDesc();
+    List<PcReviewEntity> findTop10ByOrderByPcreviewIdDesc();
 }
