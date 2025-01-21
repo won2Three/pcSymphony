@@ -57,7 +57,7 @@
                         <div class = "partsDiv" id="cpuDiv">
                                 <div class="category-name">CPU</div>
                                 <label class="image-name">
-                                    <img alt="CPU Image" class="xsmall-image" th:src="${details.cpu.imageUrl != null ? details.cpu.imageUrl : 'images/nav-cpu.png'}">
+                                    <img alt="CPU Image" class="xsmall-image" th:src="${details.cpu.imageUrl != null ? details.cpu.imageUrl : '/images/nav-cpu.png'}">
                                     <div class="partsName-price">
                                         <a class = "partsName" th:href="'/part/cpu/' + ${details.cpu.id}" th:text="${details.cpu.name}">CPU 이름</a>
                                         <div th:text="${details.cpu.price} + ' $'">CPU 가격</div>
@@ -68,7 +68,7 @@
                         <div class = "partsDiv" id="cpucoolerDiv">
                                 <div class="category-name">CPUCooler</div>
                                 <label class="image-name">
-                                    <img alt="CPUCooler Image" class="xsmall-image" th:src="${details.cpuCooler.imageUrl != null ? details.cpuCooler.imageUrl : 'images/nav-cpucooler.png'}">
+                                    <img alt="CPUCooler Image" class="xsmall-image" th:src="${details.cpuCooler.imageUrl != null ? details.cpuCooler.imageUrl : '/images/nav-cpucooler.png'}">
                                     <div class="partsName-price">
                                         <a class = "partsName" th:href="'/part/cpucooler/' + ${details.cpuCooler.id}" th:text="${details.cpuCooler.name}">CPUCooler 이름</a>
                                         <div th:text="${details.cpuCooler.price} + ' $'">CPUCooler 가격</div>
@@ -79,7 +79,7 @@
                         <div class = "partsDiv" id="motherboardDiv">
                                 <div class="category-name">Motherboard</div>
                                 <label class="image-name">
-                                    <img alt="Motherboard Image" class="xsmall-image" th:src="${details.motherboard.imageUrl != null ? details.motherboard.imageUrl : 'images/nav-motherboard.png'}">
+                                    <img alt="Motherboard Image" class="xsmall-image" th:src="${details.motherboard.imageUrl != null ? details.motherboard.imageUrl : '/images/nav-motherboard.png'}">
                                     <div class="partsName-price">
                                         <a class = "partsName"  th:href="'/part/motherboard/' + ${details.motherboard.id}" th:text="${details.motherboard.name}">Motherboard 이름</a>
                                         <div th:text="${details.motherboard.price} + ' $'">Motherboard 가격</div>
@@ -90,7 +90,7 @@
                         <div class = "partsDiv" id="memoryDiv">
                             <div class="category-name">Memory</div>
                             <label class="image-name">
-                                <img alt="Memory Image" class="xsmall-image" th:src="${details.memory.imageUrl != null ? details.memory.imageUrl : 'images/nav-memory.png'}">
+                                <img alt="Memory Image" class="xsmall-image" th:src="${details.memory.imageUrl != null ? details.memory.imageUrl : '/images/nav-memory.png'}">
 
                                 <div class="partsName-price">
                                     <a class = "partsName" th:href="'/part/memory/' + ${details.memory.id}" th:text="${details.memory.name}">Memory 이름</a>
@@ -102,7 +102,7 @@
                         <div class = "partsDiv" id="storageDiv">
                             <div class="category-name">Storage</div>
                             <label class="image-name">
-                                <img alt="Storage Image" class="xsmall-image" th:src="${details.storage.imageUrl != null ? details.storage.imageUrl : 'images/nav-storage.png'}">
+                                <img alt="Storage Image" class="xsmall-image" th:src="${details.storage.imageUrl != null ? details.storage.imageUrl : '/images/nav-storage.png'}">
                                 <div class="partsName-price">
                                     <a class = "partsName" th:href="'/part/storage/' + ${details.storage.id}" th:text="${details.storage.name}">Storage 이름</a>
                                     <div th:text="${details.storage.price} + ' $'">Storage 가격</div>
@@ -113,7 +113,7 @@
                         <div class = "partsDiv" id="videocardDiv">
                             <div class="category-name">Videocard</div>
                             <label class="image-name">
-                                <img alt="Videocard Image" class="xsmall-image" th:src="${details.videoCard.imageUrl != null ? details.videoCard.imageUrl : 'iamges/nav-videocard.png'}">
+                                <img alt="Videocard Image" class="xsmall-image" th:src="${details.videoCard.imageUrl != null ? details.videoCard.imageUrl : '/iamges/nav-videocard.png'}">
                                 <div class="partsName-price">
                                     <a class = "partsName" th:href="'/part/videocard/' + ${details.videoCard.id}" th:text="${details.videoCard.name}">Videocard 이름</a>
                                     <div th:text="${details.videoCard.price} + ' $'">Videocard 가격</div>
@@ -124,7 +124,7 @@
                         <div class = "partsDiv" id="powersupplyDiv">
                             <div class="category-name">PowerSupply</div>
                             <label class="image-name">
-                                <img alt="PowerSupply Image" class="xsmall-image" th:src="${details.powerSupply.imageUrl != null ? details.powerSupply.imageUrl : 'images/nav-powersupply.png'}">
+                                <img alt="PowerSupply Image" class="xsmall-image" th:src="${details.powerSupply.imageUrl != null ? details.powerSupply.imageUrl : '/images/nav-powersupply.png'}">
                                 <div class="partsName-price">
                                     <a class = "partsName" th:href="'/part/powersupply/' + ${details.powerSupply.id}" th:text="${details.powerSupply.name}">PowerSupply 이름</a>
                                     <div th:text="${details.powerSupply.price} + ' $'">PowerSupply 가격</div>
@@ -135,7 +135,7 @@
                         <div class = "partsDiv" id="coverDiv">
                             <div class="category-name">Case</div>
                             <label class="image-name">
-                                <img alt="Case Image" class="xsmall-image" th:src="${details.cover.imageUrl != null ? details.cover.imageUrl : 'images/nav-cover.png'}">
+                                <img alt="Case Image" class="xsmall-image" th:src="${details.cover.imageUrl != null ? details.cover.imageUrl : '/images/nav-cover.png'}">
                                 <div class="partsName-price">
                                     <a class = "partsName" th:href="'/part/cover/' + ${details.cover.id}" th:text="${details.cover.name}">Case 이름</a>
                                     <div th:text="${details.cover.price} + ' $'">Case 가격</div>

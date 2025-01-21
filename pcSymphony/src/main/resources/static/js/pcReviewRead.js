@@ -98,50 +98,82 @@ document.addEventListener("DOMContentLoaded", function () {
     const editButton = document.getElementById("editPcReviewButton");
     const saveButton = document.getElementById("savePcReviewButton");
     const cancelButton = document.getElementById("cancelPcReviewButton");
+    const preview = document.getElementById('preview');
+    const preview2 = document.getElementById('preview2');
+    const imageUpload = document.getElementById('imageUpload');
+
 
     editPcReviewRow.style.display = "none";
 
     editButton.addEventListener("click", function () {
         pcReviewRow.style.display = "none";
-        editPcReviewRow.style.display = "block";
+        editPcReviewRow.style.display = "flex";
         document.getElementById("editPcReviewTitle").value = document.getElementById("pcReviewTitle").textContent;
         document.getElementById("editPcReviewContent").value = document.getElementById("pcReviewContent").textContent;
+        document.getElementById("pcReviewDate2").textContent = document.getElementById("pcReviewDate").textContent;
+        preview2.src = preview.src;
+        imageUpload.value = null;
     });
 
     saveButton.addEventListener("click", async function () {
         const updatedTitle = document.getElementById("editPcReviewTitle").value;
         const updatedContent = document.getElementById("editPcReviewContent").value;
+        const selectedFile = imageUpload.files[0]
+        preview.src = preview2.src;
 
         document.getElementById("pcReviewTitle").textContent = updatedTitle;
         document.getElementById("pcReviewContent").textContent = updatedContent;
         document.getElementById("pcReviewDate").textContent = getMySQLFormattedTimestamp();
 
-        pcReviewRow.style.display = "block";
+        pcReviewRow.style.display = "flex";
         editPcReviewRow.style.display = "none";
 
-        try {
-            const response = await fetch('/pcreview/updatePcReview', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    pcreviewId: pcReviewRow.dataset.id,
-                    pcreviewTitle: updatedTitle,
-                    pcreviewContent: updatedContent
-                }),
-            });
+        const formData = new FormData();
+        formData.append('pcreviewId', pcReviewRow.dataset.id); // 리뷰 ID 추가
+        formData.append('pcreviewTitle', updatedTitle); // 제목 추가
+        formData.append('pcreviewContent', updatedContent); // 내용 추가
 
-            if (!response.ok) {
-                console.error('Failed to update the database');
-                alert('Failed to update the database.');
+        if (selectedFile) {
+            formData.append('imageUpload', selectedFile); // 파일 추가
+            try {
+                const response = await fetch('/pcreview/updatePcReview', {
+                    method: 'POST',
+                    body: formData, // FormData 객체를 직접 body에 전달
+                });
+
+                if (response.ok) {
+                    console.log("수정완료")
+                } else {
+                    console.error('Failed to update the review.');
+                    alert('Failed to update the review.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while updating the review.');
             }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('An issue occurred while communicating with the server.');
+        } else {
+            try {
+                const response = await fetch('/pcreview/updatePcReview2', {
+                    method: 'POST',
+                    body: formData, // FormData 객체를 직접 body에 전달
+                });
+
+                if (response.ok) {
+                    console.log("수정완료")
+                } else {
+                    console.error('Failed to update the review.');
+                    alert('Failed to update the review.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while updating the review.');
+            }
         }
+
     });
 
     cancelButton.addEventListener("click", function () {
-        pcReviewRow.style.display = "block";
+        pcReviewRow.style.display = "flex";
         editPcReviewRow.style.display = "none";
     });
 });
@@ -181,18 +213,6 @@ function setupStarRating(partName) {
         });
     });
 
-    // Edit 버튼 이벤트
-    editButton.addEventListener("click", () => {
-        partRow.style.display = "none";
-        editPartRow.style.display = "block";
-
-        // 제목, 내용, 별점 초기화
-        editPartTitle.value = partTitle.textContent.trim();
-        editPartContent.value = partContent.textContent.trim();
-        const currentRating = parseInt(partRating.textContent.trim(), 10);
-        ratingInput.value = currentRating;
-        stars.forEach((s, i) => s.classList.toggle("filled", i < currentRating));
-    });
 // 읽기 전용 별점 업데이트 함수
     function updateReadOnlyStars(readOnlyStarsContainer, rating) {
         if (!readOnlyStarsContainer) return; // 컨테이너가 없으면 중단
@@ -200,6 +220,21 @@ function setupStarRating(partName) {
         const stars = readOnlyStarsContainer.querySelectorAll(".star");
         stars.forEach((star, index) => {
             star.classList.toggle("filled", index < rating); // `filled` 클래스로 별점 상태 업데이트
+        });
+    }
+
+    // Edit 버튼 이벤트
+    if(editButton) {
+        editButton.addEventListener("click", () => {
+            partRow.style.display = "none";
+            editPartRow.style.display = "block";
+
+            // 제목, 내용, 별점 초기화
+            editPartTitle.value = partTitle.textContent.trim();
+            editPartContent.value = partContent.textContent.trim();
+            const currentRating = parseInt(partRating.textContent.trim(), 10);
+            ratingInput.value = currentRating;
+            stars.forEach((s, i) => s.classList.toggle("filled", i < currentRating));
         });
     }
 
@@ -247,6 +282,7 @@ function setupStarRating(partName) {
     cancelButton.addEventListener("click", () => {
         editPartRow.style.display = "none";
         partRow.style.display = "block";
+
     });
 }
 
@@ -271,9 +307,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-
-
 // 페이지 로드 시 댓글 목록 불러오기
 $(document).ready(function () {
     loadComments();
 });
+
+function previewImage(event) {
+        const preview = document.getElementById('preview');
+        const preview2 = document.getElementById('preview2');
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview2.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // 파일이 없을 경우 기본 이미지 표시
+            preview2.src = preview.src
+        }
+    }
