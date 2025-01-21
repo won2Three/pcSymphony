@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface GuidelineRepository extends JpaRepository<GuidelineEntity, Integer> {
-
+    List<GuidelineEntity> findTop3ByOrderByGuidelineIdDesc();
 }

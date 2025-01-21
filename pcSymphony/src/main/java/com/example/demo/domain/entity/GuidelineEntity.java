@@ -49,4 +49,7 @@ public class GuidelineEntity {
 
     @Column(name = "cover_id")
     private int coverId;
+
+    @Column(name = "image_path")
+    private String imagePath;
 }

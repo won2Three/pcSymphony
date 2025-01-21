@@ -405,7 +405,7 @@ button:hover {
 }
 
  thead {
-     background: linear-gradient(to right, #e1f5fe 95%, transparent 95%);
+     background: linear-gradient(to right, #e1f5fe 100%, transparent 100%);
  }
 
 

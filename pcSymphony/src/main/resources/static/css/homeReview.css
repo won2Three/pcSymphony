@@ -1,0 +1,157 @@
+/* 텍스트가 넘칠 경우 '...'으로 표시하는 스타일 */
+#pcreview-content,
+#guideline-content {
+    display: -webkit-box;              /* Flexbox처럼 자식 요소를 세로로 쌓을 수 있게 설정 */
+    -webkit-box-orient: vertical;      /* 세로로 정렬되게 함 */
+    overflow: hidden;                  /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis;           /* 텍스트가 넘칠 경우 '...'으로 표시 */
+    white-space: normal;               /* 텍스트가 여러 줄로 유지되도록 설정 */
+    -webkit-line-clamp: 6;             /* 최대 6줄로 텍스트를 제한 (필요에 따라 줄 수를 조정) */
+}
+
+/* 카드 항목에 마우스를 올리면 확대되는 효과 */
+.guide-item {
+    display: block;
+    transition: transform 0.3s ease-in-out;
+}
+
+.guide-item:hover {
+    transform: scale(1.05); /* 마우스를 올리면 약간 커지도록 */
+}
+
+/* 아이템의 기본 스타일 */
+.tiles-item-inner {
+    display: block;
+    height: 100%;
+}
+
+.tiles-item a {
+    display: block;
+    height: 100%;
+    text-decoration: none; /* 링크의 기본 스타일 제거 */
+    color: inherit; /* 텍스트 색상 상속 */
+}
+
+/* 카드의 기본 배경 색상 */
+.guide-container {
+    background-color: #0c1622;
+}
+
+/* 카드 이름 색상 */
+.guide-name {
+    color: white; /* 텍스트 색상 */
+}
+
+/* 리뷰 슬라이더 스타일 */
+.review-slider .tiles-item {
+    margin: 10px; /* 카드 간격 추가 */
+}
+
+/* 슬라이더 화살표 스타일 */
+.slick-prev, .slick-next {
+    background-color: rgba(0, 0, 0, 0.5); /* 화살표 배경색 */
+    color: white; /* 화살표 색상 */
+    border-radius: 50%; /* 화살표 둥글게 처리 */
+    width: 30px; /* 화살표 버튼의 너비 */
+    height: 30px; /* 화살표 버튼의 높이 */
+}
+
+.slick-prev:before, .slick-next:before {
+    font-size: 20px; /* 화살표 크기 */
+}
+
+/* 슬라이더 컨테이너 스타일 */
+.custom-slider {
+    display: flex;
+    overflow: hidden; /* 슬라이드 영역 밖은 보이지 않도록 설정 */
+    position: relative; /* 슬라이더 내부 요소가 겹치지 않도록 설정 */
+}
+
+/* 슬라이드 아이템 스타일 */
+.custom-slider .slick-slide {
+    display: block;
+    flex: 0 0 auto;  /* 슬라이드 아이템이 flexbox로 크기 자동 조정 */
+    box-sizing: border-box;  /* 여백을 포함한 정확한 크기 계산 */
+    width: 100%;  /* 슬라이드의 너비를 100%로 설정 */
+}
+
+/* 슬라이드 이미지 크기 조정 */
+.custom-slider .slick-slide img {
+    width: 100%;  /* 이미지가 슬라이드 아이템에 맞게 조정 */
+    height: auto;  /* 비율을 유지한 채 크기 조정 */
+}
+
+/* 슬라이드가 화면에 맞게 표시되도록 설정 */
+.custom-slider .slick-track {
+    display: flex;
+    flex-wrap: nowrap; /* 슬라이드 아이템이 겹치지 않게 배치 */
+    transition: transform 0.3s ease-in-out; /* 슬라이드 전환 시 부드럽게 애니메이션 적용 */
+}
+
+/* 슬라이드 아이템들이 겹치지 않도록 overflow 설정 */
+.slick-slide {
+    visibility: visible; /* 슬라이드가 보이도록 설정 */
+}
+
+/* 슬라이드 아이템이 화면을 벗어나지 않도록 설정 */
+.custom-slider .slick-slide {
+    width: 100%; /* 슬라이드 아이템의 너비를 100%로 설정 */
+}
+
+/* body 내부의 슬라이더 화살표 스타일 */
+body .slick-prev, body .slick-next {
+    background-color: rgba(25, 118, 210, 0.7); /* 기본 배경색: 투명한 rgb(25, 118, 210) */
+    color: white; /* 기본 화살표 색상 */
+    border-radius: 50%; /* 둥글게 만들기 */
+    width: 50px; /* 버튼 크기 조정 */
+    height: 50px; /* 버튼 크기 조정 */
+    z-index: 1;
+    position: absolute;
+    top: 40%; /* 위로 좀 더 올리기 */
+    transform: translateY(-50%); /* 세로 중앙 정렬 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, opacity 0.3s ease, color 0.3s ease; /* 배경색, 색상, 투명도 전환 */
+}
+
+/* Font Awesome 화살표 아이콘 크기 및 스타일 */
+body .slick-prev:before, body .slick-next:before {
+    font-size: 24px; /* 화살표 크기 */
+    color: rgb(25, 118, 210); /* 기본 화살표 색상 */
+}
+
+/* 왼쪽 화살표 */
+body .slick-prev:before {
+    content: "\f104"; /* Font Awesome 왼쪽 화살표 */
+    font-family: 'Font Awesome 6 Free'; /* Font Awesome 사용 */
+    font-weight: 900; /* 두껍게 설정 */
+}
+
+/* 오른쪽 화살표 */
+body .slick-next:before {
+    content: "\f105"; /* Font Awesome 오른쪽 화살표 */
+    font-family: 'Font Awesome 6 Free'; /* Font Awesome 사용 */
+    font-weight: 900; /* 두껍게 설정 */
+}
+
+/* hover 시 화살표 색상 변경 */
+body .slick-prev:hover, body .slick-next:hover {
+    background-color: rgba(25, 118, 210, 0.7); /* 배경색 유지 */
+    color: white; /* hover 시 화살표 색상 흰색으로 변경 */
+    opacity: 1; /* hover 시 투명도 1로 */
+}
+
+/* 슬라이더 화살표의 위치 수정 */
+body .slick-prev {
+    left: 5px; /* 왼쪽 위치 */
+}
+
+body .slick-next {
+    right: 5px; /* 오른쪽 위치 */
+}
+
+/* 화살표 클릭 가능 영역 확장 */
+body .slick-prev, body .slick-next {
+    cursor: pointer; /* 마우스 포인터 */
+}

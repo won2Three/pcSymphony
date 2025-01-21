@@ -131,10 +131,14 @@
                 replyTableBody.empty(); // 기존 댓글 목록을 비웁니다.
 
                 // 서버에서 받은 댓글 데이터를 HTML로 출력
-                data.forEach(function (comment) {
-const formattedDate = formatDate(comment.communityReplyDate);
+              data.forEach(function (comment) {
+    const formattedDate = formatDate(comment.communityReplyDate);
 
-                   const commentHtml = `
+    const deleteButtonHtml = comment.memberId === userId
+        ? `<button class="cancel-button" id="x-button" onclick="deleteComment(${comment.communityReplyId})">X</button>`
+        : '';
+
+    const commentHtml = `
         <tr id="comment-${comment.communityReplyId}" style="border-bottom: none;">
             <td id="reply-header" style="border-bottom: none;">
                 <span class="reply-author">${comment.memberId}</span>
@@ -144,12 +148,13 @@ const formattedDate = formatDate(comment.communityReplyDate);
         <tr>
             <td class="reply-content">${comment.replyContent}</td>
             <td style="text-align: right">
-                <button class="cancel-button" id="x-button" onclick="deleteComment(${comment.communityReplyId})">X</button>
+                ${deleteButtonHtml}
             </td>
         </tr>
     `;
-                    replyTableBody.append(commentHtml);
-                });
+    replyTableBody.append(commentHtml);
+});
+
             },
             error: function (xhr, status, error) {
                 alert('Failed to load the reply list.');

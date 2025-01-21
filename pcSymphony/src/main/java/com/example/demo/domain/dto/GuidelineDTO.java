@@ -22,4 +22,5 @@ public class GuidelineDTO {
     private int powerSupplyId;
     private int coverId;
 
+    private String imagePath;
 }
