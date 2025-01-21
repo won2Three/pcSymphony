@@ -1,11 +1,9 @@
-    .community-title {
+.community-title {
     font-size: 32px;
     font-weight: bold;
     color: #000;
-    margin-bottom: 10px;
     resize: none;
 }
-
 
 .pcReviewInfo {
     font-size: 12px;
@@ -214,4 +212,8 @@
 
 .hidden-rating {
     display: none;
+}
+
+#editPcReviewRow {
+    margin-bottom: 0px;
 }

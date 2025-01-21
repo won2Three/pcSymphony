@@ -255,8 +255,23 @@ public class PcReviewController {
     }
 
     @PostMapping("/updatePcReview")
-    public ResponseEntity<String> updatePcReview(@RequestBody PcReviewDTO request) {
-        pcReviewService.updatePcReview(request.getPcreviewId(), request.getPcreviewTitle(), request.getPcreviewContent());
+    public ResponseEntity<String> updatePcReview(@RequestParam("pcreviewId") String pcreviewId,
+                                                 @RequestParam("pcreviewTitle") String pcreviewTitle,
+                                                 @RequestParam("pcreviewContent") String pcreviewContent,
+                                                 @RequestParam(value = "imageUpload", required = false) MultipartFile imageUpload) {
+
+            pcReviewService.updatePcReview(Integer.parseInt(pcreviewId), pcreviewTitle, pcreviewContent, pcReviewService.saveImageToFileSystem(imageUpload));
+
+        return ResponseEntity.ok("리뷰가 성공적으로 수정되었습니다.");
+    }
+
+    @PostMapping("/updatePcReview2")
+    public ResponseEntity<String> updatePcReview2(@RequestParam("pcreviewId") String pcreviewId,
+                                                 @RequestParam("pcreviewTitle") String pcreviewTitle,
+                                                 @RequestParam("pcreviewContent") String pcreviewContent) {
+
+        pcReviewService.updatePcReview(Integer.parseInt(pcreviewId), pcreviewTitle, pcreviewContent);
+
         return ResponseEntity.ok("리뷰가 성공적으로 수정되었습니다.");
     }
 

@@ -21,11 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -151,6 +153,20 @@ public class PcReviewService {
         pcReviewRepository.save(pcReview); // 변경 사항 저장
     }
 
+    public void updatePcReview(int reviewId, String reviewTitle, String reviewContent, String imagePath) {
+        PcReviewEntity pcReview = pcReviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 리뷰를 찾을 수 없습니다. ID: " + reviewId));
+
+        pcReview.setPcreviewTitle(reviewTitle);
+        pcReview.setPcreviewContent(reviewContent);
+        pcReview.setImagePath(imagePath);
+
+
+        pcReviewRepository.save(pcReview); // 변경 사항 저장
+    }
+
+
+
     public void pcReviewCommentWrite(PcReviewCommentDTO commentDTO) {
         // 리뷰를 찾아서 설정
         PcReviewEntity pcReview = pcReviewRepository.findById(commentDTO.getPcreviewId())
@@ -235,4 +251,6 @@ public class PcReviewService {
             return null;
         }
     }
+
+
 }
