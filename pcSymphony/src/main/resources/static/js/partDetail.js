@@ -297,6 +297,7 @@ function editReview(partsReviewId) {
 
     // 별점 수정 기능 추가
     const stars = starsContainer.querySelectorAll('.star');
+
     stars.forEach(star => {
         star.addEventListener('click', () => {
             const selectedValue = parseInt(star.getAttribute('data-value'), 10);
@@ -348,7 +349,7 @@ function saveReview(partsReviewId, updatedTitle, updatedContent, updatedRating) 
     const pathParts = window.location.pathname.split('/');
     const partType = pathParts[2];  // 'cpu', 'memory' 등
     const partId = parseInt(pathParts[3]);  // 1, 2, 3 등
-
+    console.log("updatedRating" + updatedRating);
     fetch(`/part/partsReviewUpdate/${partsReviewId}`, {
         method: 'PUT',
         headers: {

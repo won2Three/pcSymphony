@@ -316,6 +316,23 @@ public class PartService {
         partsReviewRepository.delete(reviewEntity);
     }
 
+    public void partsReviewUpdate(int partsReviewId, String updatedTitle, String updatedContent, String username) {
+        //리뷰 확인
+        PartsReviewEntity reviewEntity = partsReviewRepository.findById(partsReviewId)
+                .orElseThrow(() -> new EntityNotFoundException("리뷰가 없습니다."));
+        //작성자 확인
+        if (!reviewEntity.getMember().getMemberId().equals(username)) {
+            throw new RuntimeException("수정 권한이 없습니다.");
+        }
+
+        //게시글 수정
+        reviewEntity.setPartsReviewTitle(updatedTitle);
+        reviewEntity.setPartsReviewContent(updatedContent);
+
+        partsReviewRepository.save(reviewEntity);
+
+    }
+
     public void partsReviewUpdate(int partsReviewId, String updatedTitle, String updatedContent, int updatedRating, String username) {
         //리뷰 확인
         PartsReviewEntity reviewEntity = partsReviewRepository.findById(partsReviewId)

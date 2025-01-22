@@ -66,10 +66,15 @@ public class PartRestController {
 
         String updatedTitle = requestData.get("partsReviewTitle");
         String updatedContent = requestData.get("partsReviewContent");
-        int updatedRating = Integer.parseInt(requestData.get("partsReviewRating"));
+        if(requestData.get("partsReviewRating") == null){
+            partService.partsReviewUpdate(id, updatedTitle, updatedContent, userDetails.getUsername());
+        } else {
+            int updatedRating = Integer.parseInt(requestData.get("partsReviewRating"));
+            partService.partsReviewUpdate(id, updatedTitle, updatedContent, updatedRating, userDetails.getUsername());
+        }
+
 
         //수정 처리
-        partService.partsReviewUpdate(id, updatedTitle, updatedContent, updatedRating, userDetails.getUsername());
         // JSON 응답 반환
         Map<String, String> response = new HashMap<>();
         response.put("message", "리뷰가 수정되었습니다.");

@@ -30,9 +30,12 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
             console.log('서버 응답:', data);
                 if (data.success) {
+                    const reviewButton = document.querySelector("#create\\ review");
                     const priceElement = row.querySelector(".price");
                     const itemPrice = parseFloat(priceElement.innerText.replace('$', '').replace(',', '')) || 0;
 
+                    reviewButton.disabled = true; // 버튼 비활성화
+                    reviewButton.style.color = "#B0BEC5"; // 텍스트 색상 변경
                     // 부품 상태를 "Choose a Part"로 변경
                     const nameElement = row.querySelector(".name");
                     const link = nameElement.querySelector("a");
