@@ -200,7 +200,9 @@ public class CartService {
 
     // Intel CPU의 지원 메모리 유형
     private List<String> getIntelSupportedMemoryTypes(String cpuName) {
-        if (cpuName.matches(".*-13.*") || cpuName.matches(".*-12.*")) {
+        if (cpuName.matches(".*-14.*")) {
+            return List.of("DDR5");
+        } else if (cpuName.matches(".*-13.*") || cpuName.matches(".*-12.*")) {
             return Arrays.asList("DDR4", "DDR5"); // 12, 13세대는 DDR4, DDR5 지원
         } else if (cpuName.matches(".*-8.*|.*-9.*|.*-10.*|.*-11.*")) {
             return List.of("DDR4"); // 8~11세대는 DDR4 지원

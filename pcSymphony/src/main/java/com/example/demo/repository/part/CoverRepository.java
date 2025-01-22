@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CoverRepository extends JpaRepository<CoverEntity, Integer> {
-    Page<CpuEntity> findByNameContainingOrManufacturerContaining(String name, String manufacturer, Pageable pageable);
+    Page<CoverEntity> findByNameContainingOrManufacturerContaining(String name, String manufacturer, Pageable pageable);
 }
