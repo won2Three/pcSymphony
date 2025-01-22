@@ -211,6 +211,7 @@ function fetchReviews(partType, partId) {
                 row.appendChild(dateCell);
 
                 // 수정 버튼 (작성자와 로그인한 사용자 비교 후 표시 여부 결정)
+                // check...
                 const editCell = document.createElement('td');
                 const editButton = document.createElement('button');
                 editButton.textContent = 'Edit';
@@ -230,6 +231,7 @@ function fetchReviews(partType, partId) {
                 deleteCell.classList.add('table-cell');
                 deleteButton.classList.add('delete-small-button');
                 checkPermissionAndShowButton(review.partsReviewId, 'delete', deleteButton);  // 권한 확인 후 버튼 보이기
+                // check...
                 deleteCell.appendChild(deleteButton);
                 row.appendChild(deleteCell);
 
@@ -270,7 +272,7 @@ function checkPermissionAndShowButton(partsReviewId, action, button) {
             alert('A problem occurred while verifying permissions.');
         });
 }
-
+// check...
 // 수정 버튼 클릭 시 리뷰 수정
 function editReview(partsReviewId) {
     const row = document.querySelector(`tr[data-review-id='${partsReviewId}']`);
@@ -280,13 +282,14 @@ function editReview(partsReviewId) {
     const contentTextarea = row.querySelector('.edit-content');
     const starsContainer = row.querySelector('.stars');
     const ratingInput = row.querySelector('.edit-rating');
-
+    const editButton = row.querySelector('.main-small-button')
     if (!titleSpan || !contentSpan || !titleInput || !contentTextarea || !starsContainer || !ratingInput) {
         console.error("One or more elements are missing in the row for review ID:", partsReviewId);
         return;
     }
 
     // 제목, 내용, 별점 수정 가능하게 전환
+    editButton.style.display = 'none';
     titleSpan.style.display = 'none';
     contentSpan.style.display = 'none';
     titleInput.style.display = 'inline-block';

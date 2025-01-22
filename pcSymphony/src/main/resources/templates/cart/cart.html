@@ -7,10 +7,12 @@
     <link href="../../static/css/header.css" rel="stylesheet" th:href="@{/css/header.css}">
     <link href="../../static/css/cart.css" rel="stylesheet" th:href="@{/css/cart.css}">
     <script src="../../static/js/header.js" th:src="@{/js/header.js}"></script>
+    <link href="../../static/css/footer.css" rel="stylesheet" th:href="@{/css/footer.css}">
     <script src="../../static/js/cart.js" th:src="@{/js/cart.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>CART</title>
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 </head>
 <body id="cart-body">
@@ -39,9 +41,9 @@
                         <a th:if="${cart.cpu == null}" href="/part/cpu" class="no-product-button">chose a Cpu</a>
                     </th>
                     <th class="price" th:text="${cart.cpu != null ? ('$' + cart.cpu.price) : '$0'}">Price</th>
-                    <td>
+                    <th>
                         <button class="deleteButton" th:disabled="${cart.cpu == null}">Delete</button>
-                    </td>
+                    </th>
                 </tr>
                 <tr>
                     <th>2</th>
@@ -51,9 +53,9 @@
                         <a th:if="${cart.cpucooler == null}" href="/part/cpucooler" class="no-product-button">chose a CpuCooler</a>
                     </th>
                     <th class="price" th:text="${cart.cpucooler != null ? ('$' + cart.cpucooler.price) : '$0'}">Price</th>
-                    <td>
+                    <th>
                         <button class="deleteButton" th:disabled="${cart.cpucooler == null}">Delete</button>
-                    </td>
+                    </th>
                 </tr>
                 <tr>
                     <th>3</th>
@@ -63,9 +65,9 @@
                         <a th:if="${cart.videocard == null}" href="/part/videocard" class="no-product-button">chose a VideoCard</a>
                     </th>
                     <th class="price" th:text="${cart.videocard != null ? ('$' + cart.videocard.price) : '$0'}">Price</th>
-                    <td>
+                    <th>
                         <button class="deleteButton" th:disabled="${cart.videocard == null}">Delete</button>
-                    </td>
+                    </th>
                 </tr>
                 <tr>
                     <th>4</th>
@@ -75,9 +77,9 @@
                         <a th:if="${cart.memory == null}" href="/part/memory" class="no-product-button">chose a Memory</a>
                     </th>
                     <th class="price" th:text="${cart.memory != null ? ('$' + cart.memory.price) : '$0'}">Price</th>
-                    <td>
+                    <th>
                         <button class="deleteButton" th:disabled="${cart.memory == null}">Delete</button>
-                    </td>
+                    </th>
                 </tr>
                 <tr>
                     <th>5</th>
@@ -87,9 +89,9 @@
                         <a th:if="${cart.storage == null}" href="/part/storage" class="no-product-button">chose a Storage</a>
                     </th>
                     <th class="price" th:text="${cart.storage != null ? ('$' + cart.storage.price) : '$0'}">Price</th>
-                    <td>
+                    <th>
                         <button class="deleteButton" th:disabled="${cart.storage == null}">Delete</button>
-                    </td>
+                    </th>
                 </tr>
                 <tr>
                     <th>6</th>
@@ -99,9 +101,9 @@
                         <a th:if="${cart.motherboard == null}" href="/part/motherboard" class="no-product-button">chose a MotherBoard</a>
                     </th>
                     <th class="price" th:text="${cart.motherboard != null ? ('$' + cart.motherboard.price) : '$0'}">Price</th>
-                    <td>
+                    <th>
                         <button class="deleteButton" th:disabled="${cart.motherboard == null}">Delete</button>
-                    </td>
+                    </th>
                 </tr>
                 <tr>
                     <th>7</th>
@@ -111,9 +113,9 @@
                         <a th:if="${cart.powersupply == null}" href="/part/powersupply" class="no-product-button">chose a PowerSupply</a>
                     </th>
                     <th class="price" th:text="${cart.powersupply != null ? ('$' + cart.powersupply.price) : '$0'}">Price</th>
-                    <td>
+                    <th>
                         <button class="deleteButton" th:disabled="${cart.powersupply == null}">Delete</button>
-                    </td>
+                    </th>
                 </tr>
                 <tr>
                     <th>8</th>
@@ -123,9 +125,9 @@
                         <a th:if="${cart.cover == null}" href="/part/cover" class="no-product-button">chose a Case</a>
                     </th>
                     <th class="price" th:text="${cart.cover != null ? ('$' + cart.cover.price) : '$0'}">Price</th>
-                    <td>
+                    <th>
                         <button class="deleteButton" th:disabled="${cart.cover == null}">Delete</button>
-                    </td>
+                    </th>
                 </tr>
                 </tbody>
             </table>
