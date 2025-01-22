@@ -233,7 +233,10 @@
                                     <div class="tiles-item-inner has-shadow">
                                         <figure class="news-item-image m-0">
                                             <!-- 이미지 동적으로 출력 -->
-                                            <img alt="PcReview Image" height="194" th:src="@{${pcReview.imagePath}}" width="344">
+                                            <img alt="PcReview Image"
+                                                 th:src="@{${pcReview.imagePath}}"
+                                                 style="width: 344px; height: 194px; object-fit: cover;">
+
                                         </figure>
                                         <div class="news-item-content">
                                             <div class="news-item-body">
