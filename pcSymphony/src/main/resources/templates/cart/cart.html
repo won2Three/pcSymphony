@@ -35,7 +35,7 @@
                     <th>1</th>
                     <th><a class="category" href="/part/cpu">CPU</a></th>
                     <th class="name" data-part="cpu">
-                        <span th:if="${cart.cpu != null}" th:text="${cart.cpu.name}"></span>
+                        <a th:href="'/part/cpu/' + ${cart.cpu.id}"  th:if="${cart.cpu != null}" th:text="${cart.cpu.name}"></a>
                         <a th:if="${cart.cpu == null}" href="/part/cpu" class="no-product-button">chose a Cpu</a>
                     </th>
                     <th class="price" th:text="${cart.cpu != null ? ('$' + cart.cpu.price) : '$0'}">Price</th>
@@ -47,7 +47,7 @@
                     <th>2</th>
                     <th><a class="category" href="/part/cpucooler">CpuCooler</a></th>
                     <th class="name" data-part="cpucooler">
-                        <span th:if="${cart.cpucooler != null}" th:text="${cart.cpucooler.name}"></span>
+                        <a  th:href="'/part/cpucooler/' + ${cart.cpucooler.id}"  th:if="${cart.cpucooler != null}" th:text="${cart.cpucooler.name}"></a>
                         <a th:if="${cart.cpucooler == null}" href="/part/cpucooler" class="no-product-button">chose a CpuCooler</a>
                     </th>
                     <th class="price" th:text="${cart.cpucooler != null ? ('$' + cart.cpucooler.price) : '$0'}">Price</th>
@@ -59,7 +59,7 @@
                     <th>3</th>
                     <th><a class="category" href="/part/videocard">VideoCard</a></th>
                     <th class="name" data-part="videocard">
-                        <span th:if="${cart.videocard != null}" th:text="${cart.videocard.name}"></span>
+                        <a th:href="'/part/videocard/' + ${cart.videocard.id}"  th:if="${cart.videocard != null}" th:text="${cart.videocard.name}"></a>
                         <a th:if="${cart.videocard == null}" href="/part/videocard" class="no-product-button">chose a VideoCard</a>
                     </th>
                     <th class="price" th:text="${cart.videocard != null ? ('$' + cart.videocard.price) : '$0'}">Price</th>
@@ -71,7 +71,7 @@
                     <th>4</th>
                     <th><a class="category" href="/part/memory">Memory</a></th>
                     <th class="name" data-part="memory">
-                        <span th:if="${cart.memory != null}" th:text="${cart.memory.name}"></span>
+                        <a th:href="'/part/memory/' + ${cart.memory.id}" th:if="${cart.memory != null}" th:text="${cart.memory.name}"></a>
                         <a th:if="${cart.memory == null}" href="/part/memory" class="no-product-button">chose a Memory</a>
                     </th>
                     <th class="price" th:text="${cart.memory != null ? ('$' + cart.memory.price) : '$0'}">Price</th>
@@ -83,7 +83,7 @@
                     <th>5</th>
                     <th><a class="category" href="/part/storage">Storage</a></th>
                     <th class="name" data-part="storage">
-                        <span th:if="${cart.storage != null}" th:text="${cart.storage.name}"></span>
+                        <a th:href="'/part/storage/' + ${cart.storage.id}" th:if="${cart.storage != null}" th:text="${cart.storage.name}"></a>
                         <a th:if="${cart.storage == null}" href="/part/storage" class="no-product-button">chose a Storage</a>
                     </th>
                     <th class="price" th:text="${cart.storage != null ? ('$' + cart.storage.price) : '$0'}">Price</th>
@@ -95,7 +95,7 @@
                     <th>6</th>
                     <th><a class="category" href="/part/motherboard">MotherBoard</a></th>
                     <th class="name" data-part="motherboard">
-                        <span th:if="${cart.motherboard != null}" th:text="${cart.motherboard.name}"></span>
+                        <a th:href="'/part/motherboard/' + ${cart.motherboard.id}" th:if="${cart.motherboard != null}" th:text="${cart.motherboard.name}"></a>
                         <a th:if="${cart.motherboard == null}" href="/part/motherboard" class="no-product-button">chose a MotherBoard</a>
                     </th>
                     <th class="price" th:text="${cart.motherboard != null ? ('$' + cart.motherboard.price) : '$0'}">Price</th>
@@ -107,7 +107,7 @@
                     <th>7</th>
                     <th><a class="category" href="/part/powersupply">PowerSupply</a></th>
                     <th class="name" data-part="powersupply">
-                        <span th:if="${cart.powersupply != null}" th:text="${cart.powersupply.name}"></span>
+                        <a th:href="'/part/powersupply/' + ${cart.powersupply.id}" th:if="${cart.powersupply != null}" th:text="${cart.powersupply.name}"></a>
                         <a th:if="${cart.powersupply == null}" href="/part/powersupply" class="no-product-button">chose a PowerSupply</a>
                     </th>
                     <th class="price" th:text="${cart.powersupply != null ? ('$' + cart.powersupply.price) : '$0'}">Price</th>
@@ -119,7 +119,7 @@
                     <th>8</th>
                     <th><a class="category" href="/part/cover">Case</a></th>
                     <th class="name" data-part="cover">
-                        <span th:if="${cart.cover != null}" th:text="${cart.cover.name}"></span>
+                        <a th:href="'/part/cover/' + ${cart.cover.id}" th:if="${cart.cover != null}" th:text="${cart.cover.name}"></a>
                         <a th:if="${cart.cover == null}" href="/part/cover" class="no-product-button">chose a Case</a>
                     </th>
                     <th class="price" th:text="${cart.cover != null ? ('$' + cart.cover.price) : '$0'}">Price</th>
