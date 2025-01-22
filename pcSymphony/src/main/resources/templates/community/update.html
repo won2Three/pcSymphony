@@ -54,7 +54,7 @@
                     <!-- 제출 버튼 -->
                     <button class="submit-button" type="submit">Submit</button>
                     <!-- 취소 버튼 (목록으로 돌아가기) -->
-                    <button class="cancel-button"><a href="/community/read?communityId=${community.communityId}">Cancel</a>
+                    <button class="cancel-button"><a th:href="@{/community/read(communityId=${community.communityId})}">Cancel</a>
                     </button>
                 </div>
             </form>
