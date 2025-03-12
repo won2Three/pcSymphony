@@ -1,5 +1,6 @@
 package com.example.demo.domain.entity.part;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
 
@@ -7,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})  // Hibernate 프록시 무시
 @Entity
 @Builder
 @Data
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "cover")
-public class CoverEntity {
+public class CoverEntity implements RateableProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,4 +43,20 @@ public class CoverEntity {
 
     @Column(name = "cover_image_url", length = 1000)
     private String imageUrl; // CPU 이미지 경로 필드
+
+    @Column(name = "average_rating")
+    private Double averageRating;
+
+    @Column(name = "review_count")
+    private Integer reviewCount;
+
+    @Override
+    public Double getAverageRating() {
+        return this.averageRating;
+    }
+
+    @Override
+    public Integer getReviewCount() {
+        return this.reviewCount;
+    }
 }

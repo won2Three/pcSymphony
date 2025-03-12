@@ -29,7 +29,7 @@ td:nth-child(4) {
 }
 
 th:nth-child(5), td:nth-child(5) {
-    width: 1%; /* 삭제 버튼 자리를 비워두기 위한 최소 너비 설정 */
+    width: 10%; /* 삭제 버튼 자리를 비워두기 위한 최소 너비 설정 */
     padding: 0; /* 불필요한 여백 제거 */
     text-align: center; /* 삭제 버튼이 들어갈 공간을 중앙 정렬 */
 }
@@ -408,4 +408,11 @@ button:hover {
      background: linear-gradient(to right, #e1f5fe 100%, transparent 100%);
  }
 
-
+/*셀렉트 바*/
+.recommendations-select {
+    width: 100%;              /* ✅ 너비 100% */
+    max-width: 100%;          /* ✅ 최대 너비 설정 */
+    white-space: nowrap;      /* ✅ 줄 바꿈 방지 */
+    overflow: hidden;         /* ✅ 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis;  /* ✅ 말줄임표 (...) 표시 */
+}

@@ -1,33 +1,149 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="71f0e123-fb28-4086-a1df-099c263e41fd" name="변경" comment="" />
+    <list default="true" id="71f0e123-fb28-4086-a1df-099c263e41fd" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/config/QuerydslConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/RateableProduct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/CpuRepositoryCustom.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/CpuRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/PcSymphonyApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/PcSymphonyApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/controller/CartRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/controller/CartRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/CoverEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/CoverEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/CpuCoolerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/CpuCoolerEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/CpuEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/CpuEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/MemoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/MemoryEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/MotherboardEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/MotherboardEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/PowerSupplyEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/PowerSupplyEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/StorageEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/StorageEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/VideoCardEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/domain/entity/part/VideoCardEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/CoverRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/CoverRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/CpuCoolerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/CpuCoolerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/CpuRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/CpuRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/MemoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/MemoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/MotherboardRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/MotherboardRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/PowerSupplyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/PowerSupplyRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/StorageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/StorageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/VideoCardRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/repository/part/VideoCardRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/service/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/java/com/example/demo/service/CartService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/resources/static/css/cart.css" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/resources/static/css/cart.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/resources/static/js/cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/resources/static/js/cart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcSymphony/src/main/resources/templates/cart/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/pcSymphony/src/main/resources/templates/cart/cart.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/pcSymphony">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/pcSymphony">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="pcSymphony" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="pcSymphony" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="pcSymphony" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="pcSymphony" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Lee-DaeWon"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Lee-DaeWon&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/won2Three/pcSymphony.git",
-    "accountId": "2af9e707-9aa8-4d9f-9934-c3c2a46c3040"
+}</component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="lee_plus" />
+                    <option name="lastUsedInstant" value="1739949759" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1739949758" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/won2Three/pcSymphony.git&quot;,
+    &quot;accountId&quot;: &quot;2af9e707-9aa8-4d9f-9934-c3c2a46c3040&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 2
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2rCNRxiewj9QprK6mT3S8COoLrY" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
@@ -36,23 +152,131 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.pcSymphony [:com.example.demo.PcSymphonyApplication.main()].executor": "Run",
+    "Gradle.pcSymphony [build].executor": "Run",
+    "Gradle.pcSymphony [clean].executor": "Run",
+    "Gradle.pcSymphony [dependencies].executor": "Run",
+    "Gradle.pcSymphony 빌드.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "com.codeium.enabled": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "lee__plus",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/git/pcSymphony/pcSymphony",
+    "last_opened_file_path": "C:/Program Files/Java/jdk-17",
     "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true",
+    "애플리케이션.com.example.demo.PcSymphonyApplication.executor": "Run"
   }
 }]]></component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
-      </set>
-    </attachedChunks>
+  <component name="RunManager" selected="Application.com.example.demo.PcSymphonyApplication">
+    <configuration name="PcSymphonyApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../../Program Files/Java/jdk-17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.example.PcSymphonyApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.example.demo.PcSymphonyApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../../Program Files/Java/jdk-17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.PcSymphonyApplication" />
+      <module name="pcSymphony.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.demo.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="pcSymphony [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/pcSymphony" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="pcSymphony [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/pcSymphony" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="pcSymphony [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/pcSymphony" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="dependencies" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.pcSymphony [build]" />
+        <item itemvalue="Gradle.pcSymphony [clean]" />
+        <item itemvalue="Gradle.pcSymphony [dependencies]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -68,5 +292,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

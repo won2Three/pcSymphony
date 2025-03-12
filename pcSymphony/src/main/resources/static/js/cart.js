@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "VideoCard": "videocard",
                 "Memory": "memory",
                 "Storage": "storage",
-                "MotherBoard": "motherboard",
+                "Motherboard": "motherboard",
                 "PowerSupply": "powersupply",
                 "Case": "cover"
             };
@@ -63,6 +63,58 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     });
+
+    // ✅ Delete All 버튼 이벤트 추가
+    document.getElementById("deleteAllButton").addEventListener("click", async function () {
+        if (!confirm("Are you sure you want to delete all items from the cart?")) {
+            return;
+        }
+
+        try {
+            const response = await fetch('/cart/removeAll', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                console.log("All items removed successfully");
+
+                // ✅ 테이블에서 모든 부품 제거
+                document.querySelectorAll(".name").forEach(nameElement => {
+                    nameElement.innerHTML = `<a href="/part/${nameElement.dataset.part}" class="no-product-button">Choose a ${nameElement.dataset.part}</a>`;
+                });
+
+                // ✅ 가격 초기화
+                document.querySelectorAll(".price").forEach(priceElement => {
+                    priceElement.innerText = "$0";
+                });
+
+                // ✅ 개별 삭제 버튼 비활성화
+                document.querySelectorAll(".deleteButton").forEach(button => {
+                    button.setAttribute("disabled", true);
+                });
+
+                // ✅ Total Price 초기화
+                const totalPriceElement = document.querySelector(".totalPrice");
+                if (totalPriceElement) {
+                    totalPriceElement.innerText = "Total Price : $0";
+                }
+
+                // ✅ 셀렉트 박스 다시 보이기
+                document.querySelectorAll(".recommendations-select").forEach(selectBox => {
+                    selectBox.style.display = "block";
+                });
+
+            } else {
+                alert("Failed to remove all items.");
+            }
+        } catch (error) {
+            console.error("Failed to remove all items:", error);
+        }
+    });
+
 
     // 호환성 검사 버튼 클릭 이벤트 추가
     const compatibilityButton = document.getElementById('Compatibility Check');
@@ -381,5 +433,221 @@ document.addEventListener("DOMContentLoaded", function () {
                console.error("Error capturing the content as an image:", error);
            });
  }
-
 });
+//------------------------------------------------------------------------------------
+
+document.addEventListener("DOMContentLoaded", async function () {
+    let cart = {}; // ✅ 전역 변수로 카트 데이터 관리
+
+    /** ✅ 장바구니 데이터 불러오기 */
+    async function loadCartData() {
+        try {
+            const response = await fetch('/cart/get-cart');
+            if (!response.ok) {
+                throw new Error('Failed to fetch cart data');
+            }
+            cart = await response.json();
+            console.log("Cart data loaded:", cart);
+        } catch (error) {
+            console.error("Error loading cart data:", error);
+        }
+    }
+
+    /** ✅ 추천 리스트 불러오기 */
+    async function loadRecommendations(category) {
+        console.log(`Loading recommendations for ${category}`);
+
+        try {
+            const response = await fetch(`/cart/recommend/${category}`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch recommendations for ${category}`);
+            }
+
+            const data = await response.json();
+            console.log(`Received recommendations for ${category}:`, data);
+
+            let selectBox = document.getElementById(`${category}-recommendations`);
+            let partLink = document.querySelector(`.name[data-part="${category}"] a:not(.no-product-button)`);
+
+            if (!selectBox) {
+                console.error(`Select box not found for ${category}`);
+                return;
+            }
+
+            let basedOn = [];
+            if (category === "cpu") {
+                if (cart.motherboard) basedOn.push("Motherboard");
+                if (cart.memory) basedOn.push("Memory");
+            } else if (category === "memory") {
+                if (cart.motherboard) basedOn.push("Motherboard");
+                if (cart.cpu) basedOn.push("CPU");
+            } else if (category === "motherboard") {
+                if (cart.cpu) basedOn.push("CPU");
+                if (cart.memory) basedOn.push("Memory");
+            }
+
+            let basedOnText = basedOn.length ? ` (Based on: ${basedOn.join(", ")})` : "";
+            selectBox.innerHTML = `<option value="">Select a recommended ${category}${basedOnText}</option>`;
+
+            if (partLink) {
+                selectBox.style.display = "none";
+                return;
+            } else {
+                selectBox.style.display = "block";
+            }
+
+            if (!Array.isArray(data)) {
+                console.error(`Invalid response for ${category}:`, data);
+                selectBox.innerHTML += '<option value="" disabled>Error loading recommendations</option>';
+                return;
+            }
+
+            data.slice(0, 10).forEach(part => {
+                let option = document.createElement("option");
+                option.value = part.id;
+                option.textContent = `${part.name}`;
+                selectBox.appendChild(option);
+            });
+
+        } catch (error) {
+            console.error("Error fetching recommendations:", error);
+        }
+    }
+
+    /** ✅ 부품을 선택하면 즉시 화면에 반영 */
+        document.querySelectorAll(".recommendations-select").forEach(selectBox => {
+            selectBox.addEventListener("change", async function () {
+                let category = this.id.replace("-recommendations", "");
+                let partId = this.value;
+
+                if (!partId) return;
+
+                try {
+                    const response = await fetch('/cart/add', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ tableName: category, id: partId })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        console.log(`Item ${partId} added to cart successfully.`);
+
+                        let selectedOption = selectBox.options[selectBox.selectedIndex];
+                        let partName = selectedOption.textContent.trim();
+
+                        // ✅ 가격을 서버에서 다시 요청하여 가져오기
+                        const partResponse = await fetch(`/cart/get-part-price?category=${category}&id=${partId}`);
+                        const partData = await partResponse.json();
+                        let partPrice = partData.price ? parseFloat(partData.price) : 0;
+
+                        let nameElement = document.querySelector(`.name[data-part="${category}"]`);
+                        let priceElement = nameElement.closest("tr").querySelector(".price");
+                        let chooseButton = nameElement.querySelector(".no-product-button");
+
+                        // ✅ 부품 이름 업데이트
+                        nameElement.innerHTML = `<a href="/part/${category}/${partId}" class="${category}-selected">
+                                                    <span data-id="${partId}">${partName}</span>
+                                                </a>`;
+
+                        // ✅ 가격 업데이트
+                        priceElement.innerText = `$${partPrice.toFixed(2)}`;
+
+                        // ✅ "Choose a Part"와 셀렉트 박스 숨기기
+                        if (chooseButton) chooseButton.style.display = "none";
+                        selectBox.style.display = "none";
+
+                        // ✅ 삭제 버튼 활성화
+                        let deleteButton = nameElement.closest("tr").querySelector(".deleteButton");
+                        deleteButton.removeAttribute("disabled");
+
+                        // ✅ 총 가격 업데이트
+                        updateTotalPrice();
+
+                    } else {
+                        alert('Failed to add item to cart.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+
+
+
+    /** ✅ 삭제 시 즉시 화면에 반영 */
+    document.querySelectorAll(".deleteButton").forEach(button => {
+        button.addEventListener("click", async function () {
+            const row = button.closest("tr");
+            const category = row.querySelector(".category").innerText.toLowerCase();
+
+            try {
+                const response = await fetch('/cart/removeItem', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ cartItem: category })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    console.log(`Item from ${category} removed successfully`);
+
+                    let nameElement = document.querySelector(`.name[data-part="${category}"]`);
+                    let selectBox = document.getElementById(`${category}-recommendations`);
+
+                    // ✅ "Choose a CPU" 다시 표시
+                    nameElement.innerHTML = `<a href="/part/${category}" class="no-product-button">Choose a ${category}</a>`;
+
+                    // ✅ 삭제 버튼 비활성화
+                    button.setAttribute("disabled", true);
+
+                    // ✅ 셀렉트 박스 즉시 표시
+                    if (selectBox) {
+                        selectBox.style.display = "block";
+                    }
+
+                } else {
+                    alert("삭제 실패");
+                }
+            } catch (error) {
+                console.error("삭제 실패:", error);
+            }
+        });
+    });
+
+//total price 업데이트
+function updateTotalPrice() {
+    let totalPrice = 0;
+
+    document.querySelectorAll(".price").forEach(priceElement => {
+        let priceMatch = priceElement.innerText.match(/\$(\d+(\.\d+)?)/);
+        let partPrice = priceMatch ? parseFloat(priceMatch[1]) : 0;
+        totalPrice += partPrice;
+    });
+
+    const totalPriceElement = document.querySelector(".totalPrice");
+    if (totalPriceElement) {
+        totalPriceElement.innerText = `Total Price : $${totalPrice.toLocaleString()}`;
+    }
+}
+
+    /** ✅ 페이지 로드 시 모든 추천 리스트 및 장바구니 데이터 로드 */
+        async function loadAllRecommendations() {
+            await loadCartData();
+            let categories = ["cpu", "motherboard", "memory", "videocard", "storage", "powersupply", "cpucooler", "cover"];
+            categories.forEach(category => loadRecommendations(category));
+        }
+
+        loadAllRecommendations();
+});
+
+
+
+/*
+1. 딜리트하면 셀렉트 바 즉시 안뜸, 새로고침 해야 반영됨
+2. 셀렉트 바에서 선택했을때 바로 화면에 반영 안됨, 새로고침해야 됨
+3. 파워, 글카, 메모리 추천리스트 제대로 안뜸
+*/

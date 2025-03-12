@@ -11,6 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+import java.util.Comparator;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -356,7 +360,231 @@ public class CartService {
         cartRepository.save(cartEntity);
     }
 
+//    // ✅ CPU가 지원하는 대체 메모리 타입 반환
+//    private List<String> getAlternativeMemoryTypes(String memoryType) {
+//        if ("DDR4".equalsIgnoreCase(memoryType)) {
+//            return List.of("DDR3", "DDR5"); // DDR4를 지원하는 CPU는 DDR3, DDR5도 지원 가능
+//        } else if ("DDR5".equalsIgnoreCase(memoryType)) {
+//            return List.of("DDR4", ""); // DDR5를 지원하는 CPU는 DDR4도 가능
+//        } else if ("DDR3".equalsIgnoreCase(memoryType)) {
+//            return List.of("DDR4", ""); // DDR3를 지원하는 CPU는 DDR4도 가능
+//        }
+//        return List.of(""); // 기본적으로 하나만 존재하는 경우
+//    }
+//
+//    // ✅ 메모리 타입을 기반으로 CPU 추천
+//    public List<CpuEntity> getRecommendedCpusByMemory(String memoryType) {
+//        List<String> alternativeTypes = getAlternativeMemoryTypes(memoryType);
+//        return cpuRepository.findCompatibleCpusByMemory(
+//                memoryType,
+//                alternativeTypes.size() > 0 ? alternativeTypes.get(0) : "",
+//                alternativeTypes.size() > 1 ? alternativeTypes.get(1) : ""
+//        );
+//    }
+//
+//
+//    // ✅ 마더보드 + 메모리를 기반으로 CPU 추천
+//    public List<CpuEntity> getRecommendedCpusByMotherboardAndMemory(String motherboardSocket, String memoryType) {
+//        List<String> alternativeTypes = getAlternativeMemoryTypes(memoryType);
+//        return cpuRepository.findCompatibleCpusByMotherboardAndMemory(
+//                motherboardSocket,
+//                memoryType,
+//                alternativeTypes.size() > 0 ? alternativeTypes.get(0) : "",
+//                alternativeTypes.size() > 1 ? alternativeTypes.get(1) : ""
+//        );
+//    }
+
+    private List<CpuEntity> getRecommendedCpusByMemory(String memoryType) {
+        return cpuRepository.findCompatibleCpusByMemory(memoryType, memoryType.replace("DDR", ""), "DDR" + (Integer.parseInt(memoryType.replace("DDR", "")) + 1));
+    }
+
+    private List<CpuEntity> getRecommendedCpusByMotherboardAndMemory(String motherboardSocket, String memoryType) {
+        return cpuRepository.findCompatibleCpusByMotherboardAndMemory(
+    motherboardSocket,
+    memoryType,
+    memoryType.replace("DDR", ""),
+    "DDR" + (Integer.parseInt(memoryType.replace("DDR", "")) + 1)
+);
+    }
+
+
+    // ✅ 추천 부품 조회 (NPE 방지)
+    public List<? extends RateableProduct> getRecommendedParts(CartEntity cart, String category) {
+        switch (category.toLowerCase()) {
+            case "cpu":
+                if (cart.getMotherboard() != null) {
+                    return cpuRepository.findCompatibleCpusByMotherboard(cart.getMotherboard().getMotherboardSocketCpu());
+                }
+                if (cart.getMemory() != null && cart.getMotherboard() == null) {
+                    String memoryType = cart.getMemory().getMemoryFormFactor().split("-")[0];
+                    return cpuRepository.findCompatibleCpusByMemory(
+                            memoryType,
+                            memoryType.replace("DDR", ""),  // DDR5 → 5, DDR4 → 4 (대체 메모리 타입)
+                            ""  // 추가적인 대체 타입이 없다면 빈 문자열 전달
+                    );
+                }
+
+                if (cart.getMotherboard() != null && cart.getMemory() != null) {
+                    String motherboardSocket = cart.getMotherboard().getMotherboardSocketCpu();
+                    String memoryType = cart.getMemory().getMemoryFormFactor().split("-")[0];
+
+                    return cpuRepository.findCompatibleCpusByMotherboardAndMemory(
+                            motherboardSocket,
+                            memoryType,
+                            memoryType.replace("DDR", ""),  // DDR5 → 5, DDR4 → 4 (대체 메모리 타입)
+                            ""  // 추가적인 대체 타입이 없다면 빈 문자열 전달
+                    );
+                }
+                return cpuRepository.findAll();
+
+
+            case "cpucooler":
+                return cpuCoolerRepository.findAllCpuCoolers(); // ✅ 모든 CPU 쿨러 반환
+
+            case "motherboard":
+                String cpuSocket = (cart.getCpu() != null) ? cart.getCpu().getCpuSocket() : null;
+                String memoryType = (cart.getMemory() != null) ? cart.getMemory().getMemoryFormFactor().split("-")[0] : null;
+                String coverFormFactor = (cart.getCover() != null) ? cart.getCover().getCoverMotherboardFormFactor() : null;
+
+                return motherboardRepository.findCompatibleMotherboards(cpuSocket, memoryType, coverFormFactor);
+
+            case "memory":
+                if (cart.getCpu() != null && cart.getMotherboard() == null) {
+                    List<String> cpuSupportedMemoryTypes = getSupportedMemoryTypes(cart.getCpu());
+                    if (!cpuSupportedMemoryTypes.isEmpty()) {
+                        return memoryRepository.findCompatibleMemories(cpuSupportedMemoryTypes.get(0), null);
+                    }
+                }
+
+                if (cart.getCpu() == null && cart.getMotherboard() != null) {
+                    String motherboardMemoryType = cart.getMotherboard().getMotherboardMemoryType();
+                    return (motherboardMemoryType != null && !motherboardMemoryType.isEmpty())
+                            ? memoryRepository.findByMemoryFormFactorLike(motherboardMemoryType)
+                            : List.of();
+                }
+
+                if (cart.getCpu() != null && cart.getMotherboard() != null) {
+                    String motherboardMemoryType = cart.getMotherboard().getMotherboardMemoryType();
+                    List<String> cpuSupportedMemoryTypes = getSupportedMemoryTypes(cart.getCpu());
+
+                    List<String> compatibleMemoryTypes = cpuSupportedMemoryTypes.stream()
+                            .filter(motherboardMemoryType::contains)
+                            .toList();
+
+                    if (!compatibleMemoryTypes.isEmpty()) {
+                        return memoryRepository.findCompatibleMemoriesByCpuOrMotherboard(
+                                compatibleMemoryTypes.get(0), motherboardMemoryType
+                        );
+                    }
+                }
+                return memoryRepository.findAll();
+
+            case "storage":
+                return storageRepository.findAllStorages(); // ✅ 모든 저장장치 반환
+
+            case "videocard":
+                Integer maxLength = (cart.getCover() != null) ? cart.getCover().getCoverMaxVideoCardLength() : null;
+
+                return (maxLength != null)
+                        ? videoCardRepository.findCompatibleVideoCards(maxLength)
+                        : videoCardRepository.findAll();
+
+            case "powersupply":
+                CoverEntity cover = cart.getCover();
+                if (cover != null && cover.getCoverPowerSupply() != null) {
+                    List<String> coverSupportedPowerSupplies = Arrays.asList(cover.getCoverPowerSupply().split(",\\s*"));
+                    return powerSupplyRepository.findAll().stream()
+                            .filter(psu -> Arrays.asList(psu.getPowerSupplyType().split(",\\s*"))
+                                    .stream().anyMatch(coverSupportedPowerSupplies::contains))
+                            .collect(Collectors.toList());
+                }
+                return powerSupplyRepository.findAll();
+
+
+            case "cover":
+                List<CoverEntity> covers = new ArrayList<>();
+
+                String motherboardFormFactor = (cart.getMotherboard() != null) ? cart.getMotherboard().getMotherboardFormFactor() : null;
+                Double videoCardLength = (cart.getVideocard() != null) ? cart.getVideocard().getVideoCardLength() : null;
+                List<String> powerSupplyTypes = (cart.getPowersupply() != null)
+                        ? Arrays.asList(cart.getPowersupply().getPowerSupplyType().split(",\\s*"))
+                        : null;
+
+                // ✅ 마더보드만 선택된 경우
+                if (motherboardFormFactor != null && videoCardLength == null && powerSupplyTypes == null) {
+                    return coverRepository.findCoversByMotherboard(motherboardFormFactor);
+                }
+
+                // ✅ 비디오카드만 선택된 경우
+                if (motherboardFormFactor == null && videoCardLength != null && powerSupplyTypes == null) {
+                    return coverRepository.findCoversByVideoCard(videoCardLength);
+                }
+
+                // ✅ 파워서플라이만 선택된 경우
+                if (motherboardFormFactor == null && videoCardLength == null && powerSupplyTypes != null) {
+                    return powerSupplyTypes.stream()
+                            .flatMap(type -> coverRepository.findCoversByPowerSupply(type).stream())
+                            .distinct()
+                            .collect(Collectors.toList());
+                }
+
+                // ✅ 마더보드 + 비디오카드 선택된 경우
+                if (motherboardFormFactor != null && videoCardLength != null && powerSupplyTypes == null) {
+                    List<CoverEntity> byMotherboard = coverRepository.findCoversByMotherboard(motherboardFormFactor);
+                    List<CoverEntity> byVideoCard = coverRepository.findCoversByVideoCard(videoCardLength);
+                    return byMotherboard.stream().filter(byVideoCard::contains).collect(Collectors.toList());
+                }
+
+                // ✅ 마더보드 + 파워서플라이 선택된 경우
+                if (motherboardFormFactor != null && videoCardLength == null && powerSupplyTypes != null) {
+                    List<CoverEntity> byMotherboard = coverRepository.findCoversByMotherboard(motherboardFormFactor);
+                    List<CoverEntity> byPowerSupply = powerSupplyTypes.stream()
+                            .flatMap(type -> coverRepository.findCoversByPowerSupply(type).stream())
+                            .distinct()
+                            .collect(Collectors.toList());
+                    return byMotherboard.stream().filter(byPowerSupply::contains).collect(Collectors.toList());
+                }
+
+                // ✅ 비디오카드 + 파워서플라이 선택된 경우
+                if (motherboardFormFactor == null && videoCardLength != null && powerSupplyTypes != null) {
+                    List<CoverEntity> byVideoCard = coverRepository.findCoversByVideoCard(videoCardLength);
+                    List<CoverEntity> byPowerSupply = powerSupplyTypes.stream()
+                            .flatMap(type -> coverRepository.findCoversByPowerSupply(type).stream())
+                            .distinct()
+                            .collect(Collectors.toList());
+                    return byVideoCard.stream().filter(byPowerSupply::contains).collect(Collectors.toList());
+                }
+
+                // ✅ 마더보드 + 비디오카드 + 파워서플라이 모두 선택된 경우
+                if (motherboardFormFactor != null && videoCardLength != null && powerSupplyTypes != null) {
+                    List<CoverEntity> byMotherboard = coverRepository.findCoversByMotherboard(motherboardFormFactor);
+                    List<CoverEntity> byVideoCard = coverRepository.findCoversByVideoCard(videoCardLength);
+                    List<CoverEntity> byPowerSupply = powerSupplyTypes.stream()
+                            .flatMap(type -> coverRepository.findCoversByPowerSupply(type).stream())
+                            .distinct()
+                            .collect(Collectors.toList());
+
+                    return byMotherboard.stream()
+                            .filter(byVideoCard::contains)
+                            .filter(byPowerSupply::contains)
+                            .collect(Collectors.toList());
+                }
+                return coverRepository.findAll();
+        }
+        return List.of();
+    }
+
+
+
+    // ✅ 정렬된 추천 리스트 반환 (별점 + 리뷰 수 기준)
+    public List<? extends RateableProduct> getSortedRecommendedParts(CartEntity cart, String category) {
+        return getRecommendedParts(cart, category).stream()
+                .sorted(Comparator.comparingDouble((RateableProduct p) ->
+                        Optional.ofNullable(p.getAverageRating()).orElse(0.0) * 0.7 +
+                                Optional.ofNullable(p.getReviewCount()).orElse(0) * 0.3
+                ).reversed()) // ✅ 높은 점수 순으로 정렬
+                .limit(10) // ✅ 상위 10개만 반환
+                .collect(Collectors.toList());
+    }
+
 }
-
-
-

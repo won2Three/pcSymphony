@@ -7,6 +7,7 @@ import com.example.demo.repository.CartRepository;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.part.*;
 import com.example.demo.service.CartService;
+import org.hibernate.type.ComponentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.security.Principal;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -49,10 +53,10 @@ public class CartRestController {
     private MemberRepository memberRepository;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addToCart(@RequestBody Map<String, Object> requestData, Principal principal) {
+    public ResponseEntity<Map<String, Object>> addToCart(@RequestBody Map<String, Object> requestData, Principal principal) {
         if (principal == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("User is not authenticated.");
+                    .body(Map.of("success", false, "message", "User is not authenticated."));
         }
 
         MemberEntity user = memberRepository.findByMemberId(principal.getName())
@@ -113,11 +117,18 @@ public class CartRestController {
                 cartEntity.setCover(cover);
                 break;
             default:
-                return ResponseEntity.badRequest().body("Invalid table name: " + tableName);
+//                return ResponseEntity.badRequest().body("Invalid table name: " + tableName);
         }
 
         cartRepository.save(cartEntity);
-        return ResponseEntity.ok("Item added to cart successfully");
+//        return ResponseEntity.ok("Item added to cart successfully");
+        // ✅ JSON 형태로 응답 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "Item added to cart successfully");
+        response.put("price", cartEntity.getCpu() != null ? cartEntity.getCpu().getPrice() : 0);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/removeItem")
@@ -304,7 +315,142 @@ public class CartRestController {
         ));
     }
 
+    // 부품 추천
+    public CartRestController(CartService cartService, CartRepository cartRepository) {
+        this.cartService = cartService;
+        this.cartRepository = cartRepository;
+    }
 
+    @GetMapping("/recommend")
+    public ResponseEntity<Map<String, List<? extends RateableProduct>>> getRecommendations() {
+        String loggedInUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        CartEntity cart = cartRepository.findByUser_MemberId(loggedInUserName);
+
+        if (cart == null) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("recommendations", List.of())); // 빈 리스트 반환
+        }
+
+        Map<String, List<? extends RateableProduct>> recommendations = new HashMap<>();
+
+        if (cart.getCpu() != null) {
+            recommendations.put("motherboard", cartService.getSortedRecommendedParts(cart, "cpu"));
+        }
+        if (cart.getMotherboard() != null) {
+            recommendations.put("cpu", cartService.getSortedRecommendedParts(cart, "motherboard"));
+        }
+        if (cart.getCpu() != null && cart.getMotherboard() != null) {
+            recommendations.put("memory", cartService.getSortedRecommendedParts(cart, "memory"));
+        }
+        if (cart.getMotherboard() != null) {
+            recommendations.put("storage", cartService.getSortedRecommendedParts(cart, "storage"));
+            recommendations.put("videocard", cartService.getSortedRecommendedParts(cart, "videocard"));
+        }
+
+        return ResponseEntity.ok(recommendations);
+    }
+
+    // ✅ 특정 카테고리의 추천 부품 반환 API
+    @GetMapping("/recommend/{category}")
+    public ResponseEntity<List<? extends RateableProduct>> getRecommendations(@PathVariable String category) {
+        String loggedInUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        CartEntity cart = cartRepository.findByUser_MemberId(loggedInUserName);
+
+        if (cart == null) {
+            return ResponseEntity.ok(Collections.emptyList()); // 빈 리스트 반환
+        }
+        List<? extends RateableProduct> recommendedParts = cartService.getSortedRecommendedParts(cart, category);
+        return ResponseEntity.ok(recommendedParts);
+    }
+
+    @GetMapping("/get-cart")
+    public ResponseEntity<?> getCartData() {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null || !authentication.isAuthenticated()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("error", "User is not authenticated."));
+            }
+
+            String loggedInUserName = authentication.getName();
+            CartEntity cart = cartRepository.findByUser_MemberId(loggedInUserName);
+
+            if (cart == null) {
+                return ResponseEntity.ok(new CartEntity()); // ✅ 빈 장바구니 반환
+            }
+
+            return ResponseEntity.ok(cart);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Failed to load cart data", "details", e.getMessage()));
+        }
+    }
+
+    @PostMapping("/removeAll")
+    public ResponseEntity<Map<String, Object>> removeAllItems(Principal principal) {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("success", false, "message", "User is not authenticated."));
+        }
+
+        String userId = principal.getName();
+        CartEntity cart = cartRepository.findByUser_MemberId(userId);
+
+        if (cart == null) {
+            return ResponseEntity.ok(Map.of("success", true)); // 이미 장바구니가 비어있음
+        }
+
+        // ✅ 장바구니에서 모든 부품 제거
+        cart.setCpu(null);
+        cart.setCpucooler(null);
+        cart.setMotherboard(null);
+        cart.setMemory(null);
+        cart.setStorage(null);
+        cart.setVideocard(null);
+        cart.setPowersupply(null);
+        cart.setCover(null);
+
+        cartRepository.save(cart); // ✅ 변경 사항 저장
+
+        return ResponseEntity.ok(Map.of("success", true, "message", "All items removed from cart."));
+    }
+
+    @GetMapping("/get-part-price")
+    public ResponseEntity<Map<String, Object>> getPartPrice(@RequestParam String category, @RequestParam int id) {
+        Map<String, Object> response = new HashMap<>();
+
+        switch (category.toLowerCase()) {
+            case "cpu":
+                response.put("price", cpuRepository.findById(id).map(CpuEntity::getPrice).orElse(0.0));
+                break;
+            case "motherboard":
+                response.put("price", motherboardRepository.findById(id).map(MotherboardEntity::getPrice).orElse(0.0));
+                break;
+            case "memory":
+                response.put("price", memoryRepository.findById(id).map(MemoryEntity::getPrice).orElse(0.0));
+                break;
+            case "videocard":
+                response.put("price", videoCardRepository.findById(id).map(VideoCardEntity::getPrice).orElse(0.0));
+                break;
+            case "storage":
+                response.put("price", storageRepository.findById(id).map(StorageEntity::getPrice).orElse(0.0));
+                break;
+            case "powersupply":
+                response.put("price", powerSupplyRepository.findById(id).map(PowerSupplyEntity::getPrice).orElse(0.0));
+                break;
+            case "cpucooler":
+                response.put("price", cpuCoolerRepository.findById(id).map(CpuCoolerEntity::getPrice).orElse(0.0));
+                break;
+            case "cover":
+                response.put("price", coverRepository.findById(id).map(CoverEntity::getPrice).orElse(0.0));
+                break;
+            default:
+                return ResponseEntity.badRequest().body(Map.of("error", "Invalid category"));
+        }
+
+        return ResponseEntity.ok(response);
+    }
 
 
 

@@ -1,5 +1,7 @@
 package com.example.demo.domain.entity.part;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.querydsl.core.annotations.QueryEntity;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
@@ -14,6 +16,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@QueryEntity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})  // Hibernate 프록시 무시
 @Builder
 @Data
 @NoArgsConstructor
@@ -21,7 +25,7 @@ import lombok.NoArgsConstructor;
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "cpu")
-public class CpuEntity {
+public class CpuEntity implements RateableProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,4 +61,21 @@ public class CpuEntity {
 
     @Column(name = "cpu_image_url", length = 1000)
     private String imageUrl; // CPU 이미지 경로 필드
+
+    // 평균 별점
+    @Column(name = "average_rating")
+    private Double averageRating;
+
+    @Column(name = "review_count")
+    private Integer reviewCount;
+
+    @Override
+    public Double getAverageRating() {
+        return this.averageRating;
+    }
+
+    @Override
+    public Integer getReviewCount() {
+        return this.reviewCount;
+    }
 }

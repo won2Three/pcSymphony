@@ -29,7 +29,7 @@
                     <th>Category</th>
                     <th>Name</th>
                     <th>Price</th>
-                    <th></th> <!-- 빈 공간을 위한 열 -->
+                    <th><button class="deleteButton" id="deleteAllButton">Delete All</button></th> <!-- 전체 삭제 버튼 -->
                 </tr>
                 </thead>
                 <tbody id="tbody">
@@ -37,8 +37,19 @@
                     <th>1</th>
                     <th><a class="category" href="/part/cpu">CPU</a></th>
                     <th class="name" data-part="cpu">
-                        <a th:if="${cart.cpu != null}" th:href="'/part/cpu/' + ${cart.cpu.id}"><span th:text="${cart.cpu.name}"></span></a>
-                        <a th:if="${cart.cpu == null}" href="/part/cpu" class="no-product-button">chose a Cpu</a>
+                        <!-- ✅ 부품이 선택되었을 때만 보이는 링크 -->
+                        <a th:if="${cart.cpu != null}" th:href="'/part/cpu/' + ${cart.cpu.id}" class="cpu-selected">
+                            <span th:text="${cart.cpu.name}" data-id="${cart.cpu.id}"></span>
+                        </a>
+
+                        <!-- ✅ 부품이 없을 때만 보이는 "Choose a CPU" 버튼 -->
+                        <a th:if="${cart.cpu == null}" href="/part/cpu" class="no-product-button">Choose a CPU</a>
+
+                        <!-- ✅ 부품이 없을 때만 보이도록 변경 -->
+                        <select id="cpu-recommendations" class="recommendations-select"
+                                th:style="${cart.cpu == null} ? 'display: block;' : 'display: none;'">
+                            <option value="">Select a recommended CPU</option>
+                        </select>
                     </th>
                     <th class="price" th:text="${cart.cpu != null ? ('$' + cart.cpu.price) : '$0'}">Price</th>
                     <th>
@@ -49,8 +60,13 @@
                     <th>2</th>
                     <th><a class="category" href="/part/cpucooler">CpuCooler</a></th>
                     <th class="name" data-part="cpucooler">
-                        <a  th:if="${cart.cpucooler != null}"  th:href="'/part/cpucooler/' + ${cart.cpucooler.id}"><span  th:href="'/part/cpucooler/' + ${cart.cpucooler.id}" th:text="${cart.cpucooler.name}"></span></a>
-                        <a th:if="${cart.cpucooler == null}" href="/part/cpucooler" class="no-product-button">chose a CpuCooler</a>
+                        <a th:if="${cart.cpucooler != null}" th:href="'/part/cpucooler/' + ${cart.cpucooler.id}">
+                            <span th:text="${cart.cpucooler.name}"></span>
+                        </a>
+                        <a th:if="${cart.cpucooler == null}" href="/part/cpucooler" class="no-product-button">Choose a CpuCooler</a>
+
+                        <!-- ✅ CpuCooler 추천 리스트 Select Box -->
+                        <select id="cpucooler-recommendations" class="recommendations-select" style="display: none;"></select>
                     </th>
                     <th class="price" th:text="${cart.cpucooler != null ? ('$' + cart.cpucooler.price) : '$0'}">Price</th>
                     <th>
@@ -61,8 +77,17 @@
                     <th>3</th>
                     <th><a class="category" href="/part/videocard">VideoCard</a></th>
                     <th class="name" data-part="videocard">
-                        <a th:if="${cart.videocard != null}" th:href="'/part/videocard/' + ${cart.videocard.id}"><span th:href="'/part/videocard/' + ${cart.videocard.id}" th:text="${cart.videocard.name}"></span></a>
-                        <a th:if="${cart.videocard == null}" href="/part/videocard" class="no-product-button">chose a VideoCard</a>
+                        <a th:if="${cart.videocard != null}" th:href="'/part/videocard/' + ${cart.videocard.id}">
+                            <span th:text="${cart.videocard.name}"></span>
+                        </a>
+                        <a th:if="${cart.videocard == null}" href="/part/videocard" class="no-product-button">Choose a VideoCard</a>
+
+                        <!-- ✅ 추천 리스트 (VideoCard가 선택되지 않았을 때만 보이게) -->
+                        <select id="videocard-recommendations" class="recommendations-select"
+                                th:style="${cart.videocard == null} ? 'display: block;' : 'display: none;'"
+                                onchange="addToCart('videocard', this.value)">
+                            <option value="">Select a recommended VideoCard</option>
+                        </select>
                     </th>
                     <th class="price" th:text="${cart.videocard != null ? ('$' + cart.videocard.price) : '$0'}">Price</th>
                     <th>
@@ -73,8 +98,17 @@
                     <th>4</th>
                     <th><a class="category" href="/part/memory">Memory</a></th>
                     <th class="name" data-part="memory">
-                        <a th:if="${cart.memory != null}"  th:href="'/part/memory/' + ${cart.memory.id}"><span th:href="'/part/memory/' + ${cart.memory.id}" th:text="${cart.memory.name}"></span></a>
-                        <a th:if="${cart.memory == null}" href="/part/memory" class="no-product-button">chose a Memory</a>
+                        <a th:if="${cart.memory != null}" th:href="'/part/memory/' + ${cart.memory.id}">
+                            <span th:text="${cart.memory.name}"></span>
+                        </a>
+                        <a th:if="${cart.memory == null}" href="/part/memory" class="no-product-button">Choose a Memory</a>
+
+                        <!-- ✅ 추천 리스트 (Memory가 선택되지 않았을 때만 보이게) -->
+                        <select id="memory-recommendations" class="recommendations-select"
+                                th:style="${cart.memory == null} ? 'display: block;' : 'display: none;'"
+                                onchange="addToCart('memory', this.value)">
+                            <option value="">Select a recommended Memory</option>
+                        </select>
                     </th>
                     <th class="price" th:text="${cart.memory != null ? ('$' + cart.memory.price) : '$0'}">Price</th>
                     <th>
@@ -85,8 +119,13 @@
                     <th>5</th>
                     <th><a class="category" href="/part/storage">Storage</a></th>
                     <th class="name" data-part="storage">
-                        <a  th:if="${cart.storage != null}"  th:href="'/part/storage/' + ${cart.storage.id}"><span th:href="'/part/storage/' + ${cart.storage.id}" th:text="${cart.storage.name}"></span></a>
-                        <a th:if="${cart.storage == null}" href="/part/storage" class="no-product-button">chose a Storage</a>
+                        <a th:if="${cart.storage != null}" th:href="'/part/storage/' + ${cart.storage.id}">
+                            <span th:text="${cart.storage.name}"></span>
+                        </a>
+                        <a th:if="${cart.storage == null}" href="/part/storage" class="no-product-button">Choose a Storage</a>
+
+                        <!-- ✅ Storage 추천 리스트 Select Box -->
+                        <select id="storage-recommendations" class="recommendations-select" style="display: none;"></select>
                     </th>
                     <th class="price" th:text="${cart.storage != null ? ('$' + cart.storage.price) : '$0'}">Price</th>
                     <th>
@@ -95,10 +134,18 @@
                 </tr>
                 <tr>
                     <th>6</th>
-                    <th><a class="category" href="/part/motherboard">MotherBoard</a></th>
+                    <th><a class="category" href="/part/motherboard">Motherboard</a></th>
                     <th class="name" data-part="motherboard">
-                        <a th:if="${cart.motherboard != null}" th:href="'/part/motherboard/' + ${cart.motherboard.id}"><span th:href="'/part/motherboard/' + ${cart.motherboard.id}" th:text="${cart.motherboard.name}"></span></a>
-                        <a th:if="${cart.motherboard == null}" href="/part/motherboard" class="no-product-button">chose a MotherBoard</a>
+                        <a th:if="${cart.motherboard != null}" th:href="'/part/motherboard/' + ${cart.motherboard.id}">
+                            <span th:text="${cart.motherboard.name}" data-id="${cart.motherboard.id}"></span>
+                        </a>
+                        <a th:if="${cart.motherboard == null}" href="/part/motherboard" class="no-product-button">Choose a Motherboard</a>
+
+                        <!-- ✅ Motherboard에 대한 추천 리스트 -->
+                        <select id="motherboard-recommendations" class="recommendations-select"
+                                onchange="addToCart('motherboard', this.value)">
+                            <option value="">Select a recommended Motherboard</option>
+                        </select>
                     </th>
                     <th class="price" th:text="${cart.motherboard != null ? ('$' + cart.motherboard.price) : '$0'}">Price</th>
                     <th>
@@ -109,8 +156,17 @@
                     <th>7</th>
                     <th><a class="category" href="/part/powersupply">PowerSupply</a></th>
                     <th class="name" data-part="powersupply">
-                        <a th:if="${cart.powersupply != null}" th:href="'/part/powersupply/' + ${cart.powersupply.id}"><span th:href="'/part/powersupply/' + ${cart.powersupply.id}"  th:text="${cart.powersupply.name}"></span></a>
-                        <a th:if="${cart.powersupply == null}" href="/part/powersupply" class="no-product-button">chose a PowerSupply</a>
+                        <a th:if="${cart.powersupply != null}" th:href="'/part/powersupply/' + ${cart.powersupply.id}">
+                            <span th:text="${cart.powersupply.name}"></span>
+                        </a>
+                        <a th:if="${cart.powersupply == null}" href="/part/powersupply" class="no-product-button">Choose a PowerSupply</a>
+
+                        <!-- ✅ 추천 리스트 (PowerSupply가 선택되지 않았을 때만 보이게) -->
+                        <select id="powersupply-recommendations" class="recommendations-select"
+                                th:style="${cart.powersupply == null} ? 'display: block;' : 'display: none;'"
+                                onchange="addToCart('powersupply', this.value)">
+                            <option value="">Select a recommended PowerSupply</option>
+                        </select>
                     </th>
                     <th class="price" th:text="${cart.powersupply != null ? ('$' + cart.powersupply.price) : '$0'}">Price</th>
                     <th>
@@ -121,8 +177,17 @@
                     <th>8</th>
                     <th><a class="category" href="/part/cover">Case</a></th>
                     <th class="name" data-part="cover">
-                        <a th:if="${cart.cover != null}" th:href="'/part/cover/' + ${cart.cover.id}"><span th:href="'/part/cover/' + ${cart.cover.id}" th:text="${cart.cover.name}"></span></a>
-                        <a th:if="${cart.cover == null}" href="/part/cover" class="no-product-button">chose a Case</a>
+                        <a th:if="${cart.cover != null}" th:href="'/part/cover/' + ${cart.cover.id}">
+                            <span th:text="${cart.cover.name}"></span>
+                        </a>
+                        <a th:if="${cart.cover == null}" href="/part/cover" class="no-product-button">Choose a Case</a>
+
+                        <!-- ✅ 추천 리스트 (Case가 선택되지 않았을 때만 보이게) -->
+                        <select id="cover-recommendations" class="recommendations-select"
+                                th:style="${cart.cover == null} ? 'display: block;' : 'display: none;'"
+                                onchange="addToCart('cover', this.value)">
+                            <option value="">Select a recommended Case</option>
+                        </select>
                     </th>
                     <th class="price" th:text="${cart.cover != null ? ('$' + cart.cover.price) : '$0'}">Price</th>
                     <th>
